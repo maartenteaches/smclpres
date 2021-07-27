@@ -1,5 +1,47 @@
 mata:
 
+void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    string scalar errmsg
+    if (arg != "") {
+        errmsg = "{p}{err}no argument allowed for option {res}" +
+                 opt + " {err} of {res}//layout " + cmd + " {p_end}" 
+        printf(errmsg)
+        errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+        printf(errmsg)
+        exit(198)
+    }
+    if (cmd=="secbold") {
+        settings.toc.secbf = "bold"
+    }
+    if (cmd=="secitalic") {
+        settings.toc.secit = "italic"
+    }    
+    if (cmd=="subsecbold") {
+        settings.toc.subsecbf = "bold"
+    }
+    if (cmd=="subsecitalic") {
+        settings.toc.subsecit = "italic"
+    }
+    if (cmd=="subsubsecbold") {
+        settings.toc.subsubsecbf = "bold"
+    }
+    if (cmd=="subsubsecitalic") {
+        settings.toc.subsubsecit = "italic"
+    }        
+    if (cmd=="subsubsubsecbold") {
+        settings.toc.subsubsubsecbf = "bold"
+    }
+    if (cmd=="subsubsubsecitalic") {
+        settings.toc.subsubsubsecit = "italic"
+    }
+    if (cmd=="subtitlebold") {
+        settings.toc.subtitlebf = "bold"
+    }
+    if (cmd=="subtitleitalic") {
+        settings.toc.subtitleit = "italic"
+    }        
+}
 void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     string scalar errmsg
@@ -8,7 +50,7 @@ void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string sc
     allowed = "section", "subsection", "subsubsection"
     if (anyof(allowed, arg)== 0) {
         errmsg = "{p}{err} option {res}link(){err} in " +
-                 "{res}//layout "+ cmd + "{err} may contain either " +
+                 "{res}//layout toc"+ cmd + "{err} may contain either " +
                  "section, subsection, or subsubsection{p_end}"
         printf(errmsg)
         errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"

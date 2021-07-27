@@ -1,4 +1,24 @@
 mata:
+
+void smclpres:: new() {
+    defaults()
+    source = J(0,3,"")
+    option_parse.reinit("string", 2)
+    option_parse.notfound(&notallowed())
+    option_parse.put(("toc","link"),&p_toc_sec_sub_sub)
+    option_parse.put(("toc","title"),&p_toc_sec_sub_sub)
+	option_parse.put(("toc","secbold"),&p_toc_font)
+	option_parse.put(("toc","secitalic"),&p_toc_font)
+	option_parse.put(("toc","subsecbold"),&p_toc_font)
+	option_parse.put(("toc","subsecitalic"),&p_toc_font)
+	option_parse.put(("toc","subsubsecbold"),&p_toc_font)
+	option_parse.put(("toc","subsubsecitalic"),&p_toc_font)
+	option_parse.put(("toc","subsubsubsecbold"),&p_toc_font)
+	option_parse.put(("toc","subsubsubsecitalic"),&p_toc_font)
+	option_parse.put(("toc","subtitlebold"),&p_toc_font)
+	option_parse.put(("toc","subtitleitalic"),&p_toc_font)
+}
+
 void smclpres::defaults()
 {
     settings.toc.link           = "section"
