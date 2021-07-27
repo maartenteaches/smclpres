@@ -2,46 +2,63 @@ clear all
 mata:
 mata set matastrict on
 class smclpres {
-    struct valid_set scalar valid_settings
-    string           matrix source
-    real             scalar count_lines()
-    void                    read_file()
-    real             scalar _read_file()
-    void                    new()
-    void                    parse_args()
-    string           matrix extract_args()
-}
+    class AssociativeArray scalar option_parse
+    string                 matrix source
 
+    void                          new()
 
-struct valid_set 
-{
-    string                 rowvector layout
-    string                 rowvector toc
-    string                 rowvector tocfiles
-    class AssociativeArray scalar    arg
+    real                   scalar count_lines()
+    void                          read_file()
+    real                   scalar _read_file()
+
+    void                          parse_args()
+    string                 matrix extract_args()
+    void                          notallowed()
+    void                          p_toc_sec_sub_sub()
 }
 
 void smclpres:: new() {
     source = J(0,3,"")
-    valid_settings.layout    = "toc", "tocfiles"
-    valid_settings.toc = "link", "itemize", "anc", "title", "secthline",
-                         "secbhline", "secbold", "secitalic", "subsecbold",
-                         "subsecitalic", "subsubsecbold", "subsubsecitalic",
-                         "subsubsubsecbold", "subsubsubsecitalic",
-                   		 "subtitlepos", "nosubtitlebold", "subtitleitalic", 
-                         "nosubtitlethline", "nosubtitlebhline", "subtitle", "nodigr"
-    vali_settings.tocfiles = "off", "on", "name", "where", "exname",
-		"doname", "adoname", "dataname", "classname",
-		"stylename", "graphname", "grecname", "irfname",
-		"mataname", "bcname", "stername", "tracename",
-        "semname", "swmname", "customname",
-		"doedit", "view", "gruse", "euse", "use",
-		"p2"       
-    vali_settings.arg.reinit("string",2)                                
-    valid_settings.arg.notfound("")
-    valid_settings.arg.put(("toc","link"), ("section", "subsection", "subsubsection")) 
-    valid_settings.arg.put(("toc","title"), ("subsection", "subsubsection", "notitle"))                           
-    valid_settings.arg.put(("toc","subtitlepos"), ("left", "center"))
+    option_parse.reinit("string", 2)
+    option_parse.notfound(&notallowed())
+    option_parse.put(("toc","link"),&p_toc_sec_sub_sub)
+    option_parse.put(("toc","title"),&p_toc_sec_sub_sub)
+}
+
+void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    string scalar errmsg
+    string rowvector allowed
+
+    allowed = "section", "subsection", "subsubsection"
+    if (anyof(allowed, arg)== 0) {
+        errmsg = "{p}{err} option {res}link(){err} in " +
+                 "{res}//layout "+ cmd + "{err} may contain either " +
+                 "section, subsection, or subsubsection{p_end}"
+        printf(errmsg)
+        errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+        printf(errmsg)
+        exit(198)
+    }
+    if (cmd == "link") {
+        settings.toc.link = arg
+    }
+    else if (cmd == "title") {
+        settings.toc.title = arg
+    }
+}
+void smclpres::notallowed(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line) 
+{
+	string scalar errmsg
+	errmsg = "{p}{err}option {res}" + opt
+	if (arg != "") {
+		errmsg = errmsg +"(" + arg + ")"
+	}
+	errmsg = errmsg + "{err} not allowed in {res}//layout " + cmd + "{p_end}"
+	printf(errmsg)
+	errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+	printf(errmsg)
+	exit(198)
 }
 
 string matrix smclpres::extract_args(string scalar line)
