@@ -105,11 +105,26 @@ string matrix smclpres::extract_args(string scalar line)
     return(res)
 }
 
+void smclpres::parse_args(string scalar cmd, string scalar line, string scalar filename, real scalar lnr)
+{
+    string matrix args
+    string rowvector key
+    real scalar i
+    pointer scalar p
+
+    args = extract_args(line)
+    for (i=1; i<=rows(args); i++) {
+        key = cmd, args[i,1]
+        p = option_parse.get(key)
+        (*p)(cmd, args[i,1], args[i,2], filename, strofreal(lnr))
+    }
+}
+
 real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
+    transmorphic scalar t
     string matrix EOF, toadd
     real scalar fh, i, newlines
-    string scalar line
-    string rowvector parts 
+    string scalar line, part, cmd
     
     newlines = count_lines(filename)
     toadd = J(newlines,3,"")
@@ -119,22 +134,22 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
     
     while ((line=fget(fh))!=EOF) {
         i++
-        parts = tokens(line)
-        if (cols(parts) > 0) {
-            if (parts[1] == "//include") {
-                source = source[|1,1 \ rows(source)-1,3|]
-                lnr = _read_file(parts[2], lnr)
-            }
-            else {
-                source[lnr  ,1] = line
-                source[lnr  ,2] = filename
-                source[lnr++,3] = strofreal(i)
-            }
+        t = tokeninit()
+        tokenset(t,line)
+        part = tokenget(t)
+        if (part == "//include") {
+            source = source[|1,1 \ rows(source)-1,3|]
+            lnr = _read_file(parts[2], lnr)
+        }
+        else if (part == "//layout") {
+            cmd = tokenget(t)
+            line = tokenrest(t)
+            parse_args(cmd, line, filename, i) 
         }
         else {
             source[lnr  ,1] = line
             source[lnr  ,2] = filename
-            source[lnr++,3] = strofreal(i)            
+            source[lnr++,3] = strofreal(i)
         }
     }
     fclose(fh)
