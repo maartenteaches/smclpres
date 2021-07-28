@@ -49,8 +49,8 @@ void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string sc
 
     allowed = "section", "subsection", "subsubsection"
     if (anyof(allowed, arg)== 0) {
-        errmsg = "{p}{err} option {res}link(){err} in " +
-                 "{res}//layout toc"+ cmd + "{err} may contain either " +
+        errmsg = "{p}{err} option {res}" + opt + "{err} in " +
+                 "{res}//layout "+ cmd + "{err} may contain either " +
                  "section, subsection, or subsubsection{p_end}"
         printf(errmsg)
         errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
@@ -110,7 +110,7 @@ void smclpres::parse_args(string scalar cmd, string scalar line, string scalar f
     string matrix args
     string rowvector key
     real scalar i
-    pointer scalar p
+    pointer(void function) scalar p
 
     args = extract_args(line)
     for (i=1; i<=rows(args); i++) {
@@ -126,6 +126,7 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
     real scalar fh, i, newlines
     string scalar line, part, cmd
     
+    EOF = J(0,0,"")
     newlines = count_lines(filename)
     toadd = J(newlines,3,"")
     source = source \ toadd
@@ -139,7 +140,8 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
         part = tokenget(t)
         if (part == "//include") {
             source = source[|1,1 \ rows(source)-1,3|]
-            lnr = _read_file(parts[2], lnr)
+            part = tokenget(t)
+            lnr = _read_file(part, lnr)
         }
         else if (part == "//layout") {
             cmd = tokenget(t)

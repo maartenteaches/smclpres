@@ -27,8 +27,7 @@ class smclpres {
     void                          p_toc_sec_sub_sub()
     void                          p_toc_font()
 }
-
+end
 do _smclpres_definitions.mata
 do _smclpres_init.mata
 do _smclpres_read.mata
-end
