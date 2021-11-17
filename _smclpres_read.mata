@@ -1,6 +1,19 @@
 mata:
+void smclpres::notallowed(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line) 
+{
+	string scalar errmsg
+	errmsg = "{p}{err}option {res}" + opt
+	if (arg != "") {
+		errmsg = errmsg +"(" + arg + ")"
+	}
+	errmsg = errmsg + "{err} not allowed in {res}//layout " + cmd + "{p_end}"
+	printf(errmsg)
+	errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+	printf(errmsg)
+	exit(198)
+}
 
-void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+void smclpres::no_arg_err(string scalar opt, string scalar cmd, string scalar file, string scalar line)
 {
     string scalar errmsg
     if (arg != "") {
@@ -11,6 +24,36 @@ void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar ar
         printf(errmsg)
         exit(198)
     }
+}
+
+void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scalar file, string scalar line, string rowvector allowed)
+{
+	string scalar errmsg, all_err
+    real scalar k, i
+    
+    k = cols(allowed)
+    all_err = allowed[1]
+    if (k>1) {
+    	for(i=2; i<k; i++) {
+        	all_err = all_err + ", " + allowed[i]
+        }
+        all_err = all_err + ", or " + allowed[k]
+    }
+    
+    if (anyof(allowed, arg)== 0) {
+        errmsg = "{p}{err} option {res}" + opt + "{err} in " +
+                 "{res}//layout "+ cmd + "{err} may contain either " +
+                 all_err + "{p_end}"
+        printf(errmsg)
+        errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+        printf(errmsg)
+        exit(198)
+    }
+}
+
+void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, file, line)
     if (cmd=="secbold") {
         settings.toc.secbf = "bold"
     }
@@ -44,19 +87,9 @@ void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar ar
 }
 void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    string scalar errmsg
-    string rowvector allowed
 
-    allowed = "section", "subsection", "subsubsection"
-    if (anyof(allowed, arg)== 0) {
-        errmsg = "{p}{err} option {res}" + opt + "{err} in " +
-                 "{res}//layout "+ cmd + "{err} may contain either " +
-                 "section, subsection, or subsubsection{p_end}"
-        printf(errmsg)
-        errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
-        printf(errmsg)
-        exit(198)
-    }
+    allowed_arg_err(opt, cmd, file, line, ("section", "subsection", "subsubsection"))
+
     if (cmd == "link") {
         settings.toc.link = arg
     }
@@ -64,19 +97,7 @@ void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string sc
         settings.toc.title = arg
     }
 }
-void smclpres::notallowed(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line) 
-{
-	string scalar errmsg
-	errmsg = "{p}{err}option {res}" + opt
-	if (arg != "") {
-		errmsg = errmsg +"(" + arg + ")"
-	}
-	errmsg = errmsg + "{err} not allowed in {res}//layout " + cmd + "{p_end}"
-	printf(errmsg)
-	errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
-	printf(errmsg)
-	exit(198)
-}
+
 
 string matrix smclpres::extract_args(string scalar line)
 {

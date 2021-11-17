@@ -24,6 +24,8 @@ class smclpres {
     void                          parse_args()
     string                 matrix extract_args()
     void                          notallowed()
+    void                          no_arg_err()
+    void                          allowed_arg_err()
     void                          p_toc_sec_sub_sub()
     void                          p_toc_font()
 }
