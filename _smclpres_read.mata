@@ -125,6 +125,12 @@ void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string sc
     }
 }
 
+void smclpres::p_toc_itemize(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, file, line)
+    settings.toc.itemize = "itemize"
+}
+
 
 string matrix smclpres::extract_args(string scalar line)
 {

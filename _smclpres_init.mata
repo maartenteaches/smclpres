@@ -9,6 +9,7 @@ void smclpres:: new() {
 	option_parse.put(("toc", "secbhline"), &p_toc_hline())
 	option_parse.put(("toc", "nosubtitlethline"), &p_toc_hline())
 	option_parse.put(("toc", "nosubtitlebhline"), &p_toc_hline())
+	option_parse.put(("toc", "itemize"), &p_toc_itemize())
 	option_parse.put(("toc","subtitlepos"),&p_toc_subtitlepos())
     option_parse.put(("toc","link"),&p_toc_sec_sub_sub())
     option_parse.put(("toc","title"),&p_toc_sec_sub_sub())
