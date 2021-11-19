@@ -31,16 +31,16 @@ void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scal
 	string scalar errmsg, all_err
     real scalar k, i
     
-    k = cols(allowed)
-    all_err = allowed[1]
-    if (k>1) {
-    	for(i=2; i<k; i++) {
-        	all_err = all_err + ", " + allowed[i]
-        }
-        all_err = all_err + ", or " + allowed[k]
-    }
-    
     if (anyof(allowed, arg)== 0) {
+        k = cols(allowed)
+        all_err = allowed[1]
+        if (k>1) {
+            for(i=2; i<k; i++) {
+                all_err = all_err + ", " + allowed[i]
+            }
+            all_err = all_err + ", or " + allowed[k]
+        }
+    
         errmsg = "{p}{err} option {res}" + opt + "{err} in " +
                  "{res}//layout "+ cmd + "{err} may contain either " +
                  all_err + "{p_end}"
@@ -95,6 +95,9 @@ void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string sc
     }
     else if (cmd == "title") {
         settings.toc.title = arg
+        if (opt == "subsection") {
+            settings.topbar.subsec = "nosubsec"
+        }
     }
 }
 
