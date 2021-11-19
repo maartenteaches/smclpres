@@ -85,6 +85,13 @@ void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar ar
         settings.toc.subtitleit = "italic"
     }        
 }
+
+void smclpres::p_toc_subtitlepos(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    allowed_arg_err(opt, cmd, file, line, ("left", "center"))
+    settings.toc.subtitlepos = opt
+}
+
 void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
 

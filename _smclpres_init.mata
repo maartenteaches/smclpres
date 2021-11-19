@@ -5,6 +5,7 @@ void smclpres:: new() {
     source = J(0,3,"")
     option_parse.reinit("string", 2)
     option_parse.notfound(&notallowed())
+	option_parse.put(("toc","subtitlepos"),&p_toc_subtitlepos())
     option_parse.put(("toc","link"),&p_toc_sec_sub_sub())
     option_parse.put(("toc","title"),&p_toc_sec_sub_sub())
 	option_parse.put(("toc","secbold"),&p_toc_font())
