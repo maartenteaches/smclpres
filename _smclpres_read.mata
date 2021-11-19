@@ -131,6 +131,10 @@ void smclpres::p_toc_itemize(string scalar cmd, string scalar opt, string scalar
     settings.toc.itemize = "itemize"
 }
 
+void smclpres::p_toc_anc(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    settings.toc.anc = opt
+}
 
 string matrix smclpres::extract_args(string scalar line)
 {
