@@ -78,15 +78,15 @@ void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar ar
     if (cmd=="subsubsubsecitalic") {
         settings.toc.subsubsubsecit = "italic"
     }
-    if (cmd=="subtitlebold") {
-        settings.toc.subtitlebf = "bold"
+    if (cmd=="nosubtitlebold") {
+        settings.toc.subtitlebf = "regular"
     }
     if (cmd=="subtitleitalic") {
         settings.toc.subtitleit = "italic"
     }        
 }
 
-void smclpres::p_toc_sechline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+void smclpres::p_toc_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, file, line)
     if (cmd=="secthline") {
@@ -94,6 +94,12 @@ void smclpres::p_toc_sechline(string scalar cmd, string scalar opt, string scala
     }
     if (cmd=="secbhline") {
         settings.toc.secbhline = "hline"
+    }
+    if (cmd="nosubtitlethline") {
+        settings.toc.subtitlethline = "nohline"
+    }
+    if (cmd="nosubtitlebhline"){
+        settings.toc.subtitlebhline = "nohline"
     }
 }
 

@@ -5,8 +5,10 @@ void smclpres:: new() {
     source = J(0,3,"")
     option_parse.reinit("string", 2)
     option_parse.notfound(&notallowed())
-	option_parse.put(("toc", "secthline"), &p_toc_sechline())
-	option_parse.put(("toc", "secbhline"), &p_toc_sechline())
+	option_parse.put(("toc", "secthline"), &p_toc_hline())
+	option_parse.put(("toc", "secbhline"), &p_toc_hline())
+	option_parse.put(("toc", "nosubtitlethline"), &p_toc_hline())
+	option_parse.put(("toc", "nosubtitlebhline"), &p_toc_hline())
 	option_parse.put(("toc","subtitlepos"),&p_toc_subtitlepos())
     option_parse.put(("toc","link"),&p_toc_sec_sub_sub())
     option_parse.put(("toc","title"),&p_toc_sec_sub_sub())
@@ -18,7 +20,7 @@ void smclpres:: new() {
 	option_parse.put(("toc","subsubsecitalic"),&p_toc_font())
 	option_parse.put(("toc","subsubsubsecbold"),&p_toc_font())
 	option_parse.put(("toc","subsubsubsecitalic"),&p_toc_font())
-	option_parse.put(("toc","subtitlebold"),&p_toc_font())
+	option_parse.put(("toc","nosubtitlebold"),&p_toc_font())
 	option_parse.put(("toc","subtitleitalic"),&p_toc_font())
 }
 
