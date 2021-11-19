@@ -30,6 +30,8 @@ class smclpres {
     void                          p_toc_font()
     void                          p_toc_subtitlepos()
     void                          p_toc_sechline()
+    void                          p_toc_itemize()
+    void                          p_toc_name()
 }
 end
 do _smclpres_definitions.mata
