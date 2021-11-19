@@ -86,6 +86,17 @@ void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar ar
     }        
 }
 
+void smclpres::p_toc_sechline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, file, line)
+    if (cmd=="secthline") {
+        settings.toc.secthline = "hline"
+    }
+    if (cmd=="secbhline") {
+        settings.toc.secbhline = "hline"
+    }
+}
+
 void smclpres::p_toc_subtitlepos(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     allowed_arg_err(opt, cmd, file, line, ("left", "center"))
