@@ -141,6 +141,12 @@ void smclpres::p_toc_name(string scalar cmd, string scalar opt, string scalar ar
     }
 }
 
+void smclpres::p_toc_nodigr(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, file, line)
+    settings.toc.nodigr="nodigr"    
+}
+
 string matrix smclpres::extract_args(string scalar line)
 {
 	transmorphic scalar t

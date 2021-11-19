@@ -32,6 +32,7 @@ class smclpres {
     void                          p_toc_sechline()
     void                          p_toc_itemize()
     void                          p_toc_name()
+    void                          p_toc_nodigr()
 }
 end
 do _smclpres_definitions.mata
