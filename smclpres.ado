@@ -50,14 +50,9 @@ end
 program define Parsedirs, sclass
 	syntax using/, pres(string) [dir(string) replace]
 
-	local stub : subinstr local using "\" "/", all
-	while `"`stub'"' != "" {
-		local path `path'`path2'
-		gettoken path2 stub : stub, parse("/\:")
-	}
-	local stub `path2'
-	local file "`stub'"
-	gettoken stub suffix : stub, parse(".")
+	mata: st_local("file", pathbasename(`using'))
+	mata: st_local("stub", pathrmsuffix(`file'))
+	
 	local odir = c(pwd)
 	quietly {
 		cd `"`path'"'
