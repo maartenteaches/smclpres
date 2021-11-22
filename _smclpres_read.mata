@@ -13,7 +13,7 @@ void smclpres::notallowed(string scalar cmd, string scalar opt, string scalar ar
 	exit(198)
 }
 
-void smclpres::no_arg_err(string scalar opt, string scalar cmd, string scalar file, string scalar line)
+void smclpres::no_arg_err(string scalar opt, string scalar cmd, string scalar arg, string scalar file, string scalar line)
 {
     string scalar errmsg
     if (arg != "") {
@@ -26,7 +26,7 @@ void smclpres::no_arg_err(string scalar opt, string scalar cmd, string scalar fi
     }
 }
 
-void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scalar file, string scalar line, string rowvector allowed)
+void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scalar arg, string scalar file, string scalar line, string rowvector allowed)
 {
 	string scalar errmsg, all_err
     real scalar k, i
@@ -53,7 +53,7 @@ void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scal
 
 void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, file, line)
+    no_arg_err(opt, cmd, arg, file, line)
     if (cmd=="secbold") {
         settings.toc.secbf = "bold"
     }
@@ -88,7 +88,7 @@ void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar ar
 
 void smclpres::p_toc_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, file, line)
+    no_arg_err(opt, cmd, arg, file, line)
     if (cmd=="secthline") {
         settings.toc.secthline = "hline"
     }
@@ -105,14 +105,14 @@ void smclpres::p_toc_hline(string scalar cmd, string scalar opt, string scalar a
 
 void smclpres::p_toc_subtitlepos(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    allowed_arg_err(opt, cmd, file, line, ("left", "center"))
+    allowed_arg_err(opt, cmd, arg, file, line, ("left", "center"))
     settings.toc.subtitlepos = opt
 }
 
 void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
 
-    allowed_arg_err(opt, cmd, file, line, ("section", "subsection", "subsubsection"))
+    allowed_arg_err(opt, cmd, arg, file, line, ("section", "subsection", "subsubsection"))
 
     if (cmd == "link") {
         settings.toc.link = arg
@@ -127,12 +127,13 @@ void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string sc
 
 void smclpres::p_toc_itemize(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, file, line)
+    no_arg_err(opt, cmd, arg, file, line)
     settings.toc.itemize = "itemize"
 }
 
 void smclpres::p_toc_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
+    no_arg_err(opt, cmd, arg, file, line)
     if (cmd=="anc") {
         settings.toc.anc = opt
     }
@@ -143,7 +144,7 @@ void smclpres::p_toc_name(string scalar cmd, string scalar opt, string scalar ar
 
 void smclpres::p_toc_nodigr(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, file, line)
+    no_arg_err(opt, cmd, arg, file, line)
     settings.toc.nodigr="nodigr"    
 }
 
@@ -247,10 +248,10 @@ real scalar smclpres::count_lines(string scalar filename) {
     return(i)
 }
 
-void smclpres::parsedirs(string scalar using, string scalar dir, string scalar replace)
+void smclpres::parsedirs(string scalar usingpath, string scalar dir, string scalar replace)
 {
     string scalar file, stub, odir, path, sdir, source, ddir
-    pathsplit(using, file="", path="")
+    pathsplit(usingpath, file="", path="")
     stub = pathrmsuffix(file)
     odir = pwd()
     cd(path)
@@ -265,12 +266,12 @@ void smclpres::parsedirs(string scalar using, string scalar dir, string scalar r
         ddir = odir
     }
     cd(odir)
-	settings.other.stub      = "`stub'"
-	settings.other.sourcedir = "`sdir'"
-	settings.other.source    = "`source'"
-	settings.other.olddir    = "`odir'"
-	settings.other.destdir   = "`ddir'"
-	settings.other.replace   = "`replace'"
+	settings.other.stub      = "stub"
+	settings.other.sourcedir = "sdir"
+	settings.other.source    = "source"
+	settings.other.olddir    = "odir"
+	settings.other.destdir   = "ddir"
+	settings.other.replace   = "replace"
 }
 
 void smclpres::cd(string scalar path) {

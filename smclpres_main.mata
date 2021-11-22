@@ -1,5 +1,5 @@
 clear all
-cd "d:\mijn documenten\projecten\stata\smclpres"
+cd "c:\mijn documenten\projecten\stata\smclpres"
 mata:
 mata set matastrict on
 class smclpres {
@@ -31,7 +31,7 @@ class smclpres {
     void                          p_toc_sec_sub_sub()
     void                          p_toc_font()
     void                          p_toc_subtitlepos()
-    void                          p_toc_sechline()
+    void                          p_toc_hline()
     void                          p_toc_itemize()
     void                          p_toc_name()
     void                          p_toc_nodigr()
