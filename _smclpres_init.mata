@@ -27,6 +27,7 @@ void smclpres:: new() {
 	option_parse.put(("toc","nosubtitlebold"),&p_toc_font())
 	option_parse.put(("toc","subtitleitalic"),&p_toc_font())
 	option_parse.put(("tocfiles","name"), &p_tocfiles_name())
+	option_parse.put(("tocfiles","where"), &p_tocfiles_name())
 	option_parse.put(("tocfiles","exname"), &p_tocfiles_name())
 	option_parse.put(("tocfiles","doname"), &p_tocfiles_name())
 	option_parse.put(("tocfiles","adoname"), &p_tocfiles_name())

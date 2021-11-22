@@ -157,6 +157,9 @@ void smclpres::p_tocfiles_name(string scalar cmd, string scalar opt, string scal
     if (cmd == "name") {
         settings.tocfiles.name = arg
     }
+    if (cmd == "where") {
+        settings.toctiles.where = arg
+    }
     else  {
         mark = usubstr(cmd, 1, ustrpos(cmd, "name") - 1)
         changemarkname(mark, opt)
