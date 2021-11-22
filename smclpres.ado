@@ -1,6 +1,7 @@
 *! version 3.3.1 MLB 05Aug2019
-*  fixed some missing double quotes in Parsedirs
-*  add the //dir option
+*  rewrite as a Mata class
+*  allow source files to include other source files
+*  fix to allow for very long presentations  
 
 program define smclpres, rclass
 	version 14.2
@@ -30,9 +31,9 @@ end
 
 program define smclpres_main, rclass
 	version 14.2
-	syntax using, pres(string) [replace dir(passthru)]
+	syntax using/, pres(string) [replace dir(string)]
 	
-	Parsedirs `using', `dir' `replace' pres(`pres')
+	mata: `pres'.parsedirs("`using'", `"`dir'"', "`replace'")
 	
 	Findsettings `using', pres(`pres')
 	
@@ -47,34 +48,6 @@ program define smclpres_main, rclass
 	Closingmsg, pres(`pres')
 end
 
-program define Parsedirs, sclass
-	syntax using/, pres(string) [dir(string) replace]
-
-	mata: st_local("file", pathbasename(`using'))
-	mata: st_local("stub", pathrmsuffix(`file'))
-	
-	local odir = c(pwd)
-	quietly {
-		cd `"`path'"'
-		local sdir = c(pwd)
-		local source `sdir'/`file'
-		if `"`dir'"' != "" {
-			cd `"`odir'"'
-			cd `"`dir'"'
-			local ddir = c(pwd)
-		}
-		else {
-			local ddir "`odir'"
-		}
-		cd `"`odir'"'
-	}
-	mata `pres'.settings.other.stub      = "`stub'"
-	mata `pres'.settings.other.sourcedir = "`sdir'"
-	mata `pres'.settings.other.source    = "`source'"
-	mata `pres'.settings.other.olddir    = "`odir'"
-	mata `pres'.settings.other.destdir   = "`ddir'"
-	mata `pres'.settings.other.replace   = "`replace'"
-end
 
 program define Findsettings
 	syntax using/ , pres(string)

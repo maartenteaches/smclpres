@@ -20,6 +20,8 @@ class smclpres {
     real                   scalar count_lines()
     void                          read_file()
     real                   scalar _read_file()
+    void                          parsedirs()
+    void                          cd()
 
     void                          parse_args()
     string                 matrix extract_args()

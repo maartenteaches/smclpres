@@ -246,4 +246,42 @@ real scalar smclpres::count_lines(string scalar filename) {
     fclose(fh)
     return(i)
 }
+
+void smclpres::parsedirs(string scalar using, string scalar dir, string scalar replace)
+{
+    string scalar file, stub, odir, path, sdir, source, ddir
+    pathsplit(using, file="", path="")
+    stub = pathrmsuffix(file)
+    odir = pwd()
+    cd(path)
+    sdir = pwd()
+    source = pathjoin(sdir,file)
+    if (dir!= "") {
+        cd(odir)
+        cd(dir)
+        ddir = pwd()
+    }
+    else {
+        ddir = odir
+    }
+    cd(odir)
+	settings.other.stub      = "`stub'"
+	settings.other.sourcedir = "`sdir'"
+	settings.other.source    = "`source'"
+	settings.other.olddir    = "`odir'"
+	settings.other.destdir   = "`ddir'"
+	settings.other.replace   = "`replace'"
+}
+
+void smclpres::cd(string scalar path) {
+    real scalar rc
+    string scalar errmsg
+    rc = _chdir(path)
+    if (rc != 0) {
+        errmsg = "{p}{err}directory " + path + "not found{p_end}"
+        printf(errmsg)
+        exit(rc)
+    }
+}
+
 end
