@@ -151,6 +151,25 @@ void smclpres::changemarkname(string scalar mark, string scalar name) {
 	settings.tocfiles.markname[i,2] = name
 }
 
+void smclpres::p_tocfiles_howdisplay(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    if (opt == "doedit") {
+        settings.tocfiles.doedit = arg
+    }
+    else if (opt == "view") {
+        settings.tocfiles.view = arg
+    }
+    else if (opt == "gruse") {
+        settings.tocfiles.gruse = arg
+    }
+    else if (opt == "euse") {
+        settings.tocfiles.euse = arg
+    }
+    else if (opt == "use") {
+        settings.tocfiles.use = arg
+    }
+}
+
 void smclpres::p_tocfiles_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     string scalar mark
