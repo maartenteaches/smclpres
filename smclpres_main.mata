@@ -37,6 +37,7 @@ class smclpres {
     void                          p_toc_nodigr()
     void                          p_tocfiles_name()
     void                          changemarkname()
+    void                          p_tocfiles_p2()
 }
 end
 do _smclpres_definitions.mata

@@ -163,6 +163,33 @@ void smclpres::p_tocfiles_name(string scalar cmd, string scalar opt, string scal
     }
 }
 
+void smclpres::p_tocfiles_p2(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    real rowvector nums
+    real scalar ok, k
+    string scalar errmsg
+
+    nums = strtoreal(tokens(arg))
+    k = cols(nums)
+    if (k > 2) {
+    ok = !anyof(nums,.)        & 
+         !any(nums:<0)         & 
+         (nums == floor(nums)) & 
+         (nums[1]<=nums[2])    & 
+         (cols(nums)==4)
+    }
+    else {
+        ok = 0
+    }
+    if (!`ok') {
+        errmsg = "{p}{err}there is a problem with the p2() option in //layout tocfiles{p_end}"
+        printf(errmsg)
+    	errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+	    printf(errmsg)
+	    exit(198)           
+	}
+    settings.tocfiles.p2 = arg
+}    
 void smclpres::p_toc_nodigr(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)

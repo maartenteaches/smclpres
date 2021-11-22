@@ -42,6 +42,7 @@ void smclpres:: new() {
 	option_parse.put(("tocfiles","tracename"), &p_tocfiles_name())
 	option_parse.put(("tocfiles","semname"), &p_tocfiles_name())
 	option_parse.put(("tocfiles","swmname"), &p_tocfiles_name())
+	option_parse.put(("tocfiles","p2"), &p_tocfiles_p2())
 }
 
 void smclpres::defaults()
