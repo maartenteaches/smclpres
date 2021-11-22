@@ -166,6 +166,34 @@ void smclpres::p_tocfiles_name(string scalar cmd, string scalar opt, string scal
     }
 }
 
+void smclpres::p_tocfiles_customname(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    string rowvector parts
+    real scalar i
+    transmorphic scalar t
+    string scalar mark, label, errmsg
+    string matrix res
+
+    parts = tokens(arg, ";")
+    t = tokeninit(" ")
+    res = J(0,2,"")
+    for(i=1; i<=cols(parts); i++) {
+        if (parts[i]!=";") {
+            tokenset(t,parts[i])
+            mark = tokenget(t)
+            label = tokenrest(t)
+            if (label == "") {
+                errmsg = "{p}{err}there is a problem with the customname() option in //layout tocfiles{p_end}"
+                printf(errmsg)
+                errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+                printf(errmsg)
+                exit(198)                       
+            }
+            res = res \ (mark, label)
+        }
+    }
+    settings.tocfiles.markname = settings.tocfiles.markname \ res
+}
 void smclpres::p_tocfiles_p2(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     real rowvector nums
