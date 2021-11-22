@@ -133,12 +133,33 @@ void smclpres::p_toc_itemize(string scalar cmd, string scalar opt, string scalar
 
 void smclpres::p_toc_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
     if (cmd=="anc") {
-        settings.toc.anc = opt
+        settings.toc.anc = arg
     }
     if (cmd=="subtitle") {
-        settings.toc.subtitle = opt
+        settings.toc.subtitle = arg
+    }
+}
+
+void smclpres::changemarkname(string scalar mark, string scalar name) {
+	real colvector i
+	
+	i = selectindex(settings.tocfiles.markname[.,1] :== mark)
+	if (cols(i) > 1) {
+		exit(error(198))
+	}
+	settings.tocfiles.markname[i,2] = name
+}
+
+void smclpres::p_tocfiles_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    string scalar mark
+    if (cmd == "name") {
+        settings.tocfiles.name = arg
+    }
+    else  {
+        mark = usubstr(cmd, 1, ustrpos(cmd, "name") - 1)
+        changemarkname(mark, opt)
     }
 }
 
