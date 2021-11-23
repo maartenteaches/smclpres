@@ -303,7 +303,12 @@ void smclpres::p_digr(string scalar cmd, string scalar opt, string scalar arg, s
         settings.digress.prefix = arg
     }
 }
-
+void smclpres::p_ex(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    if (cmd == "name"){
+        settings.example.name = arg
+    }
+}
 string matrix smclpres::extract_args(string scalar line)
 {
 	transmorphic scalar t
