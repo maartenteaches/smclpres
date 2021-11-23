@@ -311,6 +311,10 @@ void smclpres::p_ex(string scalar cmd, string scalar opt, string scalar arg, str
 }
     sep(string asis)
 
+void smclpres::p_topbar_sep(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    settings.topbar.sep = arg
+}
 void smclpres::p_topbar_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)

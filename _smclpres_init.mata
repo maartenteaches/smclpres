@@ -64,6 +64,7 @@ void smclpres:: new() {
 	option_parse.put(("topbar", "secitalic"), &p_topbar_font())
 	option_parse.put(("topbar", "subsecbold"), &p_topbar_font())
 	option_parse.put(("topbar", "subsecitalic"), &p_topbar_font())
+	option_parse.put(("topbar", "sep"), &p_topbar_sep())
 }
 
 void smclpres::defaults()
