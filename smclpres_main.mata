@@ -45,6 +45,7 @@ class smclpres {
     void                          p_digr()
     void                          p_ex()
     void                          p_topbar_on_off()
+    void                          p_topbar_hline()
 }
 end
 do _smclpres_definitions.mata

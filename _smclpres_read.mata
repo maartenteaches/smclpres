@@ -309,9 +309,19 @@ void smclpres::p_ex(string scalar cmd, string scalar opt, string scalar arg, str
         settings.example.name = arg
     }
 }
- nothline nobhline nosubsec nosecbold secitalic ///
+  nosubsec nosecbold secitalic ///
 		         subsecbold subsecitalic sep(string asis)
 
+void smclpres::p_topbar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, arg, file, line)
+    if (cmd="nothline") {
+        settings.topbar.thline = "nohline"
+    }
+    if (cmd="nobhline"){
+        settings.topbar.bhline = "nohline"
+    }
+}
 void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
