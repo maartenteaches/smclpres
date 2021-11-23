@@ -67,6 +67,8 @@ void smclpres:: new() {
 	option_parse.put(("topbar", "sep"), &p_topbar_sep())
 	option_parse.put(("bottombar", "nothline"), &p_bottombar_hline())
 	option_parse.put(("bottombar", "nobhline"), &p_bottombar_hline())
+	option_parse.put(("bottombar", "arrow"), &p_bottombar_arrow_label())
+	option_parse.put(("bottombar", "label"), &p_bottombar_arrow_label())
 }
 
 void smclpres::defaults()

@@ -50,6 +50,7 @@ class smclpres {
     void                          p_topbar_font()
     void                          p_topbar_sep()
     void                          p_bottombar_hline()
+    void                          p_bottombar_arrow_label()
 }
 end
 do _smclpres_definitions.mata
