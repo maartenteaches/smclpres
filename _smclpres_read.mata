@@ -309,8 +309,6 @@ void smclpres::p_ex(string scalar cmd, string scalar opt, string scalar arg, str
         settings.example.name = arg
     }
 }
-    sep(string asis)
-
 void smclpres::p_topbar_sep(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     settings.topbar.sep = arg
@@ -357,6 +355,18 @@ void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scal
 {
     no_arg_err(opt, cmd, arg, file, line)
     settings.topbar.on = cmd
+}
+nothline nobhline arrow label next(string) index(string) ///
+		        nextname(string) toc tpage(string)
+void smclpres::p_bottombar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, arg, file, line)
+    if (cmd="nothline") {
+        settings.bottombar.thline = "nohline"
+    }
+    if (cmd="nobhline"){
+        settings.bottombar.bhline = "nohline"
+    }
 }
 string matrix smclpres::extract_args(string scalar line)
 {
