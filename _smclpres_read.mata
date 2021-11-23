@@ -294,6 +294,16 @@ void smclpres::p_tocfiles_on_off(string scalar cmd, string scalar opt, string sc
     settings.tocfiles.on = cmd
 }
 
+void smclpres::p_digr(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    if (cmd == "name"){
+        settings.digress.name = arg
+    }
+    if (cmd == "prefix"){
+        settings.digress.prefix = arg
+    }
+}
+
 string matrix smclpres::extract_args(string scalar line)
 {
 	transmorphic scalar t

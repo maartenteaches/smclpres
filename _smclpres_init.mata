@@ -52,6 +52,8 @@ void smclpres:: new() {
 	option_parse.put(("tocfiles","p2"), &p_tocfiles_p2())
 	option_parse.put(("tocfiles","on"), &p_tocfiles_on_off())
 	option_parse.put(("tocfiles","off"), &p_tocfiles_on_off())
+	option_parse.put(("digress","name"), &p_digr())
+	option_parse.put(("digress","prefix"), &p_digr())
 }
 
 void smclpres::defaults()

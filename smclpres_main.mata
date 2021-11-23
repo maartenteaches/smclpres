@@ -42,6 +42,7 @@ class smclpres {
     void                          p_tocfiles_customname()
     void                          p_tocfiles_howdisplay()
     void                          p_tocfiles_howdisplay_default()
+    void                          p_digr()
 }
 end
 do _smclpres_definitions.mata
