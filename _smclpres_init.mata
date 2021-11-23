@@ -97,11 +97,6 @@ void smclpres::defaults()
 	                                   "trace" ,"Parameter-trace files" \
 	                                   "sem"   ,"SEM builder files" \
 	                                   "swm"   ,"Spatial weighting matrices"
-	settings.tocfiles.doedit    = "do ado dct class scheme style"
-	settings.tocfiles.view      = "smcl log hlp sthlp"
-	settings.tocfiles.gruse     = "gph"
-	settings.tocfiles.euse      = "ster"
-	settings.tocfiles.use       = "dta"
 	settings.tocfiles.p2        = "5 25 26 0"	
 	
 	settings.digress.name       = "digression"

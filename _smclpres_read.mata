@@ -169,6 +169,47 @@ void smclpres::p_tocfiles_howdisplay(string scalar cmd, string scalar opt, strin
         settings.tocfiles.use = arg
     }
 }
+void smclpres::p_tocfiles_howdisplay_default()
+{
+    string rowvector specified, def
+    string scalar tofill
+    real scalar i
+
+    specified = tokens(settings.tocfiles.doedit), 
+                tokens(settings.tocfiles.view),
+                tokens(settings.tocfiles.gruse),
+                tokens(settings.tocfiles.euse),
+                tokens(settings.tocfiles.use)
+
+    def = "do", "ado", "dct", "class", "scheme", "style"
+
+    tofill = ""
+    for(i=1 ; i<= cols(def) ; i++) {
+        if (!anyof(specified, def[i])) {
+            tofill = tofill + " " + def[i]
+        }
+    }
+    settings.tocfiles.doedit = settings.tocfiles.doedit + tofill
+
+    def = "smcl", "log", "hlp", "sthlp"
+    tofill = ""
+    for(i=1 ; i<= cols(def) ; i++) {
+        if (!anyof(specified, def[i])) {
+            tofill = tofill + " " + def[i]
+        }
+    }
+    settings.tocfiles.view = settings.tocfiles.view + tofill
+
+    if !anyof(specified, "gph") {
+        settings.tocfiles.gruse = settings.tocfiles.gruse + " gph"
+    }
+    if !anyof(specified, "ster") {
+        settings.tocfiles.euse = settings.tocfiles.euse + " ster"
+    }
+    if !anyof(specified, "dta") {
+        settings.tocfiles.use = settings.tocfiles.use + " dta"
+    }
+}
 
 void smclpres::p_tocfiles_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
