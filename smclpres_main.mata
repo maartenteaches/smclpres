@@ -44,6 +44,7 @@ class smclpres {
     void                          p_tocfiles_howdisplay_default()
     void                          p_digr()
     void                          p_ex()
+    void                          p_topbar_on_off()
 }
 end
 do _smclpres_definitions.mata

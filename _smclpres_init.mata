@@ -55,6 +55,8 @@ void smclpres:: new() {
 	option_parse.put(("digress","name"), &p_digr())
 	option_parse.put(("digress","prefix"), &p_digr())
 	option_parse.put(("example", "name"), &p_ex())
+	option_parse.put(("topbar", "on"), &p_topbar_on_off())
+	option_parse.put(("topbar", "off"), &p_topbar_on_off())
 }
 
 void smclpres::defaults()

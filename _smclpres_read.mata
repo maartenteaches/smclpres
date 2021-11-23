@@ -309,6 +309,14 @@ void smclpres::p_ex(string scalar cmd, string scalar opt, string scalar arg, str
         settings.example.name = arg
     }
 }
+ nothline nobhline nosubsec nosecbold secitalic ///
+		         subsecbold subsecitalic sep(string asis)
+
+void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, arg, file, line)
+    settings.topbar.on = cmd
+}
 string matrix smclpres::extract_args(string scalar line)
 {
 	transmorphic scalar t
