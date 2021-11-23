@@ -312,6 +312,12 @@ void smclpres::p_ex(string scalar cmd, string scalar opt, string scalar arg, str
   nosubsec nosecbold secitalic ///
 		         subsecbold subsecitalic sep(string asis)
 
+void smclpres::p_topbar_nosubsec(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, arg, file, line)
+    settings.topbar.subsec = cmd
+}
+
 void smclpres::p_topbar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)

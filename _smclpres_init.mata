@@ -59,6 +59,7 @@ void smclpres:: new() {
 	option_parse.put(("topbar", "off"), &p_topbar_on_off())
 	option_parse.put(("topbar", "nothline"), &p_topbar_hline())
 	option_parse.put(("topbar", "nobhline"), &p_topbar_hline())
+	option_parse.put(("topbar", "nosubsec"), &p_topbar_nosubsec())
 }
 
 void smclpres::defaults()
