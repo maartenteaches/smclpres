@@ -47,6 +47,7 @@ class smclpres {
     void                          p_topbar_on_off()
     void                          p_topbar_hline()
     void                          p_topbar_nosubsec()
+    void                          p_topbar_font()
 }
 end
 do _smclpres_definitions.mata

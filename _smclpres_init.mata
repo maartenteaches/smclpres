@@ -60,6 +60,10 @@ void smclpres:: new() {
 	option_parse.put(("topbar", "nothline"), &p_topbar_hline())
 	option_parse.put(("topbar", "nobhline"), &p_topbar_hline())
 	option_parse.put(("topbar", "nosubsec"), &p_topbar_nosubsec())
+	option_parse.put(("topbar", "nosecbold"), &p_topbar_font())
+	option_parse.put(("topbar", "secitalic"), &p_topbar_font())
+	option_parse.put(("topbar", "subsecbold"), &p_topbar_font())
+	option_parse.put(("topbar", "subsecitalic"), &p_topbar_font())
 }
 
 void smclpres::defaults()

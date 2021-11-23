@@ -309,9 +309,30 @@ void smclpres::p_ex(string scalar cmd, string scalar opt, string scalar arg, str
         settings.example.name = arg
     }
 }
-  nosubsec nosecbold secitalic ///
-		         subsecbold subsecitalic sep(string asis)
+    sep(string asis)
 
+void smclpres::p_topbar_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, arg, file, line)
+    if (cmd=="nosecbold") {
+        settings.topbar.secbf = "regular"
+    }
+    if (cmd=="secitalic") {
+        settings.topbar.secit = "italic"
+    }    
+    if (cmd=="subsecbold") {
+        settings.topbar.subsecbf = "bold"
+    }
+    if (cmd=="subsecitalic") {
+        settings.topbar.subsecit = "italic"
+    }
+    if (cmd=="subsubsecbold") {
+        settings.toc.subsubsecbf = "bold"
+    }
+    if (cmd=="subsubsecitalic") {
+        settings.toc.subsubsecit = "italic"
+    }  
+}
 void smclpres::p_topbar_nosubsec(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
