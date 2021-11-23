@@ -356,7 +356,7 @@ void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scal
     no_arg_err(opt, cmd, arg, file, line)
     settings.topbar.on = cmd
 }
-arrow label next(string) index(string) ///
+next(string) index(string) ///
 		        nextname(string) toc tpage(string)
 
 void smclpres::p_bottombar_arrow_label(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
