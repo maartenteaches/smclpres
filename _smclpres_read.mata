@@ -153,6 +153,7 @@ void smclpres::changemarkname(string scalar mark, string scalar name) {
 
 void smclpres::p_tocfiles_howdisplay(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
+    arg = usubinstr(arg, ".", "", .)
     if (opt == "doedit") {
         settings.tocfiles.doedit = arg
     }
