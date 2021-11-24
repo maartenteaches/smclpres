@@ -70,6 +70,7 @@ void smclpres:: new() {
 	option_parse.put(("bottombar", "arrow"), &p_bottombar_arrow_label())
 	option_parse.put(("bottombar", "label"), &p_bottombar_arrow_label())
 	option_parse.put(("bottombar", "toc"), &p_bottombar_arrow_label())
+	option_parse.put(("bottombar", "next"), &p_bottombar_next())
 }
 
 void smclpres::defaults()
