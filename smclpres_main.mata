@@ -55,6 +55,7 @@ class smclpres {
     void                          p_bottombar_name()
     void                          p_title_hline()
     void                          p_title_font()
+    void                          p_tab()
 }
 end
 do _smclpres_definitions.mata

@@ -80,6 +80,7 @@ void smclpres:: new() {
 	option_parse.put(("title", "italic"), &p_title_font())
 	option_parse.put(("title", "left"), &p_title_where())
 	option_parse.put(("title", "center"), &p_title_where())
+	option_parse.put(("tabs", "spaces"), &p_tab())
 }
 
 void smclpres::defaults()

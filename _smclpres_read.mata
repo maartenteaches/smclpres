@@ -415,6 +415,22 @@ void smclpres::p_title_where(string scalar cmd, string scalar opt, string scalar
     no_arg_err(opt, cmd, arg, file, line)
     settings.title.pos = opt 
 }  
+
+void smclpres::p_tab(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    string scalar errmsg
+
+    arg = strtoreal(arg)
+    if (arg==. | arg < 0 | floor(arg)!=arg) {
+        errmsg = "{p}{err}there is an error with option {res}" +
+                 opt + " {err} of {res}//layout " + cmd + " {p_end}" 
+        printf(errmsg)
+        errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+        printf(errmsg)
+        exit(198)
+    }
+    settings.other.tab = arg
+}
 string matrix smclpres::extract_args(string scalar line)
 {
 	transmorphic scalar t
