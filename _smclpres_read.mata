@@ -291,7 +291,7 @@ void smclpres::p_toc_nodigr(string scalar cmd, string scalar opt, string scalar 
 void smclpres::p_tocfiles_on_off(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    settings.tocfiles.on = cmd
+    settings.tocfiles.on = opt
 }
 
 void smclpres::p_digr(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
@@ -338,7 +338,7 @@ void smclpres::p_topbar_font(string scalar cmd, string scalar opt, string scalar
 void smclpres::p_topbar_nosubsec(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    settings.topbar.subsec = cmd
+    settings.topbar.subsec = opt
 }
 
 void smclpres::p_topbar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
@@ -354,7 +354,7 @@ void smclpres::p_topbar_hline(string scalar cmd, string scalar opt, string scala
 void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    settings.topbar.on = cmd
+    settings.topbar.on = opt
 }
 next(string) index(string) ///
 		        nextname(string) toc tpage(string)
@@ -362,7 +362,7 @@ next(string) index(string) ///
 void smclpres::p_bottombar_arrow_label(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    settings.bottombar.arrow = cmd
+    settings.bottombar.arrow = opt
 }
 void smclpres::p_bottombar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
