@@ -76,6 +76,10 @@ void smclpres:: new() {
 	option_parse.put(("bottombar", "tpage"), &p_bottombar_name())
 	option_parse.put(("title", "thline"), &p_title_hline())
 	option_parse.put(("title", "bhline"), &p_title_hline())
+	option_parse.put(("title", "nobold"), &p_title_font())
+	option_parse.put(("title", "italic"), &p_title_font())
+	option_parse.put(("title", "left"), &p_title_where())
+	option_parse.put(("title", "center"), &p_title_where())
 }
 
 void smclpres::defaults()

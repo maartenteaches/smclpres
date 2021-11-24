@@ -400,6 +400,21 @@ void smclpres::p_title_hline(string scalar cmd, string scalar opt, string scalar
         settings.bottombar.bhline = "hline"
     }
 }
+void smclpres::p_title_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, arg, file, line)
+    if (opt=="nobold") {
+        settings.title.bold = "regular"
+    }
+    if (opt=="italic") {
+        settings.title.italic = "italic"
+    }    
+}
+void smclpres::p_title_where(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, arg, file, line)
+    settings.title.pos = opt 
+}  
 string matrix smclpres::extract_args(string scalar line)
 {
 	transmorphic scalar t
