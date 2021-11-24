@@ -6,6 +6,7 @@ class smclpres {
 
     class AssociativeArray scalar option_parse
     string                 matrix source
+    real                   matrix version
 
 // smclpres_main.mata
     void                          run()
