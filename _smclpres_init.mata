@@ -81,6 +81,8 @@ void smclpres:: new() {
 	option_parse.put(("title", "left"), &p_title_where())
 	option_parse.put(("title", "center"), &p_title_where())
 	option_parse.put(("tabs", "spaces"), &p_tab())
+	option_parse.put(("bib","bibfile"), &p_bib_file())
+	option_parse.put(("bib","stylefile"), &p_bib_file())
 }
 
 void smclpres::defaults()

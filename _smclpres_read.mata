@@ -1,4 +1,14 @@
 mata:
+void smclpres::generic_err_msg(string scalar cmd, string scalar opt, string scalar file, string scalar line)
+{
+    string scalar errmsg
+    errmsg = "{p}{err}there is an error with option {res}" +
+             opt + " {err} of {res}//layout " + cmd + " {p_end}" 
+    printf(errmsg)
+    errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+    printf(errmsg)
+    exit(198)
+}
 void smclpres::notallowed(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line) 
 {
 	string scalar errmsg
@@ -232,7 +242,7 @@ void smclpres::p_tocfiles_customname(string scalar cmd, string scalar opt, strin
     string rowvector parts
     real scalar i
     transmorphic scalar t
-    string scalar mark, label, errmsg
+    string scalar mark, label
     string matrix res
 
     parts = tokens(arg, ";")
@@ -244,11 +254,7 @@ void smclpres::p_tocfiles_customname(string scalar cmd, string scalar opt, strin
             mark = tokenget(t)
             label = tokenrest(t)
             if (label == "") {
-                errmsg = "{p}{err}there is a problem with the customname() option in //layout tocfiles{p_end}"
-                printf(errmsg)
-                errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
-                printf(errmsg)
-                exit(198)                       
+                generic_err_msg(cmd,opt,file,line)                    
             }
             res = res \ (mark, label)
         }
@@ -259,7 +265,6 @@ void smclpres::p_tocfiles_p2(string scalar cmd, string scalar opt, string scalar
 {
     real rowvector nums
     real scalar ok, k
-    string scalar errmsg
 
     nums = strtoreal(tokens(arg))
     k = cols(nums)
@@ -274,11 +279,7 @@ void smclpres::p_tocfiles_p2(string scalar cmd, string scalar opt, string scalar
         ok = 0
     }
     if (!`ok') {
-        errmsg = "{p}{err}there is a problem with the p2() option in //layout tocfiles{p_end}"
-        printf(errmsg)
-    	errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
-	    printf(errmsg)
-	    exit(198)           
+        generic_err_msg(cmd, opt, file, line)           
 	}
     settings.tocfiles.p2 = arg
 }    
@@ -418,19 +419,28 @@ void smclpres::p_title_where(string scalar cmd, string scalar opt, string scalar
 
 void smclpres::p_tab(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    string scalar errmsg
-
     arg = strtoreal(arg)
     if (arg==. | arg < 0 | floor(arg)!=arg) {
-        errmsg = "{p}{err}there is an error with option {res}" +
-                 opt + " {err} of {res}//layout " + cmd + " {p_end}" 
-        printf(errmsg)
-        errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
-        printf(errmsg)
-        exit(198)
+        generic_err_msg(cmd,opt, file, line)
     }
     settings.other.tab = arg
 }
+void smclpres::p_bib_file(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    real scalar path
+    path = settings.other.sourcedir
+    path = pathjoin(path, opt)
+    if (!fileexists(path)) {
+        generic_err_msg(cmd,opt,file,line)
+    }
+    if (opt == "bibfile") {
+        bib.bibfile = path
+    }
+    if (opt == "stylefile") {
+        bib.stylefile = path
+    }
+}    
+
 string matrix smclpres::extract_args(string scalar line)
 {
 	transmorphic scalar t

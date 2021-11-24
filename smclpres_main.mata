@@ -25,6 +25,7 @@ class smclpres {
 
     void                          parse_args()
     string                 matrix extract_args()
+    void                          generic_err_msg()
     void                          notallowed()
     void                          no_arg_err()
     void                          allowed_arg_err()
@@ -56,6 +57,7 @@ class smclpres {
     void                          p_title_hline()
     void                          p_title_font()
     void                          p_tab()
+    void                          p_bib_file()
 }
 end
 do _smclpres_definitions.mata
