@@ -54,34 +54,34 @@ void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scal
 void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    if (cmd=="secbold") {
+    if (opt=="secbold") {
         settings.toc.secbf = "bold"
     }
-    if (cmd=="secitalic") {
+    if (opt=="secitalic") {
         settings.toc.secit = "italic"
     }    
-    if (cmd=="subsecbold") {
+    if (opt=="subsecbold") {
         settings.toc.subsecbf = "bold"
     }
-    if (cmd=="subsecitalic") {
+    if (opt=="subsecitalic") {
         settings.toc.subsecit = "italic"
     }
-    if (cmd=="subsubsecbold") {
+    if (opt=="subsubsecbold") {
         settings.toc.subsubsecbf = "bold"
     }
-    if (cmd=="subsubsecitalic") {
+    if (opt=="subsubsecitalic") {
         settings.toc.subsubsecit = "italic"
     }        
-    if (cmd=="subsubsubsecbold") {
+    if (opt=="subsubsubsecbold") {
         settings.toc.subsubsubsecbf = "bold"
     }
-    if (cmd=="subsubsubsecitalic") {
+    if (opt=="subsubsubsecitalic") {
         settings.toc.subsubsubsecit = "italic"
     }
-    if (cmd=="nosubtitlebold") {
+    if (opt=="nosubtitlebold") {
         settings.toc.subtitlebf = "regular"
     }
-    if (cmd=="subtitleitalic") {
+    if (opt=="subtitleitalic") {
         settings.toc.subtitleit = "italic"
     }        
 }
@@ -89,16 +89,16 @@ void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar ar
 void smclpres::p_toc_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    if (cmd=="secthline") {
+    if (opt=="secthline") {
         settings.toc.secthline = "hline"
     }
-    if (cmd=="secbhline") {
+    if (opt=="secbhline") {
         settings.toc.secbhline = "hline"
     }
-    if (cmd="nosubtitlethline") {
+    if (opt=="nosubtitlethline") {
         settings.toc.subtitlethline = "nohline"
     }
-    if (cmd="nosubtitlebhline"){
+    if (opt=="nosubtitlebhline"){
         settings.toc.subtitlebhline = "nohline"
     }
 }
@@ -133,10 +133,10 @@ void smclpres::p_toc_itemize(string scalar cmd, string scalar opt, string scalar
 
 void smclpres::p_toc_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    if (cmd=="anc") {
+    if (opt=="anc") {
         settings.toc.anc = arg
     }
-    if (cmd=="subtitle") {
+    if (opt=="subtitle") {
         settings.toc.subtitle = arg
     }
 }
@@ -316,22 +316,22 @@ void smclpres::p_topbar_sep(string scalar cmd, string scalar opt, string scalar 
 void smclpres::p_topbar_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    if (cmd=="nosecbold") {
+    if (opt=="nosecbold") {
         settings.topbar.secbf = "regular"
     }
-    if (cmd=="secitalic") {
+    if (opt=="secitalic") {
         settings.topbar.secit = "italic"
     }    
-    if (cmd=="subsecbold") {
+    if (opt=="subsecbold") {
         settings.topbar.subsecbf = "bold"
     }
-    if (cmd=="subsecitalic") {
+    if (opt=="subsecitalic") {
         settings.topbar.subsecit = "italic"
     }
-    if (cmd=="subsubsecbold") {
+    if (opt=="subsubsecbold") {
         settings.toc.subsubsecbf = "bold"
     }
-    if (cmd=="subsubsecitalic") {
+    if (opt=="subsubsecitalic") {
         settings.toc.subsubsecit = "italic"
     }  
 }
@@ -344,10 +344,10 @@ void smclpres::p_topbar_nosubsec(string scalar cmd, string scalar opt, string sc
 void smclpres::p_topbar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    if (cmd="nothline") {
+    if (opt=="nothline") {
         settings.topbar.thline = "nohline"
     }
-    if (cmd="nobhline"){
+    if (opt=="nobhline"){
         settings.topbar.bhline = "nohline"
     }
 }
@@ -356,9 +356,19 @@ void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scal
     no_arg_err(opt, cmd, arg, file, line)
     settings.topbar.on = opt
 }
-index(string) ///
-		        nextname(string) tpage(string)
 
+void smclpres::p_bottombar_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    if (opt == "index" ) {
+        settings.bottombar.index = arg
+    }
+    if (opt == "nextname") {
+        settings.bottombar.nextname = arg
+    }
+    if (opt == "tpage") {
+        settings.bottombar.tpage = arg
+    }
+}
 void smclpres::p_bottombar_next(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     allowed_arg_err(opt, cmd, arg, file, line, ("left", "right"))

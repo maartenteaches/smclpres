@@ -1,5 +1,5 @@
 clear all
-cd "c:\mijn documenten\projecten\stata\smclpres"
+cd "d:\mijn documenten\projecten\stata\smclpres"
 mata:
 mata set matastrict on
 class smclpres {
@@ -52,6 +52,7 @@ class smclpres {
     void                          p_bottombar_hline()
     void                          p_bottombar_arrow_label()
     void                          p_bottombar_next()
+    void                          p_bottombar_name()
 }
 end
 do _smclpres_definitions.mata
