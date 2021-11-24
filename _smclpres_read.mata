@@ -441,6 +441,21 @@ void smclpres::p_bib_file(string scalar cmd, string scalar opt, string scalar ar
     }
 }    
 
+void smclpres::p_bib_opt(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    if (opt=="and") {
+        bib.and = arg
+    }
+    if (opt == "authorstyle") {
+        allowed_arg_err(opt, cmd, arg, file, line, ("first last", "last first"))
+        bib.authorstyle = arg
+    }
+    if (opt == "write") {
+        allowed_arg_err(opt, cmd, arg, file, line, ("cited", "all"))
+        bib.write = arg
+    }
+}    
+
 string matrix smclpres::extract_args(string scalar line)
 {
 	transmorphic scalar t

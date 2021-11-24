@@ -61,6 +61,7 @@ class smclpres {
     void                          p_title_font()
     void                          p_tab()
     void                          p_bib_file()
+    void                          p_bib_opt()
 }
 end
 
