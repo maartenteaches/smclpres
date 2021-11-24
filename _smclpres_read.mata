@@ -507,6 +507,7 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
             lnr = _read_file(part, lnr)
         }
         else if (part == "//layout") {
+            source = source[|1,1 \ rows(source)-1,3|]
             cmd = tokenget(t)
             line = tokenrest(t)
             parse_args(cmd, line, filename, i) 
@@ -521,9 +522,9 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
     return(lnr)
 }
 
-void smclpres::read_file(string scalar filename) {
+void smclpres::read_file() {
     real scalar i
-    i = _read_file(filename,1)
+    i = _read_file(settings.other.source,1)
 }
 
 real scalar smclpres::count_lines(string scalar filename) {
@@ -541,9 +542,15 @@ real scalar smclpres::count_lines(string scalar filename) {
     return(i)
 }
 
-void smclpres::parsedirs(string scalar usingpath, string scalar dir, string scalar replace)
+void smclpres::parsedirs()
 {
+    string scalar usingpath, dir, replace
     string scalar file, stub, odir, path, sdir, source, ddir
+
+    usingpath = st_local("using")
+    dir = st_local("dir")
+    replace = st_local("replace")
+
     pathsplit(usingpath, file="", path="")
     stub = pathrmsuffix(file)
     odir = pwd()

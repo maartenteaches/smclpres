@@ -7,6 +7,9 @@ class smclpres {
     class AssociativeArray scalar option_parse
     string                 matrix source
 
+// smclpres_main.mata
+    void                          run()
+
 // _smclpres_definitions.mata    
     struct strsettings     scalar settings
     struct strpresentation scalar presentation
@@ -60,6 +63,13 @@ class smclpres {
     void                          p_bib_file()
 }
 end
+
+void smclpres::run()
+{
+    parsedirs()
+    read_file()
+}
+
 do _smclpres_definitions.mata
 do _smclpres_init.mata
 do _smclpres_read.mata
