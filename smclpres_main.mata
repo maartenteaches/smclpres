@@ -53,6 +53,7 @@ class smclpres {
     void                          p_bottombar_arrow_label()
     void                          p_bottombar_next()
     void                          p_bottombar_name()
+    void                          p_title_hline()
 }
 end
 do _smclpres_definitions.mata

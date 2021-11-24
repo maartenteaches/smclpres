@@ -74,6 +74,8 @@ void smclpres:: new() {
 	option_parse.put(("bottombar", "index"), &p_bottombar_name())
 	option_parse.put(("bottombar", "nextname"), &p_bottombar_name())
 	option_parse.put(("bottombar", "tpage"), &p_bottombar_name())
+	option_parse.put(("title", "thline"), &p_title_hline())
+	option_parse.put(("title", "bhline"), &p_title_hline())
 }
 
 void smclpres::defaults()

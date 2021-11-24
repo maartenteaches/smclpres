@@ -383,11 +383,21 @@ void smclpres::p_bottombar_arrow_label(string scalar cmd, string scalar opt, str
 void smclpres::p_bottombar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    if (cmd="nothline") {
+    if (opt=="nothline") {
         settings.bottombar.thline = "nohline"
     }
-    if (cmd="nobhline"){
+    if (opt=="nobhline"){
         settings.bottombar.bhline = "nohline"
+    }
+}
+void smclpres::p_title_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(opt, cmd, arg, file, line)
+    if (opt=="thline") {
+        settings.bottombar.thline = "hline"
+    }
+    if (opt=="bhline"){
+        settings.bottombar.bhline = "hline"
     }
 }
 string matrix smclpres::extract_args(string scalar line)
