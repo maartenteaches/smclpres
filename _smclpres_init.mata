@@ -2,9 +2,11 @@ mata:
 
 void smclpres:: new() {
     defaults()
+	pointer p
     source = J(0,3,"")
     option_parse.reinit("string", 2)
-    option_parse.notfound(&notallowed())
+	p = &this.notallowed()
+    option_parse.notfound(p)
 	option_parse.put(("toc",       "secthline"         ), &p_hline())
 	option_parse.put(("toc",       "secbhline"         ), &p_hline())
 	option_parse.put(("toc",       "nosubtitlethline"  ), &p_hline())

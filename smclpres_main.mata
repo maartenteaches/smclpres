@@ -4,28 +4,29 @@ mata:
 mata set matastrict on
 class smclpres {
 
-    class AssociativeArray scalar option_parse
-    string                 matrix source
-    real                   matrix vers
+    class AssociativeArray scalar    option_parse
+    string                 matrix    source
+    real                   matrix    vers
 
 // smclpres_main.mata
-    void                          run()
+    void                             run()
 
 // _smclpres_definitions.mata    
-    struct strsettings     scalar settings
-    struct strpresentation scalar presentation
-    struct strbib          scalar bib
+    struct strsettings     scalar    settings
+    struct strpresentation scalar    presentation
+    struct strbib          scalar    bib
 
 // _smclpres_init.mata    
-    void                          new()
-    void                          defaults()
+    void                             new()
+    void                             defaults()
 
 // _smclpres_read.mata
-    real                   scalar count_lines()
-    void                          read_file()
-    real                   scalar _read_file()
-    void                          parsedirs()
-    void                          cd()
+    real                   scalar    count_lines()
+    void                             read_file()
+    real                   scalar    _read_file()
+    void                             parsedirs()
+    void                             cd()
+    real                   rowvector parse_version()
 
     void                          parse_args()
     string                 matrix extract_args()

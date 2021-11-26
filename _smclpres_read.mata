@@ -594,4 +594,42 @@ void smclpres::cd(string scalar path) {
     }
 }
 
+real rowvector smclpres::parse_version(string scalar valstr)
+{
+	real scalar l, i, j
+	real rowvector v
+	string scalar part, errmsg
+	string rowvector res, nr
+
+	res = "", J(1,2,"0")
+	l = ustrlen(valstr)
+	j=1
+	nr = "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"
+	
+	for(i=1; i<=l; i++) {
+		part = usubstr(valstr,i,1)
+		if (anyof(nr,part)) {
+			res[j] = res[j]+part
+		}
+		else if (part == " ") {
+			// do nothing; i.e. ignore spaces
+		}
+		else if (part == "." ) {
+			if (i!=l) {
+				j=j+1
+				if (j>3) {
+					_error("format for version number is #.#.#")
+				}
+				res[j]=""
+			}
+		}
+		else {
+			_error("format for version number is #.#.#")
+		}
+	}
+	v = strtoreal(res)
+
+	return(v)
+}
+
 end
