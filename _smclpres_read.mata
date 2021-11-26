@@ -127,20 +127,46 @@ void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, s
 
 }
 
-void smclpres::p_toc_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
-    if (opt=="secthline") {
-        settings.toc.secthline = "hline"
+    if (cmd == "toc") {
+        no_arg_err(opt, cmd, arg, file, line)
+        if (opt=="secthline") {
+            settings.toc.secthline = "hline"
+        }
+        if (opt=="secbhline") {
+            settings.toc.secbhline = "hline"
+        }
+        if (opt=="nosubtitlethline") {
+            settings.toc.subtitlethline = "nohline"
+        }
+        if (opt=="nosubtitlebhline"){
+            settings.toc.subtitlebhline = "nohline"
+        }
     }
-    if (opt=="secbhline") {
-        settings.toc.secbhline = "hline"
+    if (cmd == "title") {
+        if (opt=="thline") {
+            settings.bottombar.thline = "hline"
+        }
+        if (opt=="bhline"){
+            settings.bottombar.bhline = "hline"
+        }
     }
-    if (opt=="nosubtitlethline") {
-        settings.toc.subtitlethline = "nohline"
+    if (cmd == "topbar") {
+        if (opt=="nothline") {
+            settings.topbar.thline = "nohline"
+        }
+        if (opt=="nobhline"){
+            settings.topbar.bhline = "nohline"
+        }
     }
-    if (opt=="nosubtitlebhline"){
-        settings.toc.subtitlebhline = "nohline"
+    if (cmd == "bottombar") {
+        if (opt=="nothline") {
+            settings.bottombar.thline = "nohline"
+        }
+        if (opt=="nobhline"){
+            settings.bottombar.bhline = "nohline"
+        }
     }
 }
 
@@ -351,16 +377,6 @@ void smclpres::p_topbar_nosubsec(string scalar cmd, string scalar opt, string sc
     settings.topbar.subsec = opt
 }
 
-void smclpres::p_topbar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
-{
-    no_arg_err(opt, cmd, arg, file, line)
-    if (opt=="nothline") {
-        settings.topbar.thline = "nohline"
-    }
-    if (opt=="nobhline"){
-        settings.topbar.bhline = "nohline"
-    }
-}
 void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
@@ -389,26 +405,6 @@ void smclpres::p_bottombar_arrow_label(string scalar cmd, string scalar opt, str
 {
     no_arg_err(opt, cmd, arg, file, line)
     settings.bottombar.arrow = opt
-}
-void smclpres::p_bottombar_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
-{
-    no_arg_err(opt, cmd, arg, file, line)
-    if (opt=="nothline") {
-        settings.bottombar.thline = "nohline"
-    }
-    if (opt=="nobhline"){
-        settings.bottombar.bhline = "nohline"
-    }
-}
-void smclpres::p_title_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
-{
-    no_arg_err(opt, cmd, arg, file, line)
-    if (opt=="thline") {
-        settings.bottombar.thline = "hline"
-    }
-    if (opt=="bhline"){
-        settings.bottombar.bhline = "hline"
-    }
 }
 void smclpres::p_title_where(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
