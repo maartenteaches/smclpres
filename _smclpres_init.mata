@@ -82,7 +82,7 @@ void smclpres:: new() {
 	option_parse.put(("title",     "center"            ), &p_pos())
 	option_parse.put(("tabs",      "spaces"            ), &p_tab())
 	option_parse.put(("bib",       "bibfile"           ), &p_bib_file())
-	option_parse.put(("bib"        "stylefile"         ), &p_bib_file())
+	option_parse.put(("bib",       "stylefile"         ), &p_bib_file())
 	option_parse.put(("bib",       "and"               ), &p_bib_opt())
 	option_parse.put(("bib",       "authorstyle"       ), &p_bib_opt())
 	option_parse.put(("bib",       "write"             ), &p_bib_opt())
