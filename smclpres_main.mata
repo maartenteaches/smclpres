@@ -6,7 +6,7 @@ class smclpres {
 
     class AssociativeArray scalar option_parse
     string                 matrix source
-    real                   matrix version
+    real                   matrix vers
 
 // smclpres_main.mata
     void                          run()
@@ -34,7 +34,7 @@ class smclpres {
     void                          no_arg_err()
     void                          allowed_arg_err()
     void                          p_toc_sec_sub_sub()
-    void                          p_toc_font()
+    void                          p_font()
     void                          p_toc_subtitlepos()
     void                          p_toc_hline()
     void                          p_toc_itemize()
@@ -52,25 +52,25 @@ class smclpres {
     void                          p_topbar_on_off()
     void                          p_topbar_hline()
     void                          p_topbar_nosubsec()
-    void                          p_topbar_font()
     void                          p_topbar_sep()
     void                          p_bottombar_hline()
     void                          p_bottombar_arrow_label()
     void                          p_bottombar_next()
     void                          p_bottombar_name()
     void                          p_title_hline()
-    void                          p_title_font()
+    void                          p_title_where()
     void                          p_tab()
     void                          p_bib_file()
     void                          p_bib_opt()
 }
-end
 
 void smclpres::run()
 {
     parsedirs()
     read_file()
 }
+
+end
 
 do _smclpres_definitions.mata
 do _smclpres_init.mata

@@ -61,39 +61,70 @@ void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scal
     }
 }
 
-void smclpres::p_toc_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    if (opt=="secbold") {
-        settings.toc.secbf = "bold"
-    }
-    if (opt=="secitalic") {
-        settings.toc.secit = "italic"
+    if (cmd=="toc") {
+        if (opt=="secbold") {
+            settings.toc.secbf = "bold"
+        }
+        if (opt=="secitalic") {
+            settings.toc.secit = "italic"
+        }    
+        if (opt=="subsecbold") {
+            settings.toc.subsecbf = "bold"
+        }
+        if (opt=="subsecitalic") {
+            settings.toc.subsecit = "italic"
+        }
+        if (opt=="subsubsecbold") {
+            settings.toc.subsubsecbf = "bold"
+        }
+        if (opt=="subsubsecitalic") {
+            settings.toc.subsubsecit = "italic"
+        }        
+        if (opt=="subsubsubsecbold") {
+            settings.toc.subsubsubsecbf = "bold"
+        }
+        if (opt=="subsubsubsecitalic") {
+            settings.toc.subsubsubsecit = "italic"
+        }
+        if (opt=="nosubtitlebold") {
+            settings.toc.subtitlebf = "regular"
+        }
+        if (opt=="subtitleitalic") {
+            settings.toc.subtitleit = "italic"
+        }
     }    
-    if (opt=="subsecbold") {
-        settings.toc.subsecbf = "bold"
+    if (cmd=="title"){
+        if (opt=="nobold") {
+            settings.title.bold = "regular"
+        }
+        if (opt=="italic") {
+            settings.title.italic = "italic"
+        }  
     }
-    if (opt=="subsecitalic") {
-        settings.toc.subsecit = "italic"
+    if (cmd=="topbar"){
+        if (opt=="nosecbold") {
+            settings.topbar.secbf = "regular"
+        }
+        if (opt=="secitalic") {
+            settings.topbar.secit = "italic"
+        }    
+        if (opt=="subsecbold") {
+            settings.topbar.subsecbf = "bold"
+        }
+        if (opt=="subsecitalic") {
+            settings.topbar.subsecit = "italic"
+        }
+        if (opt=="subsubsecbold") {
+            settings.toc.subsubsecbf = "bold"
+        }
+        if (opt=="subsubsecitalic") {
+            settings.toc.subsubsecit = "italic"
+        }  
     }
-    if (opt=="subsubsecbold") {
-        settings.toc.subsubsecbf = "bold"
-    }
-    if (opt=="subsubsecitalic") {
-        settings.toc.subsubsecit = "italic"
-    }        
-    if (opt=="subsubsubsecbold") {
-        settings.toc.subsubsubsecbf = "bold"
-    }
-    if (opt=="subsubsubsecitalic") {
-        settings.toc.subsubsubsecit = "italic"
-    }
-    if (opt=="nosubtitlebold") {
-        settings.toc.subtitlebf = "regular"
-    }
-    if (opt=="subtitleitalic") {
-        settings.toc.subtitleit = "italic"
-    }        
+
 }
 
 void smclpres::p_toc_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
@@ -124,10 +155,10 @@ void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string sc
 
     allowed_arg_err(opt, cmd, arg, file, line, ("section", "subsection", "subsubsection"))
 
-    if (cmd == "link") {
+    if (opt == "link") {
         settings.toc.link = arg
     }
-    else if (cmd == "title") {
+    else if (opt == "title") {
         settings.toc.title = arg
         if (opt == "subsection") {
             settings.topbar.subsec = "nosubsec"
@@ -211,13 +242,13 @@ void smclpres::p_tocfiles_howdisplay_default()
     }
     settings.tocfiles.view = settings.tocfiles.view + tofill
 
-    if !anyof(specified, "gph") {
+    if (!anyof(specified, "gph")) {
         settings.tocfiles.gruse = settings.tocfiles.gruse + " gph"
     }
-    if !anyof(specified, "ster") {
+    if (!anyof(specified, "ster")) {
         settings.tocfiles.euse = settings.tocfiles.euse + " ster"
     }
-    if !anyof(specified, "dta") {
+    if (!anyof(specified, "dta")) {
         settings.tocfiles.use = settings.tocfiles.use + " dta"
     }
 }
@@ -225,11 +256,11 @@ void smclpres::p_tocfiles_howdisplay_default()
 void smclpres::p_tocfiles_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     string scalar mark
-    if (cmd == "name") {
+    if (opt == "name") {
         settings.tocfiles.name = arg
     }
-    if (cmd == "where") {
-        settings.toctiles.where = arg
+    if (opt == "where") {
+        settings.tocfiles.where = arg
     }
     else  {
         mark = usubstr(cmd, 1, ustrpos(cmd, "name") - 1)
@@ -278,7 +309,7 @@ void smclpres::p_tocfiles_p2(string scalar cmd, string scalar opt, string scalar
     else {
         ok = 0
     }
-    if (!`ok') {
+    if (!ok) {
         generic_err_msg(cmd, opt, file, line)           
 	}
     settings.tocfiles.p2 = arg
@@ -297,44 +328,22 @@ void smclpres::p_tocfiles_on_off(string scalar cmd, string scalar opt, string sc
 
 void smclpres::p_digr(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    if (cmd == "name"){
+    if (opt == "name"){
         settings.digress.name = arg
     }
-    if (cmd == "prefix"){
+    if (opt == "prefix"){
         settings.digress.prefix = arg
     }
 }
 void smclpres::p_ex(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    if (cmd == "name"){
+    if (opt == "name"){
         settings.example.name = arg
     }
 }
 void smclpres::p_topbar_sep(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     settings.topbar.sep = arg
-}
-void smclpres::p_topbar_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
-{
-    no_arg_err(opt, cmd, arg, file, line)
-    if (opt=="nosecbold") {
-        settings.topbar.secbf = "regular"
-    }
-    if (opt=="secitalic") {
-        settings.topbar.secit = "italic"
-    }    
-    if (opt=="subsecbold") {
-        settings.topbar.subsecbf = "bold"
-    }
-    if (opt=="subsecitalic") {
-        settings.topbar.subsecit = "italic"
-    }
-    if (opt=="subsubsecbold") {
-        settings.toc.subsubsecbf = "bold"
-    }
-    if (opt=="subsubsecitalic") {
-        settings.toc.subsubsecit = "italic"
-    }  
 }
 void smclpres::p_topbar_nosubsec(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
@@ -401,16 +410,6 @@ void smclpres::p_title_hline(string scalar cmd, string scalar opt, string scalar
         settings.bottombar.bhline = "hline"
     }
 }
-void smclpres::p_title_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
-{
-    no_arg_err(opt, cmd, arg, file, line)
-    if (opt=="nobold") {
-        settings.title.bold = "regular"
-    }
-    if (opt=="italic") {
-        settings.title.italic = "italic"
-    }    
-}
 void smclpres::p_title_where(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
@@ -419,17 +418,18 @@ void smclpres::p_title_where(string scalar cmd, string scalar opt, string scalar
 
 void smclpres::p_tab(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    arg = strtoreal(arg)
-    if (arg==. | arg < 0 | floor(arg)!=arg) {
+    real scalar spaces
+    spaces = strtoreal(arg)
+    if (spaces==. | spaces < 0 | floor(spaces)!=spaces) {
         generic_err_msg(cmd,opt, file, line)
     }
-    settings.other.tab = arg
+    settings.other.tab = spaces
 }
 void smclpres::p_bib_file(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    real scalar path
+    string scalar path
     path = settings.other.sourcedir
-    path = pathjoin(path, opt)
+    path = pathjoin(path, arg)
     if (!fileexists(path)) {
         generic_err_msg(cmd,opt,file,line)
     }
@@ -581,12 +581,12 @@ void smclpres::parsedirs()
         ddir = odir
     }
     cd(odir)
-	settings.other.stub      = "stub"
-	settings.other.sourcedir = "sdir"
-	settings.other.source    = "source"
-	settings.other.olddir    = "odir"
-	settings.other.destdir   = "ddir"
-	settings.other.replace   = "replace"
+	settings.other.stub      = stub
+	settings.other.sourcedir = sdir
+	settings.other.source    = source
+	settings.other.olddir    = odir
+	settings.other.destdir   = ddir
+	settings.other.replace   = replace
 }
 
 void smclpres::cd(string scalar path) {
