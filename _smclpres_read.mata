@@ -124,9 +124,23 @@ void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, s
             settings.toc.subsubsecit = "italic"
         }  
     }
-
 }
 
+void smclpres::p_pos(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    if (cmd=="bottombar") {
+        allowed_arg_err(opt, cmd, arg, file, line, ("left", "right"))
+        settings.bottombar.next = arg 
+    }
+    if (cmd == "toc") {
+        allowed_arg_err(opt, cmd, arg, file, line, ("left", "center"))
+        settings.toc.subtitlepos = opt
+    }
+    if (cmd=="title") {
+        no_arg_err(opt, cmd, arg, file, line)
+        settings.title.pos = opt 
+    }
+}
 void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     if (cmd == "toc") {
@@ -168,12 +182,6 @@ void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, 
             settings.bottombar.bhline = "nohline"
         }
     }
-}
-
-void smclpres::p_toc_subtitlepos(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
-{
-    allowed_arg_err(opt, cmd, arg, file, line, ("left", "center"))
-    settings.toc.subtitlepos = opt
 }
 
 void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
@@ -395,22 +403,12 @@ void smclpres::p_bottombar_name(string scalar cmd, string scalar opt, string sca
         settings.bottombar.tpage = arg
     }
 }
-void smclpres::p_bottombar_next(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
-{
-    allowed_arg_err(opt, cmd, arg, file, line, ("left", "right"))
-    settings.bottombar.next = arg 
-}    
 
 void smclpres::p_bottombar_arrow_label(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
     settings.bottombar.arrow = opt
 }
-void smclpres::p_title_where(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
-{
-    no_arg_err(opt, cmd, arg, file, line)
-    settings.title.pos = opt 
-}  
 
 void smclpres::p_tab(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
