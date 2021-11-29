@@ -18,7 +18,7 @@ program define smclpres, rclass
 		if `"`olddir'"' != `"`c(pwd)'"' {
 			qui cd `olddir'
 		}
-		mata : `pres'.fcloseall()
+		//mata : `pres'.fcloseall()
 		if "`debug'" == "" {
 			mata: mata drop `pres'
 		}

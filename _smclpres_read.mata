@@ -667,11 +667,10 @@ void smclpres::parsedirs()
     usingpath = st_local("using")
     dir = st_local("dir")
     replace = st_local("replace")
-
-    pathsplit(usingpath, file="", path="")
+    pathsplit(usingpath, path="", file="")
     stub = pathrmsuffix(file)
     odir = pwd()
-    cd(path)
+    if(path != "") cd(path)
     sdir = pwd()
     source = pathjoin(sdir,file)
     if (dir!= "") {
@@ -696,7 +695,7 @@ void smclpres::cd(string scalar path) {
     string scalar errmsg
     rc = _chdir(path)
     if (rc != 0) {
-        errmsg = "{p}{err}directory " + path + "not found{p_end}"
+        errmsg = "{p}{err}directory " + path + " not found{p_end}"
         printf(errmsg)
         exit(rc)
     }
