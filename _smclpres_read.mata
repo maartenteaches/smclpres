@@ -477,18 +477,126 @@ string matrix smclpres::extract_args(string scalar line)
     return(res)
 }
 
+void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    if (cmd=="toc") {
+        if      (opt == "secthline"         ) p_hline(cmd, opt, arg, file , line)
+        else if (opt == "secbhlil"          )  p_hline(cmd, opt, arg, file , line)
+		else if (opt == "nosubtitlethline"  ) p_hline(cmd, opt, arg, file , line)
+		else if (opt == "nosubtitlebhline"  ) p_hline(cmd, opt, arg, file , line)
+		else if (opt == "itemize"           ) p_toc_itemize(cmd, opt, arg, file , line)
+		else if (opt == "anc"               ) p_toc_name(cmd, opt, arg, file , line)
+		else if (opt == "subtitle"          ) p_toc_name(cmd, opt, arg, file , line)
+		else if (opt == "nodigr"            ) p_toc_nodigr(cmd, opt, arg, file , line)
+		else if (opt == "subtitlepos"       ) p_pos(cmd, opt, arg, file , line)
+		else if (opt == "link"              ) p_toc_sec_sub_sub(cmd, opt, arg, file , line)
+		else if (opt == "title"             ) p_toc_sec_sub_sub(cmd, opt, arg, file , line)
+		else if (opt == "secbold"           ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "secitalic"         ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subsecbold"        ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subsecitalic"      ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subsubsecbold"     ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subsubsecitalic"   ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subsubsubsecbold"  ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subsubsubsecitalic") p_font(cmd, opt, arg, file , line)
+		else if (opt == "nosubtitlebold"    ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subtitleitalic"    ) p_font(cmd, opt, arg, file , line)
+		else notallowed(cmd, opt, arg, file , line)
+	}
+	else if (cmd=="tocfiles"){
+		if      (opt == "name"              ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "where"             ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "exname"            ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "doname"            ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "adoname"           ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "dataname"          ) p_tocfiles_name(cmd, opt, arg, file , line)	
+		else if (opt == "classname"         ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "stylename"         ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "graphname"         ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "grecname"          ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "irfname"           ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "mataname"          ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "bcname"            ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "stername"          ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "tracename"         ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "semname"           ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "swmname"           ) p_tocfiles_name(cmd, opt, arg, file , line)
+		else if (opt == "customname"        ) p_tocfiles_customname(cmd, opt, arg, file , line)
+		else if (opt == "doedit"            ) p_tocfiles_howdisplay(cmd, opt, arg, file , line)
+		else if (opt == "view"              ) p_tocfiles_howdisplay(cmd, opt, arg, file , line)
+		else if (opt == "gruse"             ) p_tocfiles_howdisplay(cmd, opt, arg, file , line)
+		else if (opt == "euse"              ) p_tocfiles_howdisplay(cmd, opt, arg, file , line)
+		else if (opt == "use"               ) p_tocfiles_howdisplay(cmd, opt, arg, file , line)
+		else if (opt == "p2"                ) p_tocfiles_p2(cmd, opt, arg, file , line)
+		else if (opt == "on"                ) p_tocfiles_on_off(cmd, opt, arg, file , line)
+		else if (opt == "off"               ) p_tocfiles_on_off(cmd, opt, arg, file , line)
+		else notallowed(cmd, opt, arg, file , line)
+	}
+	else if (cmd == "digress") {
+		if      (opt == "name"              ) p_digr(cmd, opt, arg, file , line)
+		else if (opt == "prefix"            ) p_digr(cmd, opt, arg, file , line)		
+		else notallowed(cmd, opt, arg, file , line)
+	}
+	else if (cmd == "example") {
+		if (opt == "name") p_ex(cmd, opt, arg, file , line)
+		else notallowed(cmd, opt, arg, file , line)
+	}
+	else if (cmd == "topbar") {
+        if      (opt == "on"                ) p_topbar_on_off(cmd, opt, arg, file , line)
+		else if (opt == "off"               ) p_topbar_on_off(cmd, opt, arg, file , line)
+		else if (opt == "nothline"          ) p_hline(cmd, opt, arg, file , line)
+		else if (opt == "nobhline"          ) p_hline(cmd, opt, arg, file , line)
+		else if (opt == "nosubsec"          ) p_topbar_nosubsec(cmd, opt, arg, file , line)
+		else if (opt == "nosecbold"         ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "secitalic"         ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subsecbold"        ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "subsecitalic"      ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "sep"               ) p_topbar_sep(cmd, opt, arg, file , line)		
+		else notallowed(cmd, opt, arg, file , line)
+	}
+	else if (cmd == "bottombar") {
+		if      (opt == "nothline"          ) p_hline(cmd, opt, arg, file , line)
+		else if (opt == "nobhline"          ) p_hline(cmd, opt, arg, file , line)
+		else if (opt == "arrow"             ) p_bottombar_arrow_label(cmd, opt, arg, file , line)
+		else if (opt == "label"             ) p_bottombar_arrow_label(cmd, opt, arg, file , line)
+		else if (opt == "toc"               ) p_bottombar_arrow_label(cmd, opt, arg, file , line)
+		else if (opt == "next"              ) p_pos(cmd, opt, arg, file , line)
+		else if (opt == "index"             ) p_bottombar_name(cmd, opt, arg, file , line)
+		else if (opt == "nextname"          ) p_bottombar_name(cmd, opt, arg, file , line)
+		else if (opt == "tpage"             ) p_bottombar_name(cmd, opt, arg, file , line)
+		else notallowed(cmd, opt, arg, file , line)
+	}
+	else if (cmd == "title") {
+		if      (opt == "thline"            ) p_hline(cmd, opt, arg, file , line)
+		else if (opt == "bhline"            ) p_hline(cmd, opt, arg, file , line)
+		else if (opt == "nobold"            ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "italic"            ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "left"              ) p_pos(cmd, opt, arg, file , line)
+		else if (opt == "center"            ) p_pos(cmd, opt, arg, file , line)
+		else notallowed(cmd, opt, arg, file , line)
+	}
+	else if (cmd == "tabs") {
+		if (opt == "spaces"            ) p_tab(cmd, opt, arg, file , line)
+		else notallowed(cmd, opt, arg, file , line)
+	}
+	else if (cmd == "bib") {
+		if      (opt == "bibfile"           ) p_bib_file(cmd, opt, arg, file , line)
+		else if (opt == "stylefile"         ) p_bib_file(cmd, opt, arg, file , line)
+		else if (opt == "and"               ) p_bib_opt(cmd, opt, arg, file , line)
+		else if (opt == "authorstyle"       ) p_bib_opt(cmd, opt, arg, file , line)
+		else if (opt == "write"             ) p_bib_opt(cmd, opt, arg, file , line)
+		else notallowed(cmd, opt, arg, file , line)
+    }
+	else notallowed(cmd, opt, arg, file , line) 
+}
 void smclpres::parse_args(string scalar cmd, string scalar line, string scalar filename, real scalar lnr)
 {
     string matrix args
-    string rowvector key
     real scalar i
-    pointer(void function) scalar p
 
     args = extract_args(line)
     for (i=1; i<=rows(args); i++) {
-        key = cmd, args[i,1]
-        p = option_parse.get(key)
-        (*p)(cmd, args[i,1], args[i,2], filename, strofreal(lnr))
+        p_layout(cmd, args[i,1], args[i,2], filename, strofreal(lnr))
     }
 }
 

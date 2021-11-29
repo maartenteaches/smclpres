@@ -1,10 +1,8 @@
 clear all
-cd "d:\mijn documenten\projecten\stata\smclpres"
+cd "c:\mijn documenten\projecten\stata\smclpres"
 mata:
 mata set matastrict on
 class smclpres {
-
-    class AssociativeArray scalar    option_parse
     string                 matrix    source
     real                   matrix    vers
 
@@ -28,36 +26,37 @@ class smclpres {
     void                             cd()
     real                   rowvector parse_version()
 
-    void                          parse_args()
-    string                 matrix extract_args()
-    void                          generic_err_msg()
-    void                          notallowed()
-    void                          no_arg_err()
-    void                          allowed_arg_err()
-    void                          p_toc_sec_sub_sub()
-    void                          p_font()
-    void                          p_pos()
-    void                          p_hline()
-    void                          p_toc_itemize()
-    void                          p_toc_name()
-    void                          p_toc_nodigr()
-    void                          p_tocfiles_name()
-    void                          changemarkname()
-    void                          p_tocfiles_p2()
-    void                          p_tocfiles_on_off()
-    void                          p_tocfiles_customname()
-    void                          p_tocfiles_howdisplay()
-    void                          p_tocfiles_howdisplay_default()
-    void                          p_digr()
-    void                          p_ex()
-    void                          p_topbar_on_off()
-    void                          p_topbar_nosubsec()
-    void                          p_topbar_sep()
-    void                          p_bottombar_arrow_label()
-    void                          p_bottombar_name()
-    void                          p_tab()
-    void                          p_bib_file()
-    void                          p_bib_opt()
+    void                             parse_args()
+    string                 matrix    extract_args()
+    void                             generic_err_msg()
+    void                             notallowed()
+    void                             no_arg_err()
+    void                             allowed_arg_err()
+    void                             p_layout()
+    void                             p_toc_sec_sub_sub()
+    void                             p_font()
+    void                             p_pos()
+    void                             p_hline()
+    void                             p_toc_itemize()
+    void                             p_toc_name()
+    void                             p_toc_nodigr()
+    void                             p_tocfiles_name()
+    void                             changemarkname()
+    void                             p_tocfiles_p2()
+    void                             p_tocfiles_on_off()
+    void                             p_tocfiles_customname()
+    void                             p_tocfiles_howdisplay()
+    void                             p_tocfiles_howdisplay_default()
+    void                             p_digr()
+    void                             p_ex()
+    void                             p_topbar_on_off()
+    void                             p_topbar_nosubsec()
+    void                             p_topbar_sep()
+    void                             p_bottombar_arrow_label()
+    void                             p_bottombar_name()
+    void                             p_tab()
+    void                             p_bib_file()
+    void                             p_bib_opt()
 }
 
 void smclpres::run()
