@@ -621,6 +621,7 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
         if (part == "//include") {
             source = source[|1,1 \ rows(source)-1,3|]
             part = tokenget(t)
+            if (!pathisabs(part)) part = settings.other.sourcedir + part
             lnr = _read_file(part, lnr)
         }
         else if (part == "//layout") {

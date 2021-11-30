@@ -2,6 +2,8 @@
 // smclpres using minimalist.do
 // ============================================================================
 
+//layout bottombar label
+
 //toctitle A minimalist example presentation
 
 /*toctxt
@@ -56,3 +58,4 @@ txt*/
 reg price i.rep78 
 //endex
 //endslide --------------------------------------------------------------------
+ 
