@@ -5,6 +5,7 @@ mata set matastrict on
 class smclpres {
     string                 matrix    source
     real                   matrix    vers
+    class AssociativeArray scalar    files
 
 // smclpres_main.mata
     void                             run()
@@ -25,6 +26,9 @@ class smclpres {
     void                             parsedirs()
     void                             cd()
     real                   rowvector parse_version()
+    real                   scalar    sp_fopen()
+    void                             sp_fclose()
+    void                             sp_fcloseall()
 
     void                             parse_args()
     string                 matrix    extract_args()

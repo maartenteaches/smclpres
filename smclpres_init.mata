@@ -122,15 +122,6 @@ struct strslide {
 	real                scalar    prev
 	real                scalar    forw         
 }
-struct strpres {
-	struct strsettings  scalar    settings
-	struct strslide     colvector slide
-	struct strslide     scalar    tocslide
-	struct strslide     scalar    titleslide
-	struct strbib       scalar    bib
-	transmorphic        scalar    files
-	
-}
 
 struct strpres scalar sp_presinit() {
 	struct strpres scalar pres
