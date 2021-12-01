@@ -610,7 +610,7 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
     newlines = count_lines(filename)
     toadd = J(newlines,3,"")
     source = source \ toadd
-    fh = fopen(filename, "r")
+    fh = sp_fopen(filename, "r")
     i = 0
     
     while ((line=fget(fh))!=EOF) {
@@ -636,7 +636,7 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
             source[lnr++,3] = strofreal(i)
         }
     }
-    fclose(fh)
+    sp_fclose(fh)
     return(lnr)
 }
 
@@ -649,14 +649,14 @@ real scalar smclpres::count_lines(string scalar filename) {
     string matrix EOF
     real scalar fh, i
     
-    fh = fopen(filename, "r")
+    fh = sp_fopen(filename, "r")
     EOF = J(0,0,"")
     
     i=0
     while (fget(fh)!=EOF) {
        i++ 
     }
-    fclose(fh)
+    sp_fclose(fh)
     return(i)
 }
 
