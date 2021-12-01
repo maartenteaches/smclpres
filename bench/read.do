@@ -80,7 +80,7 @@ mata:
 totest.parsedirs()
 totest.read_file()
 assert(rows(totest.source)==60) // there is a single //layout command in minimalist.do
-assert(allof(totest.source[.,2], "C:\Mijn documenten\projecten\stata\smclpres\bench\minimalist.do"))
+assert(allof(strlower(totest.source[.,2]), pwd + "bench\minimalist.do"))
 assert(totest.source[.,3]==(strofreal((1..4, 6..61)))')
 assert(totest.settings.bottombar.arrow == "label")
 end
@@ -94,15 +94,72 @@ totest.read_file()
 assert(rows(totest.source)==56)
 
 true = 
-J(8,1,"C:\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do") \ 
-J(15,1, "C:\Mijn documenten\projecten\stata\smclpres\bench\incl_child.do") \ 
-J(12,1, "C:\Mijn documenten\projecten\stata\smclpres\bench\incl_grandchild1.do") \ 
-"C:\Mijn documenten\projecten\stata\smclpres\bench\incl_child.do" \ 
-J(9,1, "C:\Mijn documenten\projecten\stata\smclpres\bench\incl_grandchild2.do") \ 
-J(11,1, "C:\Mijn documenten\projecten\stata\smclpres\bench\incl_child.do")
-assert(totest.source[.,2] == true)
+J(8,1,pwd + "bench\incl_main.do") \ 
+J(15,1,pwd + "bench\incl_child.do") \ 
+J(12,1, pwd + "bench\incl_grandchild1.do") \ 
+pwd + "bench\incl_child.do" \ 
+J(9,1, pwd + "bench\incl_grandchild2.do") \ 
+J(11,1, pwd +  "bench\incl_child.do")
+assert(strlower(totest.source[.,2]) == true)
 
 true = (1..8, 1..15, 1..12, 17, 1..9, 19..29)'
 true = strofreal(true)
 assert(totest.source[.,3]==true)
+
+end
+
+// ---------------------------------------------------------------------- sp_fopen & sp_fclose
+local using "bench/incl_main.do"
+local replace ""
+mata:
+totest = smclpres()
+totest.parsedirs()
+fh1 = totest.sp_fopen("bench\incl_main.do", "r")
+unlink("bench/test/foo.do")
+fh2 = totest.sp_fopen("bench\test\foo.do", "w")
+
+notfound = totest.files.notfound()
+for (val=totest.files.firstval(); val!=notfound; val=totest.files.nextval()) {
+    assert(val == "open") 
+}
+
+fput(fh2, "bla")
+fput(fh2, "blup")
+totest.sp_fclose(fh2)
+fget(fh1)
+totest.sp_fclose(fh1)
+
+for (val=totest.files.firstval(); val!=notfound; val=totest.files.nextval()) {
+    assert(val == "closed") 
+}
+
+end
+// no replace 
+rcof `"mata: fh2 = totest.sp_fopen("bench\test\foo.do", "w")"' == 602
+
+// replace
+local using "bench/incl_main.do"
+local replace "replace"
+mata:
+totest = smclpres()
+totest.parsedirs()
+fh2 = totest.sp_fopen("bench\test\foo.do", "w")
+totest.sp_fclose(fh2)
+end
+
+// sp_fcloseall
+local using "bench/incl_main.do"
+local replace "replace"
+mata:
+totest = smclpres()
+totest.parsedirs()
+fh1 = totest.sp_fopen("bench\incl_main.do", "r")
+fh2 = totest.sp_fopen("bench\test\foo.do", "w")
+for (val=totest.files.firstval(); val!=notfound; val=totest.files.nextval()) {
+    assert(val == "open") 
+}
+totest.sp_fcloseall()
+for (val=totest.files.firstval(); val!=notfound; val=totest.files.nextval()) {
+    assert(val == "closed") 
+}
 end

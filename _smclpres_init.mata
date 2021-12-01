@@ -2,7 +2,7 @@ mata:
 
 void smclpres:: new() {
     defaults()
-
+	files.reinit("real")
     source = J(0,3,"")
 }
 
