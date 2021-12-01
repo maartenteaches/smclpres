@@ -600,9 +600,10 @@ void smclpres::parse_args(string scalar cmd, string scalar line, string scalar f
     }
 }
 
-real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
+real scalar smclpres::_read_file(string scalar filename, real scalar lnr, real rowvector current_version) {
     transmorphic scalar t
     string matrix EOF, toadd
+    real matrix toadd_v
     real scalar fh, i, newlines
     string scalar line, part, cmd
     
@@ -610,6 +611,10 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
     newlines = count_lines(filename)
     toadd = J(newlines,3,"")
     source = source \ toadd
+    toadd_v = J(newlines,3,.)
+    source_version = source_version \toadd_v
+    
+
     fh = sp_fopen(filename, "r")
     i = 0
     
@@ -620,20 +625,29 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
         part = tokenget(t)
         if (part == "//include") {
             source = source[|1,1 \ rows(source)-1,3|]
+            source_version = source_version[|1,1 \ rows(source_version)-1,3|]
             part = tokenget(t)
             if (!pathisabs(part)) part = settings.other.sourcedir + part
-            lnr = _read_file(part, lnr)
+            lnr = _read_file(part, lnr, current_version)
         }
         else if (part == "//layout") {
             source = source[|1,1 \ rows(source)-1,3|]
+            source_version = source_version[|1,1 \ rows(source_version)-1,3|]
             cmd = tokenget(t)
             line = tokenrest(t)
             parse_args(cmd, line, filename, i) 
         }
+        else if (part == "//version") {
+            source = source[|1,1 \ rows(source)-1,3|]
+            source_version = source_version[|1,1 \ rows(source_version)-1,3|]
+            part = tokenget(t)
+            current_version = parse_version(part)
+        }
         else {
-            source[lnr  ,1] = line
-            source[lnr  ,2] = filename
-            source[lnr++,3] = strofreal(i)
+            source[lnr,1] = line
+            source[lnr,2] = filename
+            source[lnr,3] = strofreal(i)
+            source_version[lnr++,.] = current_version
         }
     }
     sp_fclose(fh)
@@ -642,7 +656,8 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr) {
 
 void smclpres::read_file() {
     real scalar i
-    i = _read_file(settings.other.source,1)
+
+    i = _read_file(settings.other.source,1, smclpres_version)
 }
 
 real scalar smclpres::count_lines(string scalar filename) {
@@ -719,9 +734,6 @@ real rowvector smclpres::parse_version(string scalar valstr)
 		if (anyof(nr,part)) {
 			res[j] = res[j]+part
 		}
-		else if (part == " ") {
-			// do nothing; i.e. ignore spaces
-		}
 		else if (part == "." ) {
 			if (i!=l) {
 				j=j+1
@@ -736,7 +748,6 @@ real rowvector smclpres::parse_version(string scalar valstr)
 		}
 	}
 	v = strtoreal(res)
-
 	return(v)
 }
 

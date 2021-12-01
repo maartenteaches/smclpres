@@ -1,6 +1,7 @@
-*! version 3.3.1 MLB 05Aug2019
+*! version 4.0.0 MLB 05Aug2019
 *  rewrite as a Mata class
 *  allow source files to include other source files
+*  add version numbers, and with that backwards compatability (from 4.0.0 on)
 *  fix to allow for very long presentations  
 
 program define smclpres, rclass
@@ -9,7 +10,7 @@ program define smclpres, rclass
 	
 	local olddir = c(pwd)
 	
-	local pres sp__presentation_struct
+	local pres sp__presentation_class_instance
 	mata: `pres' = smclpres()	
 	
 	capture noisily smclpres_main `using', `options' pres(`pres')

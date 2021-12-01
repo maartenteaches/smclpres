@@ -4,9 +4,10 @@ mata:
 mata set matastrict on
 class smclpres {
     string                 matrix    source
-    real                   matrix    vers
+    real                   matrix    source_version
+    real                   rowvector smclpres_version
     class AssociativeArray scalar    files
-
+    
 // smclpres_main.mata
     void                             run()
 
