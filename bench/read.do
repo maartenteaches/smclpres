@@ -164,6 +164,22 @@ for (val=totest.files.firstval(); val!=notfound; val=totest.files.nextval()) {
 }
 end
 
+// parse_version
+
+local using "bench/incl_main.do"
+local replace "replace"
+mata:
+totest = smclpres()
+assert(totest.parse_version("4.0.0") == (4,0,0))
+assert(totest.parse_version("3.14.0") == (3,14,0))
+assert(totest.parse_version("2.3.35") == (2,3,35))
+assert(totest.parse_version("4.0.") == (4,0,0))
+assert(totest.parse_version("4.0") == (4,0,0))
+assert(totest.parse_version("4.") == (4,0,0))
+assert(totest.parse_version("4") == (4,0,0))
+
+end
+
 // version
 
 local using "bench/incl_main.do"
