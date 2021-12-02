@@ -102,7 +102,7 @@ J(9,1, pwd + "bench\incl_grandchild2.do") \
 J(11,1, pwd +  "bench\incl_child.do")
 assert(strlower(totest.source[.,2]) == true)
 
-true = (1..8, 1..15, 1..12, 17, 1..9, 19..29)'
+true = (2..9, 1, 3..16, 2..13, 18, 1..9, 20..30)'
 true = strofreal(true)
 assert(totest.source[.,3]==true)
 
@@ -162,4 +162,21 @@ totest.sp_fcloseall()
 for (val=totest.files.firstval(); val!=notfound; val=totest.files.nextval()) {
     assert(val == "closed") 
 }
+end
+
+// version
+
+local using "bench/incl_main.do"
+local replace "replace"
+
+mata:
+totest = smclpres()
+totest.parsedirs()
+totest.read_file()
+assert(totest.smclpres_version == (4,0,0))
+true = J(9,1,(4,0,0))   \  // incl_main
+       J(14,1,(3,1,0))  \  // incl_child
+       J(12,1, (2,0,0)) \  // incl_grandchild1
+       J(21,1,(3,1,0))     // incl_grandchild2 and incl_child
+assert(totest.source_version == true)
 end

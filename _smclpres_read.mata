@@ -606,6 +606,7 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr, real r
     real matrix toadd_v
     real scalar fh, i, newlines
     string scalar line, part, cmd
+    real rowvector old_version
     
     EOF = J(0,0,"")
     newlines = count_lines(filename)
@@ -628,7 +629,9 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr, real r
             source_version = source_version[|1,1 \ rows(source_version)-1,3|]
             part = tokenget(t)
             if (!pathisabs(part)) part = settings.other.sourcedir + part
+            old_version = current_version
             lnr = _read_file(part, lnr, current_version)
+            current_version = old_version
         }
         else if (part == "//layout") {
             source = source[|1,1 \ rows(source)-1,3|]
