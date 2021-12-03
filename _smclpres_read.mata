@@ -644,7 +644,7 @@ real scalar smclpres::_read_file(string scalar filename, real scalar lnr, real r
             source = source[|1,1 \ rows(source)-1,3|]
             source_version = source_version[|1,1 \ rows(source_version)-1,3|]
             part = tokenget(t)
-            current_version = parse_version(part)
+            current_version = parse_version(part, filename, i)
         }
         else {
             source[lnr,1] = line
@@ -720,13 +720,14 @@ void smclpres::cd(string scalar path) {
     }
 }
 
-real rowvector smclpres::parse_version(string scalar valstr)
+real rowvector smclpres::parse_version(string scalar valstr, string scalar filename, real scalar lnr)
 {
 	real scalar l, i, j
 	real rowvector v
-	string scalar part, errmsg
+	string scalar part, errmsg, where
 	string rowvector res, nr
 
+    where = "{p}{err}This error occured on line " + strofreal(lnr) + " of " + filename + "{p_end}"
 	res = "", J(1,2,"0")
 	l = ustrlen(valstr)
 	j=1
@@ -741,17 +742,87 @@ real rowvector smclpres::parse_version(string scalar valstr)
 			if (i!=l) {
 				j=j+1
 				if (j>3) {
-					_error("format for version number is #.#.#")
+                    printf("{p}{err}format for version number is #.#.#{p_end}")
+                    printf(where)
+					exit(198)
 				}
 				res[j]=""
 			}
 		}
 		else {
-			_error("format for version number is #.#.#")
+			printf("{p}{err}format for version number is #.#.#{p_end}")
+            printf(where)
+            exit(198)
 		}
 	}
 	v = strtoreal(res)
+    if (pres_lt_val(1, v, "max")) {
+        errmsg = invtokens(strofreal(smclpres_version), ".")
+        errmsg = "{p}{err}this is version " + errmsg + " of smclpres{p_end}"    
+        printf(errmsg)
+        printf("{p}{err}a version specified in //version cannot exceed that{p_end}")
+        printf(where)
+        exit(198)
+    }
 	return(v)
+}
+
+real scalar smclpres::pres_lt_val(real scalar sourcerow, real rowvector tocheck, | string scalar max) 
+{
+    real scalar i, res
+	real rowvector pres
+	
+    if (args()==2) {
+		pres = source_version[sourcerow,.]
+	}
+	else {
+		pres = smclpres_version
+	}
+
+	res = 0
+	for (i=1; i<=3 ; i++) {
+		if (pres[i] > tocheck[i]) {
+			break
+		}
+	    if (pres[i] < tocheck[i]) {
+		    res = 1
+			break
+		}
+	}
+	return(res)
+}
+
+real scalar smclpres::pres_leq_val(real scalar sourcerow, real rowvector tocheck) 
+{
+    real scalar i, res
+	
+	if (tocheck==source_version[sourcerow,.]) return(1)
+	return(pres_lt_val(sourcerow, tocheck))
+}
+
+real scalar smclpres::pres_geq_val(real scalar sourcerow, real rowvector tocheck) 
+{
+    real scalar i, res
+	
+	if (tocheck==source_version[sourcerow,.]) return(1)
+	return(pres_gt_val(sourcerow, tocheck))
+}
+
+real scalar smclpres::pres_gt_val(real scalar sourcerow, real rowvector tocheck) 
+{
+    real scalar i, res
+	
+	res = 0
+	for (i=1; i<=3 ; i++) {
+		if (source_version[sourcerow, i] > tocheck[i]) {
+			res = 1
+			break
+		}
+	    if (source_version[sourcerow, i] < tocheck[i]) {
+			break
+		}
+	}
+	return(res)
 }
 
 real scalar smclpres::sp_fopen ( string scalar file, string scalar mode, | real scalar sourcerow) {

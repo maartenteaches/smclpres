@@ -171,13 +171,13 @@ local using "bench/incl_main.do"
 local replace "replace"
 mata:
 totest = smclpres()
-assert(totest.parse_version("4.0.0") == (4,0,0))
-assert(totest.parse_version("3.14.0") == (3,14,0))
-assert(totest.parse_version("2.3.35") == (2,3,35))
-assert(totest.parse_version("4.0.") == (4,0,0))
-assert(totest.parse_version("4.0") == (4,0,0))
-assert(totest.parse_version("4.") == (4,0,0))
-assert(totest.parse_version("4") == (4,0,0))
+assert(totest.parse_version("4.0.0", "filename", 1) == (4,0,0))
+assert(totest.parse_version("3.14.0", "filename", 1) == (3,14,0))
+assert(totest.parse_version("2.3.35", "filename", 1) == (2,3,35))
+assert(totest.parse_version("4.0.", "filename", 1) == (4,0,0))
+assert(totest.parse_version("4.0", "filename", 1) == (4,0,0))
+assert(totest.parse_version("4.", "filename", 1) == (4,0,0))
+assert(totest.parse_version("4", "filename", 1) == (4,0,0))
 
 end
 
@@ -196,4 +196,18 @@ true = J(9,1,(4,0,0))   \  // incl_main
        J(12,1, (2,0,0)) \  // incl_grandchild1
        J(21,1,(3,1,0))     // incl_grandchild2 and incl_child
 assert(totest.source_version == true)
+
+assert(totest.pres_lt_val(1, (2,0,1))==0)
+assert(totest.pres_lt_val(1, (4,0,0))==0) 
+assert(totest.pres_lt_val(24, (2,0,1))==1)
+assert(totest.pres_leq_val(1, (2,0,1))==0)
+assert(totest.pres_leq_val(1, (4,0,0))==1) 
+assert(totest.pres_leq_val(24, (2,0,1))==1)
+assert(totest.pres_gt_val(1, (2,0,1))==1)
+assert(totest.pres_gt_val(1, (4,0,0))==0) 
+assert(totest.pres_gt_val(24, (2,0,1))==0)
+assert(totest.pres_geq_val(1, (2,0,1))==1)
+assert(totest.pres_geq_val(1, (4,0,0))==1) 
+assert(totest.pres_geq_val(24, (2,0,1))==0)
+
 end
