@@ -7,6 +7,7 @@ class smclpres {
     real                   matrix    source_version
     real                   rowvector smclpres_version
     class AssociativeArray scalar    files
+    struct strslide        rowvector slide
     
 // smclpres_main.mata
     void                             run()
@@ -66,6 +67,9 @@ class smclpres {
     void                             p_tab()
     void                             p_bib_file()
     void                             p_bib_opt()
+
+    // _smclpres_toc.mata
+    void                             count_slides()
 }
 
 void smclpres::run()
@@ -79,3 +83,4 @@ end
 do _smclpres_definitions.mata
 do _smclpres_init.mata
 do _smclpres_read.mata
+do _smclpres_toc.mata
