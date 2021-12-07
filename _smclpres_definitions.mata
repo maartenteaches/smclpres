@@ -106,11 +106,6 @@ struct strslide {
 	real                scalar    prev
 	real                scalar    forw         
 }
-struct strpresentation {
-    struct strslide     colvector slide
-	struct strslide     scalar    tocslide
-	struct strslide     scalar    titleslide 
-}
 struct strbib {
 	class AssociativeArray scalar    bibdb
 	class AssociativeArray scalar    style
