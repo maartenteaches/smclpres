@@ -835,11 +835,12 @@ real scalar smclpres::sp_fopen ( string scalar file, string scalar mode, | real 
             if (args() == 3) {
                 errmsg = "{p}{err}an error occured when replacing file " + file + "{p_end}"
                 printf(errmsg)
-                errmsg = "{p}{err}This error occured on line " + source[sourcerow,3] + " of  file " + source[sourcerow,2] +"{p_end}"
-                printf(errmsg)
+                where_err(sourcerow)
                 exit(abs(errcode))
             }
             else {
+                errmsg = "{p}{err}an error occured when replacing file " + file + "{p_end}"
+                printf(errmsg)
                 exit(error(abs(errcode)))
             }
         }
@@ -849,11 +850,12 @@ real scalar smclpres::sp_fopen ( string scalar file, string scalar mode, | real 
         if (args() == 3) {
             errmsg = "{p}{err}An error occured when opening file " + file +"{p_end}"
             printf(errmsg)
-            errmsg = "{p}{err}This error occured on line " + source[sourcerow,3] + " of  file " + source[sourcerow,2] +"{p_end}"
-            printf(errmsg)
+            where_err(sourcerow)
             exit(abs(fh))
         }
         else {
+            errmsg = "{p}{err}An error occured when opening file " + file +"{p_end}"
+            printf(errmsg)
             exit(error(abs(fh)))
         }
     }
@@ -870,8 +872,7 @@ void smclpres::sp_fclose ( real scalar fh,| real scalar sourcerow) {
         if (args() == 2) {
             errmsg = "{p}{err}An error occured when closing a file {p_end}"
             printf(errmsg)
-            errmsg = "{p}{err}This error occured on line " + source[sourcerow,3] + " of  file " + source[sourcerow,2] +"{p_end}"
-            printf(errmsg)
+            where_err(sourcerow)
             exit(abs(errcode))
         }
         else {

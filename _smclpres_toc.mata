@@ -141,4 +141,34 @@ void smclpres::find_structure() {
 	titleslide.forw = settings.other.regslides[1]
 }
 
+void write_toc() {
+	real scalar dest
+	string scalar destfile
+	
+	if (settings.other.titlepage) {
+		destfile = pathjoin(settings.other.destdir , "/index.smcl")
+	}
+	else {
+		destfile = pathjoin(settings.other.destdir,  settings.other.stub + ".smcl")	
+	}
+	dest = sp_fopen(destfile,"w")
+
+	write_toc_top(dest)
+	if (settings.tocfiles.on == "on") {
+		write_toc_subtitle("slides", dest)	
+	}
+	write_toc_slides(dest)
+	if (settings.tocfiles.on=="on") {
+		write_toc_subtitle("files", dest)
+		write_toc_files(dest)
+	}
+	if (settings.bottombar.toc == "toc") {
+		write_bottombar(dest,0,"toc")
+	}
+	if (settings.other.titlepage == 0) {
+		write_pres_settings(pres,dest)
+	}
+	sp_fclose(dest)
+}
+
 end
