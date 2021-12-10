@@ -259,7 +259,7 @@ void smclpres::write_toc_subtitle(string scalar which, real scalar dest) {
 	}	
 }
 
-void sp_write_toc_slides(real scalar dest) {
+void smclpres::write_toc_slides(real scalar dest) {
 	real   scalar snr
 	string scalar section, subsection
 	
@@ -278,6 +278,33 @@ void sp_write_toc_slides(real scalar dest) {
 			write_toc_subsection(snr, dest)
 		}
 		write_toc_title(snr, dest)
+	}
+}
+
+void smclpres::write_toc_section(real scalar snr, real scalar dest) {
+	string scalar section
+
+	fput(dest, " ")
+	
+	if (settings.toc.secthline == "hline") {
+		fput(dest, "{hline}")
+	}
+	
+	section = slide[snr].section
+	if (settings.toc.secbf=="bold") {
+		section = "{bf:"+section+"}"
+	}
+	if (settings.toc.secit=="italic") {
+		section = "{it:"+section+"}"
+	}
+	if (settings.toc.link == "section") {
+		section = "{view slide" + strofreal(snr) + ".smcl : " + section + "}"
+	}
+	section = "{* tocline }" + settings.other.l1 + section + "{p_end}"
+	fput(dest, section)
+	
+	if (settings.toc.secbhline == "hline") {
+		fput(dest, "{hline}")
 	}
 }
 
