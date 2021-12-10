@@ -226,5 +226,37 @@ void smclpres::write_toc_top(real scalar dest) {
 	}
 }
 
+void smclpres::write_toc_subtitle(string scalar which, real scalar dest) {
+	string scalar temp
+	
+	fput(dest,"")
+	fput(dest,"")
+	fput(dest,"")
+	if (settings.toc.subtitlethline == "hline"){
+		fput(dest, "{hline}")
+	}
+	if (which == "slides") {
+		temp = settings.toc.subtitle
+	}
+	if (which == "files" ) {
+		temp = settings.tocfiles.name
+	}
+	if (settings.toc.subtitlebf == "bold") {
+		temp = "{bf:" + temp + "}"
+	}
+	if (settings.toc.subtitleit == "italic") {
+		temp = "{it:" + temp + "}"
+	}
+	if (settings.toc.subtitlepos == "center") {
+		temp = "{center:" + temp + "}"
+	}
+	else {
+		temp = "{p}" + temp + "{p_end}"
+	}
+	fput(dest, temp)
+	if (settings.toc.subtitlebhline == "hline"){
+		fput(dest, "{hline}")
+	}	
+}
 
 end

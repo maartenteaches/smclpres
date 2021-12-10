@@ -76,6 +76,7 @@ class smclpres {
     void                             find_structure()
     void                             write_toc()
     void                             write_toc_top()
+    void                             write_toc_subtitle()
 
     //_smclpres_parts.mata
     void                             write_title()
