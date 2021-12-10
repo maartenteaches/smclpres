@@ -661,6 +661,7 @@ void smclpres::read_file() {
     real scalar i
 
     i = _read_file(settings.other.source,1, smclpres_version)
+    rows_source = rows(source)
 }
 
 real scalar smclpres::count_lines(string scalar filename) {

@@ -5,7 +5,7 @@ void smclpres::count_slides() {
 
 	snr   = 0
 	regsl = 0
-	for(i=1; i<=rows(source); i++) {
+	for(i=1; i<=rows_source; i++) {
 		line = tokens(source[i,1])
 		if (cols(line) > 0) {
 			if (line[1]=="//endslide") {
@@ -32,7 +32,7 @@ void smclpres::find_structure() {
 	real   scalar snr, regsl, titleopen, rownr
 	string scalar section, subsection, err 
 	string rowvector left
-	transmorphic t
+	transmorphic scalar t
 
 	count_slides()
 	
@@ -40,7 +40,7 @@ void smclpres::find_structure() {
 	snr = 1
 	regsl= 1
 	titleopen = 0
-	for(rownr=1; rownr <=rows(source); rownr++) {
+	for(rownr=1; rownr <=rows_source; rownr++) {
 		tokenset(t, source[rownr,1])
 		if ((left=tokenget(t)) != "") {
 			if (left == "//slide") {
@@ -141,7 +141,7 @@ void smclpres::find_structure() {
 	titleslide.forw = settings.other.regslides[1]
 }
 
-void write_toc() {
+void smclpres::write_toc() {
 	real scalar dest
 	string scalar destfile
 	
@@ -170,5 +170,61 @@ void write_toc() {
 	}
 	sp_fclose(dest)
 }
+
+void smclpres::write_toc_top(real scalar dest) {
+	real   scalar    titleopen, textopen, rownr
+	string scalar left
+	transmorphic scalar t
+
+	t = tokeninit(" ")	
+	titleopen = 0
+	textopen  = 0
+	fput(dest, "{smcl}")
+	for(rownr = 1; rownr <= rows_source; rownr++) {
+		tokenset(t, source[rownr,1])
+		if ((left=tokenget(t))!= "") {
+			if (left == "//toctitle") {
+				write_title(ustrltrim(tokenrest(t)), dest)
+			}
+			else if (left == "/*toctitle") {
+				titleopen = 1
+				if (settings.title.thline == "hline") {
+					fput(dest, "{hline}")
+				}
+			}
+			else if (left == "toctitle*/") {
+				titleopen = 0
+				if (settings.title.bhline == "hline") {
+					fput(dest, "{hline}")
+				}
+			}
+			else if (titleopen) {
+				write_title(ustrltrim(tokenrest(t)),dest)
+			}
+			else if (left == "/*toctxt") {
+				textopen = 1
+			}
+			else if (left == "toctxt*/") {
+				textopen = 0
+			}
+			else if (textopen) {
+				fput(dest, source[rownr,1])
+			}
+		}
+		else {
+			if ( textopen ) {
+				fput(dest, " ")
+			}
+			if (titleopen) {
+				fput(dest, " ")
+			}
+		}
+    }
+	if (textopen | titleopen) {
+		printf("{p}{err}a /*toctext or /*toctitle was opened but never closed{p_end}")
+		exit(198)
+	}
+}
+
 
 end

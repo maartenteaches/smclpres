@@ -5,6 +5,7 @@ mata set matastrict on
 class smclpres {
     string                 matrix    source
     real                   matrix    source_version
+    real                   scalar    rows_source
     real                   rowvector smclpres_version
     class AssociativeArray scalar    files
     
@@ -73,6 +74,11 @@ class smclpres {
     void                             count_slides()
     void                             where_err()
     void                             find_structure()
+    void                             write_toc()
+    void                             write_toc_top()
+
+    //_smclpres_parts.mata
+    void                             write_title()
 }
 
 void smclpres::run()
@@ -88,3 +94,4 @@ do _smclpres_definitions.mata
 do _smclpres_init.mata
 do _smclpres_read.mata
 do _smclpres_toc.mata
+do _smclpres_parts.mata
