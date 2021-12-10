@@ -259,4 +259,26 @@ void smclpres::write_toc_subtitle(string scalar which, real scalar dest) {
 	}	
 }
 
+void sp_write_toc_slides(real scalar dest) {
+	real   scalar snr
+	string scalar section, subsection
+	
+	section    = ""
+	subsection = ""
+	
+	for (snr=1; snr <= cols(pres.slide); snr++ ) {
+		if (slide[snr].section != section & slide[snr].type=="regular") {
+			section = slide[snr].section
+			write_toc_section(snr, dest)
+			
+		}
+		if (slide[snr].subsection != subsection & slide[snr].type=="regular" & 
+		    slide[snr].subsection != "") {
+			subsection = slide[snr].subsection
+			write_toc_subsection(snr, dest)
+		}
+		write_toc_title(snr, dest)
+	}
+}
+
 end

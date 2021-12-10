@@ -78,6 +78,7 @@ class smclpres {
     void                             write_toc()
     void                             write_toc_top()
     void                             write_toc_subtitle()
+    void                             write_toc_slides()
 
     //_smclpres_parts.mata
     void                             write_title()
