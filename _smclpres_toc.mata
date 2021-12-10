@@ -327,4 +327,76 @@ void smclpres::write_toc_subsection(real scalar snr, real scalar dest) {
 	}
 }
 
+void smclpres::write_toc_title(real scalar snr, real scalar dest) {
+	string scalar title
+	
+	title = slide[snr].title
+	if (slide[snr].type == "bibliography") fput(dest, " ")
+	
+	if ( (settings.toc.title == "subsection" |
+	     (slide[snr].type=="ancillary" & settings.toc.title == "notitle")) &
+		 slide[snr].type != "digression" ) {
+		if (settings.toc.subsecbf ==  "bold") {
+			title = "{bf:" + title + "}"
+		}
+		if (settings.toc.subsecit == "italic") {
+			title = "{it:" + title + "}"
+		}
+		if (settings.toc.link == "subsection" | slide[snr].type == "ancillary" | 
+		    slide[snr].type == "bibliography") {
+			title = "{view slide" + strofreal(snr) + ".smcl : " + title + "}"
+		}
+		if (slide[snr].type=="ancillary") {
+				title = title + " (" + settings.toc.anc +")"
+		}
+		title = "{* tocline }"+ settings.other.l2 + title + "{p_end}"
+		fput(dest,title)
+	}
+	if (settings.toc.title == "subsubsection" & slide[snr].type != "digression") {
+		if (settings.toc.subsubsecbf == "bold") {
+			title = "{bf:" + title + "}"
+		}
+		if (settings.toc.subsubsecit == "italic") {
+			title = "{it:" + title + "}"
+		}
+		if (settings.toc.link == "subsubsection" | slide[snr].type == "ancillary" | 
+		    slide[snr].type == "bibliography") {
+			title = "{view slide" + strofreal(snr) + ".smcl : " + title + "}"
+		}
+		if (slide[snr].type == "ancillary") {
+			title = title + " (" + settings.toc.anc +")"
+		}
+		title = "{* tocline }"+ settings.other.l3 + title + "{p_end}"
+		fput(dest, title)
+	}
+	if (settings.toc.title == "subsection" & slide[snr].type=="digression" & 
+	    settings.toc.nodigr != "nodigr") {
+		if (settings.toc.subsubsecbf == "bold") {
+			title = "{bf:" + title + "}"
+		}
+		if (settings.toc.subsubsecit == "italic") {
+			title = "{it:" + title + "}"
+		}
+		if (settings.toc.link == "subsection") {
+			title = "{view slide" + strofreal(snr) + ".smcl : " + title + "}"
+		}
+		title = "{* tocline }"+ settings.other.l3 + title + "{p_end}"
+		fput(dest,title)
+	}
+	if (settings.toc.title == "subsubsection" & slide[snr].type=="digression" & 
+	    settings.toc.nodigr != "nodigr") {
+		if (settings.toc.subsubsubsecbf == "bold") {
+			title = "{bf:" + title + "}"
+		}
+		if (settings.toc.subsubsubsecit == "italic") {
+			title = "{it:" + title + "}"
+		}
+		if (settings.toc.link == "subsubsection") {
+			title = "{view slide" + strofreal(snr) + ".smcl : " + title + "}"
+		}
+		title = "{* tocline }"+ settings.other.l4 + title + "{p_end}"
+		fput(dest,title)
+	}
+}
+
 end
