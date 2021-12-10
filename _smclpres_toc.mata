@@ -308,4 +308,23 @@ void smclpres::write_toc_section(real scalar snr, real scalar dest) {
 	}
 }
 
+void smclpres::write_toc_subsection(real scalar snr, real scalar dest) {
+	string scalar subsection
+	
+	if (settings.toc.title != "subsection") {
+		subsection = slide[snr].subsection
+		if (settings.toc.subsecbf=="bold") {
+			subsection = "{bf:" + subsection + "}"
+		}
+		if (settings.toc.subsecit=="italic") {
+			subsection = "{it:" + subsection + "}"
+		}
+		if (settings.toc.link == "subsection") {
+			subsection = "{view slide" + strofreal(snr) + ".smcl : " + subsection + "}"
+		}
+		subsection = "{* tocline }" + settings.other.l2 + subsection + "{p_end}"
+		fput(dest, subsection)
+	}
+}
+
 end
