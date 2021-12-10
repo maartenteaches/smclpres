@@ -69,6 +69,7 @@ class smclpres {
     void                             p_tab()
     void                             p_bib_file()
     void                             p_bib_opt()
+    void                             toc_indent_settings()
 
     // _smclpres_toc.mata
     void                             count_slides()

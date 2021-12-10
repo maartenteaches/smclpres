@@ -662,8 +662,33 @@ void smclpres::read_file() {
 
     i = _read_file(settings.other.source,1, smclpres_version)
     rows_source = rows(source)
+    toc_indent_settings()
 }
 
+void smclpres::toc_indent_settings() {
+    if (settings.toc.itemize   == "itemize" &
+	    settings.toc.secthline == "nohline" &
+		settings.toc.secbhline == "nohline" ) {
+		settings.other.l1 = "{p  4  6 2}o "
+		settings.other.l2 = "{p  8 10 2}- "
+		settings.other.l3 = "{p 12 14 2}. "
+		settings.other.l4 = "{p 16 16 2}"
+	}
+	else if (settings.toc.itemize   == "itemize" & (
+	         settings.toc.secthline == "hline" |
+		     settings.toc.secbhline == "hline" ) ) {
+		settings.other.l1 = "{p  4  4 2}"
+		settings.other.l2 = "{p  8 10 2}o "
+		settings.other.l3 = "{p 12 14 2}- "
+		settings.other.l4 = "{p 16 18 2}. "				 
+	}
+	else {
+		settings.other.l1 = "{p  4  4 2}"
+		settings.other.l2 = "{p  8  8 2}"
+		settings.other.l3 = "{p 12 12 2}"
+		settings.other.l4 = "{p 16 16 2}"
+	}
+}
 real scalar smclpres::count_lines(string scalar filename) {
     string matrix EOF
     real scalar fh, i
