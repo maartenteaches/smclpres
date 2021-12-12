@@ -93,6 +93,7 @@ void smclpres::run()
     parsedirs()
     read_file()
     find_structure()
+    write_toc()
 }
 
 end
