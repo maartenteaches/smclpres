@@ -82,6 +82,7 @@ class smclpres {
     void                             write_toc_section()
     void                             write_toc_subsection()
     void                             write_toc_title()
+    void                             write_toc_files()
 
     //_smclpres_parts.mata
     void                             write_title()

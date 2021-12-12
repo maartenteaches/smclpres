@@ -398,5 +398,100 @@ void smclpres::write_toc_title(real scalar snr, real scalar dest) {
 		fput(dest,title)
 	}
 }
+void write_toc_files(real scalar dest) {
+	real                   scalar    snr, exnr, i, j, rownr
+	string                 scalar    lab, left, filename, slidename, row, mark, err, section
+	class AssociativeArray scalar    filetoc
+	transmorphic           scalar    t
+	
+	for(i=1; i <= rows(settings.tocfiles.markname); i++) {
+			filetoc.put(settings.tocfiles.markname[i,1], J(0,1,""))
+	}
+	
+	fput(dest, "{p2colset " + settings.tocfiles.p2 + "}{...}")
+	
+	snr    = 0
+	exnr   = 0
+	
+	t = tokeninit(" ")	
+	for(rownr = 1; rownr <= rows_source; rownr++) {
+		tokenset(t, source[rownr,1])
+		if ((left=tokenget(t))!= "") {
+			if (left == "//slide" | left == "//anc" | left == "digr" ) {
+				snr  = snr + 1
+				exnr = 1
+			}
+			else if (left=="//ex") {
+				if ( (right = ustrltrim(tokenrest(t))) != "") {
+					lab = right
+				}
+				else {
+					lab = settings.tocfiles.exname + " " + strofreal(exnr)
+				}
+				filename = "slide" + strofreal(snr) + "ex" + strofreal(exnr) + ".do"
+				slidename = "slide" + strofreal(snr) + ".smcl"
+				row = sp_buildfilerow(pres,filename,lab,slidename)
+				filetoc.put("ex", (filetoc.get("ex") \ row))
+				exnr = exnr + 1
+			}
+			else if (left=="//tocfile") {
+				mark = tokenget(t)
+				filename = tokenget(t)
+				lab = ustrltrim(tokenrest(t))
+				if (mark == "" | filename == "" | lab == "") {
+					err = "{p}{err}//filetoc command contains an error{p_end}"
+					printf(err)
+					where_err(rownr)
+					exit(198)
+				}
+				if (filetoc.exists(mark)) {
+					slidename = "slide" + strofreal(snr) + ".smcl"
+					row = sp_buildfilerow(filename,lab,slidename)
+					filetoc.put(mark, (filetoc.get(mark) \ row))
+				}
+				else {
+					err = "{p}{err}mark {res}" + mark + 
+					      " {err }in the //filetoc command is not defined{p_end}"
+					printf(err)
+					where_err(rownr)
+					exit(198)
+				}
+				
+			}
+		}
+	}
+	
+	for (i = 1 ; i <= rows(settings.tocfiles.markname); i++) {
+		mark = settings.tocfiles.markname[i,1]
+		if (rows(filetoc.get(mark)) > 0 ) {
+			fput(dest, " ")
+			
+			if (settings.toc.secthline == "hline") {
+				fput(dest, "{hline}")
+			}
+			
+			section = settings.tocfiles.markname[i,2]
+			if (settings.toc.secbf=="bold") {
+				section = "{bf:"+section+"}"
+			}
+			if (settings.toc.secit=="italic") {
+				section = "{it:"+section+"}"
+			}
+			if (settings.toc.link == "section") {
+				section = "{view slide" + strofreal(snr) + ".smcl : " + section + "}"
+			}
+			section = settings.other.l1 + section + "{p_end}"
+			fput(dest, section)
+			
+			if (settings.toc.secbhline == "hline") {
+				fput(dest, "{hline}")
+			}
+			for(j=1; j<=rows(filetoc.get(mark)); j++) {
+				fput(dest, filetoc.get(mark)[j])
+			}
+		}	
+	}
+}
+
 
 end
