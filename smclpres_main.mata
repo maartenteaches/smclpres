@@ -90,6 +90,10 @@ class smclpres {
     void                             write_title()
     void                             write_topbar()
     void                             write_bottombar()
+
+    //_smclpres_slides.mata      
+    real                     scalar  start_slide()
+    real                     scalar  start_ex()
 }
 
 void smclpres::run()
@@ -107,3 +111,4 @@ do _smclpres_init.mata
 do _smclpres_read.mata
 do _smclpres_toc.mata
 do _smclpres_parts.mata
+do _smclpres_slides.mata
