@@ -1,5 +1,5 @@
 cscript
-local drive d
+local drive c
 cd "`drive':\mijn documenten\projecten\stata\smclpres"
 do smclpres_main.mata
 
