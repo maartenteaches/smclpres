@@ -4,13 +4,13 @@ void smclpres::write_title( string scalar line, real scalar dest) {
 	if (settings.title.thline == "hline") {
 		fput(dest, "{hline}")
 	}
-	if (pres.settings.title.bold == "bold") {
+	if (settings.title.bold == "bold") {
 		line = "{bf:" + line + "}"
 	}
-	if (pres.settings.title.italic == "italic" ) {
+	if (settings.title.italic == "italic" ) {
 		line = "{it:" + line + "}"
 	}
-	if (pres.settings.title.pos == "center") {
+	if (settings.title.pos == "center") {
 		line = "{center:" + line + "}"
 	}
 	else {

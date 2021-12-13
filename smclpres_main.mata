@@ -1,5 +1,5 @@
 clear all
-cd "d:\mijn documenten\projecten\stata\smclpres"
+cd "c:\mijn documenten\projecten\stata\smclpres"
 mata:
 mata set matastrict on
 class smclpres {
@@ -83,7 +83,8 @@ class smclpres {
     void                             write_toc_subsection()
     void                             write_toc_title()
     void                             write_toc_files()
-    string                   scalar  buildfilerow()               
+    string                   scalar  buildfilerow() 
+    void                             write_pres_settings()              
 
     //_smclpres_parts.mata
     void                             write_title()

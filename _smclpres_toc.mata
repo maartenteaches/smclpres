@@ -166,7 +166,7 @@ void smclpres::write_toc() {
 		write_bottombar(dest,0,"toc")
 	}
 	if (settings.other.titlepage == 0) {
-		write_pres_settings(pres,dest)
+		write_pres_settings(dest)
 	}
 	sp_fclose(dest)
 }
@@ -266,7 +266,7 @@ void smclpres::write_toc_slides(real scalar dest) {
 	section    = ""
 	subsection = ""
 	
-	for (snr=1; snr <= cols(pres.slide); snr++ ) {
+	for (snr=1; snr <= cols(slide); snr++ ) {
 		if (slide[snr].section != section & slide[snr].type=="regular") {
 			section = slide[snr].section
 			write_toc_section(snr, dest)
@@ -398,7 +398,7 @@ void smclpres::write_toc_title(real scalar snr, real scalar dest) {
 		fput(dest,title)
 	}
 }
-void write_toc_files(real scalar dest) {
+void smclpres::write_toc_files(real scalar dest) {
 	real                   scalar    snr, exnr, i, j, rownr
 	string                 scalar    lab, left, filename, slidename, row, mark, err, section
 	class AssociativeArray scalar    filetoc
@@ -422,15 +422,12 @@ void write_toc_files(real scalar dest) {
 				exnr = 1
 			}
 			else if (left=="//ex") {
-				if ( (right = ustrltrim(tokenrest(t))) != "") {
-					lab = right
-				}
-				else {
+				if ( (lab = ustrltrim(tokenrest(t))) == "") {
 					lab = settings.tocfiles.exname + " " + strofreal(exnr)
 				}
 				filename = "slide" + strofreal(snr) + "ex" + strofreal(exnr) + ".do"
 				slidename = "slide" + strofreal(snr) + ".smcl"
-				row = sp_buildfilerow(pres,filename,lab,slidename)
+				row = buildfilerow(filename,lab,slidename)
 				filetoc.put("ex", (filetoc.get("ex") \ row))
 				exnr = exnr + 1
 			}
@@ -531,6 +528,33 @@ string scalar smclpres::buildfilerow(string scalar filename,
 	toreturn = toreturn + "}" +	label + settings.tocfiles.where 
 	toreturn = toreturn + "{view " + slide + "}{p_end}"
 	return(toreturn)
+}
+
+void smclpres::write_pres_settings(real scalar dest) {
+	real scalar snr
+	string scalar app
+	string rowvector strslides
+	
+	app = ""
+	strslides = settings.other.stub + ".smcl "
+	if (settings.other.titlepage) {
+		strslides = strslides + "index.smcl "
+	}
+	for (snr=1 ; snr <= cols(slide) ; snr++) {
+		if (slide[snr].type=="regular") {
+			strslides = strslides + "slide" + strofreal(snr) + ".smcl "
+		}
+		else {
+			app = app + "slide" + strofreal(snr) + ".smcl "
+		}
+	}
+	strslides = strslides + app
+	strslides = tokens(strslides)
+	fput(dest, "{* slides }{...}" )
+	for(snr = 1; snr <= cols(strslides); snr++) {
+		fput(dest, "{* " + strslides[snr]+ " }{...}")
+	}
+	fput(dest, "{* bottomstyle " + settings.bottombar.arrow + " }{...}")
 }
 
 end
