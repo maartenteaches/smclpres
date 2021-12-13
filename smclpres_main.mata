@@ -83,6 +83,7 @@ class smclpres {
     void                             write_toc_subsection()
     void                             write_toc_title()
     void                             write_toc_files()
+    string                   scalar  buildfilerow()               
 
     //_smclpres_parts.mata
     void                             write_title()

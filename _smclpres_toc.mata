@@ -493,5 +493,44 @@ void write_toc_files(real scalar dest) {
 	}
 }
 
+string scalar smclpres::buildfilerow(string scalar filename,
+                           string scalar label, string scalar slide ) {
+
+	string scalar    toreturn
+	string rowvector ext
+	
+	ext = pathsuffix(filename)
+	ext = tokens(ext, ".")
+	if ( cols(ext) == 2 ) {
+		ext = ext[2]
+	}
+	else {
+		ext = ""
+	}
+	
+	toreturn = "{p2col:"
+	
+	if (rowsum(tokens(settings.tocfiles.doedit):==ext)) {
+		toreturn = toreturn + `"{stata "doedit "' + filename + `"":"' + filename + "}"
+	}
+	else if (rowsum(tokens(settings.tocfiles.view):==ext)) {
+		toreturn = toreturn + "{view " + filename + "}"
+	}
+	else if (rowsum(tokens(settings.tocfiles.gruse):==ext)) {
+		toreturn = toreturn + `"{stata "graph use "' + filename + `"":"' + filename + "}"
+	}
+	else if (rowsum(tokens(settings.tocfiles.euse):==ext)) {
+		toreturn = toreturn + `"{stata "est use "' + filename + `"":"' + filename + "}"
+	}
+	else if (rowsum(tokens(settings.tocfiles.use):==ext)) {
+		toreturn = toreturn + `"{stata "use "' + filename + `", clear":"' + filename + "}"
+	}
+	else {
+		toreturn = toreturn + filename
+	}
+	toreturn = toreturn + "}" +	label + settings.tocfiles.where 
+	toreturn = toreturn + "{view " + slide + "}{p_end}"
+	return(toreturn)
+}
 
 end
