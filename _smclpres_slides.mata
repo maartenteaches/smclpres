@@ -635,7 +635,6 @@ void smclpres::write_slides() {
 			}
 		}
 	}
-	sp_fclose(pres,source)
 	if (txtopen) {
 		err = "{p}{err}reached end of sourcefile, but a textblock is still open{p_end}"
 		printf(err)
