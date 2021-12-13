@@ -663,7 +663,10 @@ void smclpres::read_file() {
     i = _read_file(settings.other.source,1, smclpres_version)
     rows_source = rows(source)
     toc_indent_settings()
+    // replace tab with white spaces
+    source[.,1] = usubinstr(source[.,1], char(9), settings.other.tab*" ", .)
 }
+
 
 void smclpres::toc_indent_settings() {
     if (settings.toc.itemize   == "itemize" &
@@ -854,7 +857,7 @@ real scalar smclpres::pres_gt_val(real scalar sourcerow, real rowvector tocheck)
 real scalar smclpres::sp_fopen ( string scalar file, string scalar mode, | real scalar sourcerow) {
 	real scalar fh, errcode
 	string scalar errmsg
-        
+
     if (mode == "w" & settings.other.replace == "replace") {
         errcode = _unlink(file)
         if (errcode != 0){

@@ -11,7 +11,7 @@ assert(cols(totest.settings.other.regslides) == 3)
 end
 
 // find_structure()
-smclpres using "bench\minimalist.do", debug dir(bench/test)
+smclpres using "bench\minimalist.do", debug dir(bench/test) replace
 
 local pres sp__presentation_class_instance
 mata:
