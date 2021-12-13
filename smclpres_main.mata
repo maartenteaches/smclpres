@@ -94,6 +94,8 @@ class smclpres {
     //_smclpres_slides.mata      
     real                     scalar  start_slide()
     real                     scalar  start_ex()
+    string                   scalar  digr_replace()
+    void                             write_slides()
 }
 
 void smclpres::run()
