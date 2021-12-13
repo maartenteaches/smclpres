@@ -1,0 +1,19 @@
+{smcl}
+
+{center:{bf:A minimalist example presentation}}
+
+ 
+{center:Maarten Buis}
+{center:maarten.buis@uni.kn}
+ 
+{* tocline }{p  4  4 2}{view slide1.smcl : First section}{p_end}
+{* tocline }{p  8  8 2}First subsection{p_end}
+{* tocline }{p  8  8 2}Second subsection{p_end}
+ 
+{* tocline }{p  4  4 2}{view slide3.smcl : Second section}{p_end}
+{* slides }{...}
+{* minimalist.smcl }{...}
+{* slide1.smcl }{...}
+{* slide2.smcl }{...}
+{* slide3.smcl }{...}
+{* bottomstyle label }{...}

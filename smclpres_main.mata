@@ -88,6 +88,7 @@ class smclpres {
 
     //_smclpres_parts.mata
     void                             write_title()
+    void                             write_topbar()
     void                             write_bottombar()
 }
 

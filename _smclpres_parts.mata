@@ -23,6 +23,69 @@ void smclpres::write_title( string scalar line, real scalar dest) {
 	fput(dest,"")
 }
 
+void smclpres::write_topbar(real scalar dest, real scalar snr) {
+	string scalar line, temp
+	
+	line = ""
+	if (!(slide[snr].section == "" &  ( 
+	   slide[snr].subsection == "" | 
+	   settings.topbar.subsec=="nosubsec")) & 
+	   slide[snr].type == "regular") {
+		
+		line = "{p}"
+		temp = slide[snr].section
+		if (settings.topbar.secbf == "bold") {
+			temp = "{bf:" + temp + "}"
+		}
+		if (settings.topbar.secit == "italic") {
+			temp = "{it:" + temp + "}"
+		}
+		line = line + temp
+		if (slide[snr].subsection != "" & 
+		    settings.topbar.subsec=="subsec") {
+			temp = slide[snr].subsection
+			if (settings.topbar.subsecbf == "bold") {
+				temp = "{bf:" + temp + "}"
+			}
+			if (settings.topbar.subsecit == "italic") {
+				temp = "{it:" + temp + "}"
+			}	
+			line = line + settings.topbar.sep + temp
+		}
+		line = line + "{p_end}"
+
+	}
+	else if (slide[snr].type == "ancillary") {
+		line = settings.toc.anc
+		if (settings.topbar.secbf == "bold") {
+			line = "{bf:" + line + "}"
+		}
+		if (settings.topbar.secit == "italic") {
+			line = "{it:" + line + "}"
+		}
+		line = "{p}" + line + "{p_end}"
+	}
+	else if (slide[snr].type == "digression") {
+		line = settings.digress.name
+		if (settings.topbar.secbf == "bold") {
+			line = "{bf:" + line + "}"
+		}
+		if (settings.topbar.secit == "italic") {
+			line = "{it:" + line + "}"
+		}
+		line = "{p}" + line + "{p_end}"
+	}
+	if (line != "") {
+		if (settings.topbar.thline=="hline") {
+			fput(dest, "{hline}")
+		}
+		fput(dest,line)
+		if (settings.topbar.bhline=="hline") {
+			fput(dest, "{hline}")
+		}	
+	}
+}
+
 void smclpres::write_bottombar( real scalar dest, 
                      real scalar snr, string scalar special) {
 	string scalar line, forw, back, forwl
