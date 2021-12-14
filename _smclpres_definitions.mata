@@ -118,4 +118,17 @@ struct strbib {
 	string                 colvector refs
 	string                 scalar    write
 }
+
+struct strstate {
+	real                   scalar    snr  
+	real                   scalar    exnr 
+	real                   scalar    slideopen 
+	real                   scalar    titlepageopen 
+	real                   scalar    exopen 
+	real                   scalar    txtopen
+	real                   scalar    dest
+	real                   scalar    exdest
+	real                   scalar    rownr
+	string                 scalar    line
+}
 end
