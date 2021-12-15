@@ -314,6 +314,24 @@ void smclpres::write_online_text(struct strstate scalar state)
 	fput(dest, state.line)
 }
 
+struct strstate scalar smclpres::write_graph(struct strstate scalar state, string scalar right)
+{
+	string scalar err
+	exopen(state,"graph comment")
+	noslideopen(state, "graph comment")
+	if (right) == "") {
+		err = "{p}{err}no graph name(s) mentioned after //graph {p_end}"
+        printf(err)
+        where_err(state.rownr)
+        exit(198)
+	}
+	state.line = "{* graph " + right + " }{...}"
+	if (state.txtopen == 0) {
+		fput(state.dest, state.line )
+	}
+	return(state)
+}
+
 void smclpres::write_slides() {
 	real scalar snr, exnr, rownr, snrp1, i
 	real scalar slideopen, titlepageopen, exopen, txtopen
@@ -372,28 +390,7 @@ void smclpres::write_slides() {
 				state = end_ex(state)
 			}
 			else if (left == "//graph") {
-				if (exopen) {
-					err = "{p}{err}tried adding a graph comment when an example was open{p_end}"
-					printf(err)
-                    where_err(rownr)
-					exit(198)
-				}
-				if (slideopen==0 & titlepageopen == 0) {
-					err = "{p}{err}tried adding a graph comment when no slide was open{p_end}"
-					printf(err)
-                    where_err(rownr)
-					exit(198)
-				}
-				if ((right=tokenrest(t)) == "") {
-					err = "{p}{err}no graph name(s) mentioned after //graph {p_end}"
-                    printf(err)
-                    where_err(rownr)
-                    exit(198)
-				}
-				line = "{* graph " + right + " }{...}"
-				if (txtopen == 0) {
-					fput(dest, line )
-				}
+				state = write_graph(state, tokenrest(t))
 			}
 			else if (left == "//file") {
 				if ((right=tokenrest(t)) == "") {
