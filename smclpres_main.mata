@@ -1,5 +1,5 @@
 clear all
-cd "c:\mijn documenten\projecten\stata\smclpres"
+cd "d:\mijn documenten\projecten\stata\smclpres"
 mata:
 mata set matastrict on
 class smclpres {
@@ -93,9 +93,37 @@ class smclpres {
 
     //_smclpres_slides.mata      
     real                     scalar  start_slide()
-    real                     scalar  start_ex()
-    string                   scalar  digr_replace()
+    struct strstate          scalar  start_ex()
+    struct strstate          scalar  end_ex()
+    struct strstate          scalar  digr_replace()
+    struct strstate          scalar  write_db()
+    struct strstate          scalar  write_dofiles()
+    struct strstate          scalar  end_titlepage()
+    struct strstate          scalar  begin_slide()
+    struct strstate          scalar  end_slide()
+    void                             noslideopen()
+    void                             notxtopen()
+    void                             txtopen()
+    void                             exopen()
+    struct strstate          scalar  begin_txt()
+    struct strstate          scalar  end_txt()
+    void                             write_oneline_text()
+    void                             write_ex()
+    void                             write_file()
+    void                             write_dir()
+    void                             slides_done()
+    struct strstate          scalar  write_graph()
+    struct strstate          scalar  write_ho_ignore()
     void                             write_slides()
+
+    //_smclpres_bib.mata
+    real                     scalar  nbrace()
+    string                   scalar  stripbraces()
+    string                   scalar  stripbrackets()
+    string                   scalar  remove_all_braces()
+    void                             write_bib()
+    void                             write_bib_entry()
+
 }
 
 void smclpres::run()
@@ -114,3 +142,4 @@ do _smclpres_read.mata
 do _smclpres_toc.mata
 do _smclpres_parts.mata
 do _smclpres_slides.mata
+do _smclpres_bib.mata

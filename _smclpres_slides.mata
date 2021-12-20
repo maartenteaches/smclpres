@@ -18,8 +18,7 @@ real scalar smclpres::start_slide(real scalar snr, string scalar title) {
 }
 
 struct strstate scalar smclpres::start_ex(struct strstate scalar state) {
-	string scalar destfile
-	real scalar dest exname
+	string scalar destfile, exname
 	
 	exopen(state, "new example")
 	noslideopen(state, "example")
@@ -304,14 +303,77 @@ struct strstate scalar smclpres::end_txt(struct strstate scalar state)
 	return(state)
 }
 
-void smclpres::write_online_text(struct strstate scalar state)
+void smclpres::write_oneline_text(struct strstate scalar state, | string scalar left)
 {
+	if (left == "*/txt") return
 	noslideopen(state, "single line text")
 	txtopen(state, "single line text")
 	exopen(state, "single line text")
 	state = digr_replace(state)
 	state = ref_replace(state)
 	fput(dest, state.line)
+}
+void smclpres::write_ex(struct strstate scalar state, string scalar left)
+{
+	if (left != "//ex") {
+		fput(dest, "        " + line)
+		fput(exdest, line)
+	}
+}
+
+void smclpres::write_file(struct strstate scalar state, string scalar right)
+{
+	string scalar dofile , dofile2, err, command
+	if ((right == "") {
+		err = "{p}{err}1 file must be specified after //file {p_end}"
+		printf(err)
+        where_err(state.rownr)
+		exit(198)
+	}
+	dofile = pathjoin(other.sourcedir , right)
+	if (!fileexists(dofile)) {
+		err = "{p}{err}file {res}" + dofile + "{err} specified after //file does not exist{p_end}"
+		printf(err)
+		where_err(state.rownr)
+        exit(198)
+	}
+	dofile2 = pathjoin(other.destdir, right)
+	if (!fileexists(dofile2)) {
+		command = `"copy ""' + dofile + `"" ""' + dofile2 + `"""'
+		stata( command, 1)
+	}
+}
+
+void smclpres::write_dir(struct strstate scalar state, string scalar right)
+{
+	string scalar err, dir
+	if (right == "") {
+		err = "{p}{err}1 directory must be specified after //dir {p_end}"
+		printf(err)
+        where_err(state.rownr)
+		exit(198)
+	}	
+	dir = pathjoin(settings.other.destdir, right) 
+	if (!direxists(dir)) mkdir(dir)
+}
+
+void smclpres::slides_done(struct strstate scalar state)
+{
+	if (state.txtopen) {
+		err = "{p}{err}reached end of sourcefile, but a textblock is still open{p_end}"
+		printf(err)
+		exit(198)
+	}
+	if (state.exopen) {
+		err = "{p}{err}reached end of sourcefile, but an example is still open{p_end}"
+		printf(err)
+		exit(198)
+	}
+	if (state.slideopen | state.titlepageopen) {
+		err = "{p}{err}reached end of sourcefile, but a slide is still open{p_end}"
+		printf(err)
+		exit(198)
+	}	
 }
 
 struct strstate scalar smclpres::write_graph(struct strstate scalar state, string scalar right)
@@ -329,6 +391,15 @@ struct strstate scalar smclpres::write_graph(struct strstate scalar state, strin
 	if (state.txtopen == 0) {
 		fput(state.dest, state.line )
 	}
+	return(state)
+}
+
+struct strstate scalar smclpres::write_ho_ignore(struct strstate scalar state)
+{
+	exopen(state, "ho_ignore comment")
+	noslideopen(state, "ho_ignore comment")
+	notxtopen(state, "ho_ignore comment")
+	state.line = "{* ho_ignore }" + subinstr(state.line, "//ho_ignore", "", 1)
 	return(state)
 }
 
@@ -353,176 +424,75 @@ void smclpres::write_slides() {
 		tokenset(t, source[rownr,1])
 		state.line = source[rownr,1]
 		state.rownr = rownr
-		if ((left=tokenget(t))!= "") {
-			if (left == "//slide" | left == "//anc" | left == "//digr" | left == "//bib" ) {
-				state = begin_slide(state)
-			}
-			else if (left == "//endslide" | left == "//endanc" | left == "//enddigr" | left == "//endbib") {
-				state = end_slide(state)
-			}
-			else if (left == "//title") {
-				noslideopen(state, "title")
-				exopen(state, "title")
-				write_title(tline, dest, 0)
-			}
-			else if (left == "//titlepage") {
-				noslideopen(state, "new slide")
-				state.slideopen = 1
-				state.dest = start_slide(snr, "titlepage")
-			}
-			else if (left == "//endtitlepage") {
-				state=end_titlepage(state)
-			}
-			else if (left == "/*txt") {
-				state = begin_txt(state)
-			}
-			else if (left == "txt*/") {
-				state = end_txt(state)
-			}
-			else if (left == "//txt") {
-				state.line = tokenrest(t)
-				write_online_text(state)
-			}
-			else if (left == "//ex") {
-				state = start_ex(state)
-			}
-			else if (left == "//endex") {
-				state = end_ex(state)
-			}
-			else if (left == "//graph") {
-				state = write_graph(state, tokenrest(t))
-			}
-			else if (left == "//file") {
-				if ((right=tokenrest(t)) == "") {
-					err = "{p}{err}1 file must be specified after //file {p_end}"
-					printf(err)
-                    where_err(rownr)
-					exit(198)
-				}
-				dofile = pathjoin(other.sourcedir , right)
-				if (!fileexists(dofile)) {
-					err = "{p}{err}file {res}" + dofile + "{err} specified after //file does not exist{p_end}"
-					printf(err)
-					where_err(rownr)
-                    exit(198)
-				}
-				dofile2 = pathjoin(other.destdir, right)
-				if (!fileexists(dofile2)) {
-					command = `"copy ""' + dofile + `"" ""' + dofile2 + `"""'
-					stata( command, 1)
-				}
-			}
-			else if (left == "//dir") {
-				if ((right=tokenrest(t)) == "") {
-					err = "{p}{err}1 directory must be specified after //dir {p_end}"
-					printf(err)
-                    where_err(rownr)
-					exit(198)
-				}	
-				dir = pathjoin(settings.other.destdir, right) 
-				if (!direxists(dir)) mkdir(dir)
-			}
-			else if (left == "//dofile" | left == "apdofile" | left == "codefile" | left == "apcodefile") {
-				state.line = tokenrest(t)
-				state = write_dofiles(left, state)
-			}
-			else if (left == "//db
-				state.line = tokenrest(t)
-				state = write_db(state)
-			}			
-			else if (left == "//ho_ignore") {
-				if (exopen) {
-					err = "{p}{err}tried adding a ho_ignore comment when an example was open{p_end}"
-					printf(err)
-					where_err(rownr)
-					exit(198)
-				}
-				if (slideopen==0 & titlepageopen == 0) {
-					err = "{p}{err}tried adding a ho_ignore comment when no slide was open{p_end}"
-					printf(err)
-					where_err(rownr)
-					exit(198)
-				}
-				if (txtopen == 0) {
-					err = "{p}{err}tried adding a ho_ignore comment when no textblock was open{p_end}"
-					printf(err)
-					where_err(rownr)
-					exit(198)
-				}
-				line = "{* ho_ignore }" + subinstr(line, "//ho_ignore", "", 1)
-			}
-			else if (left == "//bib_here" | left == "/*bib") {
-				if (exopen) {
-					err = "{p}{err}tried adding a bibliography when an example was open{p_end}"
-					printf(err)
-					where_err(rownr)
-					exit(198)
-				}
-				if (slideopen==0 ) {
-					err = "{p}{err}tried adding a bibliography when no slide was open{p_end}"
-					printf(err)
-					where_err(rownr)
-					exit(198)
-				}
-				if (txtopen == 1) {
-					err = "{p}{err}tried adding a bibliography when an textblock was open{p_end}"
-					printf(err)
-					where_err(rownr)
-					exit(198)
-				}
-				if (snr != bib.bibslide) {
-					err = "{p}{err}tried adding a bibliography on a non bibliography slide{p_end}"
-					printf(err)
-					where_err(rownr)
-					exit(198)
-				}
-				write_bib(dest)
-			}	
+		left = tokenget(t)
+
+		if (left == "//slide" | left == "//anc" | left == "//digr" | left == "//bib" ) {
+			state = begin_slide(state)
 		}
+		else if (left == "//endslide" | left == "//endanc" | left == "//enddigr" | left == "//endbib") {
+			state = end_slide(state)
+		}
+		else if (left == "//title") {
+			noslideopen(state, "title")
+			exopen(state, "title")
+			write_title(tline, dest, 0)
+		}
+		else if (left == "//titlepage") {
+			noslideopen(state, "new slide")
+			state.slideopen = 1
+			state.dest = start_slide(snr, "titlepage")
+		}
+		else if (left == "//endtitlepage") {
+			state=end_titlepage(state)
+		}
+		else if (left == "/*txt") {
+			state = begin_txt(state)
+		}
+		else if (left == "txt*/") {
+			state = end_txt(state)
+		}
+		else if (left == "//txt") {
+			state.line = tokenrest(t)
+			write_oneline_text(state)
+		}
+		else if (left == "//ex") {
+			state = start_ex(state)
+		}
+		else if (left == "//endex") {
+			state = end_ex(state)
+		}
+		else if (left == "//graph") {
+			state = write_graph(state, tokenrest(t))
+		}
+		else if (left == "//file") {
+			write_file(state, tokenrest(t))
+		}
+		else if (left == "//dir") {
+			write_dir(state,tokenrest(t))
+		}
+		else if (left == "//dofile" | left == "apdofile" | left == "codefile" | left == "apcodefile") {
+			state.line = tokenrest(t)
+			state = write_dofiles(left, state)
+		}
+		else if (left == "//db
+			state.line = tokenrest(t)
+			state = write_db(state)
+		}			
+		else if (left == "//ho_ignore") {
+			state = write_ho_ignore(state)
+		}
+		else if (left == "//bib_here" | left == "/*bib") {
+			write_bib(state)
+		}	
+
 		if (txtopen) {
-			if (left != "") {
-				if (left != "/*txt") {
-					if ( anyof(tline, "/*digr*/") ) {
-						line = digr_replace(line, snr, rownr) 
-					}
-					if (anyof(tline, "/*cite")) {
-						line = sp_replaceref(pres, line, snr)
-					}
-					fput(dest, line)
-				}
-			}
-			else {
-				fput(dest,line)
-			}
+			write_oneline_text(state, left)
 		}
 		if (exopen) {
-			if (left != "") {
-				if (left != "//ex") {
-					fput(dest, "        " + line)
-					fput(exdest, line)
-				}
-			}
-			else {
-				fput(dest, line)
-				fput(exdest, line)
-			}
+			write_ex(state,left)
 		}
 	}
-	if (txtopen) {
-		err = "{p}{err}reached end of sourcefile, but a textblock is still open{p_end}"
-		printf(err)
-		exit(198)
-	}
-	if (exopen) {
-		err = "{p}{err}reached end of sourcefile, but an example is still open{p_end}"
-		printf(err)
-		exit(198)
-	}
-	if (slideopen | titlepageopen) {
-		err = "{p}{err}reached end of sourcefile, but a slide is still open{p_end}"
-		printf(err)
-		exit(198)
-	}	
+	slides_done(state)
 }
 
 
