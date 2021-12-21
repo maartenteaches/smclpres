@@ -18,15 +18,15 @@ real scalar smclpres::start_slide(real scalar snr, string scalar title) {
 }
 
 struct strstate scalar smclpres::start_ex(struct strstate scalar state) {
-	string scalar destfile, exname
+	string scalar destfile
 	
 	exopen(state, "new example")
 	noslideopen(state, "example")
 	state.exopen = 1
 	state.exnr = state.exnr + 1
-	exname = "slide" + strofreal(state.snr) + "ex" + strofreal(state.exnr)
+	state.exname = "slide" + strofreal(state.snr) + "ex" + strofreal(state.exnr)
 	fput(state.dest, " ")
-	fput(state.dest,"{* ex " + exname  + " }{...}")
+	fput(state.dest,"{* ex " + state.exname  + " }{...}")
 	fput(state.dest,"{cmd}")
 
 	destfile = pathjoin(settings.other.destdir, "slide" + strofreal(state.snr) + "ex" + strofreal(state.exnr) + ".do")	
@@ -36,7 +36,7 @@ struct strstate scalar smclpres::start_ex(struct strstate scalar state) {
 
 struct strstate scalar smclpres::end_ex(struct strstate scalar state)
 {
-	string scalar err
+	string scalar err, command
 	if (state.exopen == 0) {
 		err = "{p}{err}tried to close an example when none was open{p_end}"
 		printf(err)
@@ -44,13 +44,13 @@ struct strstate scalar smclpres::end_ex(struct strstate scalar state)
 		exit(198)
 	}
 	fput(state.dest, "{txt}{...}")
-	command = `"""'+ "do " + exname + ".do" + `"""'
+	command = `"""'+ "do " + state.exname + ".do" + `"""'
 	fput(state.dest, "{pstd}({stata " +  command +  ":" + 
 		             settings.example.name + "}){p_end}")
 	fput(state.dest,"")
 	fput(state.dest,"")
 	fput(state.dest,"{* endex }{...}")
-	sp_fclose(pres,state.exdest)
+	sp_fclose(state.exdest)
 	state.exopen = 0
 	return(state)
 }
@@ -65,7 +65,7 @@ struct strstate scalar smclpres::digr_replace(struct strstate scalar state)
 		if (slide[snrp1].type != "digression") {
 			err = "{p}{err}a link to a digression was included but the next slide is not a digression{p_end}"
 			printf(err)
-            where_err(rownr)
+            where_err(state.rownr)
 			exit(198)
 		}
 		if (slide[snrp1].label == "") {
@@ -77,10 +77,10 @@ struct strstate scalar smclpres::digr_replace(struct strstate scalar state)
 		rep = (settings.digress.prefix == ">> " ? "&gt;&gt; ": settings.digress.prefix ) + lab
 		rep = "{* digr <a href=" + `""#slide"' + strofreal(snrp1) + `".smcl">"' +
 			  rep + "</a>}{view slide" + strofreal(snrp1) +
-			  ".smcl:" + pres.settings.digress.prefix +
+			  ".smcl:" + settings.digress.prefix +
 			  lab + "}{* /digr}"
 
-		state.line = usubinstr(state.line, "/*digr*/", rep)
+		state.line = usubinstr(state.line, "/*digr*/", rep, .)
 	}
     return(state)
 }
@@ -132,7 +132,7 @@ struct strstate scalar smclpres::write_db(struct strstate scalar state)
 
 struct strstate scalar smclpres::write_dofiles(string scalar what, struct strstate scalar state)
 {
-	string scalar err, command
+	string scalar err, command, dofile, dofile2
 	string rowvector tline
 
 	what = usubinstr(what,"//","", 1)
@@ -172,6 +172,7 @@ struct strstate scalar smclpres::write_dofiles(string scalar what, struct strsta
 }
 
 struct strstate scalar smclpres::end_titlepage(struct strstate scalar state)
+{	
 	string scalar err
 	if (state.slideopen == 0) {
 		err = "{p}{err}tried to close a slide when none is open{p_end}"
@@ -199,8 +200,6 @@ struct strstate scalar smclpres::end_titlepage(struct strstate scalar state)
 }
 struct strstate scalar smclpres::begin_slide(struct strstate scalar state)
 {
-	string scalar err
-
 	state.snr  = state.snr + 1
 	state.exnr = 0
 	noslideopen(state, "new slide")
@@ -271,13 +270,14 @@ void smclpres::exopen(struct strstate scalar state, string scalar what)
 {
 	string scalar err
 	if (state.exopen) {
-		err = "{p}{err}tried adding a title when example was open{p_end}"
+		err = "{p}{err}tried adding a " + what + " when example was open{p_end}"
 		printf(err)
         where_err(state.rownr)
 		exit(198)
 	}
 }
 struct strstate scalar smclpres::begin_txt(struct strstate scalar state)
+{	
 	string scalar err
 	if (state.txtopen == 1) {
 		err = "{p}{err}tried to open a textblock when one was already open{p_end}"
@@ -311,37 +311,37 @@ void smclpres::write_oneline_text(struct strstate scalar state, | string scalar 
 	exopen(state, "single line text")
 	state = digr_replace(state)
 	state = ref_replace(state)
-	fput(dest, state.line)
+	fput(state.dest, state.line)
 }
 void smclpres::write_ex(struct strstate scalar state, string scalar left)
 {
 	if (left != "//ex") {
-		fput(dest, "        " + line)
-		fput(exdest, line)
+		fput(state.dest, "        " + state.line)
+		fput(state.exdest, state.line)
 	}
 }
 
 void smclpres::write_file(struct strstate scalar state, string scalar right)
 {
-	string scalar dofile , dofile2, err, command
-	if ((right == "") {
-		err = "{p}{err}1 file must be specified after //file {p_end}"
+	string scalar dofile, dofile2, err , command
+	if (right == "") {
+		err = "{p}{err}1 file must be specified after //file{p_end}"
 		printf(err)
-        where_err(state.rownr)
+		where_err(state.rownr)
 		exit(198)
 	}
-	dofile = pathjoin(other.sourcedir , right)
-	if (!fileexists(dofile)) {
+	dofile = pathjoin(settings.other.sourcedir, right)
+	if(!fileexists(dofile)){
 		err = "{p}{err}file {res}" + dofile + "{err} specified after //file does not exist{p_end}"
 		printf(err)
 		where_err(state.rownr)
         exit(198)
 	}
-	dofile2 = pathjoin(other.destdir, right)
+	dofile2 = pathjoin(settings.other.destdir, right)
 	if (!fileexists(dofile2)) {
 		command = `"copy ""' + dofile + `"" ""' + dofile2 + `"""'
 		stata( command, 1)
-	}
+	}	
 }
 
 void smclpres::write_dir(struct strstate scalar state, string scalar right)
@@ -359,6 +359,7 @@ void smclpres::write_dir(struct strstate scalar state, string scalar right)
 
 void smclpres::slides_done(struct strstate scalar state)
 {
+	string scalar err
 	if (state.txtopen) {
 		err = "{p}{err}reached end of sourcefile, but a textblock is still open{p_end}"
 		printf(err)
@@ -381,7 +382,7 @@ struct strstate scalar smclpres::write_graph(struct strstate scalar state, strin
 	string scalar err
 	exopen(state,"graph comment")
 	noslideopen(state, "graph comment")
-	if (right) == "") {
+	if (right == "") {
 		err = "{p}{err}no graph name(s) mentioned after //graph {p_end}"
         printf(err)
         where_err(state.rownr)
@@ -404,11 +405,8 @@ struct strstate scalar smclpres::write_ho_ignore(struct strstate scalar state)
 }
 
 void smclpres::write_slides() {
-	real scalar snr, exnr, rownr, snrp1, i
-	real scalar slideopen, titlepageopen, exopen, txtopen
-	real scalar source, dest, exdest
-	string scalar left, right, exname, command, err, rep, lab, dofile, dofile2, db, db2, dir
-	string rowvector dirs
+	real scalar  rownr 
+	string scalar left
     transmorphic scalar t
 	struct strstate scalar state
 	
@@ -421,8 +419,8 @@ void smclpres::write_slides() {
 	
     t = tokeninit(" ")	
 	for(rownr = 1; rownr <= rows_source; rownr++) {
-		tokenset(t, source[rownr,1])
 		state.line = source[rownr,1]
+		tokenset(t, source[rownr,1])
 		state.rownr = rownr
 		left = tokenget(t)
 
@@ -435,12 +433,12 @@ void smclpres::write_slides() {
 		else if (left == "//title") {
 			noslideopen(state, "title")
 			exopen(state, "title")
-			write_title(tline, dest, 0)
+			write_title(tokenrest(t), state.dest, 0)
 		}
 		else if (left == "//titlepage") {
 			noslideopen(state, "new slide")
 			state.slideopen = 1
-			state.dest = start_slide(snr, "titlepage")
+			state.dest = start_slide(state.snr, "titlepage")
 		}
 		else if (left == "//endtitlepage") {
 			state=end_titlepage(state)
@@ -474,7 +472,7 @@ void smclpres::write_slides() {
 			state.line = tokenrest(t)
 			state = write_dofiles(left, state)
 		}
-		else if (left == "//db
+		else if (left == "//db") {
 			state.line = tokenrest(t)
 			state = write_db(state)
 		}			
@@ -485,10 +483,10 @@ void smclpres::write_slides() {
 			write_bib(state)
 		}	
 
-		if (txtopen) {
+		if (state.txtopen) {
 			write_oneline_text(state, left)
 		}
-		if (exopen) {
+		if (state.exopen) {
 			write_ex(state,left)
 		}
 	}

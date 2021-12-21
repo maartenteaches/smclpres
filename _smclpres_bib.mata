@@ -75,7 +75,6 @@ void smclpres::write_bib_entry(struct strstate scalar state, string scalar key)
 	string rowvector mask
 	string colvector first, last
 	real   scalar    i, j
-	real   colvector slides
 	
 	fput(state.dest, "{marker " + key + "}{...}")
 	type = bib.bibdb.get((key,"type"))

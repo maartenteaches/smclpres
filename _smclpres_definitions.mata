@@ -125,6 +125,7 @@ struct strstate {
 	real                   scalar    slideopen 
 	real                   scalar    titlepageopen 
 	real                   scalar    exopen 
+	string                 scalar    exname
 	real                   scalar    txtopen
 	real                   scalar    dest
 	real                   scalar    exdest
