@@ -102,6 +102,7 @@ class smclpres {
     struct strstate          scalar  begin_slide()
     struct strstate          scalar  end_slide()
     void                             noslideopen()
+    void                             slideopen()
     void                             notxtopen()
     void                             txtopen()
     void                             exopen()
@@ -123,6 +124,9 @@ class smclpres {
     string                   scalar  remove_all_braces()
     void                             write_bib()
     void                             write_bib_entry()
+    struct strstate          scalar  ref_replace()
+    string                   scalar  write_ref()
+    string                   scalar  write_single_ref()
 
 }
 
@@ -132,6 +136,7 @@ void smclpres::run()
     read_file()
     find_structure()
     write_toc()
+    write_slides()
 }
 
 end

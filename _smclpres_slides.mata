@@ -202,7 +202,7 @@ struct strstate scalar smclpres::begin_slide(struct strstate scalar state)
 {
 	state.snr  = state.snr + 1
 	state.exnr = 0
-	noslideopen(state, "new slide")
+	slideopen(state, "new slide")
 	state.slideopen = 1
 	state.dest = start_slide(state.snr, "")
 	write_topbar(state.dest, state.snr)
@@ -245,6 +245,16 @@ void smclpres::noslideopen(struct strstate scalar state, string scalar what)
 		exit(198)
 	}
 } 
+void smclpres::slideopen(struct strstate scalar state, string scalar what)
+{
+	string scalar err
+	if (state.slideopen == 1 | state.titlepageopen == 1) {
+		err = "{p}{err}tried adding a " + what + " when a slide was open{p_end}"
+		printf(err)
+        where_err(state.rownr)
+		exit(198)
+	}
+}
 void smclpres::notxtopen(struct strstate scalar state, string scalar what)
 {
 	string scalar err
@@ -305,9 +315,8 @@ struct strstate scalar smclpres::end_txt(struct strstate scalar state)
 
 void smclpres::write_oneline_text(struct strstate scalar state, | string scalar left)
 {
-	if (left == "*/txt") return
+	if (left == "/*txt") return
 	noslideopen(state, "single line text")
-	txtopen(state, "single line text")
 	exopen(state, "single line text")
 	state = digr_replace(state)
 	state = ref_replace(state)
@@ -433,7 +442,7 @@ void smclpres::write_slides() {
 		else if (left == "//title") {
 			noslideopen(state, "title")
 			exopen(state, "title")
-			write_title(tokenrest(t), state.dest, 0)
+			write_title(tokenrest(t), state.dest)
 		}
 		else if (left == "//titlepage") {
 			noslideopen(state, "new slide")
@@ -451,6 +460,7 @@ void smclpres::write_slides() {
 		}
 		else if (left == "//txt") {
 			state.line = tokenrest(t)
+			txtopen(state, "single line text")
 			write_oneline_text(state)
 		}
 		else if (left == "//ex") {

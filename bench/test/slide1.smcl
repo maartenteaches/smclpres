@@ -1,0 +1,24 @@
+{smcl}
+{* 22 Dec 2021}{...}
+{hline}
+{p}{bf:First section} {hline 2} First subsection{p_end}
+{hline}
+
+{center:{bf: First slide}}
+
+{pstd}Some interesting text about {help regress}{p_end}
+ 
+{* ex slide1ex1 }{...}
+{cmd}
+        sysuse auto, clear
+        sum price
+{txt}{...}
+{pstd}({stata "do slide1ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{view minimalist.smcl:index}{right:{view slide2.smcl:next}}
+{hline}

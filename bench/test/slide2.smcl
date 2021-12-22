@@ -1,0 +1,17 @@
+{smcl}
+{* 22 Dec 2021}{...}
+{hline}
+{p}{bf:First section} {hline 2} Second subsection{p_end}
+{hline}
+
+{center:{bf: Second slide}}
+
+{phang}Kwaak, kwaak, kikker kwaak. Als ik grote sprongen maak. Doe ik 
+net zo gek als jij, en ik kwaak er ook nog bij.{p_end}
+{phang}Kwaak, kwaak, kwaak maar door. Kom maar in het kikker koor. 
+Kwaak van dit en kwaak van dat. Kikkers kwaken altijd wat.{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{view minimalist.smcl:index}{right:{view slide3.smcl:next}}
+{hline}
