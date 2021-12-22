@@ -1,4 +1,186 @@
 mata:
+void smclpres::read_bib() {
+	real          scalar in_entry, fh, openbraces, closebraces
+	string        scalar line, entry
+	
+	in_entry = 0
+	fh = sp_fopen( bib.bibfile, "r") 
+
+	while ( (line = fget(fh)) != J(0,0,"") ) {
+		line = remove_tab(line) 
+		if ( in_entry == 0 & usubstr(ustrltrim(line),1,1) == "@") {
+			in_entry = 1
+			openbraces = 0
+			closebraces = 0
+			entry = ""
+		}
+		if (in_entry == 1) {
+			openbraces = openbraces + nbrace(line, "{")
+			closebraces = closebraces + nbrace(line, "}")
+			entry = entry + line
+			if (openbraces - closebraces == 0) {
+				in_entry = 0
+				parse_entry(entry)
+			}
+		}
+	}
+	sp_fclose(fh)
+	parse_authors()
+}
+
+void smclpres::parse_entry(string scalar entry) 
+{
+
+	string       scalar key, type, content, token
+	real         scalar k
+	transmorphic scalar t
+	
+	t = tokeninit(" "+char(9), (","),  ("{}"))
+	tokenset(t, entry)
+	type = tokenget(t)
+	type = strlower(tokens(type, "@")[2])
+	tokenset(t,stripbraces(tokenget(t)))
+	key = tokenget(t)
+	bib.keys = bib.keys \ key
+	bib.bibdb.put((key,"type"),type)
+	while ((token= tokenget(t)) != "") {
+		if (token == "," ) {
+			k = -1
+			if (key != "" & content != "" )  {
+				if (type == "author") {
+					content = stripbraces(content)
+				}
+				else {
+					content = remove_all_braces(content)
+				}
+				bib.bibdb.put((key,type), content)
+			}
+		}
+		k = k +1
+		if (k == 1) {
+			type = token
+		}
+		if (k == 2) {
+			if (token != "=") {
+				error(198)
+			}
+		}
+		if (k == 3) {
+			content = token
+		}
+		if (k >= 4) {
+			content = content + " " +  token
+		}
+	}
+	if (key != "" & content != "" )  {
+		if (type == "author") {
+			content = stripbraces(content)
+		}
+		else {
+			content = remove_all_braces(content)
+		}
+		bib.bibdb.put((key,type), content)
+	}
+}
+void smclpres::parse_authors()
+{
+	real   scalar    i
+	string rowvector key
+	string matrix    parsed
+	
+	for(i = 1 ; i <= rows(bib.keys); i++) {
+		key = bib.keys[i]
+		parsed = parse_author(key)
+		key = (key,"author_first")
+		bib.bibdb.put(key, parsed[.,1])
+		key[2] = "author_last"
+		bib.bibdb.put(key, parsed[.,2])
+	}
+}
+
+string matrix smclpres::parse_author(string scalar key)
+{
+	real   scalar    i
+	string colvector unparsed
+	string matrix    parsed
+	
+	parsed = J(0,2,"")
+	
+	unparsed = bib.bibdb.get((key,"author"))
+	if (unparsed != "") {	
+		unparsed = split_on_and(unparsed)
+		
+		for (i = 1 ; i <= rows(unparsed) ; i++)  {
+			parsed = parsed \ parse_name(unparsed[i])
+		}
+	}
+	return(parsed)	
+}
+string colvector smclpres::split_on_and(string scalar str)
+{
+	string       colvector res
+	string       scalar    temp, token
+	transmorphic scalar    t
+	
+	res = J(0,1, "")
+	temp = ""
+	
+	t = tokeninit(" ", "", "{}")	
+	tokenset(t, str)
+	
+	while ((token= tokenget(t)) != "") {
+		if (token == "and" & temp != "") {
+			res = res \ temp
+			temp = ""
+		}
+		else {
+			temp = temp + " " + token
+		}
+	}
+	res = res \ temp
+	return(res)
+}
+
+string rowvector smclpres::parse_name(string scalar str) 
+{
+	string       scalar    first, last
+	string       rowvector temp
+	real         scalar    i, hascomma
+	transmorphic scalar    t
+	
+	first = ""
+	last = ""
+	hascomma = 0
+	
+	t = tokeninit(" ", ",", "{}")
+	tokenset(t, str)
+	temp = tokengetall(t)
+
+	for (i=1 ; i <= cols(temp); i++) {
+		if (temp[i] == ",") {
+			last = first
+			first = ""
+			hascomma = 1
+		}
+		else {
+			if (hascomma == 1) {
+				first = first + " " + temp[i]
+			}
+		}
+		if (hascomma == 0) {
+			if (i == cols(temp)) {
+				last = temp[i]
+			}
+			else {
+				first = first + " " + temp[i]
+			}
+		}
+	}
+	last = stripbraces(last)
+	return((ustrtrim(first), ustrtrim(last)))
+	
+}
+
 real scalar smclpres::nbrace(string scalar str, string scalar type) 
 {
 	real scalar pos, n
@@ -186,5 +368,305 @@ void smclpres::write_bib_entry(struct strstate scalar state, string scalar key)
 		}
 	}
 	fput(state.dest, res)
+}
+
+void smclpres::collect_bib()
+{
+	real   scalar    dest, bibopen, bibslide
+	real   scalar    txtopen, rownr, exopen
+	string scalar    err
+	string rowvector tline
+	
+	bibopen  = 0
+	bibslide = 0
+	lnr      = 0
+	txtopen  = 0
+	exopen   = 0
+	
+	dest   = sp_fopen(,bib.bibfile, "w")
+	
+	for (rownr = 1 ; rownr <= rows_source; rownr++){
+		tline = tokens(source[rownr,1])
+		if (cols(tline) > 0) {
+			if (tline[1] == "/*txt") txtopen = 1
+			if (tline[1] == "//txt") txtopen = 1
+			if (tline[1] == "txt*/") txtopen = 0
+			if (tline[1] == "//ex")  exopen  = 1
+			if (tline[1] == "//endex") exopen = 0
+			if (tline[1] == "bib*/") {
+				if (bibopen == 0) {
+					err = "{err}tried to close a bibliography while none was open"
+					printf(err)
+					where_err(rownr)
+					exit(198)
+				}
+				bibopen = 0
+			}
+			if (tline[1] == "/*bib") {
+				if (bibopen ==  1) {
+					err = "{err}tried to open bibliography while one was already open"
+					printf(err)
+					where_err(rownr)
+					exit(198)
+				}
+				if (bibslide == 0) {
+					err = "{err}tried to open a bibliography while not on a bibliography slide"
+					printf(err)
+					where_err(rownr)
+					exit(198)
+				}
+				if (txtopen == 1) {
+					err = "{err}tried to open a bibliography while a textblock was open"
+					printf(err)
+					where_err(rownr)
+					exit(198)
+				}
+				if (exopen == 1) {
+					err = "{err}tried to open a bibliography while an example was open"
+					printf(err)
+					where_err(rownr)
+					exit(198)
+				}				
+				bibopen = 1
+			}
+			else if (bibopen == 1) {
+				fput(dest, source[rownr,1])
+			}
+			if (tline[1] == "//bib") {
+				bibslide = 1
+			}
+			if (tline[1] == "//endbib")  { 
+				bibslide = 0
+				if (bibopen == 1) {
+					err = "{p}{err}tried to close the bibliography slide while a " +
+						  "bibliography was still open{p_end}"
+					printf(err)
+					where_err(rownr)
+					exit(198)
+				}
+			}
+		}
+	}
+	sp_fclose(dest)
+}
+
+void smclpres::set_style()
+{
+	if (bib.stylefile == "") {
+		base_style(pres)
+	}
+	else {
+		import_style(pres)
+	}
+}
+
+void smclpres::sp_base_style()
+{
+	string rowvector style 
+	
+    style = ("{p 4 8 2}", "[author]", " (", "[year]", "), {it:", "[title]", "}.  ", 
+    "[address]", ": ", "[publisher]", ".{p_end}")
+    bib.style.put( "book", style)
+     
+    style = ("{p 4 8  2}", "[author]", " (", "[year]", `"), ""', "[title]", `"", {it:"', 
+    "[journal]", "}, {bf:", "[volume]", "}(", "[number]", "), pp. ", "[pages]", 
+    ".{p_end}")
+    bib.style.put( "article", style)
+    
+      style = ("{p 4 8 2}", "[author]", " (", "[year]", `"), ""', "[title]", `"". In {it:"', 
+    "[booktitle]", "}, edited by ", "[editor]", ", pp. ", "[pages]", ". ", 
+    "[address]", ": ", "[publisher]", ".{p_end}")
+    bib.style.put( "incollection", style)
+    
+      style = ("{p 4 8 2}", "[author]", " (", "[year]", "), {it:", "[title]", "}. ", 
+    "[school]", ".{p_end}")
+    bib.style.put( "phdthesis", style)
+    
+      style = ("{p 4 8 2}", "[author]", " (", "[year]", "), {it:", "[title]", "}. ", 
+    "[note]", ".{p_end}")
+    bib.style.put( "unpublished", style)
+}
+
+void smclpres::import_style()
+{
+	real   scalar in_entry, fh, openbraces, closebraces
+	string scalar entry, line
+	
+	in_entry = 0
+	fh = sp_fopen(bib.stylefile, "r")
+	
+	while ((line = fget(fh)) != J(0,0,"") ) {
+		if ( in_entry == 0 & usubstr(ustrltrim(line),1,1) == "@") {
+			in_entry = 1
+			openbraces = 0
+			closebraces = 0
+			entry = ""
+		}
+		if (in_entry == 1) {
+			openbraces = openbraces + sp_nbrace(line, "{")
+			closebraces = closebraces + sp_nbrace(line, "}")
+			entry = entry + line
+			if (openbraces - closebraces == 0) {
+				in_entry = 0
+				parse_style_entry( entry )
+			}
+		}		
+	}
+	sp_fclose(fh)
+}
+
+void sp_parse_style_entry(struct strpres scalar pres, string scalar entry)
+{
+	real         scalar    st, fi 
+	string       scalar    type
+	string       rowvector res
+	transmorphic scalar    t
+	
+	st = ustrpos(entry, "@") + 1
+	fi = ustrpos(entry, "{")
+	type = usubstr(entry, st , fi - st)
+
+	entry = ustrtrim(stripbraces(usubstr(entry, fi, .)))
+	t = tokeninit("", (""),  ("[]"))
+	tokenset(t, entry)
+	res = tokengetall(t)
+	bib.style.put( type, res)
+}
+
+void smclpres::collect_refs()
+{
+	real   scalar    rownr, txtopen, i
+	string scalar    line
+	string rowvector tline
+	string colvector refs
+	
+	lnr      = 0
+	txtopen  = 0
+
+	for(rownr=1; rownr <= rows_source; rownr++) {
+		tline = tokens(source[rownr,1])
+		if (cols(tline) > 0) {
+			if (tline[1] == "/*txt") txtopen = 1
+			if (tline[1] == "//txt") txtopen = 1
+			if (tline[1] == "txt*/") txtopen = 0
+			if (txtopen == 1 & bib.write == "cited") {
+				if (anyof(tline, "/*cite")) {
+					refs = extract_refs(rownr)
+					for(i = 1 ; i <= rows(refs); i++) {
+						if (bib.refs == J(0,1,"")) {
+							bib.refs = refs[i]
+						}
+						else if (!anyof(bib.refs,refs[i])) {
+							bib.refs = bib.refs \ refs[i]
+						}					
+					}
+				}
+			}
+			if (tline[1] == "//txt") txtopen = 0
+		}
+	}
+	
+	if (bib.write == "all") {
+		bib.refs = asarray_keys(pres.bib.bibdb)
+	}
+	fix_collisions()
+}
+
+string colvector smclpres::extract_refs(real scalar rownr)
+{
+	string       colvector rawrefs, res
+	string       scalar    token
+	real         scalar    i
+	transmorphic scalar    t
+	
+	res = J(0,1, "")
+	t = tokeninit(" ", "", "{}" )
+	rawrefs = extract_rawrefs(rownr)
+	for (i = 1 ; i <= rows(rawrefs) ; i++) {
+		tokenset(t, rawrefs[i])
+		while ( (token = tokenget(t)) != "") {
+            if ( usubstr(token,1,1) != "{" ) {
+				res = res \ token
+			}
+        }
+	}
+	return(res)
+}
+
+string colvector smclpres::extract_rawrefs( real scalar rownr) 
+{
+	real   scalar    st, fi
+	string colvector res
+	string scalar    err, line
+	
+	res = J(0,1, "")
+	line = source[rownr,1]
+	st = 0
+	while( (st = ustrpos(line, "/*cite", st) + 1 ) != 1) {
+		fi = ustrpos(line, "*/", st)
+		if (fi == 0) {
+			err = "{p]{err}a /*cite was started but was not finished by a */{p_end}"
+			printf(err)
+			where_err(rownr)
+			exit(198)
+		}
+		res = res \ usubstr(line,st+6, fi-st-6)
+	}
+	return(res)
+}
+
+void smclpres::fix_collisions() 
+{
+	string matrix     content
+	string scalar     key, pf
+	real   scalar     i, k, dup
+	real   colvector  o
+	
+	k = rows(bib.refs)
+	if (k > 1) {
+		content = J(k,4, "")
+		for (i = 1 ; i <= k; i++) {
+			key = bib.refs[i]
+			if (bib.bibdb.exists((key,"author"))) {
+				content[i,1] = invtokens(bib.bibdb.get((key, "author_last"))')
+				content[i,2] = bib.bibdb.get((key, "year"))
+				content[i,3] = bib.bibdb.get((key, "title"))
+				content[i,4] = key
+			}
+		}
+		o = order(content,(1,2,3,4))
+		content = content[o,.]
+		bib.refs = pres.bib.refs[o]
+		
+		dup = 0
+		for (i = 2 ; i <= k; i++) {
+			if ( content[|i,1 \ i, 2|] == content[|i-1,1 \ i-1, 2|] ) {
+				dup = dup + 1
+				if (dup == 1) {
+					key = content[i-1,4]
+					bib.bibdb.put((key, "postfix"), "a")
+				}
+				key = content[i,4]
+				pf = strlower(numtobase26(dup+1))
+				bib.bibdb.put((key,"postfix"),pf)
+			}
+			else {
+				dup = 0
+			}
+		}
+	}
+}
+
+void smclpres::init_bib()
+{
+	if (bib.bibslide != .) {
+		if (bib.bibfile == "" ) {
+			bib.bibfile = st_tempfilename()
+			collect_bib()
+		}
+		read_bib()
+		set_style()
+		collect_refs()
+	}
 }
 end

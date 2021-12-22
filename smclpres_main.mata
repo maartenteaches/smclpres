@@ -136,6 +136,7 @@ void smclpres::run()
     read_file()
     find_structure()
     write_toc()
+    init_bib()
     write_slides()
 }
 
