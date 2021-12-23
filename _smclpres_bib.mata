@@ -379,11 +379,10 @@ void smclpres::collect_bib()
 	
 	bibopen  = 0
 	bibslide = 0
-	lnr      = 0
 	txtopen  = 0
 	exopen   = 0
 	
-	dest   = sp_fopen(,bib.bibfile, "w")
+	dest   = sp_fopen(bib.bibfile, "w")
 	
 	for (rownr = 1 ; rownr <= rows_source; rownr++){
 		tline = tokens(source[rownr,1])
@@ -453,14 +452,14 @@ void smclpres::collect_bib()
 void smclpres::set_style()
 {
 	if (bib.stylefile == "") {
-		base_style(pres)
+		base_style()
 	}
 	else {
-		import_style(pres)
+		import_style()
 	}
 }
 
-void smclpres::sp_base_style()
+void smclpres::base_style()
 {
 	string rowvector style 
 	
@@ -515,7 +514,7 @@ void smclpres::import_style()
 	sp_fclose(fh)
 }
 
-void sp_parse_style_entry(struct strpres scalar pres, string scalar entry)
+void smclpres::parse_style_entry(string scalar entry)
 {
 	real         scalar    st, fi 
 	string       scalar    type
@@ -536,11 +535,9 @@ void sp_parse_style_entry(struct strpres scalar pres, string scalar entry)
 void smclpres::collect_refs()
 {
 	real   scalar    rownr, txtopen, i
-	string scalar    line
 	string rowvector tline
 	string colvector refs
-	
-	lnr      = 0
+
 	txtopen  = 0
 
 	for(rownr=1; rownr <= rows_source; rownr++) {
@@ -567,7 +564,7 @@ void smclpres::collect_refs()
 	}
 	
 	if (bib.write == "all") {
-		bib.refs = asarray_keys(pres.bib.bibdb)
+		bib.refs = bib.bibdb.keys()
 	}
 	fix_collisions()
 }
@@ -636,7 +633,7 @@ void smclpres::fix_collisions()
 		}
 		o = order(content,(1,2,3,4))
 		content = content[o,.]
-		bib.refs = pres.bib.refs[o]
+		bib.refs = bib.refs[o]
 		
 		dup = 0
 		for (i = 2 ; i <= k; i++) {
