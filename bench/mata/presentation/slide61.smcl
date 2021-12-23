@@ -1,0 +1,25 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Certification{p_end}
+{hline}
+
+{center:{bf: Certification script}}
+
+{pstd}
+A certification script is just a .do file 
+
+{pstd}
+It checks if things you think should be true are actually true.
+
+{pstd}
+If you make it public, then that helps build confidence in the quality of your
+program. 
+
+{pstd}
+At least, you are open about what you have checked and what you have not checked
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide60.smcl:<<}   {view presentation.smcl:index}   {view slide62.smcl:>>}}
+{hline}

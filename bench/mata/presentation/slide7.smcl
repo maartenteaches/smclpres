@@ -1,0 +1,41 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} How is Mata different from Stata{p_end}
+{hline}
+
+{center:{bf: variables}}
+
+{pstd}
+In Mata something is either a variable or a function
+
+{pstd}
+Functions are like programs. We will discuss them later
+
+{pstd}
+Anything that is not a function is a variable
+
+{pstd}
+The purpose of a variable is to store information
+
+{pstd}
+Variables differ depending on what is stored and how it is organized 
+
+{pstd}In Mata a variable can contain either: {p_end}
+{pmore}A real number (real){p_end}
+{pmore}A complex number (complex){p_end}
+{pmore}Text (string){p_end}
+{pmore}The address where another object is stored in memory (pointer){p_end}
+{pmore}A set of variables tied together under one name (struct){p_end}
+{pmore}A set of variables and functions tied together under one name (class){p_end}
+
+{pstd}This information can be organized as a:{p_end}
+{pmore}scalar{p_end}
+{pmore}rowvector{p_end}
+{pmore}colvector{p_end}
+{pmore}matrix{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide6.smcl:<<}   {view presentation.smcl:index}   {view slide8.smcl:>>}}
+{hline}

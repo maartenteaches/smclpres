@@ -1,0 +1,85 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} moving data between Stata and Mata{p_end}
+{hline}
+
+{center:{bf: views and subviews}}
+
+{pstd}
+If we use {cmd:st_data} to load data into Mata, we are making a copy of that 
+datast meaning we use potentially a lot of memory. 
+
+{pstd}
+Alternatively, we can make a "view" of the data which directly "sees" the Stata
+data rather than make a copy of it.
+ 
+{* ex slide19ex1 }{...}
+{cmd}
+        sysuse auto, clear
+        gen byte touse = !missing(foreign, rep78, price)
+        mata:
+        Data = .
+        st_view(Data, ., "foreign rep78 price", "touse")
+        Data[1..10,.]
+        end
+{txt}{...}
+{pstd}({stata "do slide19ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Since a view directly sees the Stata data, we change that data when we change 
+the view
+ 
+{* ex slide19ex2 }{...}
+{cmd}
+        list foreign in 1/5
+        mata:
+        Data[1,1] = 5
+        end
+        list foreign in 1/5
+{txt}{...}
+{pstd}({stata "do slide19ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Often we want to get different parts of the data into Mata as different matrices
+
+{pstd}
+For example, we may want a dependent variable in a vector {cmd:y}, and the independent
+variables in a matrix {cmd:X}
+
+{pstd}
+We need to make sure that all matices use the same observations
+
+{pstd}
+The best way to do that is to use a common selection variable
+
+{pstd}
+Alternatively, we can make a main view of all variables we need, and make 
+subviews from that main view using {helpb mata st_subview():subview()}
+ 
+{* ex slide19ex3 }{...}
+{cmd}
+        sysuse auto, clear
+        mata:
+        Data = y = X = .
+        st_view(Data,.,"foreign rep78 price",0)
+        st_subview(y,Data,.,1)
+        st_subview(X,Data,.,(2\.))
+        Data[1..5,.]
+        y[1..5,.]
+        X[1..5,.]
+        end
+{txt}{...}
+{pstd}({stata "do slide19ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide18.smcl:<<}   {view presentation.smcl:index}   {view slide20.smcl:>>}}
+{hline}

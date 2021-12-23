@@ -1,0 +1,42 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Certification{p_end}
+{hline}
+
+{center:{bf: What is in a certification script}}
+
+{pstd}
+For estimation commands a minimalist certification script that is quick to write
+and can pick up a lot of bugs before you go public would consider:
+
+{pmore}
+Often there are special cases of your model, where you know what the solution is.
+In our cases, that would be the model without covariates.
+
+{pmore}
+You can "manually" implement an {cmd:if} condition by just dropping the unwanted
+observations. Adding an {cmd:if} condition and the manual way, should yield the
+exact same results
+
+{pmore}
+You can "manually" implement {cmd:fweight}s by {helpb expand:expanding} the 
+dataset. Adding an {cmd:fweight}s and the manual way, should yield the
+exact same results
+
+{pstd}
+A more complete certification script would also certify the (Mata) subroutines
+
+{pstd}
+You can read more on certification scripts in ({view slide88.smcl##gould01:Gould 2001}; {view slide88.smcl##buis14:Buis 2014}) and 
+{help cscript}
+
+{pstd}
+A basic certification script for the {cmd:my_logit} command is here:
+
+//codefile my_logit_cert.do "certification script"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide61.smcl:<<}   {view presentation.smcl:index}   {view slide63.smcl:>>}}
+{hline}

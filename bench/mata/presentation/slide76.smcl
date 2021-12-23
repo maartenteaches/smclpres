@@ -1,0 +1,28 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class}{p_end}
+{hline}
+
+{center:{bf: The goal}}
+
+{pstd}
+We are going to write a program that receives a text file and returns a dataset
+that contains a list of all words that occured in that file and how many times 
+it appeared
+
+{pstd}
+We will write this using a class
+
+{pstd}
+The reason we do that, is that we think we want to extend this program (text 
+analysis is a huge field)
+
+{pstd}
+We are writing this program with the goal that it should be easy to maintain and
+extend
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide75.smcl:<<}   {view presentation.smcl:index}   {view slide77.smcl:>>}}
+{hline}

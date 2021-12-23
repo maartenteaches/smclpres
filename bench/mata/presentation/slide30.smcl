@@ -1,0 +1,64 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} basics{p_end}
+{hline}
+
+{center:{bf: functions}}
+
+{pstd}
+In said before that in Mata something is either a variable or a function, and we
+have talked about variables
+
+{pstd}
+A function is a program, for example:
+ 
+{* ex slide30ex1 }{...}
+{cmd}
+        mata:
+        mata clear
+        mata set matastrict off
+        
+        real scalar my_median(string scalar varn)
+        {
+            x = st_data(.,varn, 0)
+            _sort(x,1)
+            index = ceil(rows(x)/2)
+            return(x[index])
+        }
+        end
+        
+        sysuse nlsw88, clear
+        mata: my_median("tenure")
+        sum tenure, detail
+{txt}{...}
+{pstd}({stata "do slide30ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+So we created a function called {cmd:my_median()}
+
+{pstd}
+But first we need to specify what kind of thing this function is going to return,
+in our case a real scalar (a single number)
+
+{pstd}
+Within the parantheses we specify what our function expects as arguments{p_end}
+{pmore}First what kind of thing it is, in our case a string scalar{p_end}
+{pmore}Second the name it will have inside our function, in our case {it:varn}{p_end}
+
+{pstd}
+Whithin the braces we put what the function does, in our case:{p_end}
+{pmore}We first loaded the data{p_end}
+{pmore}Sorted that variable{p_end}
+{pmore}Computed at what point the middle is{p_end}
+{pmore}Returned the middle value{p_end}
+
+{pstd}
+It is a start, but there are still various problems with this function
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide29.smcl:<<}   {view presentation.smcl:index}   {view slide31.smcl:>>}}
+{hline}

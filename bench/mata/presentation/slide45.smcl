@@ -1,0 +1,30 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+Do the same to your 2sls program
+
+{pstd}
+The {cmd:syntax} I would use is:
+
+{cmd}
+    syntax varlist(numeric) [if] [in], ///
+         endog(varlist numeric)        ///
+         instruments(varlist numeric)
+{txt}
+
+{pstd}
+The first variable in varlist is the dependent, and the remaining variables are 
+the exogenous variables. 
+
+//apcodefile tsls06.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide44.smcl:<<}   {view presentation.smcl:index}   {view slide46.smcl:>>}}
+{hline}

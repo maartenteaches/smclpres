@@ -1,0 +1,61 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} struct{p_end}
+{hline}
+
+{center:{bf: What is a struct}}
+
+{pstd}
+A {helpb [M-2] struct:struct} is another way of storing multiple things in a 
+single object.
+
+{pstd}
+The difference is that what it contains and their names have to be declared 
+beforehand.
+
+{pstd}
+This makes it quicker to store and retrieve things and there is automatic error 
+checking, but is less flexible.  
+ 
+{* ex slide71ex1 }{...}
+{cmd}
+        mata:
+        mata clear 
+        mata set matastrict on
+        
+        struct mystruct {
+            real scalar x, y
+        }
+        
+        void main_func(real scalar x, real scalar y)
+        {
+            struct mystruct scalar data
+            
+            data.x = x
+            data.y = y
+            
+            subroutine(data)
+        }
+        
+        real scalar subroutine(struct mystruct scalar data)
+        {
+            return(data.x+data.y)
+        }
+        
+        main_func(1,5)
+        end
+{txt}{...}
+{pstd}({stata "do slide71ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+I use {cmd:struct}s in larger projects with many subroutines and I have a large 
+amount of information to move between those routines.
+
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide70.smcl:<<}   {view presentation.smcl:index}   {view slide72.smcl:>>}}
+{hline}

@@ -1,0 +1,30 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+The formulas for the parameter estimates of 2sls model are:
+
+{pstd}{cmd:b}      = ({cmd:X}'{cmd:MX})^-1{cmd:X}'{cmd:My}{p_end}
+{pstd}{cmd:M}      = {cmd:Z}({cmd:Z}'{cmd:Z})^-1{cmd:Z}'{p_end}
+
+{pstd}
+They don't lend themselves so readily for {cmd:cross}, which is why we added the 
+constants
+
+{pstd}
+Continue working in your do file and compute {cmd:M} and {cmd:b}
+
+{pstd}
+Check your results agains {cmd:ivregress 2sls rent pcturban (hsngval = faminc i.region), small}
+
+//apcodefile tsls02.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide24.smcl:<<}   {view presentation.smcl:index}   {view slide26.smcl:>>}}
+{hline}

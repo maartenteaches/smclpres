@@ -1,0 +1,17 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+Use the same tricks to display the results from your 2sls estimator
+
+//apcodefile tsls04.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide28.smcl:<<}   {view presentation.smcl:index}   {view slide30.smcl:>>}}
+{hline}

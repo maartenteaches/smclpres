@@ -1,0 +1,45 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} class{p_end}
+{hline}
+
+{center:{bf: What is a class}}
+
+{pstd}
+A {helpb [M-2] class:class} is a {cmd:struct} that can also contain functions. 
+These functions have access to all the data in that class. 
+ 
+{* ex slide73ex1 }{...}
+{cmd}
+        mata:
+        mata clear 
+        mata set matastrict on
+        
+        class myclass {
+            real scalar x, y
+            real scalar sum()
+        }
+        
+        
+        real scalar myclass::sum()
+        {
+            return(x+y)
+        }
+        a = myclass()
+        a.x=3
+        a.y=2
+        a.sum()
+        end
+{txt}{...}
+{pstd}({stata "do slide73ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+I use classes when I have lots of subroutines
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide72.smcl:<<}   {view presentation.smcl:index}   {view slide74.smcl:>>}}
+{hline}

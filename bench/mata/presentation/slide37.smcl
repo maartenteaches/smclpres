@@ -1,0 +1,17 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} basics{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+Change your {cmd:my_mean()} function by declaring your variables first
+
+//apcodefile my_mean04.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide36.smcl:<<}   {view presentation.smcl:index}   {view slide38.smcl:>>}}
+{hline}

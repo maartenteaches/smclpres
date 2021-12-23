@@ -1,0 +1,43 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} Pointers{p_end}
+{hline}
+
+{center:{bf: Try it yourself: 3D array}}
+
+{pstd}
+Say we observed a matrix at three points in time.
+
+{pstd}
+Our results are:
+ 
+{* ex slide68ex1 }{...}
+{cmd}
+        mata:
+        A1 = 2, 5, 3 \
+             2, 3, 9
+        
+        A2 = 4, 6, 2 \
+             1, 4, 2 
+              
+        A3 = 6, 2, 7 \
+             2, 5, 1       
+        end     
+{txt}{...}
+{pstd}({stata "do slide68ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+We want to store them in a single object, using pointers
+
+{pstd}
+extract from that object the value for t=2, row=2, col=3
+
+//apcodefile threeD.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide67.smcl:<<}   {view presentation.smcl:index}   {view slide69.smcl:>>}}
+{hline}

@@ -1,0 +1,2774 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+        background-color: white;
+}
+pre.output {
+    border-left-style: solid;
+    width: 650px;
+    max-height: 500px;
+    overflow: auto;
+    border-left-color:grey;
+    border-width: 5px;
+    background-color: #f0f0f0;
+    padding: 0px 5px 0px 10px;
+    margin: 0px auto 0px auto;
+}
+pre.code {
+    border-left-style: solid;
+    width: 650px;
+    max-height: 500px;
+    overflow: auto;
+    border-left-color:grey;
+    border-width: 5px;
+    background-color: #f0f0f0;
+    padding: 0px 5px 0px 10px;
+    margin: 0px auto 0px auto;
+}
+pre.code:before {
+    counter-reset: listing;
+}
+pre.code code {
+  counter-increment: listing;
+}
+pre.code code::before {
+  content: counter(listing) ". ";
+  display: inline-block;
+  width: 35px;
+  padding-left: auto;
+  margin-left: auto;
+  text-align: right;
+}
+pre {
+    margin: 0px;
+}
+div.slide { 
+    max-width: 680px;
+    display: block;
+    padding: 5px;
+    margin: 10px auto 10px auto;
+    border-style: solid;
+    border-width: 1px;
+    background-color: white ;
+}
+div.txt { 
+    margin: 0px auto 0px auto;
+    max-width: 650px;
+}
+div.flex-container {
+    display: flex;
+    justify-content: space-around;
+}
+p.bottom {
+    display: block;
+    margin: 0px;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+<div class="slide" id="presentation.smcl">
+<div class="txt"><pre>
+<br>
+                                <b>Basics of Mata</b>
+<br>
+                                 Maarten Buis
+                            University of Konstanz
+<br>
+                              maarten.buis@uni.kn
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"> <a href="#index.smcl">index</a> <a href="#slide1.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="index.smcl">
+<div class="txt"><pre>
+<br>
+                               <b>Table of content</b>
+<br>
+ 
+</pre>
+<pre>
+    <b>How is Mata different from Stata</b>
+</pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+<pre>
+       <a href="#slide1.smcl"> What is Mata</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide2.smcl"> Mata and Stata</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide3.smcl"> When to use which</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide4.smcl"> entering and leaving Mata</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide5.smcl"> Try it yourself</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide6.smcl"> things persist between Mata sessions</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide7.smcl"> variables</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide8.smcl"> creating variables</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    <b>matrix operations</b>
+</pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+<pre>
+       <a href="#slide9.smcl"> arithmatic</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide10.smcl"> elementwise operations</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide11.smcl"> Subscripting</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide12.smcl"> logic</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide13.smcl"> elementwise logic</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    <b>precision</b>
+</pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+<pre>
+       <a href="#slide14.smcl"> binary versus decimal</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide15.smcl"> how a number is stored</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide16.smcl"> rounding errors: adding and subtracting</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    <b>moving data between Stata and Mata</b>
+</pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+<pre>
+       <a href="#slide17.smcl"> reading data from Stata in Mata</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide18.smcl"> storing data from Mata in Stata</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide19.smcl"> views and subviews</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide20.smcl"> reading and writing matrices and macros from Stata</a>
+</pre>
+<pre>
+</pre>
+<pre>
+           <a href="#slide21.smcl"> macros and scalars in Stata</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    <b>Application: linear regression and instrumental variable regression</b>
+</pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+<pre>
+       <a href="#slide22.smcl"> linear regression: getting variables</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide23.smcl"> Try it yourself</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide24.smcl"> Parameter estimates</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide25.smcl"> Do it yourself</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide26.smcl"> The variance covariance matrix</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide27.smcl"> Try it yourself</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide28.smcl"> Export and display the results in Stata</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide29.smcl"> Do it yourself</a>
+</pre>
+<pre>
+</pre>
+</div>
+</div>
+<div class="slide" id="slide1.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>How is Mata different from Stata</b>
+-------------------------------------------------------------------------------
+<br>
+                                 <b>What is Mata</b>
+<br>
+    Mata is a programming language, that works well with
+        matrices
+        strings
+        Stata
+<br>
+    Stata reads instructions (commands) one line at the time
+<br>
+    Mata is compiled, making it faster
+<br>
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#presentation.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide2.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide2.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>How is Mata different from Stata</b>
+-------------------------------------------------------------------------------
+<br>
+                                <b>Mata and Stata</b>
+<br>
+    Stata is high level language, which means that we humans can focus on the
+    big picture because a lot of the details have already been preprogrammed.
+<br>
+    For example, in Stata we can type <b>regress income female educ</b>, and we can
+    think of this as a shorthand for the following conversation between me
+    and Stata:
+<br>
+        <b>me</b>:  Hi Stata. I want to run a linear regression today
+        <b>Stata</b>: Hi Maarten. Great, I know how to do that. What dependent
+        variable do you want to use?
+        <b>me</b>:  income
+        <b>Stata</b>: OK, I found it. Do you want to use any independent variables?
+        <b>me</b>:  Yes, female and educ
+        <b>Stata</b>: Ok, I also found those. Do you want to limit the sample in any
+        way? Do you want to use weights? Is there a specific type of standard
+        error you wish to see?
+        <b>me</b>:  No, I am good. You can start now.
+        <b>Stata</b>: OK, here are your results.
+<br>
+    Mata is a lower level language, which means the humans have more control
+    and it often runs faster because less is preprogrammed.
+<br>
+    If I try to do the same as above then we are going to have a very long
+    conversation...
+<br>
+        <b>me</b>:  Hi Mata. I want to run a linear regression today
+        <b>Mata</b>:  Hi Maarten. What is a "linear regression"?
+        <b>me</b>:  Oh, it is a model where look at the relationship between
+        variables
+        <b>Mata</b>:  What is a variable?
+        <b>me</b>:  Oh, it is a column in a matrix
+        <b>Mata</b>:  I know what that is. Where shall I find that matrix? How shall
+        we keep track of these “variables”? I love integers. Names, you say?
+        Are those like strings? I have really long strings. Really, however,
+        integers are better.
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide1.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide3.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide3.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>How is Mata different from Stata</b>
+-------------------------------------------------------------------------------
+<br>
+                               <b>When to use which</b>
+<br>
+    Stata is better for . . .
+        Parsing standard syntax
+        Data management
+        Scripting existing Stata commands (writing a .do file to do an
+        analysis)
+        Outputting (usually)
+        Posting saved results
+<br>
+    Mata is better for . . .
+        Parsing non-standard syntax (including files)
+        Performing matrix operations
+        Non-scripting applications
+        Outputting (when complicated)
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide2.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide4.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide4.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>How is Mata different from Stata</b>
+-------------------------------------------------------------------------------
+<br>
+                           <b>entering and leaving Mata</b>
+<br>
+    You can enter Mata by typing in Stata either <b>mata</b> or <b>mata:</b>
+<br>
+    You can leave Mata, and enter Stata again, by typing <b>end</b>
+<br>
+    <b>mata</b> will continue executing till it reaches <b>end</b> even if an error occured
+        This is helpful when using Mata interactively to try things out
+        When trying things out, errors are expected. It is convenient when
+        those errors have not other consequences than an error message.
+<br>
+    <b>mata:</b> stops as soon as an error occured and drop you back into Stata.
+        This is helpful when programming
+ 
+        This makes it easier to find where the bug is
+<br>
+    Alternatively, you can pass a single line from Stata to Mata by typing
+    <b>mata: something_Mata_understands</b>
+<br>
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide3.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide5.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide5.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>How is Mata different from Stata</b>
+-------------------------------------------------------------------------------
+<br>
+                                <b>Try it yourself</b>
+<br>
+    Enter Mata using <b>mata</b>
+<br>
+    Type <b>1 + 2</b>
+<br>
+    OK, so if we type an expression which has an answer, that answer is
+    displayed on screen. In fact, that answer is not stored anywhere.
+<br>
+    Type <b>a = 1 + 2</b>
+<br>
+    Type <b>a</b>
+<br>
+    OK, so with an equal sign we can store answers
+<br>
+    Lets make an error: type <b>a = b</b>. We have not defined <b>b</b> yet, so what can
+    Mata do other than return an error?
+<br>
+    Notice that the command prompt is still <b>:</b>, i.e. we are still in Mata
+<br>
+    Lets fix the error, type <b>b = "Hello"</b> and <b>a = b</b>
+<br>
+    Leave Mata by typing <b>end</b>
+<br>
+    We can try one-line execution of Mata commands from Stata: Type <b>mata: 1 +</b>
+    <b>2</b>
+<br>
+    Lets try the same sequence of commands but with <b>mata:</b> instead of <b>mata</b>.
+    You can copy the commands below in the .do file editor and run it:
+<br>
+<br>
+<b>    clear mata</b>
+<b>    mata:</b>
+<b>    1 + 2</b>
+<b>    a = 1 + 2</b>
+<b>    a</b>
+<b>    a = b</b>
+<b>    b = "Hello"</b>
+<b>    a = b</b>
+<b>    end</b>
+<br>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide4.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide6.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide6.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>How is Mata different from Stata</b>
+-------------------------------------------------------------------------------
+<br>
+                     <b>things persist between Mata sessions</b>
+<br>
+    Things you create in Mata persist between Mata sessions untill you clear
+    Mata or you close Stata
+<br>
+    That is why I added <b>clear mata</b> to the last exercise:
+        The purpose was for the first line <b>a = b</b> to result in an error.
+ 
+        However, in the previous exercise we successfuly created <b>b</b>, which
+        will persist between sessions, so no error would occur.
+        To make the desired error occur we needed to explicitly remove it
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: a = 1</b>
+<br>
+<b>: b = 2</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. </b>
+<b>. mata: a</b>
+<b>  1</b>
+<br>
+<b>. </b>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: a + b</b>
+<b>  3</b>
+<br>
+<b>: </b>
+<b>: mata clear</b>
+<br>
+<b>: a</b>
+                 &lt;istmt&gt;:  3499  a not found
+(0 lines skipped)
+-------------------------------------------------------------------------------
+r(3499);
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide5.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide7.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide7.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>How is Mata different from Stata</b>
+-------------------------------------------------------------------------------
+<br>
+                                   <b>variables</b>
+<br>
+    In Mata something is either a variable or a function
+<br>
+    Functions are like programs. We will discuss them later
+<br>
+    Anything that is not a function is a variable
+<br>
+    The purpose of a variable is to store information
+<br>
+    Variables differ depending on what is stored and how it is organized
+<br>
+    In Mata a variable can contain either:
+        A real number (real)
+        A complex number (complex)
+        Text (string)
+        The address where another object is stored in memory (pointer)
+        A set of variables tied together under one name (struct)
+        A set of variables and functions tied together under one name (class)
+<br>
+    This information can be organized as a:
+        scalar
+        rowvector
+        colvector
+        matrix
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide6.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide8.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide8.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>How is Mata different from Stata</b>
+-------------------------------------------------------------------------------
+<br>
+                              <b>creating variables</b>
+<br>
+    You create a variable with <b>=</b>
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: A = 1 , 2 \</b>
+<b>&gt;     3 , 4</b>
+<br>
+<b>: </b>
+<b>: A    </b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>1   2</b>  |
+  2 |  <b>3   4</b>  |
+    +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Some functions return things that can be stored as a variable
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: A = J(3,3,34)</b>
+<br>
+<b>: A</b>
+[symmetric]
+        1    2    3
+    +----------------+
+  1 |  <b>34          </b>  |
+  2 |  <b>34   34     </b>  |
+  3 |  <b>34   34   34</b>  |
+    +----------------+
+<br>
+<b>: </b>
+<b>: A = I(3,3)</b>
+<br>
+<b>: A</b>
+[symmetric]
+       1   2   3
+    +-------------+
+  1 |  <b>1        </b>  |
+  2 |  <b>0   1    </b>  |
+  3 |  <b>0   0   1</b>  |
+    +-------------+
+<br>
+<b>: </b>
+<b>: A = J(2,1,a)</b>
+                 &lt;istmt&gt;:  3499  a not found
+(1 line skipped)
+-------------------------------------------------------------------------------
+r(3499);
+<br>
+</pre>
+<div class="txt"><pre>
+    You can have matrices with 0 rows or columns or both. This can be helpful
+    starting point when you want to successively add collumns or rows to a
+    matrix.
+<br>
+        Note: Starting with complete matrix and successively changing the
+        content of rows and columns is a lot quicker than changing the number
+        of rows and columns of a matrix.
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: A = J(2,0,.)</b>
+<br>
+<b>: </b>
+<b>: A = A , (2 \ 3)</b>
+<br>
+<b>: A</b>
+<b>       </b>1
+    +-----+
+  1 |  <b>2</b>  |
+  2 |  <b>3</b>  |
+    +-----+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    You can chain assignments, which can be an easy way to initialize
+    multiple variables
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: a = b = 2</b>
+<br>
+<b>: a</b>
+<b>  2</b>
+<br>
+<b>: b</b>
+<b>  2</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    You can be more fancy with that
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: fraction = 2 /(sum=2+3)</b>
+<br>
+<b>: fraction</b>
+<b>  .4</b>
+<br>
+<b>: sum</b>
+<b>  5</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide7.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide9.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide9.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>matrix operations</b>
+-------------------------------------------------------------------------------
+<br>
+                                  <b>arithmatic</b>
+<br>
+    Matrix addition, subtraction, and multiplication work as you would expect
+    with the <b>+</b>, <b>-</b>, and <b>*</b> operators:
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: A = 1 , 2 \        </b>
+<b>&gt;     3 , 2           </b>
+<br>
+<b>: </b>
+<b>: b = 1     \</b>
+<b>&gt;     2</b>
+<br>
+<b>: </b>
+<b>: C = 2 , 4 \   </b>
+<b>&gt;     1 , 3    </b>
+<br>
+<b>: </b>
+<b>: A + C </b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>3   6</b>  |
+  2 |  <b>4   5</b>  |
+    +---------+
+<br>
+<b>: </b>
+<b>: A - C </b>
+<b>       </b> 1    2
+    +-----------+
+  1 |  <b>-1   -2</b>  |
+  2 |  <b> 2   -1</b>  |
+    +-----------+
+<br>
+<b>: </b>
+<b>: A * C </b>
+<b>       </b> 1    2
+    +-----------+
+  1 |  <b> 4   10</b>  |
+  2 |  <b> 8   18</b>  |
+    +-----------+
+<br>
+<b>: </b>
+<b>: A * b</b>
+<b>       </b>1
+    +-----+
+  1 |  <b>5</b>  |
+  2 |  <b>7</b>  |
+    +-----+
+<br>
+<b>: end </b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Multiplication of a matrix by a scalar works as expected
+<br>
+    By analogy, division by a scalar works just fine with the <b>/</b> operator
+<br>
+    The <b>/</b> operator does not work matrix division
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: A*2</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>2   4</b>  |
+  2 |  <b>6   4</b>  |
+    +---------+
+<br>
+<b>: A/2</b>
+<b>       </b>  1     2
+    +-------------+
+  1 |  <b> .5     1</b>  |
+  2 |  <b>1.5     1</b>  |
+    +-------------+
+<br>
+<b>: A / C</b>
+                       /:  3204  matrix found where scalar required
+                 &lt;istmt&gt;:     -  function returned error
+(0 lines skipped)
+-------------------------------------------------------------------------------
+r(3204);
+<br>
+</pre>
+<div class="txt"><pre>
+    You can transpose a matrix with <b>'</b>
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: b'</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>1   2</b>  |
+    +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide8.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide10.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide10.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>matrix operations</b>
+-------------------------------------------------------------------------------
+<br>
+                            <b>elementwise operations</b>
+<br>
+    Alternatively, you sometimes want to do something element by element
+<br>
+    For that you can add a colon in front of many operators
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: A</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>1   2</b>  |
+  2 |  <b>3   2</b>  |
+    +---------+
+<br>
+<b>: b</b>
+<b>       </b>1
+    +-----+
+  1 |  <b>1</b>  |
+  2 |  <b>2</b>  |
+    +-----+
+<br>
+<b>: C</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>2   4</b>  |
+  2 |  <b>1   3</b>  |
+    +---------+
+<br>
+<b>: </b>
+<b>: A:*C</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>2   8</b>  |
+  2 |  <b>3   6</b>  |
+    +---------+
+<br>
+<b>: A:*b</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>1   2</b>  |
+  2 |  <b>6   4</b>  |
+    +---------+
+<br>
+<b>: A:*b'</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>1   4</b>  |
+  2 |  <b>3   4</b>  |
+    +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+        What rules does <b>:*</b> apply to these matrices?
+<br>
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide9.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide11.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide11.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>matrix operations</b>
+-------------------------------------------------------------------------------
+<br>
+                                 <b>Subscripting</b>
+<br>
+    We can get at cells in a matrix using <b>[]</b>:
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: A</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>1   2</b>  |
+  2 |  <b>3   2</b>  |
+    +---------+
+<br>
+<b>: b</b>
+<b>       </b>1
+    +-----+
+  1 |  <b>1</b>  |
+  2 |  <b>2</b>  |
+    +-----+
+<br>
+<b>: </b>
+<b>: A[2,1]</b>
+<b>  3</b>
+<br>
+<b>: b[2]</b>
+<b>  2</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    We can also get at multiple cells
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: D = A, b</b>
+<br>
+<b>: D</b>
+<b>       </b>1   2   3
+    +-------------+
+  1 |  <b>1   2   1</b>  |
+  2 |  <b>3   2   2</b>  |
+    +-------------+
+<br>
+<b>: D[2,.]</b>
+<b>       </b>1   2   3
+    +-------------+
+  1 |  <b>3   2   2</b>  |
+    +-------------+
+<br>
+<b>: D[.,2]</b>
+<b>       </b>1
+    +-----+
+  1 |  <b>2</b>  |
+  2 |  <b>2</b>  |
+    +-----+
+<br>
+<b>: D[1,(2,3)]</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>2   1</b>  |
+    +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    We can also specify the starting cell and the ending cell, and get the
+    entire submatrix between those using <b>[||]</b>
+<br>
+    This can be faster
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: D[|1,2 \ 1,3|]</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>2   1</b>  |
+    +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide10.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide12.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide12.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>matrix operations</b>
+-------------------------------------------------------------------------------
+<br>
+                                     <b>logic</b>
+<br>
+    Like in Stata 0 is false, and non-zero (including missing) is true
+<br>
+    Operators or functions that return true or false will return 0 for false
+    and 1 for true
+<br>
+    The basic operators are:
+        <b>==</b> for equals
+        <b>!=</b> for not equals
+        <b>&gt;</b> for larger than
+        <b>&gt;=</b> for larger than or equal
+        <b>&lt;</b> for less than
+        <b>&lt;=</b> for than than or equal
+        <b>!</b> for negation
+        <b>&amp;</b> for and
+        <b>|</b> for or
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide11.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide13.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide13.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>matrix operations</b>
+-------------------------------------------------------------------------------
+<br>
+                               <b>elementwise logic</b>
+<br>
+    You can also use the elementwise colon operator for logic
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: A:==2</b>
+<b>       </b>1   2
+    +---------+
+  1 |  <b>0   1</b>  |
+  2 |  <b>0   1</b>  |
+    +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+        You can add the elements of a matrix with the sum() function.  So we
+        can count the number of 2s in the matrix <b>A</b>.
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: sum(A:==2)</b>
+<b>  2</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Since 0 is false and non-zero is true, we can use the previous answer to
+    test whether 2 occurs in matrix <b>A</b>.
+<br>
+    Better (quicker and less memory used) would be to use the <b>any()</b> function:
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata: any(A:==2)</b>
+<b>  1</b>
+<br>
+</pre>
+<div class="txt"><pre>
+    Even better would be to use <b>anyof()</b>
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata: anyof(A,2)</b>
+<b>  1</b>
+<br>
+</pre>
+<div class="txt"><pre>
+    Similarly you can use <b>all()</b> and <b>allof()</b> to check if <i>all</i> elements are true
+    or equal to some value.
+<br>
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide12.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide14.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide14.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>precision</b>
+-------------------------------------------------------------------------------
+<br>
+                             <b>binary versus decimal</b>
+<br>
+    There is a limit on how precise numbers are stored on computers
+<br>
+    If a computer stored numbers in decimal format we would not be surprised
+    that we could not store the number 1/3 exactly; we would have to stop
+    storing 3s otherwise we would need an infinite amount of memory to store
+    one number.
+<br>
+    A computer however stores numbers in binary format. In binary some
+    numbers we would not consider problematic, are actualy like 1/3. The most
+    common example is 0.1.
+<br>
+    So a lot of numbers we think are perfectly "normal" are in a computer
+    actually rounded versions of that number.
+<br>
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide13.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide15.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide15.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>precision</b>
+-------------------------------------------------------------------------------
+<br>
+                            <b>how a number is stored</b>
+<br>
+    So how are numbers stored?
+<br>
+    We could say that we store a number up to 6 digits after the decimal
+    point (ignoring that they are actually stored in binary)
+<br>
+    This is problematic
+<br>
+        We would store the number 1,000,000 with 13 significant digits
+<br>
+        While we would store the number 0.0001 with only 3 significant digits
+<br>
+    Instead a number is stored in three parts: the sign and two numbers, lets
+    call them a and b
+<br>
+    If we would store the number in decimal format the number stored would
+    then be sign * a * 10^b
+<br>
+    So if we decided on 6 significant digits we would store the number
+    1,000,000 as +1*1.00000*10^6 and the number 0.0001 as +1*1.00000*10^-4
+<br>
+    In real computers both a and b are binary numbers and we don't use 10^b,
+    but 2^b
+<br>
+    In Mata all real numbers are stored in "double precision":
+        A number is stored using 8 bytes, i.e. 64 bits
+        1 bit is used for the sign
+        11 bits are used for the exponent (b)
+        The remaining 52 bits are used for the fractional part (a)
+        27 of the possible configurations of bits are reserved for missing
+        values (., .a, .b, .., .z)
+        2 possible configurations of bits are reserved for 0 (+0 and -0)
+<br>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide14.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide16.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide16.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>precision</b>
+-------------------------------------------------------------------------------
+<br>
+                    <b>rounding errors: adding and subtracting</b>
+<br>
+    This way of storing number allows us to reliably store number within a
+    very large range.
+<br>
+    It has some quirks, for example adding numbers that differ by a large
+    order of magnitude can lead to quite large rounding errors.
+<br>
+    We want to add 1,000,000 and 0.0001
+<br>
+        Then we are adding +1*1,00000*10^6 and +1*1.00000*10^-4
+<br>
+        In order to add them we would need to the exponent the same:
+<br>
+        We would change +1*1.00000*10^-4 to +1*0.00000000001*10^6
+<br>
+        However, we only stored 6 digits, so 0.00000000001 gets rounded to 0
+<br>
+    A common computations where this could be a problem are:
+<br>
+        Computing a sum of values in a large matrix
+<br>
+        1 - probability
+<br>
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide15.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide17.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide17.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>moving data between Stata and Mata</b>
+-------------------------------------------------------------------------------
+<br>
+                        <b>reading data from Stata in Mata</b>
+<br>
+    You can store parts of a Stata dataset as a matrix using <b>st_data()</b>.
+<br>
+    In its simplest form it accepts two arguments
+        The first argument specifies the rows
+        The second argument specifies the columns
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse auto, clear</b>
+(1978 Automobile Data)
+<br>
+<b>. </b>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: y = st_data(.,"foreign rep78")</b>
+<br>
+<b>: y</b>
+<b>        </b>1   2
+     +---------+
+   1 |  <b>0   3</b>  |
+   2 |  <b>0   3</b>  |
+   3 |  <b>0   .</b>  |
+   4 |  <b>0   3</b>  |
+   5 |  <b>0   4</b>  |
+   6 |  <b>0   3</b>  |
+   7 |  <b>0   .</b>  |
+   8 |  <b>0   3</b>  |
+   9 |  <b>0   3</b>  |
+  10 |  <b>0   3</b>  |
+  11 |  <b>0   3</b>  |
+  12 |  <b>0   2</b>  |
+  13 |  <b>0   3</b>  |
+  14 |  <b>0   3</b>  |
+  15 |  <b>0   4</b>  |
+  16 |  <b>0   3</b>  |
+  17 |  <b>0   2</b>  |
+  18 |  <b>0   2</b>  |
+  19 |  <b>0   3</b>  |
+  20 |  <b>0   5</b>  |
+  21 |  <b>0   2</b>  |
+  22 |  <b>0   2</b>  |
+  23 |  <b>0   2</b>  |
+  24 |  <b>0   4</b>  |
+  25 |  <b>0   3</b>  |
+  26 |  <b>0   3</b>  |
+  27 |  <b>0   3</b>  |
+  28 |  <b>0   3</b>  |
+  29 |  <b>0   4</b>  |
+  30 |  <b>0   4</b>  |
+  31 |  <b>0   3</b>  |
+  32 |  <b>0   3</b>  |
+  33 |  <b>0   4</b>  |
+  34 |  <b>0   3</b>  |
+  35 |  <b>0   4</b>  |
+  36 |  <b>0   3</b>  |
+  37 |  <b>0   3</b>  |
+  38 |  <b>0   4</b>  |
+  39 |  <b>0   3</b>  |
+  40 |  <b>0   1</b>  |
+  41 |  <b>0   3</b>  |
+  42 |  <b>0   3</b>  |
+  43 |  <b>0   5</b>  |
+  44 |  <b>0   3</b>  |
+  45 |  <b>0   .</b>  |
+  46 |  <b>0   2</b>  |
+  47 |  <b>0   4</b>  |
+  48 |  <b>0   1</b>  |
+  49 |  <b>0   3</b>  |
+  50 |  <b>0   3</b>  |
+  51 |  <b>0   .</b>  |
+  52 |  <b>0   2</b>  |
+  53 |  <b>1   5</b>  |
+  54 |  <b>1   3</b>  |
+  55 |  <b>1   4</b>  |
+  56 |  <b>1   4</b>  |
+  57 |  <b>1   5</b>  |
+  58 |  <b>1   4</b>  |
+  59 |  <b>1   4</b>  |
+  60 |  <b>1   3</b>  |
+  61 |  <b>1   5</b>  |
+  62 |  <b>1   4</b>  |
+  63 |  <b>1   4</b>  |
+  64 |  <b>1   .</b>  |
+  65 |  <b>1   3</b>  |
+  66 |  <b>1   5</b>  |
+  67 |  <b>1   5</b>  |
+  68 |  <b>1   5</b>  |
+  69 |  <b>1   5</b>  |
+  70 |  <b>1   4</b>  |
+  71 |  <b>1   5</b>  |
+  72 |  <b>1   4</b>  |
+  73 |  <b>1   4</b>  |
+  74 |  <b>1   5</b>  |
+     +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Notice that we have missing values, which we may want to ignore
+<br>
+    One posibility is to set a third argument equal to 0. This will ignore
+    all observations with at least one missing value on one of the specified
+    variables.
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata: </b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: y = st_data(.,"foreign rep78", 0)</b>
+<br>
+<b>: y</b>
+<b>        </b>1   2
+     +---------+
+   1 |  <b>0   3</b>  |
+   2 |  <b>0   3</b>  |
+   3 |  <b>0   3</b>  |
+   4 |  <b>0   4</b>  |
+   5 |  <b>0   3</b>  |
+   6 |  <b>0   3</b>  |
+   7 |  <b>0   3</b>  |
+   8 |  <b>0   3</b>  |
+   9 |  <b>0   3</b>  |
+  10 |  <b>0   2</b>  |
+  11 |  <b>0   3</b>  |
+  12 |  <b>0   3</b>  |
+  13 |  <b>0   4</b>  |
+  14 |  <b>0   3</b>  |
+  15 |  <b>0   2</b>  |
+  16 |  <b>0   2</b>  |
+  17 |  <b>0   3</b>  |
+  18 |  <b>0   5</b>  |
+  19 |  <b>0   2</b>  |
+  20 |  <b>0   2</b>  |
+  21 |  <b>0   2</b>  |
+  22 |  <b>0   4</b>  |
+  23 |  <b>0   3</b>  |
+  24 |  <b>0   3</b>  |
+  25 |  <b>0   3</b>  |
+  26 |  <b>0   3</b>  |
+  27 |  <b>0   4</b>  |
+  28 |  <b>0   4</b>  |
+  29 |  <b>0   3</b>  |
+  30 |  <b>0   3</b>  |
+  31 |  <b>0   4</b>  |
+  32 |  <b>0   3</b>  |
+  33 |  <b>0   4</b>  |
+  34 |  <b>0   3</b>  |
+  35 |  <b>0   3</b>  |
+  36 |  <b>0   4</b>  |
+  37 |  <b>0   3</b>  |
+  38 |  <b>0   1</b>  |
+  39 |  <b>0   3</b>  |
+  40 |  <b>0   3</b>  |
+  41 |  <b>0   5</b>  |
+  42 |  <b>0   3</b>  |
+  43 |  <b>0   2</b>  |
+  44 |  <b>0   4</b>  |
+  45 |  <b>0   1</b>  |
+  46 |  <b>0   3</b>  |
+  47 |  <b>0   3</b>  |
+  48 |  <b>0   2</b>  |
+  49 |  <b>1   5</b>  |
+  50 |  <b>1   3</b>  |
+  51 |  <b>1   4</b>  |
+  52 |  <b>1   4</b>  |
+  53 |  <b>1   5</b>  |
+  54 |  <b>1   4</b>  |
+  55 |  <b>1   4</b>  |
+  56 |  <b>1   3</b>  |
+  57 |  <b>1   5</b>  |
+  58 |  <b>1   4</b>  |
+  59 |  <b>1   4</b>  |
+  60 |  <b>1   3</b>  |
+  61 |  <b>1   5</b>  |
+  62 |  <b>1   5</b>  |
+  63 |  <b>1   5</b>  |
+  64 |  <b>1   5</b>  |
+  65 |  <b>1   4</b>  |
+  66 |  <b>1   5</b>  |
+  67 |  <b>1   4</b>  |
+  68 |  <b>1   4</b>  |
+  69 |  <b>1   5</b>  |
+     +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Alternatively, that third argument can be a variable
+<br>
+    non-zero values indicate that that observation is to be included, while a
+    value of zero means that that observation is to be ignored
+<br>
+    In programming, this is the most common way to do this
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. gen byte touse = !missing(foreign, rep78)</b>
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: y = st_data(.,"foreign rep78", "touse")</b>
+<br>
+<b>: y</b>
+<b>        </b>1   2
+     +---------+
+   1 |  <b>0   3</b>  |
+   2 |  <b>0   3</b>  |
+   3 |  <b>0   3</b>  |
+   4 |  <b>0   4</b>  |
+   5 |  <b>0   3</b>  |
+   6 |  <b>0   3</b>  |
+   7 |  <b>0   3</b>  |
+   8 |  <b>0   3</b>  |
+   9 |  <b>0   3</b>  |
+  10 |  <b>0   2</b>  |
+  11 |  <b>0   3</b>  |
+  12 |  <b>0   3</b>  |
+  13 |  <b>0   4</b>  |
+  14 |  <b>0   3</b>  |
+  15 |  <b>0   2</b>  |
+  16 |  <b>0   2</b>  |
+  17 |  <b>0   3</b>  |
+  18 |  <b>0   5</b>  |
+  19 |  <b>0   2</b>  |
+  20 |  <b>0   2</b>  |
+  21 |  <b>0   2</b>  |
+  22 |  <b>0   4</b>  |
+  23 |  <b>0   3</b>  |
+  24 |  <b>0   3</b>  |
+  25 |  <b>0   3</b>  |
+  26 |  <b>0   3</b>  |
+  27 |  <b>0   4</b>  |
+  28 |  <b>0   4</b>  |
+  29 |  <b>0   3</b>  |
+  30 |  <b>0   3</b>  |
+  31 |  <b>0   4</b>  |
+  32 |  <b>0   3</b>  |
+  33 |  <b>0   4</b>  |
+  34 |  <b>0   3</b>  |
+  35 |  <b>0   3</b>  |
+  36 |  <b>0   4</b>  |
+  37 |  <b>0   3</b>  |
+  38 |  <b>0   1</b>  |
+  39 |  <b>0   3</b>  |
+  40 |  <b>0   3</b>  |
+  41 |  <b>0   5</b>  |
+  42 |  <b>0   3</b>  |
+  43 |  <b>0   2</b>  |
+  44 |  <b>0   4</b>  |
+  45 |  <b>0   1</b>  |
+  46 |  <b>0   3</b>  |
+  47 |  <b>0   3</b>  |
+  48 |  <b>0   2</b>  |
+  49 |  <b>1   5</b>  |
+  50 |  <b>1   3</b>  |
+  51 |  <b>1   4</b>  |
+  52 |  <b>1   4</b>  |
+  53 |  <b>1   5</b>  |
+  54 |  <b>1   4</b>  |
+  55 |  <b>1   4</b>  |
+  56 |  <b>1   3</b>  |
+  57 |  <b>1   5</b>  |
+  58 |  <b>1   4</b>  |
+  59 |  <b>1   4</b>  |
+  60 |  <b>1   3</b>  |
+  61 |  <b>1   5</b>  |
+  62 |  <b>1   5</b>  |
+  63 |  <b>1   5</b>  |
+  64 |  <b>1   5</b>  |
+  65 |  <b>1   4</b>  |
+  66 |  <b>1   5</b>  |
+  67 |  <b>1   4</b>  |
+  68 |  <b>1   4</b>  |
+  69 |  <b>1   5</b>  |
+     +---------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide16.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide18.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide18.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>moving data between Stata and Mata</b>
+-------------------------------------------------------------------------------
+<br>
+                        <b>storing data from Mata in Stata</b>
+<br>
+    We can store a matrix in Mata as (a) variable(s) using <b>st_store()</b>
+<br>
+    This will replace existing variables
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse auto, clear</b>
+(1978 Automobile Data)
+<br>
+<b>. mata: </b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: x = st_data(.,"foreign")</b>
+<br>
+<b>: x = x:+10</b>
+<br>
+<b>: st_store(.,"foreign",x)</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. tab foreign</b>
+<br>
+<b>   </b>Car type |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         10 |<b>         52       70.27       70.27</b>
+         11 |<b>         22       29.73      100.00</b>
+------------+-----------------------------------
+      Total |<b>         74      100.00</b>
+<br>
+</pre>
+<div class="txt"><pre>
+    If we want to store our matrix as a new variable, then we first have to
+    create that variable with <b>st_addvar</b>, and than replace its content with
+    <b>st_store()</b>
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse auto, clear</b>
+(1978 Automobile Data)
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: x = st_data(.,"foreign")</b>
+<br>
+<b>: x = x :+ 10</b>
+<br>
+<b>: idx = st_addvar("byte", "x")</b>
+<br>
+<b>: st_store(.,idx, x)</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. tab foreign x</b>
+<br>
+<b>           </b>|           x
+  Car type |        10         11 |     Total
+-----------+----------------------+----------
+  Domestic |<b>        52          0 </b>|<b>        52 </b>
+   Foreign |<b>         0         22 </b>|<b>        22 </b>
+-----------+----------------------+----------
+     Total |<b>        52         22 </b>|<b>        74 </b>
+<br>
+</pre>
+<div class="txt"><pre>
+    We can control which observations gets a value by using a selection
+    variable
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse auto, clear</b>
+(1978 Automobile Data)
+<br>
+<b>. gen touse = !missing(foreign, rep78)</b>
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: x = st_data(.,"foreign", "touse")</b>
+<br>
+<b>: x = x :+ 10</b>
+<br>
+<b>: idx = st_addvar("byte", "x")</b>
+<br>
+<b>: st_store(.,idx, "touse", x)</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. tab foreign x, missing</b>
+<br>
+<b>           </b>|                x
+  Car type |        10         11          . |     Total
+-----------+---------------------------------+----------
+  Domestic |<b>        48          0          4 </b>|<b>        52 </b>
+   Foreign |<b>         0         21          1 </b>|<b>        22 </b>
+-----------+---------------------------------+----------
+     Total |<b>        48         21          5 </b>|<b>        74 </b>
+<br>
+<b>. tab x touse, missing</b>
+<br>
+<b>           </b>|         touse
+         x |         0          1 |     Total
+-----------+----------------------+----------
+        10 |<b>         0         48 </b>|<b>        48 </b>
+        11 |<b>         0         21 </b>|<b>        21 </b>
+         . |<b>         5          0 </b>|<b>         5 </b>
+-----------+----------------------+----------
+     Total |<b>         5         69 </b>|<b>        74 </b>
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide17.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide19.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide19.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>moving data between Stata and Mata</b>
+-------------------------------------------------------------------------------
+<br>
+                              <b>views and subviews</b>
+<br>
+    If we use <b>st_data</b> to load data into Mata, we are making a copy of that
+    datast meaning we use potentially a lot of memory.
+<br>
+    Alternatively, we can make a "view" of the data which directly "sees" the
+    Stata data rather than make a copy of it.
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse auto, clear</b>
+(1978 Automobile Data)
+<br>
+<b>. gen byte touse = !missing(foreign, rep78, price)</b>
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: Data = .</b>
+<br>
+<b>: st_view(Data, ., "foreign rep78 price", "touse")</b>
+<br>
+<b>: Data[1..10,.]</b>
+<b>        </b>    1       2       3
+     +-------------------------+
+   1 |  <b>    0       3    4099</b>  |
+   2 |  <b>    0       3    4749</b>  |
+   3 |  <b>    0       3    4816</b>  |
+   4 |  <b>    0       4    7827</b>  |
+   5 |  <b>    0       3    5788</b>  |
+   6 |  <b>    0       3    5189</b>  |
+   7 |  <b>    0       3   10372</b>  |
+   8 |  <b>    0       3    4082</b>  |
+   9 |  <b>    0       3   11385</b>  |
+  10 |  <b>    0       2   14500</b>  |
+     +-------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Since a view directly sees the Stata data, we change that data when we
+    change the view
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. list foreign in 1/5</b>
+<br>
+     +----------+
+     | <b> foreign </b>|
+     |----------|
+  1. | <b>Domestic </b>|
+  2. | <b>Domestic </b>|
+  3. | <b>Domestic </b>|
+  4. | <b>Domestic </b>|
+  5. | <b>Domestic </b>|
+     +----------+
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: Data[1,1] = 5</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. list foreign in 1/5</b>
+<br>
+     +----------+
+     | <b> foreign </b>|
+     |----------|
+  1. | <b>       5 </b>|
+  2. | <b>Domestic </b>|
+  3. | <b>Domestic </b>|
+  4. | <b>Domestic </b>|
+  5. | <b>Domestic </b>|
+     +----------+
+<br>
+</pre>
+<div class="txt"><pre>
+    Often we want to get different parts of the data into Mata as different
+    matrices
+<br>
+    For example, we may want a dependent variable in a vector <b>y</b>, and the
+    independent variables in a matrix <b>X</b>
+<br>
+    We need to make sure that all matices use the same observations
+<br>
+    The best way to do that is to use a common selection variable
+<br>
+    Alternatively, we can make a main view of all variables we need, and make
+    subviews from that main view using <b>subview()</b>
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse auto, clear</b>
+(1978 Automobile Data)
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: Data = y = X = .</b>
+<br>
+<b>: st_view(Data,.,"foreign rep78 price",0)</b>
+<br>
+<b>: st_subview(y,Data,.,1)</b>
+<br>
+<b>: st_subview(X,Data,.,(2\.))</b>
+<br>
+<b>: Data[1..5,.]</b>
+<b>       </b>   1      2      3
+    +----------------------+
+  1 |  <b>   0      3   4099</b>  |
+  2 |  <b>   0      3   4749</b>  |
+  3 |  <b>   0      3   4816</b>  |
+  4 |  <b>   0      4   7827</b>  |
+  5 |  <b>   0      3   5788</b>  |
+    +----------------------+
+<br>
+<b>: y[1..5,.]</b>
+<b>       </b>1
+    +-----+
+  1 |  <b>0</b>  |
+  2 |  <b>0</b>  |
+  3 |  <b>0</b>  |
+  4 |  <b>0</b>  |
+  5 |  <b>0</b>  |
+    +-----+
+<br>
+<b>: X[1..5,.]</b>
+<b>       </b>   1      2
+    +---------------+
+  1 |  <b>   3   4099</b>  |
+  2 |  <b>   3   4749</b>  |
+  3 |  <b>   3   4816</b>  |
+  4 |  <b>   4   7827</b>  |
+  5 |  <b>   3   5788</b>  |
+    +---------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide18.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide20.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide20.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>moving data between Stata and Mata</b>
+-------------------------------------------------------------------------------
+<br>
+              <b>reading and writing matrices and macros from Stata</b>
+<br>
+    Stata also has matrices, and we may want to load those in Stata. We do
+    that with the <b>st_matrix()</b> function.
+<br>
+    For example, <b>regress</b> leaves the coefficients as the rowvector e(b)
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. reg wage i.union i.race i.south grade ttl_exp</b>
+<br>
+      Source |       SS           df       MS      Number of obs   =<b>     1,876</b>
+-------------+----------------------------------   F(6, 1869)      = <b>   133.68</b>
+       Model | <b>  9789.5268         6   1631.5878   </b>Prob &gt; F        =<b>    0.0000</b>
+    Residual | <b> 22811.9477     1,869  12.2054295   </b>R-squared       =<b>    0.3003</b>
+-------------+----------------------------------   Adj R-squared   =<b>    0.2980</b>
+       Total | <b> 32601.4745     1,875  17.3874531   </b>Root MSE        =   <b> 3.4936</b>
+<br>
+------------------------------------------------------------------------------
+        wage |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       union |
+      union  |<b>   .8762805   .1921366     4.56   0.000     .4994557    1.253105</b>
+             |
+        race |
+      black  |<b>  -.4220536   .1938443    -2.18   0.030    -.8022276   -.0418796</b>
+      other  |<b>   .7718287   .7206785     1.07   0.284    -.6415906    2.185248</b>
+             |
+     1.south |<b>  -.8955855   .1726014    -5.19   0.000    -1.234097   -.5570737</b>
+       grade |<b>   .5798155   .0328168    17.67   0.000      .515454     .644177</b>
+     ttl_exp |<b>   .2681669   .0178573    15.02   0.000     .2331446    .3031892</b>
+       _cons |<b>  -3.233793   .4705745    -6.87   0.000    -4.156699   -2.310886</b>
+------------------------------------------------------------------------------
+<br>
+<b>. </b>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: b = st_matrix("e(b)")</b>
+<br>
+<b>: b</b>
+<b>       </b>           1              2              3              4
+    +-------------------------------------------------------------
+  1 |  <b>           0    .8762805149              0   -.4220535843</b>
+    +-------------------------------------------------------------
+                  5              6              7              8
+     -------------------------------------------------------------
+  1    <b> .7718286975              0   -.8955855048    .5798155063</b>
+     -------------------------------------------------------------
+                  9             10
+     -------------------------------+
+  1    <b>  .268166922   -3.233792755</b>  |
+     -------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    We can also use <b>st_matrix()</b> to copy matrices from Mata to Stata
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: X = 1,2 \ </b>
+<b>&gt;     3,4</b>
+<br>
+<b>: st_matrix("X",X)    </b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. </b>
+<b>. matlist X</b>
+<br>
+             |        c1         c2 
+-------------+----------------------
+          r1 | <b>        1</b>  <b>        2</b> 
+          r2 | <b>        3</b>  <b>        4</b> 
+<br>
+</pre>
+<div class="txt"><pre>
+    We can also read the content of <b>macros</b> and <b>scalars</b> from Stata into Mata
+    using <b>st_local()</b> and <b> st_scalar()</b>
+<br>
+    we can use the same functions to write to Stata
+<br>
+    There are some <a href="#slide21.smcl">&gt;&gt; arcana of macros and scalars in Stata</a>to consider
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. tempname realnumber</b>
+<br>
+<b>. local nirv "here we are now, entertain us"</b>
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: st_local("nirv")</b>
+<b>  here we are now, entertain us</b>
+<br>
+<b>: st_local("greetings", "Hello")</b>
+<br>
+<b>: st_local("number", strofreal(42))</b>
+<br>
+<b>: st_numscalar(st_local("realnumber"), 42)</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. di "`greetings'"</b>
+<b>Hello</b>
+<br>
+<b>. di `number'</b>
+<b>42</b>
+<br>
+<b>. di `realnumber'</b>
+<b>42</b>
+<br>
+</pre>
+<div class="txt"><pre>
+    We have already seen that we can access returned matrices using
+    <b>st_matrix()</b>
+<br>
+    Returned string scalars can be accessed using <b>st_global()</b>
+<br>
+    Returned numeric scalars can be accessed using <b>st_numscalar()</b>
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. ereturn list</b>
+<br>
+scalars:
+                  e(N) =  <b>1876</b>
+<b>               </b>e(df_m) =  <b>6</b>
+<b>               </b>e(df_r) =  <b>1869</b>
+<b>                  </b>e(F) =  <b>133.6772130604341</b>
+<b>                 </b>e(r2) =  <b>.3002786511498445</b>
+<b>               </b>e(rmse) =  <b>3.493626984318627</b>
+<b>                </b>e(mss) =  <b>9789.526803052533</b>
+<b>                </b>e(rss) =  <b>22811.94774589027</b>
+<b>               </b>e(r2_a) =  <b>.298032354684836</b>
+<b>                 </b>e(ll) =  <b>-5005.186420890172</b>
+<b>               </b>e(ll_0) =  <b>-5340.120985183983</b>
+<b>               </b>e(rank) =  <b>7</b>
+<br>
+macros:
+            e(cmdline) : "<b>regress wage i.union i.race i.south grade ttl_exp</b>"
+              e(title) : "<b>Linear regression</b>"
+          e(marginsok) : "<b>XB default</b>"
+                e(vce) : "<b>ols</b>"
+             e(depvar) : "<b>wage</b>"
+                e(cmd) : "<b>regress</b>"
+         e(properties) : "<b>b V</b>"
+            e(predict) : "<b>regres_p</b>"
+              e(model) : "<b>ols</b>"
+          e(estat_cmd) : "<b>regress_estat</b>"
+<br>
+matrices:
+                  e(b) : <b> 1 x 10</b>
+<b>                  </b>e(V) : <b> 10 x 10</b>
+<br>
+functions:
+             e(sample)   
+<br>
+<b>. </b>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: st_global("e(title)")</b>
+<b>  Linear regression</b>
+<br>
+<b>: st_numscalar("e(N)")</b>
+<b>  1876</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide19.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide22.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide22.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Application: linear regression and instrumental variable regression</b>
+-------------------------------------------------------------------------------
+<br>
+                     <b>linear regression: getting variables</b>
+<br>
+    I am going to implement a linear regression in Mata in steps
+<br>
+    You are going to implement a IV regression with a two stage least square
+    estimator using similar steps
+<br>
+    Data: nlsw88
+<br>
+    <b>y</b> = wage
+    <b>X</b> = grade union ttl_exp tenure south
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. gen byte touse = !missing(wage, grade, union, ttl_exp, tenure, south)</b>
+<br>
+<b>. </b>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: X=y=.</b>
+<br>
+<b>: st_view(X,.,"grade union ttl_exp tenure south", "touse")</b>
+<br>
+<b>: st_view(y,.,"wage", "touse")</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide20.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide23.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide23.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Application: linear regression and instrumental variable regression</b>
+-------------------------------------------------------------------------------
+<br>
+                                <b>Try it yourself</b>
+<br>
+    We are going to implement a IV regression via two stage least squares
+<br>
+    The data is hsng2
+    The dependent variable <b>y</b> is rent
+    The endogenous variable <b>Y</b> is hsngval
+    The instruments <b>X2</b> are faminc reg2 reg3 and reg4
+    The other exogenous variables <b>X1</b> is pcturban
+<br>
+    We need to load three matrices:
+        <b>y</b>
+        <b>X</b> = <b>Y</b>, <b>X1</b>, <b>cons</b>
+        <b>Z</b> = <b>X1</b>, <b>X2</b>, <b>cons</b>
+<br>
+    Open the dataset using <b>webuse</b>, create a new variable cons containing 1,
+    and load the three matrices in Mata
+<br>
+</pre>
+<pre><a href="#app0"> (solution) </a></pre>
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide22.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide24.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide24.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Application: linear regression and instrumental variable regression</b>
+-------------------------------------------------------------------------------
+<br>
+                              <b>Parameter estimates</b>
+<br>
+    The formula for the parameter estimates <b>b</b> in a linear regression is: <b>b</b> =
+    <b>X</b>'<b>X</b>^-1<b>X</b>'<b>y</b>
+<br>
+    Notice that I did not add the constant here. That is because I (mostly)
+    don't need to as <b>cross()</b> will do most of the computions and allows you to
+    add the constant on the fly
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. gen byte touse = !missing(wage, grade, union, ttl_exp, tenure, south)</b>
+<br>
+<b>. </b>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: X=y=.</b>
+<br>
+<b>: st_view(X,.,"grade union ttl_exp tenure south", "touse")</b>
+<br>
+<b>: st_view(y,.,"wage", "touse")</b>
+<br>
+<b>: XX = cross(X,1, X,1)</b>
+<br>
+<b>: Xy = cross(X,1, y,0)</b>
+<br>
+<b>: b = invsym(XX)*Xy</b>
+<br>
+<b>: b</b>
+<b>       </b>           1
+    +----------------+
+  1 |  <b> .5910388365</b>  |
+  2 |  <b> .7654532103</b>  |
+  3 |  <b> .2348584673</b>  |
+  4 |  <b> .0412963548</b>  |
+  5 |  <b>-.9976962817</b>  |
+  6 |  <b>-3.245932113</b>  |
+    +----------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. reg wage grade union ttl_exp tenure south</b>
+<br>
+      Source |       SS           df       MS      Number of obs   =<b>     1,866</b>
+-------------+----------------------------------   F(5, 1860)      = <b>   158.02</b>
+       Model | <b> 9668.81879         5  1933.76376   </b>Prob &gt; F        =<b>    0.0000</b>
+    Residual | <b> 22761.2079     1,860  12.2372085   </b>R-squared       =<b>    0.2981</b>
+-------------+----------------------------------   Adj R-squared   =<b>    0.2963</b>
+       Total | <b> 32430.0267     1,865  17.3887542   </b>Root MSE        =   <b> 3.4982</b>
+<br>
+------------------------------------------------------------------------------
+        wage |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       grade |<b>   .5910388   .0324833    18.20   0.000     .5273312    .6547465</b>
+       union |<b>   .7654532   .1922649     3.98   0.000     .3883755    1.142531</b>
+     ttl_exp |<b>   .2348585   .0219678    10.69   0.000     .1917744    .2779426</b>
+      tenure |<b>   .0412964   .0178785     2.31   0.021     .0062324    .0763603</b>
+       south |<b>  -.9976963   .1663997    -6.00   0.000    -1.324046   -.6713466</b>
+       _cons |<b>  -3.245932    .468053    -6.93   0.000    -4.163897   -2.327968</b>
+------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide23.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide25.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide25.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Application: linear regression and instrumental variable regression</b>
+-------------------------------------------------------------------------------
+<br>
+                                <b>Do it yourself</b>
+<br>
+    The formulas for the parameter estimates of 2sls model are:
+<br>
+    <b>b</b> = (<b>X</b>'<b>MX</b>)^-1<b>X</b>'<b>My</b>
+    <b>M</b> = <b>Z</b>(<b>Z</b>'<b>Z</b>)^-1<b>Z</b>'
+<br>
+    They don't lend themselves so readily for <b>cross</b>, which is why we added
+    the constants
+<br>
+    Continue working in your do file and compute <b>M</b> and <b>b</b>
+<br>
+    Check your results agains <b>ivregress 2sls rent pcturban (hsngval = faminc</b>
+    <b>i.region), small</b>
+<br>
+</pre>
+<pre><a href="#app1"> (solution) </a></pre>
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide24.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide26.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide26.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Application: linear regression and instrumental variable regression</b>
+-------------------------------------------------------------------------------
+<br>
+                        <b>The variance covariance matrix</b>
+<br>
+    <b>Var(b)</b> = s2*<b>X</b>'<b>X</b>^-1
+    s2 = ess/(N-k)
+    ess = (<b>y</b>-<b>Xb</b>)'(<b>y</b>-<b>Xb</b>)
+    N = rows(<b>X</b>)
+    k = cols(<b>X</b>) + 1 (the +1 for the constant)
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. gen byte touse = !missing(wage, grade, union, ttl_exp, tenure, south)</b>
+<br>
+<b>. </b>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: X=y=.</b>
+<br>
+<b>: st_view(X,.,"grade union ttl_exp tenure south", "touse")</b>
+<br>
+<b>: st_view(y,.,"wage", "touse")</b>
+<br>
+<b>: XX = cross(X,1, X,1)</b>
+<br>
+<b>: Xy = cross(X,1, y,0)</b>
+<br>
+<b>: b = invsym(XX)*Xy</b>
+<br>
+<b>: </b>
+<b>: N = rows(X)</b>
+<br>
+<b>: k = cols(X) + 1</b>
+<br>
+<b>: cons = J(N,1,1)</b>
+<br>
+<b>: res = y - (X,cons)*b</b>
+<br>
+<b>: ess = cross(res,res)</b>
+<br>
+<b>: s2 = ess/(N-k)</b>
+<br>
+<b>: Var = s2*invsym(XX)</b>
+<br>
+<b>: sqrt(diagonal(Var))</b>
+<b>       </b>          1
+    +---------------+
+  1 |  <b>.0324833365</b>  |
+  2 |  <b>.1922649311</b>  |
+  3 |  <b>.0219677852</b>  |
+  4 |  <b>.0178784551</b>  |
+  5 |  <b>.1663996582</b>  |
+  6 |  <b>.4680530328</b>  |
+    +---------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. reg wage grade union ttl_exp tenure south</b>
+<br>
+      Source |       SS           df       MS      Number of obs   =<b>     1,866</b>
+-------------+----------------------------------   F(5, 1860)      = <b>   158.02</b>
+       Model | <b> 9668.81879         5  1933.76376   </b>Prob &gt; F        =<b>    0.0000</b>
+    Residual | <b> 22761.2079     1,860  12.2372085   </b>R-squared       =<b>    0.2981</b>
+-------------+----------------------------------   Adj R-squared   =<b>    0.2963</b>
+       Total | <b> 32430.0267     1,865  17.3887542   </b>Root MSE        =   <b> 3.4982</b>
+<br>
+------------------------------------------------------------------------------
+        wage |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       grade |<b>   .5910388   .0324833    18.20   0.000     .5273312    .6547465</b>
+       union |<b>   .7654532   .1922649     3.98   0.000     .3883755    1.142531</b>
+     ttl_exp |<b>   .2348585   .0219678    10.69   0.000     .1917744    .2779426</b>
+      tenure |<b>   .0412964   .0178785     2.31   0.021     .0062324    .0763603</b>
+       south |<b>  -.9976963   .1663997    -6.00   0.000    -1.324046   -.6713466</b>
+       _cons |<b>  -3.245932    .468053    -6.93   0.000    -4.163897   -2.327968</b>
+------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide25.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide27.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide27.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Application: linear regression and instrumental variable regression</b>
+-------------------------------------------------------------------------------
+<br>
+                                <b>Try it yourself</b>
+<br>
+    The formulas for the variance covariance matrix in the 2sls estimator
+    are:
+<br>
+    <b>Var(b)</b> = s2*<b>X</b>'<b>MX</b>^-1
+    s2 = ess/(N-k)
+    ess = (<b>y</b>-<b>Xb</b>)'(<b>y</b>-<b>Xb</b>)
+    N = rows(<b>X</b>)
+    k = cols(<b>X</b>) (not +1: constant is already in X)
+<br>
+    Expand your do-file to create the variance covariance matrix
+<br>
+</pre>
+<pre><a href="#app2"> (solution) </a></pre>
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide26.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide28.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide28.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Application: linear regression and instrumental variable regression</b>
+-------------------------------------------------------------------------------
+<br>
+                    <b>Export and display the results in Stata</b>
+<br>
+    We can use <b>ereturn</b> in Stata to display our results in the standard way
+    Stata users expect from an estimation commands
+<br>
+    We first need to export our results from Mata to Stata and than use
+    <b>ereturn</b>
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. gen byte touse = !missing(wage, grade, union, ttl_exp, tenure, south)</b>
+<br>
+<b>. </b>
+<b>. tempname b V</b>
+<br>
+<b>. </b>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: X=y=.</b>
+<br>
+<b>: st_view(X,.,"grade union ttl_exp tenure south", "touse")</b>
+<br>
+<b>: st_view(y,.,"wage", "touse")</b>
+<br>
+<b>: XX = cross(X,1, X,1)</b>
+<br>
+<b>: Xy = cross(X,1, y,0)</b>
+<br>
+<b>: b = invsym(XX)*Xy</b>
+<br>
+<b>: </b>
+<b>: N = rows(X)</b>
+<br>
+<b>: k = cols(X) + 1</b>
+<br>
+<b>: cons = J(N,1,1)</b>
+<br>
+<b>: res = y - (X,cons)*b</b>
+<br>
+<b>: ess = cross(res,res)</b>
+<br>
+<b>: s2 = ess/(N-k)</b>
+<br>
+<b>: Var = s2*invsym(XX)</b>
+<br>
+<b>: </b>
+<b>: st_matrix(st_local("b"), b')</b>
+<br>
+<b>: st_matrix(st_local("V"), Var)</b>
+<br>
+<b>: st_local("df_r", strofreal(N-k))</b>
+<br>
+<b>: st_local("N", strofreal(N))</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. </b>
+<b>. local xnames `""grade" "union" "ttl_exp" "tenure" "south" "_cons""'</b>
+<br>
+<b>. matrix colnames `b' = `xnames'</b>
+<br>
+<b>. matrix colnames `V' = `xnames'</b>
+<br>
+<b>. matrix rownames `V' = `xnames'</b>
+<br>
+<b>. ereturn post `b' `V', dof(`df_r') obs(`N') esample(touse)</b>
+<br>
+<b>. ereturn display</b>
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       grade |<b>   .5910388   .0324833    18.20   0.000     .5273312    .6547465</b>
+       union |<b>   .7654532   .1922649     3.98   0.000     .3883755    1.142531</b>
+     ttl_exp |<b>   .2348585   .0219678    10.69   0.000     .1917744    .2779426</b>
+      tenure |<b>   .0412964   .0178785     2.31   0.021     .0062324    .0763603</b>
+       south |<b>  -.9976963   .1663997    -6.00   0.000    -1.324046   -.6713466</b>
+       _cons |<b>  -3.245932    .468053    -6.93   0.000    -4.163897   -2.327968</b>
+------------------------------------------------------------------------------
+<br>
+<b>. </b>
+<b>. reg wage grade union ttl_exp tenure south</b>
+<br>
+      Source |       SS           df       MS      Number of obs   =<b>     1,866</b>
+-------------+----------------------------------   F(5, 1860)      = <b>   158.02</b>
+       Model | <b> 9668.81879         5  1933.76376   </b>Prob &gt; F        =<b>    0.0000</b>
+    Residual | <b> 22761.2079     1,860  12.2372085   </b>R-squared       =<b>    0.2981</b>
+-------------+----------------------------------   Adj R-squared   =<b>    0.2963</b>
+       Total | <b> 32430.0267     1,865  17.3887542   </b>Root MSE        =   <b> 3.4982</b>
+<br>
+------------------------------------------------------------------------------
+        wage |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       grade |<b>   .5910388   .0324833    18.20   0.000     .5273312    .6547465</b>
+       union |<b>   .7654532   .1922649     3.98   0.000     .3883755    1.142531</b>
+     ttl_exp |<b>   .2348585   .0219678    10.69   0.000     .1917744    .2779426</b>
+      tenure |<b>   .0412964   .0178785     2.31   0.021     .0062324    .0763603</b>
+       south |<b>  -.9976963   .1663997    -6.00   0.000    -1.324046   -.6713466</b>
+       _cons |<b>  -3.245932    .468053    -6.93   0.000    -4.163897   -2.327968</b>
+------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide27.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide29.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide29.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Application: linear regression and instrumental variable regression</b>
+-------------------------------------------------------------------------------
+<br>
+                                <b>Do it yourself</b>
+<br>
+    Use the same tricks to display the results from your 2sls estimator
+<br>
+</pre>
+<pre><a href="#app3"> (solution) </a></pre>
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide28.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide21.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>digression</b>
+-------------------------------------------------------------------------------
+<br>
+                          <b>macros and scalars in Stata</b>
+<br>
+    A macro is a shorthand, it is one thing standing for another
+<br>
+    It can contain anything, but is always a string
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. local mac "foo"</b>
+<br>
+<b>. di `mac'</b>
+foo not found
+r(111);
+<br>
+</pre>
+<div class="txt"><pre>
+    I said that the content of a macro is always a string, then why did this
+    return an error?
+<br>
+    The double quotes are there to indicate that this is a string, but they
+    are not part of the string.
+<br>
+    So `mac' contains <i>foo</i> not <i>"foo"</i>
+<br>
+    So for the second line Stata saw <b>di foo</b>, and since there were no double
+    quotes Stata assumed we wanted to look at a variable (or scalar) foo,
+    could not find that variable and returned the error message.
+<br>
+    This will work:
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. local mac "foo"</b>
+<br>
+<b>. di "`mac'"</b>
+<b>foo</b>
+<br>
+</pre>
+<div class="txt"><pre>
+    Because the quotes are stripped, macros may also contain numbers.
+<br>
+    They are stored as strings, but as soon as Stata replaces the name of the
+    macro with its content it will see them as numbers, as there are no
+    quotes around them.
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. local mac 1</b>
+<br>
+<b>. di `mac'</b>
+<b>1</b>
+<br>
+</pre>
+<div class="txt"><pre>
+    However, numbers stored in macros are not quite as precise as numbers
+    stored in scalars.
+<br>
+    Scalars are stored in double precision (15-16 decimal digits), while
+    locals have about 12 decimal digits, sometimes more, but never less than
+    11.
+<br>
+    A scalar is a "container" containing one element, either a string or a
+    number.
+<br>
+    It is good practice to use tempnames for scalars as they share the same
+    namespace as variables
+<br>
+    <b>tempname</b> stores the names it reserves in a local macro, so we can use
+    <b>st_local</b> to recover that.
+<br>
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide20.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="app0">
+<pre><p align="center"><b> (solution) </b></p></pre><br><br>
+<pre class="code">
+<code>webuse hsng2, clear</code>
+<code></code>
+<code>gen byte cons = 1</code>
+<code></code>
+<code>gen byte touse = !missing(rent, pcturban, faminc, reg2, reg3, reg4, hsngval)</code>
+<code></code>
+<code>mata:</code>
+<code>y = X = Z = .</code>
+<code>st_view(y,.,"rent", "touse")</code>
+<code>st_view(X,.,"hsngval pcturban cons", "touse")</code>
+<code>st_view(Z,.,"pcturban faminc reg2 reg3 reg4 cons", "touse")</code>
+<code>end</code>
+</pre>
+<div class="txt"></p><pre>-------------------------------------------------------------------------------</pre>
+<pre><p align=center><a href="#slide23.smcl">&lt;&lt;</a></p></pre>
+<pre>-------------------------------------------------------------------------------</pre>
+</div></div><div class="slide" id="app1">
+<pre><p align="center"><b> (solution) </b></p></pre><br><br>
+<pre class="code">
+<code>webuse hsng2, clear</code>
+<code></code>
+<code>gen byte cons = 1</code>
+<code></code>
+<code>gen byte touse = !missing(rent, pcturban, faminc, reg2, reg3, reg4, hsngval)</code>
+<code></code>
+<code>mata:</code>
+<code>y = X = Z = .</code>
+<code>st_view(y,.,"rent", "touse")</code>
+<code>st_view(X,.,"hsngval pcturban cons", "touse")</code>
+<code>st_view(Z,.,"pcturban faminc reg2 reg3 reg4 cons", "touse")</code>
+<code></code>
+<code>ZZi = invsym(cross(Z, Z))</code>
+<code>M= Z*ZZi*Z'</code>
+<code>b = invsym(X'*M*X)*X'*M*y</code>
+<code>b</code>
+<code>end</code>
+<code></code>
+<code>ivregress 2sls rent pcturban (hsngval = faminc i.region), small</code>
+</pre>
+<div class="txt"></p><pre>-------------------------------------------------------------------------------</pre>
+<pre><p align=center><a href="#slide25.smcl">&lt;&lt;</a></p></pre>
+<pre>-------------------------------------------------------------------------------</pre>
+</div></div><div class="slide" id="app2">
+<pre><p align="center"><b> (solution) </b></p></pre><br><br>
+<pre class="code">
+<code>webuse hsng2, clear</code>
+<code></code>
+<code>gen byte cons = 1</code>
+<code></code>
+<code>gen byte touse = !missing(rent, pcturban, faminc, reg2, reg3, reg4, hsngval)</code>
+<code></code>
+<code>mata:</code>
+<code>y = X = Z = .</code>
+<code>st_view(y,.,"rent", "touse")</code>
+<code>st_view(X,.,"hsngval pcturban cons", "touse")</code>
+<code>st_view(Z,.,"pcturban faminc reg2 reg3 reg4 cons", "touse")</code>
+<code></code>
+<code>ZZi = invsym(cross(Z, Z))</code>
+<code>M= Z*ZZi*Z'</code>
+<code>b = invsym(X'*M*X)*X'*M*y</code>
+<code></code>
+<code>k = cols(X) </code>
+<code>N = rows(X)</code>
+<code>res = y - X*b</code>
+<code>ess = quadcross(res,res)</code>
+<code>s2 = ess/(N-k)</code>
+<code>Var = s2*invsym(X'*M*X)</code>
+<code>sqrt(diagonal(Var))</code>
+<code>end</code>
+<code></code>
+<code>ivregress 2sls rent pcturban (hsngval = faminc i.region), small</code>
+</pre>
+<div class="txt"></p><pre>-------------------------------------------------------------------------------</pre>
+<pre><p align=center><a href="#slide27.smcl">&lt;&lt;</a></p></pre>
+<pre>-------------------------------------------------------------------------------</pre>
+</div></div><div class="slide" id="app3">
+<pre><p align="center"><b> (solution) </b></p></pre><br><br>
+<pre class="code">
+<code>webuse hsng2, clear</code>
+<code></code>
+<code>gen byte cons = 1</code>
+<code></code>
+<code>gen byte touse = !missing(rent, pcturban, faminc, reg2, reg3, reg4, hsngval)</code>
+<code></code>
+<code>tempname b V</code>
+<code></code>
+<code>mata:</code>
+<code>y = X = Z = .</code>
+<code>st_view(y,.,"rent", "touse")</code>
+<code>st_view(X,.,"hsngval pcturban cons", "touse")</code>
+<code>st_view(Z,.,"pcturban faminc reg2 reg3 reg4 cons", "touse")</code>
+<code></code>
+<code>ZZi = invsym(cross(Z, Z))</code>
+<code>M= Z*ZZi*Z'</code>
+<code>b = invsym(X'*M*X)*X'*M*y</code>
+<code></code>
+<code>k = cols(X) </code>
+<code>N = rows(X)</code>
+<code>res = y - X*b</code>
+<code>ess = quadcross(res,res)</code>
+<code>s2 = ess/(N-k)</code>
+<code>Var = s2*invsym(X'*M*X)</code>
+<code>sqrt(diagonal(Var))</code>
+<code></code>
+<code>st_matrix(st_local("b"),b')</code>
+<code>st_matrix(st_local("V"),Var)</code>
+<code>st_local("df_r",strofreal(N-k))</code>
+<code>st_local("N", strofreal(N))</code>
+<code>end</code>
+<code></code>
+<code>local xnames `""pcturban" "faminc" "_cons""'</code>
+<code>matrix colnames `b' = `xnames'</code>
+<code>matrix colnames `V' = `xnames'</code>
+<code>matrix rownames `V' = `xnames'</code>
+<code>ereturn post `b' `V', dof(`df_r') obs(`N') esample(touse)</code>
+<code>ereturn display</code>
+<code></code>
+<code>ivregress 2sls rent pcturban (hsngval = faminc i.region), small</code>
+</pre>
+<div class="txt"></p><pre>-------------------------------------------------------------------------------</pre>
+<pre><p align=center><a href="#slide29.smcl">&lt;&lt;</a></p></pre>
+<pre>-------------------------------------------------------------------------------</pre>
+</div></div>
+</body>
+</html>

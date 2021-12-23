@@ -1,0 +1,47 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: The variance covariance matrix}}
+
+{pstd}{cmd:Var(b)} = s2*{cmd:X}'{cmd:X}^-1{p_end}
+{pstd}s2 = ess/(N-k){p_end}
+{pstd}ess = ({cmd:y}-{cmd:Xb})'({cmd:y}-{cmd:Xb}){p_end}
+{pstd}N = rows({cmd:X}){p_end}
+{pstd}k = cols({cmd:X}) + 1   (the +1 for the constant){p_end}
+ 
+{* ex slide26ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        gen byte touse = !missing(wage, grade, union, ttl_exp, tenure, south)
+        
+        mata:
+        X=y=.
+        st_view(X,.,"grade union ttl_exp tenure south", "touse")
+        st_view(y,.,"wage", "touse")
+        XX = cross(X,1, X,1)
+        Xy = cross(X,1, y,0)
+        b = invsym(XX)*Xy
+        
+        N = rows(X)
+        k = cols(X) + 1
+        cons = J(N,1,1)
+        res = y - (X,cons)*b
+        ess = cross(res,res)
+        s2 = ess/(N-k)
+        Var = s2*invsym(XX)
+        sqrt(diagonal(Var))
+        end
+        reg wage grade union ttl_exp tenure south
+{txt}{...}
+{pstd}({stata "do slide26ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide25.smcl:<<}   {view presentation.smcl:index}   {view slide27.smcl:>>}}
+{hline}

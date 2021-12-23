@@ -1,0 +1,77 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
+{hline}
+
+{center:{bf: include in Stata program}}
+
+{pstd}
+We want to use it in a Stata program
+ 
+{* ex slide51ex1 }{...}
+{cmd}
+        sysuse auto, clear
+        program drop _all
+        
+        mata:
+        mata clear
+        mata set matastrict on
+        
+        void logiteval(transmorphic M, real rowvector b, real colvector lnf)
+        {
+            real colvector xb
+            real colvector y
+            
+            xb = moptimize_util_xb(M, b, 1)
+            y  = moptimize_util_depvar(M,1)
+            
+            lnf = y:*ln(invlogit(xb)) + (1:-y):*ln(invlogit(-xb)) 
+        }
+        
+        void logitwork(string scalar depvar, string scalar indepvars)
+        {
+            transmorphic M
+            M = moptimize_init()
+            moptimize_init_evaluatortype(M, "lf")
+            moptimize_init_evaluator(M, &logiteval())
+            moptimize_init_touse(M, st_local("touse"))
+            moptimize_init_ndepvars(M,1)
+            moptimize_init_depvar(M, 1, depvar)
+            moptimize_init_eq_indepvars(M,1,indepvars) 
+            moptimize_init_valueid(M, "log likelihood")
+            moptimize(M)
+            moptimize_result_display(M)
+            moptimize_result_post(M)
+        }
+        
+        end
+        
+        program define my_logit, eclass
+            version 16
+            syntax varlist [if] [in]
+            
+            marksample touse
+            
+            _rmcoll `varlist' if `touse' , ///
+                logit touse(`touse')       // options specific to logit (detect perfect predictions)
+            
+            local varlist `r(varlist)'
+            gettoken y x : varlist
+            
+            mata logitwork("`y'", "`x'")
+        end
+        
+        my_logit foreign price weight
+        logit foreign price weight
+        
+{txt}{...}
+{pstd}({stata "do slide51ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide50.smcl:<<}   {view presentation.smcl:index}   {view slide52.smcl:>>}}
+{hline}

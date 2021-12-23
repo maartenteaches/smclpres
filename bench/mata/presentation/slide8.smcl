@@ -1,0 +1,101 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} How is Mata different from Stata{p_end}
+{hline}
+
+{center:{bf: creating variables}}
+
+{pstd}
+You create a variable with {cmd:=}
+ 
+{* ex slide8ex1 }{...}
+{cmd}
+        mata:
+        A = 1 , 2 \
+            3 , 4
+        
+        A    
+        end
+{txt}{...}
+{pstd}({stata "do slide8ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Some functions return things that can be stored as a variable
+ 
+{* ex slide8ex2 }{...}
+{cmd}
+        mata:
+        A = J(3,3,34)
+        A
+        
+        A = I(3,3)
+        A
+        
+        A = J(2,1,a)
+        A
+        end
+{txt}{...}
+{pstd}({stata "do slide8ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+You can have matrices with 0 rows or columns or both. This can be helpful 
+starting point when you want to successively add collumns or rows to a matrix.
+
+{pmore}
+Note: Starting with complete matrix and successively changing the content of rows
+and columns is a lot quicker than changing the number of rows and columns of a 
+matrix. 
+ 
+{* ex slide8ex3 }{...}
+{cmd}
+        mata:
+        A = J(2,0,.)
+        
+        A = A , (2 \ 3)
+        A
+        end
+{txt}{...}
+{pstd}({stata "do slide8ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+You can chain assignments, which can be an easy way to initialize multiple variables
+ 
+{* ex slide8ex4 }{...}
+{cmd}
+        mata:
+        a = b = 2
+        a
+        b
+        end
+{txt}{...}
+{pstd}({stata "do slide8ex4.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+You can be more fancy with that
+ 
+{* ex slide8ex5 }{...}
+{cmd}
+        mata:
+        fraction = 2 /(sum=2+3)
+        fraction
+        sum
+        end
+{txt}{...}
+{pstd}({stata "do slide8ex5.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide7.smcl:<<}   {view presentation.smcl:index}   {view slide9.smcl:>>}}
+{hline}

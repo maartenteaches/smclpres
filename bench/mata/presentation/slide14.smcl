@@ -1,0 +1,28 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} precision{p_end}
+{hline}
+
+{center:{bf: binary versus decimal}}
+
+{pstd}
+There is a limit on how precise numbers are stored on computers
+
+{pstd}
+If a computer stored numbers in decimal format we would not be surprised that we
+could not store the number 1/3 exactly; we would have to stop storing 3s 
+otherwise we would need an infinite amount of memory to store one number.
+
+{pstd}
+A computer however stores numbers in binary format. In binary some numbers we would
+not consider problematic, are actualy like 1/3. The most common example is 0.1. 
+
+{pstd}
+So a lot of numbers we think are perfectly "normal" are in a computer actually 
+rounded versions of that number.
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide13.smcl:<<}   {view presentation.smcl:index}   {view slide15.smcl:>>}}
+{hline}

@@ -1,0 +1,53 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Turning it into a Mata class{p_end}
+{hline}
+
+{center:{bf: Passing parameters to our class}}
+
+{pstd}
+For safety you normally would not want users to directly access variables
+
+{pstd}
+Instead you would want them to go through a function
+
+{cmd}
+    class hist_gen {
+        string                  scalar    fn_stopwords
+        class  AssociativeArray scalar    stopwords
+        string                  scalar    fn
+        class  AssociativeArray scalar    hist
+        string                  rowvector punct
+        
+        transmorphic                      fn_stopwords()
+        void                              make_hist()       
+        void                              setup()           
+        void                              parse_stopwords() 
+        void                              count_words()     
+        string                  rowvector parse_line()      
+        real                    scalar    valid_word()      
+        void                              to_stata()        
+    }
+
+    transmorphic hist_gen::fn_stopwords(| string scalar val)
+    {
+        if (args() == 1) {
+            // here you can put checks if val is appropriate for that variable
+            fn_stopwords = val
+        }
+        else {
+            return(fn_stopwords)
+        }
+    }
+{txt}
+
+{pstd}
+Make functions for {cmd:fn}, and {cmd:punct}
+
+//apcodefile hist07.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide83.smcl:<<}   {view presentation.smcl:index}   {view slide85.smcl:>>}}
+{hline}

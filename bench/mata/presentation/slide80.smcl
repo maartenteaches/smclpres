@@ -1,0 +1,45 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
+{hline}
+
+{center:{bf: Common "meaningless" words}}
+
+{pstd}
+There are some words that are very common, but don't interest us
+
+{pstd}
+For example, "der", "die", und "das" 
+ 
+{* ex slide80ex1 }{...}
+{cmd}
+        mata: hist.get("die")
+{txt}{...}
+{pstd}({stata "do slide80ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+So we don't want to count those
+
+{pstd}
+The file "stop_words_german.txt" contains a list of these words
+
+{pstd}
+We can read that file into Mata using {helpb mata fopen():fopen()}
+
+{pstd}
+Put all words in an associative array called stopwords (with a value 1, which 
+does not matter)
+
+{pstd}
+When we count the words from the main file, we first check if that words exists
+in the array stopwords (stopwords.exists()) and only count if that is not the case
+
+//apcodefile hist03.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide79.smcl:<<}   {view presentation.smcl:index}   {view slide81.smcl:>>}}
+{hline}

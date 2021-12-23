@@ -1,0 +1,74 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} moving data between Stata and Mata{p_end}
+{hline}
+
+{center:{bf: reading data from Stata in Mata}}
+
+{pstd}
+You can store parts of a Stata dataset as a matrix using {helpb mf_st_data:st_data()}.
+
+{pstd}
+In its simplest form it accepts two arguments{p_end}
+{pmore}The first argument specifies the rows{p_end}
+{pmore}The second argument specifies the columns{p_end}
+ 
+{* ex slide17ex1 }{...}
+{cmd}
+        sysuse auto, clear
+        
+        mata:
+        y = st_data(.,"foreign rep78")
+        y
+        end
+{txt}{...}
+{pstd}({stata "do slide17ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Notice that we have missing values, which we may want to ignore
+
+{pstd}
+One posibility is to set a third argument equal to 0. This will ignore all
+observations with at least one missing value on one of the specified variables.
+ 
+{* ex slide17ex2 }{...}
+{cmd}
+        mata: 
+        y = st_data(.,"foreign rep78", 0)
+        y
+        end
+{txt}{...}
+{pstd}({stata "do slide17ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Alternatively, that third argument can be a variable
+
+{pstd}
+non-zero values indicate that that observation is to be included, while a value 
+of zero means that that observation is to be ignored
+
+{pstd}
+In programming, this is the most common way to do this
+ 
+{* ex slide17ex3 }{...}
+{cmd}
+        gen byte touse = !missing(foreign, rep78)
+        mata:
+        y = st_data(.,"foreign rep78", "touse")
+        y
+        end
+{txt}{...}
+{pstd}({stata "do slide17ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide16.smcl:<<}   {view presentation.smcl:index}   {view slide18.smcl:>>}}
+{hline}

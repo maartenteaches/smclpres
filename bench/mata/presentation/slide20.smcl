@@ -1,0 +1,102 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} moving data between Stata and Mata{p_end}
+{hline}
+
+{center:{bf: reading and writing matrices and macros from Stata}}
+
+{pstd}
+Stata also has matrices, and we may want to load those in Stata. We do that with
+the {helpb mata st_matrix():st_matrix()} function.
+
+{pstd}
+For example, {cmd:regress} leaves the coefficients as the rowvector e(b)
+ 
+{* ex slide20ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        reg wage i.union i.race i.south grade ttl_exp
+        
+        mata:
+        b = st_matrix("e(b)")
+        b
+        end
+{txt}{...}
+{pstd}({stata "do slide20ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+We can also use {cmd:st_matrix()} to copy matrices from Mata to Stata
+ 
+{* ex slide20ex2 }{...}
+{cmd}
+        mata:
+        X = 1,2 \ 
+            3,4
+        st_matrix("X",X)    
+        end
+        
+        matlist X
+{txt}{...}
+{pstd}({stata "do slide20ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+We can also read the content of {helpb macro:macros} and {helpb scalar:scalars}
+from Stata into Mata using {helpb mata st_local():st_local()} and 
+{helpb mf_st_numscalar: st_scalar()}
+
+{pstd}
+we can use the same functions to write to Stata
+
+{pstd}
+There are some {* digr <a href="#slide21.smcl">&gt;&gt; arcana of macros and scalars in Stata</a>}{view slide21.smcl:>> arcana of macros and scalars in Stata}{* /digr} to consider
+ 
+{* ex slide20ex3 }{...}
+{cmd}
+        tempname realnumber
+        local nirv "here we are now, entertain us"
+        mata:
+        st_local("nirv")
+        st_local("greetings", "Hello")
+        st_local("number", strofreal(42))
+        st_numscalar(st_local("realnumber"), 42)
+        end
+        di "`greetings'"
+        di `number'
+        di `realnumber'
+{txt}{...}
+{pstd}({stata "do slide20ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+We have already seen that we can access returned matrices using {cmd:st_matrix()}
+
+{pstd}
+Returned string scalars can be accessed using {cmd:st_global()}
+
+{pstd}
+Returned numeric scalars can be accessed using {cmd:st_numscalar()}
+ 
+{* ex slide20ex4 }{...}
+{cmd}
+        ereturn list
+        
+        mata:
+        st_global("e(title)")
+        st_numscalar("e(N)")
+        end
+{txt}{...}
+{pstd}({stata "do slide20ex4.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide19.smcl:<<}   {view presentation.smcl:index}   {view slide22.smcl:>>}}
+{hline}

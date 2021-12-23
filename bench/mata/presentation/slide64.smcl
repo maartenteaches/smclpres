@@ -1,0 +1,47 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} Pointers{p_end}
+{hline}
+
+{center:{bf: Passing functions to functions}}
+
+{pstd}
+A common application of pointers is to pass a function to another function.
+
+{pstd}
+A pointer can point to functions as well as data
+ 
+{* ex slide64ex1 }{...}
+{cmd}
+        mata:
+        mata clear
+        
+        void greetings(string scalar who)
+        {
+            printf("Hello " + who)
+        }   
+        
+        p = &greetings()
+        
+        (*p)("BIBB")
+        end
+{txt}{...}
+{pstd}({stata "do slide64ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+We have seen an application in {cmd:moptimize}
+
+{pstd}
+We created a function {cmd:logiteval()} that computes our log likelihood, and we
+needed to pass that on to {cmd:moptimize}, which we did with the line:
+
+{pmore}
+{cmd:moptimize_init_evaluator(M, &logiteval())}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide63.smcl:<<}   {view presentation.smcl:index}   {view slide65.smcl:>>}}
+{hline}

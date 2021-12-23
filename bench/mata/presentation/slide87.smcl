@@ -1,0 +1,30 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Wrapping up{p_end}
+{hline}
+
+{center:{bf: Useful sources}}
+
+{pstd}
+Very useful free websources for learning how to use Mata and program commands in 
+Stata are:
+
+{pmore}
+Bill Gould's {browse "https://www.stata.com/meeting/uk10/UKSUG10.Gould.pdf" :Mata, the missing manual}
+presented at the 2010 UK Stata Users' Group meeting.
+
+{pmore}
+David Drukker's Blog {browse "https://blog.stata.com/2016/01/15/programming-an-estimation-command-in-stata-a-map-to-posted-entries/" :Programming an estimation command in Stata} 
+
+{pstd}
+If you want to dive deep into Mata, then you cannot go wrong with 
+
+{pmore}
+William W. Gould (2018), {it:The Mata Book: A Book for Serious Programmers and Those Who Want to Be}.  
+College Station, TX: The Stata Press.
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide86.smcl:<<}   {view presentation.smcl:index}     }
+{hline}

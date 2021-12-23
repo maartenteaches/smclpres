@@ -1,0 +1,22 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} How is Mata different from Stata{p_end}
+{hline}
+
+{center:{bf: What is Mata}}
+
+{pstd}Mata is a programming language, that works well with{p_end}
+{pmore}matrices{p_end}
+{pmore}strings{p_end}
+{pmore}Stata{p_end}
+
+{pstd}Stata reads instructions (commands) one line at the time{p_end}
+
+{pstd}
+Mata is compiled, making it faster 
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:     {view presentation.smcl:index}   {view slide2.smcl:>>}}
+{hline}

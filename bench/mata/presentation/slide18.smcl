@@ -1,0 +1,73 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} moving data between Stata and Mata{p_end}
+{hline}
+
+{center:{bf: storing data from Mata in Stata}}
+
+{pstd}
+We can store a matrix in Mata as (a) variable(s) using {helpb st_store()}
+
+{pstd}
+This will replace existing variables
+ 
+{* ex slide18ex1 }{...}
+{cmd}
+        sysuse auto, clear
+        mata: 
+        x = st_data(.,"foreign")
+        x = x:+10
+        st_store(.,"foreign",x)
+        end
+        tab foreign
+{txt}{...}
+{pstd}({stata "do slide18ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+If we want to store our matrix as a new variable, then we first have to create 
+that variable with {helpb st_addvar}, and than replace its content with 
+{cmd:st_store()}
+ 
+{* ex slide18ex2 }{...}
+{cmd}
+        sysuse auto, clear
+        mata:
+        x = st_data(.,"foreign")
+        x = x :+ 10
+        idx = st_addvar("byte", "x")
+        st_store(.,idx, x)
+        end
+        tab foreign x
+{txt}{...}
+{pstd}({stata "do slide18ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+We can control which observations gets a value by using a selection variable
+ 
+{* ex slide18ex3 }{...}
+{cmd}
+        sysuse auto, clear
+        gen touse = !missing(foreign, rep78)
+        mata:
+        x = st_data(.,"foreign", "touse")
+        x = x :+ 10
+        idx = st_addvar("byte", "x")
+        st_store(.,idx, "touse", x)
+        end
+        tab foreign x, missing
+        tab x touse, missing
+{txt}{...}
+{pstd}({stata "do slide18ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide17.smcl:<<}   {view presentation.smcl:index}   {view slide19.smcl:>>}}
+{hline}

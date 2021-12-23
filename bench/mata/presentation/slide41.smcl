@@ -1,0 +1,17 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} basics{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+Make your own .ado file for {cmd:my_mean}
+
+//apcodefile my_mean06.ado "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide40.smcl:<<}   {view presentation.smcl:index}   {view slide42.smcl:>>}}
+{hline}

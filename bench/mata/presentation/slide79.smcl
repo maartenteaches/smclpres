@@ -1,0 +1,25 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
+{hline}
+
+{center:{bf: Capital letters}}
+
+{pstd}
+The same word can appear starting with and without a capital letter, depending
+on where it is in the sentence
+
+{pstd}
+These count now as different words
+
+{pstd}
+The easiest solution is to turn all capital letter into lower case letters with 
+the {helpb mf_strupper:strlower()} function
+
+//apcodefile hist02.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide78.smcl:<<}   {view presentation.smcl:index}   {view slide80.smcl:>>}}
+{hline}

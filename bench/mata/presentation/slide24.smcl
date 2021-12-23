@@ -1,0 +1,41 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Parameter estimates}}
+
+{pstd}
+The formula for the parameter estimates {cmd:b} in a linear regression is: {cmd:b} = {cmd:X}'{cmd:X}^-1{cmd:X}'{cmd:y}
+
+{pstd}
+Notice that I did not add the constant here. That is because I (mostly) don't 
+need to as {helpb mata cross():cross()} will do most of the computions and allows
+you to add the constant on the fly
+ 
+{* ex slide24ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        gen byte touse = !missing(wage, grade, union, ttl_exp, tenure, south)
+        
+        mata:
+        X=y=.
+        st_view(X,.,"grade union ttl_exp tenure south", "touse")
+        st_view(y,.,"wage", "touse")
+        XX = cross(X,1, X,1)
+        Xy = cross(X,1, y,0)
+        b = invsym(XX)*Xy
+        b
+        end
+        reg wage grade union ttl_exp tenure south
+{txt}{...}
+{pstd}({stata "do slide24ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide23.smcl:<<}   {view presentation.smcl:index}   {view slide25.smcl:>>}}
+{hline}

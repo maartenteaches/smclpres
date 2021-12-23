@@ -1,0 +1,18 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} basics{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+Create a similar function {cmd:my_mean()} which returns the mean (ignoring the 
+fact that Mata already has a function {helpb mf_mean:mean()})
+
+//apcodefile my_mean01.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide30.smcl:<<}   {view presentation.smcl:index}   {view slide32.smcl:>>}}
+{hline}

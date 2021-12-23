@@ -1,0 +1,28 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
+{hline}
+
+{center:{bf: punctuation}}
+
+{pstd}
+One problem is that punctiation marks are still attached to the words. So 
+"Menschen." is counted as a different word as "Menschen"
+
+{pstd}
+We could make a string with all the punctuation marks we want to remove 
+(separated by spaces)
+
+{pstd}
+use {helpb mf_tokens:tokens()} to turn that into a vector
+
+{pstd}
+use {helpb Mata subinstr()} to remove those (i.e. replace it with an empty string "")
+
+//apcodefile hist01.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide77.smcl:<<}   {view presentation.smcl:index}   {view slide79.smcl:>>}}
+{hline}

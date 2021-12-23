@@ -1,0 +1,85 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
+{hline}
+
+{center:{bf: Maximum Likelihood}}
+
+{pstd}
+You start with a model, which has parameters, and dataset
+
+{pstd}
+Find those parameters that maximize the probability of observing the data 
+assuming the model is true
+
+{pstd}
+{cmd:Example:} 
+
+{pmore}
+We want to know the probability that someone is a member of a trade 
+union
+
+{pmore}
+Data: N persons and a binary variable {it:union}, which is 1 when the person is
+a union member, and 0 when not
+
+{pmore}
+The model: There is a fixed probability {it:pi} that a person is a member
+
+{pmore}
+The likelihood: If someone is a member, then the probability of seeing such a 
+person is {it:pi}
+
+{pmore}
+If someone is not a member then the probability of observing that person is 
+(1-{it:pi})
+
+{pmore}
+Say we observe 3 union members and 2 non-members, then the likelihood is :
+
+{pmore}
+L({it:pi}|data) = {it:pi}*{it:pi}*{it:pi}*(1-{it:pi})*(1-{it:pi})
+
+{pmore}
+L({it:pi}|data) = Prod({it:pi}^union * (1-{it:pi})^(1-union)
+
+{pmore}
+We need to find the value of {it:pi} that maximizes L
+
+{pstd}
+It is actually more convenient to maximize the log of the likelihood
+
+{pstd}
+Remember:{p_end}
+{pmore}ln(a*b) = ln(a) + ln(b){p_end}
+{pmore}ln(a^b) = b ln(a){p_end}
+
+{pmore}
+ln(L({it:pi}|data)) = ln(Prod({it:pi}^union * (1-{it:pi})^(1-union))
+
+{pmore}
+ln(L({it:pi}|data)) = sum(ln({it:pi}^union) + ln((1-{it:pi})^(1-union))
+
+{pmore}
+ln(L({it:pi}|data)) = sum(union*ln({it:pi}) + (1-union)*ln(1-{it:pi})
+
+{pstd}
+Typically, we don't think there is one probability for everybody, but we are 
+interested in how that probability differs depending on explanatory variables
+
+{pstd}
+So we replace {it:pi} with a function of of those explanatory variables
+
+{pstd}
+A common choice is the logit function:{p_end}
+{pmore}xb = b_0 + b_1 x_1 + b_2 x_2 + ...{p_end}
+{pmore}{it:pi}= exp(xb)/(1-exp(xb)) = invlogit(xb){p_end}
+
+{pstd}
+This is logistic regression
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide47.smcl:<<}   {view presentation.smcl:index}   {view slide49.smcl:>>}}
+{hline}

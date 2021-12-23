@@ -1,0 +1,76 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} matrix operations {p_end}
+{hline}
+
+{center:{bf: arithmatic}}
+
+{pstd}
+Matrix addition, subtraction, and multiplication work as you would expect with 
+the {cmd:+}, {cmd:-}, and {cmd:*} operators:
+ 
+{* ex slide9ex1 }{...}
+{cmd}
+        mata:
+        A = 1 , 2 \        
+            3 , 2           
+        
+        b = 1     \
+            2
+        
+        C = 2 , 4 \   
+            1 , 3    
+        
+        A + C 
+        
+        A - C 
+        
+        A * C 
+        
+        A * b
+        end 
+{txt}{...}
+{pstd}({stata "do slide9ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Multiplication of a matrix by a scalar works as expected
+
+{pstd}
+By analogy, division by a scalar works just fine with the {cmd:/} operator
+
+{pstd}
+The {cmd:/} operator does not work matrix division
+ 
+{* ex slide9ex2 }{...}
+{cmd}
+        mata:
+        A*2
+        A/2
+        A / C
+        end
+{txt}{...}
+{pstd}({stata "do slide9ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+You can transpose a matrix with {cmd:'}
+ 
+{* ex slide9ex3 }{...}
+{cmd}
+        mata:
+        b'
+        end
+{txt}{...}
+{pstd}({stata "do slide9ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide8.smcl:<<}   {view presentation.smcl:index}   {view slide10.smcl:>>}}
+{hline}

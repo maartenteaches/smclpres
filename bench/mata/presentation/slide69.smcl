@@ -1,0 +1,23 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} associative array{p_end}
+{hline}
+
+{center:{bf: What is an associative array}}
+
+{pstd}
+In a matrix the rows and columns are numbered, and we refer to the cells by these
+row and column numbers
+
+{pstd}
+What if we could use names instead of numbers, and what if we could store anything
+we want in the cells?
+
+{pstd}
+That is an {helpb mf_associativearray:associative array}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide68.smcl:<<}   {view presentation.smcl:index}   {view slide70.smcl:>>}}
+{hline}

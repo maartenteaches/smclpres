@@ -481,7 +481,7 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 {
     if (cmd=="toc") {
         if      (opt == "secthline"         ) p_hline(cmd, opt, arg, file , line)
-        else if (opt == "secbhlil"          )  p_hline(cmd, opt, arg, file , line)
+        else if (opt == "secbhline"         ) p_hline(cmd, opt, arg, file , line)
 		else if (opt == "nosubtitlethline"  ) p_hline(cmd, opt, arg, file , line)
 		else if (opt == "nosubtitlebhline"  ) p_hline(cmd, opt, arg, file , line)
 		else if (opt == "itemize"           ) p_toc_itemize(cmd, opt, arg, file , line)

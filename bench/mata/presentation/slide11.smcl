@@ -1,0 +1,64 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} matrix operations {p_end}
+{hline}
+
+{center:{bf: Subscripting}}
+
+{pstd}
+We can get at cells in a matrix using {cmd:[]}:
+ 
+{* ex slide11ex1 }{...}
+{cmd}
+        mata:
+        A
+        b
+        
+        A[2,1]
+        b[2]
+        end
+{txt}{...}
+{pstd}({stata "do slide11ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+We can also get at multiple cells
+ 
+{* ex slide11ex2 }{...}
+{cmd}
+        mata:
+        D = A, b
+        D
+        D[2,.]
+        D[.,2]
+        D[1,(2,3)]
+        end
+{txt}{...}
+{pstd}({stata "do slide11ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+We can also specify the starting cell and the ending cell, and get the entire 
+submatrix between those using {cmd:[||]}
+
+{pstd}
+This can be faster
+ 
+{* ex slide11ex3 }{...}
+{cmd}
+        mata:
+        D[|1,2 \ 1,3|]
+        end
+{txt}{...}
+{pstd}({stata "do slide11ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide10.smcl:<<}   {view presentation.smcl:index}   {view slide12.smcl:>>}}
+{hline}

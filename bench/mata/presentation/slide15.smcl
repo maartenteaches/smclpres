@@ -1,0 +1,53 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} precision{p_end}
+{hline}
+
+{center:{bf: how a number is stored}}
+
+{pstd}
+So how are numbers stored? 
+
+{pstd}
+We could say that we store a number up to 6 digits 
+after the decimal point (ignoring that they  are actually stored in binary)
+
+{pstd}
+This is problematic
+
+{pmore}
+We would store the number 1,000,000 with 13 significant digits
+
+{pmore}
+While we would store the number 0.0001 with only 3 significant digits
+
+{pstd}
+Instead a number is stored in three parts: the sign and two numbers, lets call
+them a and b
+
+{pstd}
+If we would store the number in decimal format the number stored would then be
+sign * a * 10^b
+
+{pstd}
+So if we decided on 6 significant digits we would store the number 1,000,000 as
++1*1.00000*10^6 and the number 0.0001 as +1*1.00000*10^-4
+
+{pstd}
+In real computers both a and b are binary numbers and we don't use 10^b, but 2^b
+
+{pstd}
+In Mata all real numbers are stored in "double precision":{p_end}
+{pmore}A number is stored using 8 bytes, i.e. 64 bits{p_end}
+{pmore}1 bit is used for the sign{p_end}
+{pmore}11 bits are used for the exponent (b){p_end}
+{pmore}The remaining 52 bits are used for the fractional part (a){p_end}
+{pmore}27 of the possible configurations of bits are reserved for missing values (., .a, .b, .., .z){p_end}
+{pmore}2 possible configurations of bits are reserved for 0 (+0 and -0)
+
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide14.smcl:<<}   {view presentation.smcl:index}   {view slide16.smcl:>>}}
+{hline}

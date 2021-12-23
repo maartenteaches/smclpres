@@ -1,0 +1,17 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+Do the same to your 2sls program
+
+//apcodefile my_2sls07.ado "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide46.smcl:<<}   {view presentation.smcl:index}   {view slide48.smcl:>>}}
+{hline}

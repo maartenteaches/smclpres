@@ -1,0 +1,17 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} basics{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+Check if the variable is numeric in your {cmd:my_mean()} function
+
+//apcodefile my_mean02.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide32.smcl:<<}   {view presentation.smcl:index}   {view slide34.smcl:>>}}
+{hline}

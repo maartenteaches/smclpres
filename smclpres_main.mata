@@ -116,6 +116,7 @@ class smclpres {
     struct strstate        scalar    write_graph()
     struct strstate        scalar    write_ho_ignore()
     void                             write_slides()
+    string                 scalar    remove_tab()
 
     //_smclpres_bib.mata
     real                   scalar    nbrace()

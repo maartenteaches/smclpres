@@ -1,0 +1,29 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Turn it into a .ado file}}
+
+{pstd}
+As before, all we need to do is clean up, put the Mata code at the bottom of the
+file, and save it as an .ado file
+
+//codefile my_regress.ado "the file"
+ 
+{* ex slide46ex1 }{...}
+{cmd}
+        sysuse auto
+        my_regress price weight length mpg
+        regress price weight length mpg
+{txt}{...}
+{pstd}({stata "do slide46ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide45.smcl:<<}   {view presentation.smcl:index}   {view slide47.smcl:>>}}
+{hline}

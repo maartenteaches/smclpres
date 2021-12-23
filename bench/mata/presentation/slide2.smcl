@@ -1,0 +1,49 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} How is Mata different from Stata{p_end}
+{hline}
+
+{center:{bf: Mata and Stata}}
+
+{pstd}
+Stata is high level language, which means that we humans can focus on the big 
+picture because a lot of the details have already been preprogrammed.
+
+{pstd}
+For example, in Stata we can type {cmd:regress income female educ}, and we 
+can think of this as a shorthand for the following conversation between me and 
+Stata:
+
+{pmore}{bf:me}:    Hi Stata. I want to run a linear regression today{p_end}
+{pmore}{bf:Stata}: Hi Maarten. Great, I know how to do that. What dependent 
+variable do you want to use?{p_end}
+{pmore}{bf:me}:      income{p_end}
+{pmore}{bf:Stata}: OK, I found it. Do you want to use any independent variables?{p_end}
+{pmore}{bf:me}:    Yes, female and educ{p_end}
+{pmore}{bf:Stata}: Ok, I also found those. Do you want to limit the sample in 
+any way? Do you want to use weights? Is there a specific type of standard error
+you wish to see?{p_end}
+{pmore}{bf:me}:    No, I am good. You can start now.{p_end}
+{pmore}{bf:Stata}: OK, here are your results.{p_end}
+
+{pstd}
+Mata is a lower level language, which means the humans have more control and it 
+often runs faster because less is preprogrammed.
+
+{pstd}
+If I try to do the same as above then we are going to have a very long conversation...
+
+{pmore}{bf:me}:    Hi Mata. I want to run a linear regression today{p_end}
+{pmore}{bf:Mata}:  Hi Maarten. What is a "linear regression"?{p_end}
+{pmore}{bf:me}:    Oh, it is a model where look at the relationship between variables{p_end}
+{pmore}{bf:Mata}:  What is a variable?{p_end}
+{pmore}{bf:me}:    Oh, it is a column in a matrix{p_end}
+{pmore}{bf:Mata}:  I know what that is. Where shall I find that matrix? How shall 
+we keep track of these “variables”? I love integers. Names, you say? Are those 
+like strings? I have really long strings. Really, however, integers are better.{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide1.smcl:<<}   {view presentation.smcl:index}   {view slide3.smcl:>>}}
+{hline}

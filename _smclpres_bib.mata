@@ -304,7 +304,7 @@ void smclpres::write_bib(struct strstate scalar state)
     string scalar err
 
     exopen(state, "bibliography")
-	slideopen(state, "bibliography")
+	noslideopen(state, "bibliography")
 	txtopen(state, "bibliograph")
 	if (state.snr != bib.bibslide) {
 		err = "{p}{err}tried adding a bibliography on a non bibliography slide{p_end}"

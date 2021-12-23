@@ -1,0 +1,72 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} basics{p_end}
+{hline}
+
+{center:{bf: declare your variables}}
+
+{pstd}
+It is good practice to first declare the variables you make in a functions, that 
+is, tell Mata what kind of variable it is
+
+{pstd}
+This will make your function (a bit) faster
+
+{pstd}
+It provides a built in check whether what you create is actually what you think 
+it should be.
+
+{pstd}
+You can force yourself to declare your variables by setting {cmd:matastrict} to on.
+ 
+{* ex slide36ex1 }{...}
+{cmd}
+        mata:
+        mata clear
+        mata set matastrict on
+        
+        real rowvector my_median(string scalar varn)
+        {
+            real scalar k, i, n, index
+            real rowvector median
+            real colvector x
+            
+            varn = tokens(varn)
+            k = cols(varn)
+            median = J(1,k,.)
+            
+            for(i=1; i<=k; i++) {
+                if (st_isnumvar(varn[i])==0) exit(error(108))   
+                x = st_data(.,varn[i], 0)
+                n = rows(x)
+                _sort(x,1)
+                if (mod(n,2)==1) {
+                    index = ceil(n/2)
+                    median[i] = x[index]
+                }
+                else {
+                    index = floor(n/2)
+                    median[i] = x[index]
+                    index = index + 1
+                    median[i] = (median[i] + x[index])/2
+                }
+            }
+            
+            return(median)
+        }
+        end
+        
+        sysuse nlsw88, clear
+        mata: my_median("tenure ttl_exp")
+        sum tenure ttl_exp, detail
+{txt}{...}
+{pstd}({stata "do slide36ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide35.smcl:<<}   {view presentation.smcl:index}   {view slide37.smcl:>>}}
+{hline}

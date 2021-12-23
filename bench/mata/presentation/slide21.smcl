@@ -1,0 +1,90 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:digression}{p_end}
+{hline}
+
+{center:{bf: macros and scalars in Stata}}
+
+{pstd}
+A macro is a shorthand, it is one thing standing for another
+
+{pstd}
+It can contain anything, but is always a string
+ 
+{* ex slide21ex1 }{...}
+{cmd}
+        local mac "foo"
+        di `mac'
+{txt}{...}
+{pstd}({stata "do slide21ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+I said that the content of a macro is always a string, then why did this return 
+an error?
+
+{pstd}
+The double quotes are there to indicate that this is a string, but they are not 
+part of the string.
+
+{pstd}
+So `mac' contains {it:foo} not {it:"foo"}
+
+{pstd}
+So for the second line Stata saw {cmd:di foo}, and since there were no double 
+quotes Stata assumed we wanted to look at a variable (or scalar) foo, could not
+find that variable and returned the error message.
+
+{pstd}
+This will work:
+ 
+{* ex slide21ex2 }{...}
+{cmd}
+        local mac "foo"
+        di "`mac'"
+{txt}{...}
+{pstd}({stata "do slide21ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Because the quotes are stripped, macros may also contain numbers.
+
+{pstd}
+They are stored as strings, but as soon as Stata replaces the name of the macro
+with its content it will see them as numbers, as there are no quotes around them.
+ 
+{* ex slide21ex3 }{...}
+{cmd}
+        local mac 1
+        di `mac'
+{txt}{...}
+{pstd}({stata "do slide21ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+However, numbers stored in macros are not quite as precise as numbers stored in
+scalars.
+
+{pstd}
+Scalars are stored in double precision (15-16 decimal digits), while locals have
+about 12 decimal digits, sometimes more, but never less than 11.
+
+{pstd}
+A scalar is a "container" containing one element, either a string or a number.
+
+{pstd}
+It is good practice to use tempnames for scalars as they share the same namespace
+as variables
+
+{pstd}
+{cmd:tempname} stores the names it reserves in a local macro, so we can use 
+{cmd:st_local} to recover that.
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide20.smcl:<<}   {view presentation.smcl:index}     }
+{hline}

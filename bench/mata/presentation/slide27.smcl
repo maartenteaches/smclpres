@@ -1,0 +1,26 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Try it yourself}}
+
+{pstd}
+The formulas for the variance covariance matrix in the 2sls estimator are:
+
+{pstd}{cmd:Var(b)} = s2*{cmd:X}'{cmd:MX}^-1{p_end}
+{pstd}s2 = ess/(N-k){p_end}
+{pstd}ess = ({cmd:y}-{cmd:Xb})'({cmd:y}-{cmd:Xb}){p_end}
+{pstd}N = rows({cmd:X}){p_end}
+{pstd}k = cols({cmd:X})    (not +1: constant is already in X){p_end}
+
+{pstd}
+Expand your do-file to create the variance covariance matrix
+
+//apcodefile tsls03.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide26.smcl:<<}   {view presentation.smcl:index}   {view slide28.smcl:>>}}
+{hline}

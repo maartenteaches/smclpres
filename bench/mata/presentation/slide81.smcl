@@ -1,0 +1,36 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
+{hline}
+
+{center:{bf: Finding the most common words}}
+
+{pstd}
+So what are the most commonly used words in this document?
+
+{pstd}
+We can extract a vector of words using {cmd:hist.keys()}, which we will call words
+
+{pstd}
+We create a new numeric vector (count) with the same number of rows, loop over 
+those and fill these cells with the corresponding counts
+
+{pstd}
+We use {helpb mata sort():order()} to create a permutation vector: The first 
+cell in that vector contains the rownumber that cell should be for it to be 
+ordered, etc. We will call that vector o
+
+{pstd}
+We can now order both words and count using {cmd:words = words[o]} and the same 
+for count
+
+{pstd}
+Do this
+
+//apcodefile hist04.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide80.smcl:<<}   {view presentation.smcl:index}   {view slide82.smcl:>>}}
+{hline}

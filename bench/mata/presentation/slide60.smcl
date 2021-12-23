@@ -1,0 +1,17 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
+{hline}
+
+{center:{bf: do it yourself}}
+
+{pstd}
+Do the same for your Poisson regression
+
+//apcodefile my_poisson06.ado "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide59.smcl:<<}   {view presentation.smcl:index}   {view slide61.smcl:>>}}
+{hline}

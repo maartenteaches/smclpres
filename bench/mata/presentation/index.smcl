@@ -1,0 +1,48 @@
+{smcl}
+
+{center:{bf:Table of content}}
+
+ 
+{* tocline }{p  4  4 2}{bf:How is Mata different from Stata}{p_end}
+{hline}
+{* tocline }{p  8  8 2}{view slide1.smcl : What is Mata}{p_end}
+{* tocline }{p  8  8 2}{view slide2.smcl : Mata and Stata}{p_end}
+{* tocline }{p  8  8 2}{view slide3.smcl : When to use which}{p_end}
+{* tocline }{p  8  8 2}{view slide4.smcl : entering and leaving Mata}{p_end}
+{* tocline }{p  8  8 2}{view slide5.smcl : Try it yourself}{p_end}
+{* tocline }{p  8  8 2}{view slide6.smcl : things persist between Mata sessions}{p_end}
+{* tocline }{p  8  8 2}{view slide7.smcl : variables}{p_end}
+{* tocline }{p  8  8 2}{view slide8.smcl : creating variables}{p_end}
+ 
+{* tocline }{p  4  4 2}{bf:matrix operations}{p_end}
+{hline}
+{* tocline }{p  8  8 2}{view slide9.smcl : arithmatic}{p_end}
+{* tocline }{p  8  8 2}{view slide10.smcl : elementwise operations}{p_end}
+{* tocline }{p  8  8 2}{view slide11.smcl : Subscripting}{p_end}
+{* tocline }{p  8  8 2}{view slide12.smcl : logic}{p_end}
+{* tocline }{p  8  8 2}{view slide13.smcl : elementwise logic}{p_end}
+ 
+{* tocline }{p  4  4 2}{bf:precision}{p_end}
+{hline}
+{* tocline }{p  8  8 2}{view slide14.smcl : binary versus decimal}{p_end}
+{* tocline }{p  8  8 2}{view slide15.smcl : how a number is stored}{p_end}
+{* tocline }{p  8  8 2}{view slide16.smcl : rounding errors: adding and subtracting}{p_end}
+ 
+{* tocline }{p  4  4 2}{bf:moving data between Stata and Mata}{p_end}
+{hline}
+{* tocline }{p  8  8 2}{view slide17.smcl : reading data from Stata in Mata}{p_end}
+{* tocline }{p  8  8 2}{view slide18.smcl : storing data from Mata in Stata}{p_end}
+{* tocline }{p  8  8 2}{view slide19.smcl : views and subviews}{p_end}
+{* tocline }{p  8  8 2}{view slide20.smcl : reading and writing matrices and macros from Stata}{p_end}
+{* tocline }{p 12 12 2}{view slide21.smcl : macros and scalars in Stata}{p_end}
+ 
+{* tocline }{p  4  4 2}{bf:Application: linear regression and instrumental variable regression}{p_end}
+{hline}
+{* tocline }{p  8  8 2}{view slide22.smcl : linear regression: getting variables}{p_end}
+{* tocline }{p  8  8 2}{view slide23.smcl : Try it yourself}{p_end}
+{* tocline }{p  8  8 2}{view slide24.smcl : Parameter estimates}{p_end}
+{* tocline }{p  8  8 2}{view slide25.smcl : Do it yourself}{p_end}
+{* tocline }{p  8  8 2}{view slide26.smcl : The variance covariance matrix}{p_end}
+{* tocline }{p  8  8 2}{view slide27.smcl : Try it yourself}{p_end}
+{* tocline }{p  8  8 2}{view slide28.smcl : Export and display the results in Stata}{p_end}
+{* tocline }{p  8  8 2}{view slide29.smcl : Do it yourself}{p_end}

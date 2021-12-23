@@ -1,0 +1,44 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} Pointers{p_end}
+{hline}
+
+{center:{bf: Try it yourself: approximating a function with a linear spline}}
+
+{pstd}
+We are writing a program to approximate a function with a set of linear splines
+
+{pstd}
+We need to find the knots
+
+{pmore}
+We start with a lower and upper bound
+
+{pmore}
+we look at the middle, and see if the approximation there is good enough
+
+{pmore}
+If it is not, we add a knots
+
+{pmore}
+We continue adding knots till the approximation is good enough
+
+{pstd}
+Here is a first attempt:
+
+//codefile sp_approx01.do "sp_approx01"
+
+{pstd}
+The function we want to approximate is now hard coded in our program. We could 
+make this more general with pointers
+
+{pstd}
+Do so
+
+//apcodefile sp_approx02.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide64.smcl:<<}   {view presentation.smcl:index}   {view slide66.smcl:>>}}
+{hline}

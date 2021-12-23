@@ -1,0 +1,116 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} basics{p_end}
+{hline}
+
+{center:{bf: Conditional statements}}
+
+{pstd}
+One of the problems with {cmd:my_median()} is that the way I computed the middle 
+observation is only valid for an uneven number of observations
+
+{pstd}
+So we want to do different computations depending on whether the number of 
+observations is even or uneven. 
+ 
+{* ex slide32ex1 }{...}
+{cmd}
+        mata:
+        mata clear
+        mata set matastrict off
+        
+        real scalar my_median(string scalar varn)
+        {
+            x = st_data(.,varn, 0)
+            n = rows(x)
+            _sort(x,1)
+            if (mod(n,2)==1) {
+                index = ceil(n/2)
+                median = x[index]
+            }
+            else {
+                index = floor(n/2)
+                median = x[index]
+                index = index + 1
+                median = (median + x[index])/2
+            }
+            return(median)
+        }
+        end
+        
+        sysuse nlsw88, clear
+        mata: my_median("tenure")
+        sum tenure, detail
+        mata: my_median("ttl_exp")
+        sum ttl_exp, detail
+{txt}{...}
+{pstd}({stata "do slide32ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Unlike Stata, in Mata we need parantheses after {helpb [M-2] if:if()}
+
+{pstd}
+The condition is between the parantheses
+
+{pstd}
+Within the braces is what we do when that condition is met
+
+{pstd}
+We can chain conditions with {cmd:else if ()} and finally {cmd:else}
+
+{pstd}
+Another thing we might want add to our function is a check if the variable we 
+receive is a numeric variable
+
+{pstd}
+If that is not true, we should return an error message
+ 
+{* ex slide32ex2 }{...}
+{cmd}
+        
+        mata:
+        mata clear
+        mata set matastrict off
+        
+        real scalar my_median(string scalar varn)
+        {
+            if (st_isnumvar(varn)==0) exit(error(108))
+            
+            x = st_data(.,varn, 0)
+            n = rows(x)
+            _sort(x,1)
+            if (mod(n,2)==1) {
+                index = ceil(n/2)
+                median = x[index]
+            }
+            else {
+                index = floor(n/2)
+                median = x[index]
+                index = index + 1
+                median = (median + x[index])/2
+            }
+            return(median)
+        }
+        end
+        
+        sysuse nlsw88, clear
+        mata: my_median("tenure")
+        sum tenure, detail
+        mata: my_median("ttl_exp")
+        sum ttl_exp, detail
+        
+        decode industry, gen(str_ind)
+        mata: my_median("str_ind")
+{txt}{...}
+{pstd}({stata "do slide32ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide31.smcl:<<}   {view presentation.smcl:index}   {view slide33.smcl:>>}}
+{hline}

@@ -1,0 +1,37 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} matrix operations {p_end}
+{hline}
+
+{center:{bf: elementwise operations}}
+
+{pstd}
+Alternatively, you sometimes want to do something element by element 
+
+{pstd}
+For that you can add a colon in front of many operators
+ 
+{* ex slide10ex1 }{...}
+{cmd}
+        mata:
+        A
+        b
+        C
+        
+        A:*C
+        A:*b
+        A:*b'
+        end
+{txt}{...}
+{pstd}({stata "do slide10ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pmore}
+What rules does {cmd::*} apply to these matrices?
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide9.smcl:<<}   {view presentation.smcl:index}   {view slide11.smcl:>>}}
+{hline}

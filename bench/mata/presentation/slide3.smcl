@@ -1,0 +1,25 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} How is Mata different from Stata{p_end}
+{hline}
+
+{center:{bf: When to use which}}
+
+{pstd}Stata is better for . . .{p_end}
+{pmore}Parsing standard syntax{p_end}
+{pmore}Data management{p_end}
+{pmore}Scripting existing Stata commands (writing a .do file to do an analysis){p_end}
+{pmore}Outputting (usually){p_end}
+{pmore}Posting saved results{p_end}
+
+{pstd}Mata is better for . . .{p_end}
+{pmore}Parsing non-standard syntax (including files){p_end}
+{pmore}Performing matrix operations{p_end}
+{pmore}Non-scripting applications{p_end}
+{pmore}Outputting (when complicated){p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide2.smcl:<<}   {view presentation.smcl:index}   {view slide4.smcl:>>}}
+{hline}

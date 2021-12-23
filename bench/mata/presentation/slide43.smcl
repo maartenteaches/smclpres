@@ -1,0 +1,47 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Do it yourself}}
+
+{pstd}
+Do the same for your 2sls model
+
+{pstd}
+As arguments we want the dependent variable, the exogenous variable, the endogenous
+variables, the instruments, the constant, and the 
+selection variable.
+
+{pstd}
+To get the variables for the {cmd:X} matrix we need to combine the names of the 
+exogenous, endogenous, and the constant
+
+{pstd}
+To get the variables for the {cmd:Z} matrix we need to combine the names of the 
+exogenous, instruments, and the constant
+
+{pstd}
+We can combine string scalars with {cmd:+}, but don't forget to add a 
+space
+ 
+{* ex slide43ex1 }{...}
+{cmd}
+        mata:
+        greetings = "Hello"
+        who = "world"
+        greetings + who
+        greetings + " " + who
+        end
+{txt}{...}
+{pstd}({stata "do slide43ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+//apcodefile tsls05.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide42.smcl:<<}   {view presentation.smcl:index}   {view slide44.smcl:>>}}
+{hline}

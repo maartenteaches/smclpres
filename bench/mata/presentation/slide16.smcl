@@ -1,0 +1,44 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} precision{p_end}
+{hline}
+
+{center:{bf: rounding errors: adding and subtracting}}
+
+{pstd}
+This way of storing number allows us to reliably store number within a very large
+range.
+
+{pstd}
+It has some quirks, for example adding numbers that differ by a large order of
+magnitude can lead to quite large rounding errors.
+
+{pstd}
+We want to add 1,000,000 and 0.0001
+
+{pmore}
+Then we are adding +1*1,00000*10^6 and +1*1.00000*10^-4
+
+{pmore}
+In order to add them we would need to the exponent the same:
+
+{pmore}
+We would change +1*1.00000*10^-4 to +1*0.00000000001*10^6
+
+{pmore}
+However, we only stored 6 digits, so 0.00000000001 gets rounded to 0 
+
+{pstd}
+A common computations where this could be a problem are: 
+
+{pmore}
+Computing a sum of values in a large matrix 
+
+{pmore}
+1 - probability
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide15.smcl:<<}   {view presentation.smcl:index}   {view slide17.smcl:>>}}
+{hline}

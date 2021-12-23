@@ -1,0 +1,79 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} Pointers{p_end}
+{hline}
+
+{center:{bf: Using pointers to create an irregular array}}
+
+{pstd}
+A special case of this would be an irregular array
+
+{pstd}
+A matrix is a regular array: each row has the same number of columns
+
+{pstd}
+An irregular array would allow each row to have a different number of columns
+
+{pstd}
+Consider the example below where we have data on the alliance structure of tribes
+in the Eastern Central Highlands of New Guinea in the 1950's
+ 
+{* ex slide67ex1 }{...}
+{cmd}
+        use alliance.dta, clear
+        notes
+        list in 1/10
+{txt}{...}
+{pstd}({stata "do slide67ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Tribe 1 is a friend of tribe 2, but an enemy of tribe 3, etc.
+
+{pstd}
+We don't have a line in the data that says that tribe 2 is a friend of tribe 1. 
+That is implicit.
+
+{pstd}
+If we were programming a network analysis where we need to repeatedly find all
+the friends of tribe i, then this would be inconvenient (slow)
+
+{pstd}
+We could instead reorganize the data in an irregular array (not every tribe has
+the same number of friends)
+ 
+{* ex slide67ex2 }{...}
+{cmd}
+        mata:
+        data = st_data(.,"ego alter sign")
+        
+        friends = J(16,1,&J(1,0,.))
+        enemies = J(16,1,&J(1,0,.))
+        for(i=1; i<=rows(data); i++) {
+            if (data[i,3] == 1) {
+                friends[data[i,1]] = &(*friends[data[i,1]], data[i,2])
+                friends[data[i,2]] = &(*friends[data[i,2]], data[i,1])
+            }
+            else {
+                enemies[data[i,1]] = &(*enemies[data[i,1]], data[i,2])
+                enemies[data[i,2]] = &(*enemies[data[i,2]], data[i,1])
+            }
+        }
+        
+        *enemies[1]
+        *friends[1]
+        *enemies[16]
+        *friends[16]
+        end
+{txt}{...}
+{pstd}({stata "do slide67ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide66.smcl:<<}   {view presentation.smcl:index}   {view slide68.smcl:>>}}
+{hline}

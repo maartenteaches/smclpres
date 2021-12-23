@@ -1,0 +1,41 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: linear regression: getting variables}}
+
+{pstd}
+I am going to implement a linear regression in Mata in steps
+
+{pstd}
+You are going to implement a IV regression with a two stage least square 
+estimator using similar steps
+
+{pstd}
+Data: nlsw88
+
+{pstd}{cmd:y} = wage{p_end}
+{pstd}{cmd:X} = grade union ttl_exp tenure south{p_end}
+ 
+{* ex slide22ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        gen byte touse = !missing(wage, grade, union, ttl_exp, tenure, south)
+        
+        mata:
+        X=y=.
+        st_view(X,.,"grade union ttl_exp tenure south", "touse")
+        st_view(y,.,"wage", "touse")
+        end
+{txt}{...}
+{pstd}({stata "do slide22ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide20.smcl:<<}   {view presentation.smcl:index}   {view slide23.smcl:>>}}
+{hline}

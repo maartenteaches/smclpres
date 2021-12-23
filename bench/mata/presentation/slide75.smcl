@@ -1,0 +1,17 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} class{p_end}
+{hline}
+
+{center:{bf: Try it yourself: approximating a function with a linear spline}}
+
+{pstd}
+Revisit our linear spline program again. We can package the whole thing in a class. 
+
+//apcodefile sp_approx04.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide74.smcl:<<}   {view presentation.smcl:index}   {view slide76.smcl:>>}}
+{hline}

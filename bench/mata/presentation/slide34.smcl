@@ -1,0 +1,78 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} basics{p_end}
+{hline}
+
+{center:{bf: loops}}
+
+{pstd}
+What if we want to allow for multiple variables?
+
+{pstd}
+We could split up the scalar varn into words (in this case variable names) with
+{helpb mf_tokens:tokens()}
+
+{pstd}
+The number of columns is the number of variables
+
+{pstd}
+We can loop over those
+ 
+{* ex slide34ex1 }{...}
+{cmd}
+        mata:
+        mata clear
+        mata set matastrict off
+        
+        real rowvector my_median(string scalar varn)
+        {
+            varn = tokens(varn)
+            k = cols(varn)
+            median = J(1,k,.)
+            
+            for(i=1; i<=k; i++) {
+                if (st_isnumvar(varn[i])==0) exit(error(108))   
+                x = st_data(.,varn[i], 0)
+                n = rows(x)
+                _sort(x,1)
+                if (mod(n,2)==1) {
+                    index = ceil(n/2)
+                    median[i] = x[index]
+                }
+                else {
+                    index = floor(n/2)
+                    median[i] = x[index]
+                    index = index + 1
+                    median[i] = (median[i] + x[index])/2
+                }
+            }
+            
+            return(median)
+        }
+        end
+        
+        sysuse nlsw88, clear
+        mata: my_median("tenure ttl_exp")
+        sum tenure ttl_exp, detail
+{txt}{...}
+{pstd}({stata "do slide34ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+So a loop happens with the {helpb m2_for:for()} functions
+
+{pstd}It expects three arguments:{p_end}
+{pmore}The first tells where the loop starts{p_end}
+{pmore}The second tells how long the the loop has to continue{p_end}
+{pmore}The third tells what happens at the end of each iteration/step{p_end}
+
+
+{pstd}
+An alternative way to loop is with the {helpb m2_while:while()} function
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide33.smcl:<<}   {view presentation.smcl:index}   {view slide35.smcl:>>}}
+{hline}

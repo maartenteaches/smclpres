@@ -1,0 +1,97 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Turning it into a Mata class{p_end}
+{hline}
+
+{center:{bf: Getting started}}
+
+{pstd}
+I usually start with defining the class and naming the variables and functions
+I want it to contain
+
+{pstd}
+This gives me a roadmap of what I need to do
+
+{pstd}
+This is where I would start
+
+
+{cmd}
+    class hist_gen {
+        string                  scalar    fn_stopwords
+        class  AssociativeArray scalar    stopwords
+        string                  scalar    fn
+        class  AssociativeArray scalar    hist
+        string                  rowvector punct
+        
+        void                              make_hist()       
+        void                              setup()           
+        void                              parse_stopwords() 
+        void                              count_words()     
+        string                  rowvector parse_line()      
+        real                    scalar    valid_word()      
+        void                              to_stata()        
+    }
+
+
+    void hist_gen::parse_stopwords() 
+    {
+        //line 7-16 of hist05.do
+    }
+
+    void hist_gen::setup() 
+    {
+        parse_stopwords()
+        //line 22 of hist05.do  
+    }
+
+    void hist_gen::make_hist()
+    {
+        setup()
+        count_words()
+    }   
+
+    void hist_gen::count_words()
+    {
+        // line 24-37 of hist05.do
+        // but using parse_line() for lines 25-29
+        // and use valid_word() for the condition on line 31
+    }
+
+    string rowvector hist_gen::parse_line(string scalar line)
+    {
+        // line 25-29 of hist05.do
+    }
+
+    real scalar hist_gen::valid_word(string scalar word)
+    {
+        // line 31 of hist05.do
+    }
+
+    void hist_gen::to_stata()
+    {
+        // line 39-57 of hist05.do
+    }
+    end
+
+    //intended use
+    mata:
+    hist = hist_gen()
+    hist.fn           = "spd.txt"
+    hist.fn_stopwords = "stop_words_german.txt"
+    hist.punct        = `", . ; : ! ? ( ) [ ] > < - – * "'
+    hist.make_hist()
+    hist.to_stata()
+    end
+{txt}
+
+{pstd}
+create a working version of this class
+
+//apcodefile hist06.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide82.smcl:<<}   {view presentation.smcl:index}   {view slide84.smcl:>>}}
+{hline}

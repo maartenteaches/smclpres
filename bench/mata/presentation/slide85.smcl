@@ -1,0 +1,45 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Turning it into a Mata class{p_end}
+{hline}
+
+{center:{bf: private and public}}
+
+{pstd}
+Right now user's can still access the variables and all functions.
+
+{pstd}
+We can prevent that by declaring them private
+
+{pstd}
+It is generally a good idea to make only the functions the user needs public
+
+{cmd}
+    class hist_gen {
+        protected: 
+            string                  scalar    fn_stopwords
+            class  AssociativeArray scalar    stopwords
+            string                  scalar    fn
+            class  AssociativeArray scalar    hist
+            string                  rowvector punct
+
+            void                              setup()
+            void                              parse_stopwords()
+            string                  rowvector parse_line()
+            real                    scalar    valid_word()
+            void                              count_words() 
+
+        public: 
+            transmorphic                      fn_stopwords()
+            transmorphic                      fn()
+            transmorphic                      punct()
+            void                              make_hist()
+            void                              to_stata()
+    }
+{txt}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide84.smcl:<<}   {view presentation.smcl:index}   {view slide86.smcl:>>}}
+{hline}

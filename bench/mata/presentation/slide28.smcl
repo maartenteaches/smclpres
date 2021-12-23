@@ -1,0 +1,62 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Export and display the results in Stata}}
+
+{pstd}
+We can use {helpb ereturn} in Stata to display our results in the standard way 
+Stata users expect from an estimation commands
+
+{pstd}
+We first need to export our results from Mata to Stata and than use {cmd:ereturn}
+ 
+{* ex slide28ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        gen byte touse = !missing(wage, grade, union, ttl_exp, tenure, south)
+        
+        tempname b V
+        
+        mata:
+        X=y=.
+        st_view(X,.,"grade union ttl_exp tenure south", "touse")
+        st_view(y,.,"wage", "touse")
+        XX = cross(X,1, X,1)
+        Xy = cross(X,1, y,0)
+        b = invsym(XX)*Xy
+        
+        N = rows(X)
+        k = cols(X) + 1
+        cons = J(N,1,1)
+        res = y - (X,cons)*b
+        ess = cross(res,res)
+        s2 = ess/(N-k)
+        Var = s2*invsym(XX)
+        
+        st_matrix(st_local("b"), b')
+        st_matrix(st_local("V"), Var)
+        st_local("df_r", strofreal(N-k))
+        st_local("N", strofreal(N))
+        end
+        
+        local xnames `""grade" "union" "ttl_exp" "tenure" "south" "_cons""'
+        matrix colnames `b' = `xnames'
+        matrix colnames `V' = `xnames'
+        matrix rownames `V' = `xnames'
+        ereturn post `b' `V', dof(`df_r') obs(`N') esample(touse)
+        ereturn display
+        
+        reg wage grade union ttl_exp tenure south
+{txt}{...}
+{pstd}({stata "do slide28ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide27.smcl:<<}   {view presentation.smcl:index}   {view slide29.smcl:>>}}
+{hline}

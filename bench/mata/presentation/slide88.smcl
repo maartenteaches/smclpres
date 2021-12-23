@@ -1,0 +1,18 @@
+{smcl}
+{* 23 Dec 2021}{...}
+
+{center:{bf: References}}
+
+{marker buis14}{...}
+{p 4 8  2}Buis, Maarten L. (2014), "Stata tip 120: Certifying subroutines", {it:Stata Journal}, {bf:14}(2), pp. 449-450.{p_end}
+ 
+{marker gould01}{...}
+{p 4 8  2}Gould, William W. (2001), "Statistical software certification", {it:Stata Journal}, {bf:1}(1), pp. 29-50.{p_end}
+ 
+{marker gould_etal10}{...}
+{p 4 8 2}Gould, William W.; Pitblado, Jeffrey; and Poi, Brian (2010), {it:Maximum Likelihood Estimation with Stata, Fourth Edition}.  College Station, TX: Stata Press.{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:     {view presentation.smcl:index}     }
+{hline}

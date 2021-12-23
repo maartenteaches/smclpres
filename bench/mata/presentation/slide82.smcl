@@ -1,0 +1,33 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
+{hline}
+
+{center:{bf: Export the results to Stata}}
+
+{pstd} Then we create new variables with {cmd:st_addvar()} to add the variables
+
+{pstd}
+For string variables we need to know the maximum length (in bytes, not characters)
+of the words we want to store. We can get that with the {cmd:strlen()} function
+and {cmd:max()} function
+
+{pstd}
+For numeric variables we can use {cmd:st_store()} to store the vector in the 
+variable
+
+{pstd}
+For string variables we can use {cmd:st_sstore()}
+
+{pstd}
+But first we need to make sure there are enough observations in the Stata dataset
+to take all those words. We can count the number of observation with {cmd:st_nobs()}
+and add any extra observations we may need with {cmd:st_addobs()}
+
+//apcodefile hist05.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide81.smcl:<<}   {view presentation.smcl:index}   {view slide83.smcl:>>}}
+{hline}

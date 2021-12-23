@@ -339,6 +339,7 @@ void smclpres::write_file(struct strstate scalar state, string scalar right)
 		where_err(state.rownr)
 		exit(198)
 	}
+	right = ustrltrim(right)
 	dofile = pathjoin(settings.other.sourcedir, right)
 	if(!fileexists(dofile)){
 		err = "{p}{err}file {res}" + dofile + "{err} specified after //file does not exist{p_end}"
@@ -362,6 +363,7 @@ void smclpres::write_dir(struct strstate scalar state, string scalar right)
         where_err(state.rownr)
 		exit(198)
 	}	
+	right = ustrltrim(right)
 	dir = pathjoin(settings.other.destdir, right) 
 	if (!direxists(dir)) mkdir(dir)
 }
@@ -445,7 +447,7 @@ void smclpres::write_slides() {
 			write_title(tokenrest(t), state.dest)
 		}
 		else if (left == "//titlepage") {
-			noslideopen(state, "new slide")
+			slideopen(state, "new slide")
 			state.slideopen = 1
 			state.dest = start_slide(state.snr, "titlepage")
 		}
@@ -503,5 +505,8 @@ void smclpres::write_slides() {
 	slides_done(state)
 }
 
-
+string scalar smclpres::remove_tab(string scalar str)
+{
+	return(usubinstr(str, char(9), settings.other.tab*" ", .))
+}
 end

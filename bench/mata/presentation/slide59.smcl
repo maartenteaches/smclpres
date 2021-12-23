@@ -1,0 +1,30 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
+{hline}
+
+{center:{bf: Make an ado file}}
+
+{pstd}
+Now we can clean our code up, and save it as an .ado file
+
+//codefile my_logit.ado
+ 
+{* ex slide59ex1 }{...}
+{cmd}
+        sysuse auto, clear
+        sum price
+        gen expensive = price > r(mean) if price < .
+        my_logit foreign i.expensive weight
+        logit foreign i.expensive weight 
+{txt}{...}
+{pstd}({stata "do slide59ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide58.smcl:<<}   {view presentation.smcl:index}   {view slide60.smcl:>>}}
+{hline}

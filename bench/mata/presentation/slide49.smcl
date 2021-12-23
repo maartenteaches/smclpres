@@ -1,0 +1,99 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
+{hline}
+
+{center:{bf: Maximum Likelihood in Mata}}
+
+{pstd}
+In Mata you can use {helpb mf_moptimize:moptimize} to find the maximum likelihood
+estimates and its variance covariance matrix
+
+{pstd}
+In fact, it is more general than that: it can be used to maximize or minimize any
+function, e.g. find gmm estimates. 
+
+{pstd}
+Using {cmd:moptimize} is a multi-step process{p_end}
+{pmore}1. Create a function that takes parameter values and data and returns the 
+log-likelihood value (or gmm, or ...){p_end}
+{pmore}2. Initialize, i.e. create an object that stores everything Mata needs for
+this problem{p_end}
+{pmore}3. Give that object the information it needs, at least the function and 
+the data{p_end}
+{pmore}4. Let moptimize find the optimum{p_end}
+{pmore}5. Display the results{p_end}
+{pmore}{p_end}
+ 
+{* ex slide49ex1 }{...}
+{cmd}
+        sysuse auto, clear
+        
+        mata:
+        mata clear
+        mata set matastrict on
+        
+        // Step 1
+        void logiteval(transmorphic M, real rowvector b, real colvector lnf)
+        {
+            real colvector xb
+            real colvector y
+            
+            xb = moptimize_util_xb(M, b, 1)
+            y  = moptimize_util_depvar(M,1)
+            
+            lnf = y:*ln(invlogit(xb)) + (1:-y):*ln(invlogit(-xb)) 
+        }
+        
+        // Step 2
+        M = moptimize_init()
+        
+        // Step 3
+        moptimize_init_evaluator(M, &logiteval())
+        moptimize_init_depvar(M, 1, "foreign")
+        moptimize_init_eq_indepvars(M,1,"price weight") 
+        
+        // Step 4
+        moptimize(M)
+        
+        // Step 5
+        moptimize_result_display(M)
+        end
+        
+        logit foreign price weight
+{txt}{...}
+{pstd}({stata "do slide49ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+In the evaluator I used {cmd:invlogit(-xb)} instead of {cmd:(1-invlogit(xb))}
+
+{pstd}
+The logistic distribution is a symmetric distribution around 0, very much like 
+the standard normal distribution.
+
+{pstd}
+You may (vaguely) remember that 1-Phi(z) = Phi(z) 
+
+{pmore}
+(There was a table at the end
+of your Statistics book giving you the CDF for the standard normal distribution, 
+and you needed to use that to find the probability that a drawing a value more 
+than some {it:z})
+
+{pstd}
+Similarly, {cmd:invlogit(-xb)} is the same as {cmd:(1-invlogit(xb))}
+
+{pstd}
+However, the former is easier for computers than the latter (precision)
+
+{pstd}
+If you want to write a Maximum Likelihood model in Stata/Mata then ({view slide88.smcl##gould_etal10:Gould, Pitblado, and Poi 2010})
+is highly recommended. 
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide48.smcl:<<}   {view presentation.smcl:index}   {view slide50.smcl:>>}}
+{hline}

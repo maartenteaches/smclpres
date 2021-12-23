@@ -1,0 +1,30 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} matrix operations {p_end}
+{hline}
+
+{center:{bf: logic }}
+
+{pstd}
+Like in Stata 0 is false, and non-zero (including missing) is true
+
+{pstd}
+Operators or functions that return true or false will return 0 for false and 1 
+for true
+
+{pstd}The basic operators are:{p_end}
+{pmore}{cmd:==} for equals{p_end}
+{pmore}{cmd:!=} for not equals{p_end}
+{pmore}{cmd:>} for larger than{p_end}
+{pmore}{cmd:>=} for larger than or equal{p_end}
+{pmore}{cmd:<} for less than{p_end}
+{pmore}{cmd:<=} for than than or equal{p_end}
+{pmore}{cmd:!} for negation{p_end}
+{pmore}{cmd:&} for and{p_end}
+{pmore}{cmd:|} for or{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide11.smcl:<<}   {view presentation.smcl:index}   {view slide13.smcl:>>}}
+{hline}

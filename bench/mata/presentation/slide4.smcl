@@ -1,0 +1,30 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} How is Mata different from Stata{p_end}
+{hline}
+
+{center:{bf: entering and leaving Mata}}
+
+{pstd}You can enter Mata by typing in Stata either {cmd:mata} or {cmd:mata:}{p_end}
+
+{pstd}
+You can leave Mata, and enter Stata again, by typing {cmd:end}
+
+{pstd}{cmd:mata} will continue executing till it reaches {cmd:end} even if an 
+error occured{p_end}
+{pmore}This is helpful when using Mata interactively to try things out{p_end}
+{pmore}When trying things out, errors are expected. It is convenient when those 
+errors have not other consequences than an error message.{p_end}
+
+{pstd}{cmd:mata:} stops as soon as an error occured and drop you back into Stata.{p_end}
+{pmore}This is helpful when programming{p_end} 
+{pmore}This makes it easier to find where the bug is{p_end}
+
+{pstd}
+Alternatively, you can pass a single line from Stata to Mata by typing {cmd:mata: something_Mata_understands}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide3.smcl:<<}   {view presentation.smcl:index}   {view slide5.smcl:>>}}
+{hline}

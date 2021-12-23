@@ -1,0 +1,18 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} struct{p_end}
+{hline}
+
+{center:{bf: Try it yourself: approximating a function with a linear spline}}
+
+{pstd}
+Revisit our linear spline program. We can package lb, ub, tol, maxiter, p, and res
+in a {cmd:struct} and pass those between subroutines of {cmd:find_knots()}. 
+
+//apcodefile sp_approx03.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide71.smcl:<<}   {view presentation.smcl:index}   {view slide73.smcl:>>}}
+{hline}

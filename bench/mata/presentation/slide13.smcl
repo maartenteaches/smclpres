@@ -1,0 +1,69 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} matrix operations {p_end}
+{hline}
+
+{center:{bf: elementwise logic}}
+
+{pstd}
+You can also use the elementwise colon operator for logic
+ 
+{* ex slide13ex1 }{...}
+{cmd}
+        mata:
+        A:==2
+        end
+{txt}{...}
+{pstd}({stata "do slide13ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pmore}
+You can add the elements of a matrix with the {help mata sum():sum()} function. 
+So we can count the number of 2s in the matrix {cmd:A}.
+ 
+{* ex slide13ex2 }{...}
+{cmd}
+        mata:
+        sum(A:==2)
+        end
+{txt}{...}
+{pstd}({stata "do slide13ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Since 0 is false and non-zero is true, we can use the previous answer to test
+whether 2 occurs in matrix {cmd:A}.
+
+{pstd}
+Better (quicker and less memory used) would be to use the {helpb mata all():any()} function:
+ 
+{* ex slide13ex3 }{...}
+{cmd}
+        mata: any(A:==2)
+{txt}{...}
+{pstd}({stata "do slide13ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Even better would be to use {cmd:anyof()}
+ 
+{* ex slide13ex4 }{...}
+{cmd}
+        mata: anyof(A,2)
+{txt}{...}
+{pstd}({stata "do slide13ex4.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}
+Similarly you can use {cmd:all()} and {cmd:allof()} to check if {it:all} elements are
+true or equal to some value.
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide12.smcl:<<}   {view presentation.smcl:index}   {view slide14.smcl:>>}}
+{hline}

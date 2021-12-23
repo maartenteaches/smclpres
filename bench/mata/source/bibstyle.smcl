@@ -1,0 +1,7 @@
+@book{{p 4 8 2}[author] ([year]), {it:[title]}.  [address]: [publisher].{p_end}}
+ 
+@article{{p 4 8 2}[author] ([year]), "[title]", {it:[journal]}, {cmd:[volume]}([number]), pp. [pages].{p_end}}
+
+@inproceedings{{p 4 8 2}[author] ([year]), {it:[title]}, [booktitle], [url].{p_end}}
+
+@unpublished{p 4 8 2}[author] ([year]), {it:[title]}, [url].{p_end}}	

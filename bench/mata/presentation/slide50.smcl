@@ -1,0 +1,54 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
+{hline}
+
+{center:{bf: do it yourself poisson}}
+
+{pstd}
+If we assume that the dependent variable is Poisson distributed, then the 
+probability of observing a person with {it:y} events is 
+
+{pmore}
+({it:mu}^y exp(-{it:mu}))/y!
+
+{pstd}
+Where {it:mu} is the mean number of events. In case of a Poisson the {it:lambda} 
+is also common
+
+{pstd}
+So the probability of observing the data given a value of {it:mu} is
+
+{pmore}
+L(y|{it:mu}) = prod(({it:mu}^y exp(-{it:mu}))/y!)
+
+{pstd}
+Taking the logarithm:
+
+{pmore}ln(L(y|{it:mu})) = ln(prod(({it:mu}^y exp(-{it:mu}))/y!)){p_end}
+{pmore}ln(L(y|{it:mu})) = Sum(ln({it:mu}^y) + ln(exp(-{it:mu})) - ln(y!)){p_end}
+{pmore}ln(L(y|{it:mu})) = Sum(y*ln({it:mu}) - {it:mu} - ln(y!)){p_end}
+
+{pstd}
+The mean in case of a Poisson distribution is the expected number of events, so 
+has to be positive
+
+{pstd}
+We can make the mean dependent of explanatory variables and make sure that that 
+mean remains positive by using exp(xb)
+
+{pmore}ln(L(y|{it:b})) = Sum(y*ln(exp({cmd:Xb})) - exp({cmd:xb}) - ln(y!)){p_end}
+{pmore}ln(L(y|{it:b})) = Sum(y*{cmd:Xb} - exp({cmd:xb}) - ln(y!)){p_end}
+
+{pstd}
+Create a Poisson regression in Mata, use the horse.dta dataset, create indicator 
+variables for the cavelary units and use those as explanatory varialbes 
+(excluding the reference unit) 
+
+//apcodefile my_poisson01.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide49.smcl:<<}   {view presentation.smcl:index}   {view slide51.smcl:>>}}
+{hline}

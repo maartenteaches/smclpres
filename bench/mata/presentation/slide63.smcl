@@ -1,0 +1,45 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Advanced data types in Mata} {hline 2} Pointers{p_end}
+{hline}
+
+{center:{bf: What is a pointer}}
+
+{pstd}
+Variables and functions are stored in memory
+
+{pstd}
+These objects have an address, so the computer is able to find these.
+
+{pstd}
+These addresses are just a number
+
+{pstd}
+This is what a {helpb [M-2] pointers:pointer} is  
+
+{pstd} 
+If we type {cmd:p = &x}, then p is a pointer, which points to x
+
+{pstd} 
+If we type {cmd:*p}, then we refer to contents of that address, or we derefernce p 
+ 
+{* ex slide63ex1 }{...}
+{cmd}
+        mata:
+        x = 1, 2 \ 3, 4
+        p = &x
+        p
+        *p
+        (*p)[1,2]
+        end
+{txt}{...}
+{pstd}({stata "do slide63ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide62.smcl:<<}   {view presentation.smcl:index}   {view slide64.smcl:>>}}
+{hline}

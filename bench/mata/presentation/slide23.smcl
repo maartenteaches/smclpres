@@ -1,0 +1,33 @@
+{smcl}
+{* 23 Dec 2021}{...}
+{hline}
+{p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
+{hline}
+
+{center:{bf: Try it yourself}}
+
+{pstd}
+We are going to implement a IV regression via two stage least squares 
+
+{pstd}The data is hsng2{p_end}
+{pstd}The dependent variable {cmd:y} is rent{p_end}
+{pstd}The endogenous variable {cmd:Y} is hsngval{p_end}
+{pstd}The instruments {cmd:X2} are faminc reg2 reg3 and reg4{p_end}
+{pstd}The other exogenous variables {cmd:X1} is pcturban{p_end}
+
+{pstd}
+We need to load three matrices:{p_end}
+{pmore}{cmd:y}{p_end}
+{pmore}{cmd:X} = {cmd:Y}, {cmd:X1}, {cmd:cons}{p_end}
+{pmore}{cmd:Z} = {cmd:X1}, {cmd:X2}, {cmd:cons}{p_end}
+
+{pstd}
+Open the dataset using {cmd:webuse}, create a new variable cons containing 1, and load the 
+three matrices in Mata
+
+//apcodefile tsls01.do "(solution)"
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide22.smcl:<<}   {view presentation.smcl:index}   {view slide24.smcl:>>}}
+{hline}
