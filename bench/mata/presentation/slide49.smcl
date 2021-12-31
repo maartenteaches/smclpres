@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
 {hline}
@@ -95,5 +95,5 @@ is highly recommended.
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide48.smcl:<<}   {view presentation.smcl:index}   {view slide50.smcl:>>}}
+{* bottombar }{center:{view slide48.smcl:<<}   {view index.smcl:index}   {view slide50.smcl:>>}}
 {hline}

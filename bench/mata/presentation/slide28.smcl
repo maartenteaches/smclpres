@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
 {hline}
@@ -58,5 +58,5 @@ We first need to export our results from Mata to Stata and than use {cmd:ereturn
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide27.smcl:<<}   {view presentation.smcl:index}   {view slide29.smcl:>>}}
+{* bottombar }{center:{view slide27.smcl:<<}   {view index.smcl:index}   {view slide29.smcl:>>}}
 {hline}

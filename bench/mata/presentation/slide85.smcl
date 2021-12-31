@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Turning it into a Mata class{p_end}
 {hline}
@@ -41,5 +41,5 @@ It is generally a good idea to make only the functions the user needs public
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide84.smcl:<<}   {view presentation.smcl:index}   {view slide86.smcl:>>}}
+{* bottombar }{center:{view slide84.smcl:<<}   {view index.smcl:index}   {view slide86.smcl:>>}}
 {hline}

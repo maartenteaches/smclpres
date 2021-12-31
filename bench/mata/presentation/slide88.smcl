@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 
 {center:{bf: References}}
 
@@ -14,5 +14,5 @@
  
  
 {* /p}{hline}
-{* bottombar }{center:     {view presentation.smcl:index}     }
+{* bottombar }{center:     {view index.smcl:index}     }
 {hline}

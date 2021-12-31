@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Advanced data types in Mata} {hline 2} Pointers{p_end}
 {hline}
@@ -39,5 +39,5 @@ extract from that object the value for t=2, row=2, col=3
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide67.smcl:<<}   {view presentation.smcl:index}   {view slide69.smcl:>>}}
+{* bottombar }{center:{view slide67.smcl:<<}   {view index.smcl:index}   {view slide69.smcl:>>}}
 {hline}

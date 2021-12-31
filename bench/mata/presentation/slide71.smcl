@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Advanced data types in Mata} {hline 2} struct{p_end}
 {hline}
@@ -57,5 +57,5 @@ amount of information to move between those routines.
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide70.smcl:<<}   {view presentation.smcl:index}   {view slide72.smcl:>>}}
+{* bottombar }{center:{view slide70.smcl:<<}   {view index.smcl:index}   {view slide72.smcl:>>}}
 {hline}

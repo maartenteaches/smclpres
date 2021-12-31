@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
 {hline}
@@ -77,5 +77,5 @@ It would be helpful to allow Stata's factor variables
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide52.smcl:<<}   {view presentation.smcl:index}   {view slide54.smcl:>>}}
+{* bottombar }{center:{view slide52.smcl:<<}   {view index.smcl:index}   {view slide54.smcl:>>}}
 {hline}

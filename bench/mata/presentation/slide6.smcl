@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Basics of mata} {hline 2} How is Mata different from Stata{p_end}
 {hline}
@@ -40,5 +40,5 @@ will persist between sessions, so no error would occur.{p_end}
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide5.smcl:<<}   {view presentation.smcl:index}   {view slide7.smcl:>>}}
+{* bottombar }{center:{view slide5.smcl:<<}   {view index.smcl:index}   {view slide7.smcl:>>}}
 {hline}

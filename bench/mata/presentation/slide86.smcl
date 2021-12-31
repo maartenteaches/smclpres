@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} What next{p_end}
 {hline}
@@ -17,5 +17,5 @@ Write the help-files
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide85.smcl:<<}   {view presentation.smcl:index}   {view slide87.smcl:>>}}
+{* bottombar }{center:{view slide85.smcl:<<}   {view index.smcl:index}   {view slide87.smcl:>>}}
 {hline}

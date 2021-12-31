@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 
 {center:{bf: Mata}}
 
@@ -10,10 +10,11 @@
  
  
 {* /p}{hline}
-{* bottombar }{center:     {view presentation.smcl:index}   {view slide1.smcl:>>}}
+{* bottombar }{center:     {view index.smcl:index}   {view slide1.smcl:>>}}
 {hline}
 {* slides }{...}
 {* presentation.smcl }{...}
+{* index.smcl }{...}
 {* slide1.smcl }{...}
 {* slide2.smcl }{...}
 {* slide3.smcl }{...}

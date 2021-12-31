@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Turning it into a Mata class{p_end}
 {hline}
@@ -49,5 +49,5 @@ Make functions for {cmd:fn}, and {cmd:punct}
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide83.smcl:<<}   {view presentation.smcl:index}   {view slide85.smcl:>>}}
+{* bottombar }{center:{view slide83.smcl:<<}   {view index.smcl:index}   {view slide85.smcl:>>}}
 {hline}

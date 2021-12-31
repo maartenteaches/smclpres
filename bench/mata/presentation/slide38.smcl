@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} basics{p_end}
 {hline}
@@ -77,5 +77,5 @@ syntax and displaying standard output
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide37.smcl:<<}   {view presentation.smcl:index}   {view slide39.smcl:>>}}
+{* bottombar }{center:{view slide37.smcl:<<}   {view index.smcl:index}   {view slide39.smcl:>>}}
 {hline}

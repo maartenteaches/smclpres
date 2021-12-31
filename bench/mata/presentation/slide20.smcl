@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Basics of mata} {hline 2} moving data between Stata and Mata{p_end}
 {hline}
@@ -98,5 +98,5 @@ Returned numeric scalars can be accessed using {cmd:st_numscalar()}
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide19.smcl:<<}   {view presentation.smcl:index}   {view slide22.smcl:>>}}
+{* bottombar }{center:{view slide19.smcl:<<}   {view index.smcl:index}   {view slide22.smcl:>>}}
 {hline}

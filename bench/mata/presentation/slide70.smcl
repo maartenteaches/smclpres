@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Advanced data types in Mata} {hline 2} associative array{p_end}
 {hline}
@@ -50,5 +50,5 @@ associative arrays
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide69.smcl:<<}   {view presentation.smcl:index}   {view slide71.smcl:>>}}
+{* bottombar }{center:{view slide69.smcl:<<}   {view index.smcl:index}   {view slide71.smcl:>>}}
 {hline}

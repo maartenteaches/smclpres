@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
 {hline}
@@ -21,5 +21,5 @@ the {helpb mf_strupper:strlower()} function
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide78.smcl:<<}   {view presentation.smcl:index}   {view slide80.smcl:>>}}
+{* bottombar }{center:{view slide78.smcl:<<}   {view index.smcl:index}   {view slide80.smcl:>>}}
 {hline}

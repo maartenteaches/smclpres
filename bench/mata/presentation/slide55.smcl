@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
 {hline}
@@ -103,5 +103,5 @@ constant is ln(mean/(1-mean)), or logit(mean)
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide54.smcl:<<}   {view presentation.smcl:index}   {view slide56.smcl:>>}}
+{* bottombar }{center:{view slide54.smcl:<<}   {view index.smcl:index}   {view slide56.smcl:>>}}
 {hline}

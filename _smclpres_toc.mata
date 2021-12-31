@@ -82,6 +82,7 @@ void smclpres::find_structure() {
 			}
 			if (left == "//titlepage") {
 				titleopen = 1
+				settings.other.titlepage = 1
 			}
 			if (left == "//endtitlepage") {
 				titleopen = 0
@@ -146,10 +147,12 @@ void smclpres::write_toc() {
 	string scalar destfile
 	
 	if (settings.other.titlepage) {
-		destfile = pathjoin(settings.other.destdir , "/index.smcl")
+		destfile = pathjoin(settings.other.destdir , "index.smcl")
+		settings.other.index = "index.smcl"
 	}
 	else {
 		destfile = pathjoin(settings.other.destdir,  settings.other.stub + ".smcl")	
+		settings.other.index = settings.other.stub + ".smcl"
 	}
 	dest = sp_fopen(destfile,"w")
 

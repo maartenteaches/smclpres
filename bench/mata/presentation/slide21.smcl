@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:digression}{p_end}
 {hline}
@@ -86,5 +86,5 @@ as variables
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide20.smcl:<<}   {view presentation.smcl:index}     }
+{* bottombar }{center:{view slide20.smcl:<<}   {view index.smcl:index}     }
 {hline}

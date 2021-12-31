@@ -1,5 +1,5 @@
 {smcl}
-{* 23 Dec 2021}{...}
+{* 31 Dec 2021}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Certification{p_end}
 {hline}
@@ -21,5 +21,5 @@ At least, you are open about what you have checked and what you have not checked
  
  
 {* /p}{hline}
-{* bottombar }{center:{view slide60.smcl:<<}   {view presentation.smcl:index}   {view slide62.smcl:>>}}
+{* bottombar }{center:{view slide60.smcl:<<}   {view index.smcl:index}   {view slide62.smcl:>>}}
 {hline}
