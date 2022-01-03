@@ -1305,7 +1305,7 @@ txt*/
 {pstd}
 Now we can clean our code up, and save it as an .ado file
 
-//codefile my_logit.ado
+//codefile my_logit.ado "the cleaned .ado file"
 txt*/
 
 //ex

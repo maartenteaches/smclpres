@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
 {hline}
@@ -25,7 +25,7 @@ We need to load three matrices:{p_end}
 Open the dataset using {cmd:webuse}, create a new variable cons containing 1, and load the 
 three matrices in Mata
 
-//apcodefile tsls01.do "(solution)"
+{* apcodefile tsls01.do }{pstd}{stata "doedit tsls01.do":(solution)}{p_end}
  
  
 {* /p}{hline}

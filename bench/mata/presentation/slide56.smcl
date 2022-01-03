@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
 {hline}
@@ -12,7 +12,7 @@ Do the same in your Poisson model
 {pstd}
 The ML-estimate of the constant when you have no explanatory variables is ln(mean)
 
-//apcodefile my_poisson04.do "(solution)"
+{* apcodefile my_poisson04.do }{pstd}{stata "doedit my_poisson04.do":(solution)}{p_end}
  
  
 {* /p}{hline}

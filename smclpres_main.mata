@@ -1,5 +1,5 @@
 clear all
-cd "c:\mijn documenten\projecten\stata\smclpres"
+cd "d:\mijn documenten\projecten\stata\smclpres"
 mata:
 mata set matastrict on
 class smclpres {

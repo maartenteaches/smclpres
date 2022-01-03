@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
 {hline}
@@ -18,7 +18,7 @@ The formulas for the variance covariance matrix in the 2sls estimator are:
 {pstd}
 Expand your do-file to create the variance covariance matrix
 
-//apcodefile tsls03.do "(solution)"
+{* apcodefile tsls03.do }{pstd}{stata "doedit tsls03.do":(solution)}{p_end}
  
  
 {* /p}{hline}

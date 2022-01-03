@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Linear regression and instrumental variable regression{p_end}
 {hline}
@@ -10,7 +10,7 @@
 As before, all we need to do is clean up, put the Mata code at the bottom of the
 file, and save it as an .ado file
 
-//codefile my_regress.ado "the file"
+{* codefile my_regress.ado }{pstd}{stata "doedit my_regress.ado":the file}{p_end}
  
 {* ex slide46ex1 }{...}
 {cmd}

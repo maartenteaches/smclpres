@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
 {hline}
@@ -28,7 +28,7 @@ for count
 {pstd}
 Do this
 
-//apcodefile hist04.do "(solution)"
+{* apcodefile hist04.do }{pstd}{stata "doedit hist04.do":(solution)}{p_end}
  
  
 {* /p}{hline}

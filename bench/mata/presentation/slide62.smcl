@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Certification{p_end}
 {hline}
@@ -34,7 +34,7 @@ You can read more on certification scripts in ({view slide88.smcl##gould01:Gould
 {pstd}
 A basic certification script for the {cmd:my_logit} command is here:
 
-//codefile my_logit_cert.do "certification script"
+{* codefile my_logit_cert.do }{pstd}{stata "doedit my_logit_cert.do":certification script}{p_end}
  
  
 {* /p}{hline}

@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} basics{p_end}
 {hline}
@@ -9,7 +9,7 @@
 {pstd}
 Now all we need to do is clean it up and store it as an .ado file
 
-//codefile my_median.ado "The file"
+{* codefile my_median.ado }{pstd}{stata "doedit my_median.ado":The file}{p_end}
  
 {* ex slide40ex1 }{...}
 {cmd}

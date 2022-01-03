@@ -155,18 +155,18 @@ struct strstate scalar smclpres::write_dofiles(string scalar what, struct strsta
 		where_err(state.rownr)
 		exit(198)
 	}
-	dofile2 = pathjoin(settings.other.destdir, tline[2])
+	dofile2 = pathjoin(settings.other.destdir, tline[1])
 	if (!fileexists(dofile2)) {
 		command = `"copy ""' + dofile + `"" ""' + dofile2 + `"""'
 		stata( command, 1)
 	}
-	if (cols(tline) == 2) {
-		state.line = "{* " + what + " " + tline[2] + " }{...}"
+	if (cols(tline) == 1) {
+		state.line = "{* " + what + " " + tline[1] + " }{...}"
 	}
 	else {
-		state.line = "{* " + what + " " + tline[2] + " }" + 
-	 		   "{pstd}{stata " + `"""' + "doedit " + tline[2] + `"""' + 
-			   ":" + tline[3] + "}{p_end}"'
+		state.line = "{* " + what + " " + tline[1] + " }" + 
+	 		   "{pstd}{stata " + `"""' + "doedit " + tline[1] + `"""' + 
+			   ":" + tline[2] + "}{p_end}"
 	}
 	return(state)
 }
@@ -480,7 +480,7 @@ void smclpres::write_slides() {
 		else if (left == "//dir") {
 			write_dir(state,tokenrest(t))
 		}
-		else if (left == "//dofile" | left == "apdofile" | left == "codefile" | left == "apcodefile") {
+		else if (left == "//dofile" | left == "//apdofile" | left == "//codefile" | left == "//apcodefile") {
 			state.line = tokenrest(t)
 			state = write_dofiles(left, state)
 		}

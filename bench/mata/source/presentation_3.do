@@ -100,7 +100,7 @@ We continue adding knots till the approximation is good enough
 {pstd}
 Here is a first attempt:
 
-//codefile sp_approx01.do "sp_approx01"
+//codefile sp_approx01.do "sp_approx01.do"
 
 {pstd}
 The function we want to approximate is now hard coded in our program. We could 

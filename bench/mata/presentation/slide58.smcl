@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Maximum likelihood: logit and Poisson regression{p_end}
 {hline}
@@ -9,7 +9,7 @@
 {pstd}
 Do the same for your Poisson model
 
-//apcodefile my_poisson05.do "(solution)"
+{* apcodefile my_poisson05.do }{pstd}{stata "doedit my_poisson05.do":(solution)}{p_end}
  
  
 {* /p}{hline}

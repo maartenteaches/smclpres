@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} basics{p_end}
 {hline}
@@ -9,7 +9,7 @@
 {pstd}
 Change your {cmd:my_mean()} function by declaring your variables first
 
-//apcodefile my_mean04.do "(solution)"
+{* apcodefile my_mean04.do }{pstd}{stata "doedit my_mean04.do":(solution)}{p_end}
  
  
 {* /p}{hline}

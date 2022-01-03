@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
 {hline}
@@ -9,7 +9,7 @@
 {pstd}
 Use the same tricks to display the results from your 2sls estimator
 
-//apcodefile tsls04.do "(solution)"
+{* apcodefile tsls04.do }{pstd}{stata "doedit tsls04.do":(solution)}{p_end}
  
  
 {* /p}{hline}

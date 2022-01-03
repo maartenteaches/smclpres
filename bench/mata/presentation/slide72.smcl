@@ -1,5 +1,5 @@
 {smcl}
-{* 31 Dec 2021}{...}
+{*  3 Jan 2022}{...}
 {hline}
 {p}{bf:Advanced data types in Mata} {hline 2} struct{p_end}
 {hline}
@@ -10,7 +10,7 @@
 Revisit our linear spline program. We can package lb, ub, tol, maxiter, p, and res
 in a {cmd:struct} and pass those between subroutines of {cmd:find_knots()}. 
 
-//apcodefile sp_approx03.do "(solution)"
+{* apcodefile sp_approx03.do }{pstd}{stata "doedit sp_approx03.do":(solution)}{p_end}
  
  
 {* /p}{hline}
