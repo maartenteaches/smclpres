@@ -1,5 +1,4 @@
 clear all
-cd "d:\mijn documenten\projecten\stata\smclpres"
 mata:
 mata set matastrict on
 class smclpres {

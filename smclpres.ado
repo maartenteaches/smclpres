@@ -36,15 +36,6 @@ program define smclpres_main, rclass
 	
 	mata: `pres'.run()
 	
-	/*
-	mata: sp_find_structure(`pres')
-	
-	mata: sp_write_toc(`pres')
-	
-	mata: sp_init_bib(`pres')
-	
-	mata: sp_write_slides(`pres')
-	*/
 	Closingmsg, pres(`pres')
 end
 
