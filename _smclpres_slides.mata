@@ -132,7 +132,7 @@ struct strstate scalar smclpres::write_db(struct strstate scalar state)
 
 struct strstate scalar smclpres::write_dofiles(string scalar what, struct strstate scalar state)
 {
-	string scalar err, command, dofile, dofile2
+	string scalar err, command, dofile, dofile2, desc
 	string rowvector tline
 
 	what = usubinstr(what,"//","", 1)
@@ -164,7 +164,8 @@ struct strstate scalar smclpres::write_dofiles(string scalar what, struct strsta
 		state.line = "{* " + what + " " + tline[1] + " }{...}"
 	}
 	else {
-		state.line = "{* " + what + " " + tline[1] + " }" + 
+		desc = (what != "codefile" ? " " + tline[2]  : "" ) 
+		state.line = "{* " + what + " " + tline[1] + desc + " }" + 
 	 		   "{pstd}{stata " + `"""' + "doedit " + tline[1] + `"""' + 
 			   ":" + tline[2] + "}{p_end}"
 	}

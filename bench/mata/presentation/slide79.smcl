@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
 {hline}
@@ -17,7 +17,7 @@ These count now as different words
 The easiest solution is to turn all capital letter into lower case letters with 
 the {helpb mf_strupper:strlower()} function
 
-{* apcodefile hist02.do }{pstd}{stata "doedit hist02.do":(solution)}{p_end}
+{* apcodefile hist02.do (solution) }{pstd}{stata "doedit hist02.do":(solution)}{p_end}
  
  
 {* /p}{hline}

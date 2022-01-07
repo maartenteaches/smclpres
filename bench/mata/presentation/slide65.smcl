@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Advanced data types in Mata} {hline 2} Pointers{p_end}
 {hline}
@@ -27,7 +27,7 @@ We continue adding knots till the approximation is good enough
 {pstd}
 Here is a first attempt:
 
-{* codefile sp_approx01.do }{pstd}{stata "doedit sp_approx01.do":sp_approx01}{p_end}
+{* codefile sp_approx01.do }{pstd}{stata "doedit sp_approx01.do":sp_approx01.do}{p_end}
 
 {pstd}
 The function we want to approximate is now hard coded in our program. We could 
@@ -36,7 +36,7 @@ make this more general with pointers
 {pstd}
 Do so
 
-{* apcodefile sp_approx02.do }{pstd}{stata "doedit sp_approx02.do":(solution)}{p_end}
+{* apcodefile sp_approx02.do (solution) }{pstd}{stata "doedit sp_approx02.do":(solution)}{p_end}
  
  
 {* /p}{hline}

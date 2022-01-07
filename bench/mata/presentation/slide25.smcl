@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Basics of mata} {hline 2} Application: linear regression and instrumental variable regression{p_end}
 {hline}
@@ -22,7 +22,7 @@ Continue working in your do file and compute {cmd:M} and {cmd:b}
 {pstd}
 Check your results agains {cmd:ivregress 2sls rent pcturban (hsngval = faminc i.region), small}
 
-{* apcodefile tsls02.do }{pstd}{stata "doedit tsls02.do":(solution)}{p_end}
+{* apcodefile tsls02.do (solution) }{pstd}{stata "doedit tsls02.do":(solution)}{p_end}
  
  
 {* /p}{hline}

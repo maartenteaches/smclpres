@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Advanced data types in Mata} {hline 2} Pointers{p_end}
 {hline}
@@ -35,7 +35,7 @@ We want to store them in a single object, using pointers
 {pstd}
 extract from that object the value for t=2, row=2, col=3
 
-{* apcodefile threeD.do }{pstd}{stata "doedit threeD.do":(solution)}{p_end}
+{* apcodefile threeD.do (solution) }{pstd}{stata "doedit threeD.do":(solution)}{p_end}
  
  
 {* /p}{hline}

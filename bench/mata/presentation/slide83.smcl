@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Turning it into a Mata class{p_end}
 {hline}
@@ -89,7 +89,7 @@ This is where I would start
 {pstd}
 create a working version of this class
 
-{* apcodefile hist06.do }{pstd}{stata "doedit hist06.do":(solution)}{p_end}
+{* apcodefile hist06.do (solution) }{pstd}{stata "doedit hist06.do":(solution)}{p_end}
  
  
 {* /p}{hline}

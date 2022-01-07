@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Turning it into a Mata class{p_end}
 {hline}
@@ -45,7 +45,7 @@ Instead you would want them to go through a function
 {pstd}
 Make functions for {cmd:fn}, and {cmd:punct}
 
-{* apcodefile hist07.do }{pstd}{stata "doedit hist07.do":(solution)}{p_end}
+{* apcodefile hist07.do (solution) }{pstd}{stata "doedit hist07.do":(solution)}{p_end}
  
  
 {* /p}{hline}

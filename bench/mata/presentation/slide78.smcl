@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
 {hline}
@@ -20,7 +20,7 @@ use {helpb mf_tokens:tokens()} to turn that into a vector
 {pstd}
 use {helpb Mata subinstr()} to remove those (i.e. replace it with an empty string "")
 
-{* apcodefile hist01.do }{pstd}{stata "doedit hist01.do":(solution)}{p_end}
+{* apcodefile hist01.do (solution) }{pstd}{stata "doedit hist01.do":(solution)}{p_end}
  
  
 {* /p}{hline}

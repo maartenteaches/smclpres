@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Build your own class} {hline 2} Getting basic working code{p_end}
 {hline}
@@ -25,7 +25,7 @@ But first we need to make sure there are enough observations in the Stata datase
 to take all those words. We can count the number of observation with {cmd:st_nobs()}
 and add any extra observations we may need with {cmd:st_addobs()}
 
-{* apcodefile hist05.do }{pstd}{stata "doedit hist05.do":(solution)}{p_end}
+{* apcodefile hist05.do (solution) }{pstd}{stata "doedit hist05.do":(solution)}{p_end}
  
  
 {* /p}{hline}

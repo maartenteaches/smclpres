@@ -38,14 +38,20 @@ program define pres2html_main
 	file open `base' using `stub'.smcl, read
 	
 	file read `base' line
+	local slideslist = 0
 	while r(eof) == 0 {
 		gettoken first rest : line
 		gettoken second rest : rest
 		if `"`first'"' == "{*" & `"`second'"' == "slides" {
-			gettoken slides rest: rest, parse("}")
+			local slideslist = 1
 		}
-		if `"`first'"' == "{*" & `"`second'"' == "bottomstyle" {
+		else if `"`first'"' == "{*" & `"`second'"' == "bottomstyle" {
+			local slideslist = 0
 			gettoken bottomstyle rest : rest, parse("}")
+		}
+		else if `slideslist' & `"`second'"' != "slides" {
+			gettoken slide bracket : second, parse("}")
+			local slides = `"`slides' `slide'"'
 		}
 		file read `base' line
 	}
@@ -126,6 +132,7 @@ program define Slide2html
 			Fileappend, file(`temphtml') appendto(`tofill')
 			gettoken rest : rest, parse("}")
 			gettoken dofilesource rest : rest
+			local rest = ustrtrim(`"`rest'"')
 			file write `tofill' `"<pre><a href="#app`appnumber'">`rest'</a></pre>"'_n
 			Dohtml using `dofilesource', gen(`temphtml') replace
 			file write `app' `"<div class="slide" id="app`appnumber'">"'_n
@@ -173,6 +180,7 @@ program define Slide2html
 			Fileappend, file(`temphtml') appendto(`tofill')
 			gettoken rest : rest, parse("}")
 			gettoken codefilesource rest : rest
+			local rest = ustrtrim(`"`rest'"')
 			file write `tofill' `"<pre><a href="#app`appnumber'">`rest'</a></pre>"'_n
 			file write `app' `"<div class="slide" id="app`appnumber'">"'_n
 			file write `app' `"<pre><p align="center"><b>`rest'</b></p></pre><br><br>"'_n

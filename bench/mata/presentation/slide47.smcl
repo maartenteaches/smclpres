@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Linear regression and instrumental variable regression{p_end}
 {hline}
@@ -9,7 +9,7 @@
 {pstd}
 Do the same to your 2sls program
 
-{* apcodefile my_2sls07.ado }{pstd}{stata "doedit my_2sls07.ado":(solution)}{p_end}
+{* apcodefile my_2sls07.ado (solution) }{pstd}{stata "doedit my_2sls07.ado":(solution)}{p_end}
  
  
 {* /p}{hline}

@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Linear regression and instrumental variable regression{p_end}
 {hline}
@@ -39,7 +39,7 @@ space
 
 
 {* endex }{...}
-{* apcodefile tsls05.do }{pstd}{stata "doedit tsls05.do":(solution)}{p_end}
+{* apcodefile tsls05.do (solution) }{pstd}{stata "doedit tsls05.do":(solution)}{p_end}
  
  
 {* /p}{hline}

@@ -1,5 +1,5 @@
 {smcl}
-{*  3 Jan 2022}{...}
+{*  7 Jan 2022}{...}
 {hline}
 {p}{bf:Functions in Mata} {hline 2} Linear regression and instrumental variable regression{p_end}
 {hline}
@@ -22,7 +22,7 @@ The {cmd:syntax} I would use is:
 The first variable in varlist is the dependent, and the remaining variables are 
 the exogenous variables. 
 
-{* apcodefile tsls06.do }{pstd}{stata "doedit tsls06.do":(solution)}{p_end}
+{* apcodefile tsls06.do (solution) }{pstd}{stata "doedit tsls06.do":(solution)}{p_end}
  
  
 {* /p}{hline}
