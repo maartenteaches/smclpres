@@ -201,8 +201,8 @@ void smclpres::write_toc_top(real scalar dest) {
 					fput(dest, "{hline}")
 				}
 			}
-			else if (titleopen) {
-				write_title(ustrltrim(tokenrest(t)),dest)
+			else if (titleopen& left != "/*toctitle"){
+				writetitle(source[rownr,1],dest)
 			}
 			else if (left == "/*toctxt") {
 				textopen = 1
@@ -210,7 +210,7 @@ void smclpres::write_toc_top(real scalar dest) {
 			else if (left == "toctxt*/") {
 				textopen = 0
 			}
-			else if (textopen) {
+			else if (textopen & left != "/*toctext") {
 				fput(dest, source[rownr,1])
 			}
 		}

@@ -160,10 +160,10 @@ void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, 
     }
     if (cmd == "title") {
         if (opt=="thline") {
-            settings.bottombar.thline = "hline"
+            settings.title.thline = "hline"
         }
         if (opt=="bhline"){
-            settings.bottombar.bhline = "hline"
+            settings.title.pos = "hline"
         }
     }
     if (cmd == "topbar") {
