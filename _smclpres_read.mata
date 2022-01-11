@@ -163,7 +163,7 @@ void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, 
             settings.title.thline = "hline"
         }
         if (opt=="bhline"){
-            settings.title.pos = "hline"
+            settings.title.bhline = "hline"
         }
     }
     if (cmd == "topbar") {
