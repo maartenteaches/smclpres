@@ -300,5 +300,13 @@ assert(totest.settings.bottombar.nextname == "bla")
 // this is only added for when I want to also to link to the previous page when linking via labels
 totest.p_bottombar_name("bottombar", "tpage", "bla", "file", "1")
 assert(totest.settings.bottombar.tpage == "bla")
+end
 
+//p_topbar_on_off()
+mata:
+totest = smclpres()
+totest.p_topbar_on_off("topbar", "on", "", "file", "1")
+assert(totest.settings.topbar.on == "on")
+totest.p_topbar_on_off("topbar", "off", "", "file", "1")
+assert(totest.settings.topbar.on == "off")
 end
