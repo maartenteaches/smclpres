@@ -272,3 +272,14 @@ totest = smclpres()
 totest.p_tab("tabs", "spaces", "5", "file", "1")
 assert(totest.settings.other.tab == 5)
 end
+
+// p_bottombar_arrow_label()
+mata:
+totest = smclpres()
+totest.p_bottombar_arrow_label("bottombar", "arrow", "", "file", "1")
+assert(totest.settings.bottombar.arrow == "arrow")
+totest.p_bottombar_arrow_label("bottombar", "label", "", "file", "1")
+assert(totest.settings.bottombar.arrow == "label")
+totest.p_bottombar_arrow_label("bottombar", "toc", "", "file", "1")
+assert(totest.settings.bottombar.toc == "toc")
+end

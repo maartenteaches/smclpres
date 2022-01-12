@@ -407,7 +407,12 @@ void smclpres::p_bottombar_name(string scalar cmd, string scalar opt, string sca
 void smclpres::p_bottombar_arrow_label(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(opt, cmd, arg, file, line)
-    settings.bottombar.arrow = opt
+    if (opt == "arrow" | opt == "label") {
+        settings.bottombar.arrow = opt
+    }
+    else if (opt == "toc") {
+        settings.bottombar.toc = opt
+    }
 }
 
 void smclpres::p_tab(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
