@@ -238,3 +238,15 @@ assert(totest.settings.bottombar.thline=="hline")
 totest.p_hline("bottombar", "bhline", "", "file", "1")
 assert(totest.settings.bottombar.bhline=="hline")
 end
+
+// p_bib_opt()
+mata:
+totest = smclpres()
+totest.p_bib_opt("bib", "and", "und", "file", "1")
+assert(totest.bib.and == "und")
+totest.p_bib_opt("bib", "authorstyle", "last first", "file", "1")
+assert(totest.bib.authorstyle == "last first")
+totest.p_bib_opt("bib", "write", "all", "file", "1")
+assert(totest.bib.write == "all")
+
+end
