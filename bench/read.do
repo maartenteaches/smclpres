@@ -1,5 +1,6 @@
 cscript
 run  smclpres_main.mata
+local home = "D"
 
 // ----------------------------------- parsedirs()
 // absolute path
@@ -248,5 +249,20 @@ totest.p_bib_opt("bib", "authorstyle", "last first", "file", "1")
 assert(totest.bib.authorstyle == "last first")
 totest.p_bib_opt("bib", "write", "all", "file", "1")
 assert(totest.bib.write == "all")
+
+end
+// p_bib_file
+
+local using "bench/incl_main.do"
+local replace "replace"
+
+mata:
+totest = smclpres()
+totest.parsedirs()
+totest.p_bib_file("bib","bibfile", "incl_main.do", "file", "1")
+assert(totest.bib.bibfile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
+
+totest.p_bib_file("bib","stylefile", "incl_main.do", "file", "1")
+assert(totest.bib.stylefile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
 
 end
