@@ -283,3 +283,22 @@ assert(totest.settings.bottombar.arrow == "label")
 totest.p_bottombar_arrow_label("bottombar", "toc", "", "file", "1")
 assert(totest.settings.bottombar.toc == "toc")
 end
+
+// p_bottombar_name()
+mata:
+totest = smclpres()
+totest.p_bottombar_name("bottombar", "index", "bla", "file", "1")
+assert(totest.settings.bottombar.index == "bla")
+
+totest.p_bottombar_name("bottombar", "nextname", "bla", "file", "1")
+assert(totest.settings.bottombar.nextname == "bla")
+
+// tpage is not documented, and is also not used
+// it is the label for the title page
+// The label of a page is used when not using arrows but labels in the bottombar to link to the next page
+// Since with label we only link forwards, the label for the titlepage is never used
+// this is only added for when I want to also to link to the previous page when linking via labels
+totest.p_bottombar_name("bottombar", "tpage", "bla", "file", "1")
+assert(totest.settings.bottombar.tpage == "bla")
+
+end

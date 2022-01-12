@@ -391,15 +391,21 @@ void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scal
     settings.topbar.on = opt
 }
 
+// tpage is not documented, and is also not used
+// it is the label for the title page
+// The label of a page is used when not using arrows but labels in the bottombar to link to the next page
+// Since with label we only link forwards, the label for the titlepage is never used
+// this is only added for when I want to also to link to the previous page when linking via labels
+
 void smclpres::p_bottombar_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     if (opt == "index" ) {
         settings.bottombar.index = arg
     }
-    if (opt == "nextname") {
+    else if (opt == "nextname") {
         settings.bottombar.nextname = arg
     }
-    if (opt == "tpage") {
+    else if (opt == "tpage") {
         settings.bottombar.tpage = arg
     }
 }
