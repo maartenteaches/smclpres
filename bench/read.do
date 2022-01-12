@@ -264,5 +264,11 @@ assert(totest.bib.bibfile == "`home'" + ":\Mijn documenten\projecten\stata\smclp
 
 totest.p_bib_file("bib","stylefile", "incl_main.do", "file", "1")
 assert(totest.bib.stylefile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
+end
 
+//p_tab
+mata:
+totest = smclpres()
+totest.p_tab("tabs", "spaces", "5", "file", "1")
+assert(totest.settings.other.tab == 5)
 end
