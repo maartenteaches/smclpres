@@ -312,7 +312,6 @@ assert(totest.settings.topbar.on == "off")
 end
 
 //errors
-
 mata: totest = smclpres()
 rcof `"noi mata: totest.generic_err_msg("topbar", "italic", "file", "4")"' == 198
 rcof `"noi mata: totest.notallowed("topbar", "italic", "regular", "file", "4")"' == 198
@@ -321,3 +320,46 @@ rcof `"noi mata: totest.no_arg_err("topbar", "italic", "regular", "file", "4")"'
 noi mata: totest.allowed_arg_err("topbar", "italic", "regular", "file", "4", ("regular", "italic"))
 noi mata: totest.allowed_arg_err("topbar", "italic", "italic", "file", "4", ("regular", "italic"))
 rcof `"noi mata: totest.allowed_arg_err("topbar", "italic", "bold", "file", "4", ("regular", "italic"))"' == 198
+
+// p_font()
+mata:
+totest = smclpres()
+totest.p_font("toc","secbold", "", "file", "4")
+assert(totest.settings.toc.secbf=="bold")
+totest.p_font("toc","secitalic", "", "file", "4")
+assert(totest.settings.toc.secit=="italic")
+
+totest.p_font("toc","subsecbold", "", "file", "4")
+assert(totest.settings.toc.subsecbf=="bold")
+totest.p_font("toc","subsecitalic", "", "file", "4")
+assert(totest.settings.toc.subsecit=="italic")
+
+totest.p_font("toc","subsubsecbold", "", "file", "4")
+assert(totest.settings.toc.subsubsecbf=="bold")
+totest.p_font("toc","subsubsecitalic", "", "file", "4")
+assert(totest.settings.toc.subsubsecit=="italic")
+
+totest.p_font("toc","subsubsubsecbold", "", "file", "4")
+assert(totest.settings.toc.subsubsubsecbf=="bold")
+totest.p_font("toc","subsubsubsecitalic", "", "file", "4")
+assert(totest.settings.toc.subsubsubsecit=="italic")
+
+totest.p_font("toc","nosubtitlebold", "", "file", "4")
+assert(totest.settings.toc.subtitlebf=="regular")
+totest.p_font("toc","subtitleitalic", "", "file", "4")
+assert(totest.settings.toc.subtitleit=="italic")
+
+totest.p_font("title", "nobold", "", "file", "4")
+assert(totest.settings.title.bold == "regular")
+totest.p_font("title", "italic", "", "file", "4")
+assert(totest.settings.title.italic == "italic")
+
+totest.p_font("topbar", "nosecbold", "", "file", "4")
+assert(totest.settings.topbar.secbf == "regular")
+totest.p_font("topbar", "secitalic", "", "file", "4")
+assert(totest.settings.topbar.secit == "italic")
+totest.p_font("topbar", "subsecbold", "", "file", "4")
+assert(totest.settings.topbar.subsecbf == "bold")
+totest.p_font("topbar", "subsecitalic", "", "file", "4")
+assert(totest.settings.topbar.subsecit == "italic")
+end

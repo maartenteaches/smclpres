@@ -117,12 +117,6 @@ void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, s
         if (opt=="subsecitalic") {
             settings.topbar.subsecit = "italic"
         }
-        if (opt=="subsubsecbold") {
-            settings.toc.subsubsecbf = "bold"
-        }
-        if (opt=="subsubsecitalic") {
-            settings.toc.subsubsecit = "italic"
-        }  
     }
 }
 
