@@ -363,3 +363,20 @@ assert(totest.settings.topbar.subsecbf == "bold")
 totest.p_font("topbar", "subsecitalic", "", "file", "4")
 assert(totest.settings.topbar.subsecit == "italic")
 end
+
+// p_pos
+mata:
+totest = smclpres()
+totest.p_pos("bottombar", "next", "left", "file", "4")
+assert(totest.settings.bottombar.next == "left")
+totest.p_pos("bottombar", "next", "right", "file", "4")
+assert(totest.settings.bottombar.next == "right")
+
+totest.p_pos("toc", "subtitlepos", "left", "file", "4")
+assert(totest.settings.toc.subtitlepos == "left")
+
+totest.p_pos("title", "left", "", "file", "4")
+assert(totest.settings.title.pos == "left")
+totest.p_pos("title", "center", "", "file", "4")
+assert(totest.settings.title.pos == "center")
+end

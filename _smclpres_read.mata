@@ -128,7 +128,7 @@ void smclpres::p_pos(string scalar cmd, string scalar opt, string scalar arg, st
     }
     if (cmd == "toc") {
         allowed_arg_err(cmd, opt, arg, file, line, ("left", "center"))
-        settings.toc.subtitlepos = opt
+        settings.toc.subtitlepos = arg
     }
     if (cmd=="title") {
         no_arg_err(cmd, opt, arg, file, line)
