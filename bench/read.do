@@ -310,3 +310,14 @@ assert(totest.settings.topbar.on == "on")
 totest.p_topbar_on_off("topbar", "off", "", "file", "1")
 assert(totest.settings.topbar.on == "off")
 end
+
+//errors
+
+mata: totest = smclpres()
+rcof `"noi mata: totest.generic_err_msg("topbar", "italic", "file", "4")"' == 198
+rcof `"noi mata: totest.notallowed("topbar", "italic", "regular", "file", "4")"' == 198
+noi mata: totest.no_arg_err("topbar", "italic", "", "file", "4")
+rcof `"noi mata: totest.no_arg_err("topbar", "italic", "regular", "file", "4")"' == 198
+noi mata: totest.allowed_arg_err("topbar", "italic", "regular", "file", "4", ("regular", "italic"))
+noi mata: totest.allowed_arg_err("topbar", "italic", "italic", "file", "4", ("regular", "italic"))
+rcof `"noi mata: totest.allowed_arg_err("topbar", "italic", "bold", "file", "4", ("regular", "italic"))"' == 198

@@ -5,7 +5,7 @@ void smclpres::generic_err_msg(string scalar cmd, string scalar opt, string scal
     errmsg = "{p}{err}there is an error with option {res}" +
              opt + " {err} of {res}//layout " + cmd + " {p_end}" 
     printf(errmsg)
-    errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+    errmsg = "{p}{err}This error occured on line {res}" + line + " {err}of  file {res}" + file +"{p_end}"
     printf(errmsg)
     exit(198)
 }
@@ -18,25 +18,25 @@ void smclpres::notallowed(string scalar cmd, string scalar opt, string scalar ar
 	}
 	errmsg = errmsg + "{err} not allowed in {res}//layout " + cmd + "{p_end}"
 	printf(errmsg)
-	errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+	errmsg = "{p}{err}This error occured on line {res}" + line + " {err}of  file {res}" + file +"{p_end}"
 	printf(errmsg)
 	exit(198)
 }
 
-void smclpres::no_arg_err(string scalar opt, string scalar cmd, string scalar arg, string scalar file, string scalar line)
+void smclpres::no_arg_err(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     string scalar errmsg
     if (arg != "") {
         errmsg = "{p}{err}no argument allowed for option {res}" +
                  opt + " {err} of {res}//layout " + cmd + " {p_end}" 
         printf(errmsg)
-        errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+        errmsg = "{p}{err}This error occured on line {res}" + line + " {err}of  file {res}" + file +"{p_end}"
         printf(errmsg)
         exit(198)
     }
 }
 
-void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scalar arg, string scalar file, string scalar line, string rowvector allowed)
+void smclpres::allowed_arg_err(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line, string rowvector allowed)
 {
 	string scalar errmsg, all_err
     real scalar k, i
@@ -55,7 +55,7 @@ void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scal
                  "{res}//layout "+ cmd + "{err} may contain either " +
                  all_err + "{p_end}"
         printf(errmsg)
-        errmsg = "{p}{err}This error occured on line " + line + " of  file " + file +"{p_end}"
+        errmsg = "{p}{err}This error occured on line {res}" + line + " {err}of  file {res}" + file +"{p_end}"
         printf(errmsg)
         exit(198)
     }
@@ -63,7 +63,7 @@ void smclpres::allowed_arg_err(string scalar opt, string scalar cmd, string scal
 
 void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
+    no_arg_err(cmd, opt, arg, file, line)
     if (cmd=="toc") {
         if (opt=="secbold") {
             settings.toc.secbf = "bold"
@@ -129,22 +129,22 @@ void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, s
 void smclpres::p_pos(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     if (cmd=="bottombar") {
-        allowed_arg_err(opt, cmd, arg, file, line, ("left", "right"))
+        allowed_arg_err(cmd,opt, arg, file, line, ("left", "right"))
         settings.bottombar.next = arg 
     }
     if (cmd == "toc") {
-        allowed_arg_err(opt, cmd, arg, file, line, ("left", "center"))
+        allowed_arg_err(cmd, opt, arg, file, line, ("left", "center"))
         settings.toc.subtitlepos = opt
     }
     if (cmd=="title") {
-        no_arg_err(opt, cmd, arg, file, line)
+        no_arg_err(cmd, opt, arg, file, line)
         settings.title.pos = opt 
     }
 }
 void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     if (cmd == "toc") {
-        no_arg_err(opt, cmd, arg, file, line)
+        no_arg_err(cmd, opt, arg, file, line)
         if (opt=="secthline") {
             settings.toc.secthline = "hline"
         }
@@ -187,7 +187,7 @@ void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, 
 void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
 
-    allowed_arg_err(opt, cmd, arg, file, line, ("section", "subsection", "subsubsection"))
+    allowed_arg_err( cmd, opt, arg, file, line, ("section", "subsection", "subsubsection"))
 
     if (opt == "link") {
         settings.toc.link = arg
@@ -202,7 +202,7 @@ void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string sc
 
 void smclpres::p_toc_itemize(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
+    no_arg_err(cmd, opt, arg, file, line)
     settings.toc.itemize = "itemize"
 }
 
@@ -350,13 +350,13 @@ void smclpres::p_tocfiles_p2(string scalar cmd, string scalar opt, string scalar
 }    
 void smclpres::p_toc_nodigr(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
+    no_arg_err(cmd, opt, arg, file, line)
     settings.toc.nodigr="nodigr"    
 }
 
 void smclpres::p_tocfiles_on_off(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
+    no_arg_err(cmd, opt, arg, file, line)
     settings.tocfiles.on = opt
 }
 
@@ -381,13 +381,13 @@ void smclpres::p_topbar_sep(string scalar cmd, string scalar opt, string scalar 
 }
 void smclpres::p_topbar_nosubsec(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
+    no_arg_err(cmd, opt, arg, file, line)
     settings.topbar.subsec = opt
 }
 
 void smclpres::p_topbar_on_off(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
+    no_arg_err(cmd, opt, arg, file, line)
     settings.topbar.on = opt
 }
 
@@ -412,7 +412,7 @@ void smclpres::p_bottombar_name(string scalar cmd, string scalar opt, string sca
 
 void smclpres::p_bottombar_arrow_label(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(opt, cmd, arg, file, line)
+    no_arg_err(cmd, opt, arg, file, line)
     if (opt == "arrow" | opt == "label") {
         settings.bottombar.arrow = opt
     }
@@ -452,11 +452,11 @@ void smclpres::p_bib_opt(string scalar cmd, string scalar opt, string scalar arg
         bib.and = arg
     }
     if (opt == "authorstyle") {
-        allowed_arg_err(opt, cmd, arg, file, line, ("first last", "last first"))
+        allowed_arg_err(cmd, opt, arg, file, line, ("first last", "last first"))
         bib.authorstyle = arg
     }
     if (opt == "write") {
-        allowed_arg_err(opt, cmd, arg, file, line, ("cited", "all"))
+        allowed_arg_err(cmd, opt, arg, file, line, ("cited", "all"))
         bib.write = arg
     }
 }    
