@@ -380,3 +380,33 @@ assert(totest.settings.title.pos == "left")
 totest.p_pos("title", "center", "", "file", "4")
 assert(totest.settings.title.pos == "center")
 end
+
+//p_hline
+mata:
+totest = smclpres()
+totest.p_hline("toc", "secthline", "", "file", "4")
+assert(totest.settings.toc.secthline=="hline")
+totest.p_hline("toc", "secbhline", "", "file", "4")
+assert(totest.settings.toc.secbhline=="hline")
+
+totest.p_hline("toc", "nosubtitlethline", "", "file", "4")
+assert(totest.settings.toc.subtitlethline=="nohline")
+totest.p_hline("toc", "nosubtitlebhline", "", "file", "4")
+assert(totest.settings.toc.subtitlebhline=="nohline")
+
+totest.p_hline("title", "thline", "", "file", "4")
+assert(totest.settings.title.thline=="hline")
+totest.p_hline("title", "bhline", "", "file", "4")
+assert(totest.settings.title.bhline=="hline")
+
+totest.p_hline("topbar", "nothline", "", "file", "4")
+assert(totest.settings.topbar.thline=="nohline")
+totest.p_hline("topbar", "nobhline", "", "file", "4")
+assert(totest.settings.topbar.bhline=="nohline")
+
+totest.p_hline("bottombar", "nothline", "", "file", "4")
+assert(totest.settings.bottombar.thline=="nohline")
+totest.p_hline("bottombar", "nobhline", "", "file", "4")
+assert(totest.settings.bottombar.bhline=="nohline")
+
+end
