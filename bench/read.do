@@ -408,5 +408,24 @@ totest.p_hline("bottombar", "nothline", "", "file", "4")
 assert(totest.settings.bottombar.thline=="nohline")
 totest.p_hline("bottombar", "nobhline", "", "file", "4")
 assert(totest.settings.bottombar.bhline=="nohline")
+end
+
+//p_toc_sub_sub()
+mata:
+totest = smclpres()
+totest.p_toc_sec_sub_sub("toc", "link", "section", "file", "4")
+assert(totest.settings.toc.link == "section")
+totest.p_toc_sec_sub_sub("toc", "link", "subsection", "file", "4")
+assert(totest.settings.toc.link == "subsection")
+totest.p_toc_sec_sub_sub("toc", "link", "subsubsection", "file", "4")
+assert(totest.settings.toc.link == "subsubsection")
+
+totest.p_toc_sec_sub_sub("toc", "title", "notitle", "file", "4")
+assert(totest.settings.toc.title == "notitle")
+totest.p_toc_sec_sub_sub("toc", "title", "subsection", "file", "4")
+assert(totest.settings.toc.title == "subsection")
+assert(totest.settings.topbar.subsec == "nosubsec")
+totest.p_toc_sec_sub_sub("toc", "title", "subsubsection", "file", "4")
+assert(totest.settings.toc.title == "subsubsection")
 
 end

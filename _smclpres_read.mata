@@ -181,14 +181,18 @@ void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, 
 void smclpres::p_toc_sec_sub_sub(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
 
-    allowed_arg_err( cmd, opt, arg, file, line, ("section", "subsection", "subsubsection"))
-
+    if (cmd == "link") {
+        allowed_arg_err( cmd, opt, arg, file, line, ("section", "subsection", "subsubsection"))
+    }
+    else if (cmd == "title") {
+        allowed_arg_err( cmd, opt, arg, file, line, ("subsection", "subsubsection","notitle"))
+    }
     if (opt == "link") {
         settings.toc.link = arg
     }
     else if (opt == "title") {
         settings.toc.title = arg
-        if (opt == "subsection") {
+        if (arg == "subsection") {
             settings.topbar.subsec = "nosubsec"
         }
     }
