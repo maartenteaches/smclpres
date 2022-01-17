@@ -427,5 +427,11 @@ assert(totest.settings.toc.title == "subsection")
 assert(totest.settings.topbar.subsec == "nosubsec")
 totest.p_toc_sec_sub_sub("toc", "title", "subsubsection", "file", "4")
 assert(totest.settings.toc.title == "subsubsection")
+end
 
+//p_toc_itemize
+mata:
+totest = smclpres()
+totest.p_toc_itemize("toc","itemize", "", "file", "4")
+assert(totest.settings.toc.itemize == "itemize")
 end
