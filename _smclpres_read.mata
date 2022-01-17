@@ -214,16 +214,6 @@ void smclpres::p_toc_name(string scalar cmd, string scalar opt, string scalar ar
     }
 }
 
-void smclpres::changemarkname(string scalar mark, string scalar name) {
-	real colvector i
-	
-	i = selectindex(settings.tocfiles.markname[.,1] :== mark)
-	if (cols(i) > 1) {
-		exit(error(198))
-	}
-	settings.tocfiles.markname[i,2] = name
-}
-
 void smclpres::p_tocfiles_howdisplay(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     arg = usubinstr(arg, ".", "", .)
@@ -285,18 +275,44 @@ void smclpres::p_tocfiles_howdisplay_default()
     }
 }
 
+void smclpres::changemarkname(string scalar mark, string scalar name, string scalar file, string scalar line) {
+	real colvector i
+	string scalar errmsg
+
+	i = selectindex(settings.tocfiles.markname[.,1] :== mark)
+	if (rows(i) > 1) {
+        errmsg = "{p}{err}tried to change the default label of " + mark +" to " + name + "{p_end}"
+        printf(errmsg)
+        errmsg = "{p}{err}but multiple entries found for " + mark + "{p_end}" 
+        printf(errmsg)
+        errmsg = "{p}{err}This error occured on line {res}" + line + " {err}of  file {res}" + file +"{p_end}"
+        printf(errmsg)
+        exit(error(198))
+	}
+    if (rows(i)==0) {
+        errmsg = "{p}{err}tried to change the default label of " + mark +" to " + name + "{p_end}"
+        printf(errmsg)
+        errmsg = "{p}{err}but no entry found for " + mark + "{p_end}"
+        printf(errmsg)
+        errmsg = "{p}{err}This error occured on line {res}" + line + " {err}of  file {res}" + file +"{p_end}"
+        printf(errmsg)
+        exit(error(198))        
+    }
+	settings.tocfiles.markname[i,2] = name
+}
+
 void smclpres::p_tocfiles_name(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     string scalar mark
     if (opt == "name") {
         settings.tocfiles.name = arg
     }
-    if (opt == "where") {
+    else if (opt == "where") {
         settings.tocfiles.where = arg
     }
     else  {
-        mark = usubstr(cmd, 1, ustrpos(cmd, "name") - 1)
-        changemarkname(mark, opt)
+        mark = usubstr(opt, 1, ustrpos(opt, "name") - 1)
+        changemarkname(mark, arg, file, line)
     }
 }
 

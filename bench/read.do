@@ -444,3 +444,23 @@ assert(totest.settings.toc.anc == "extra")
 totest.p_toc_name("toc", "subtitle", "presentatie", "", "4")
 assert(totest.settings.toc.subtitle == "presentatie")
 end
+
+// changemarkname()
+mata:
+totest = smclpres()
+totest.changemarkname("do", "kwak", "file", "4")
+assert(totest.settings.tocfiles.markname[2,2] == "kwak")
+end
+
+//p_tocfiles_name()
+mata:
+totest = smclpres()
+totest.p_tocfiles_name("tocfiles", "exname", "voorbeeld", "file", "4")
+assert(totest.settings.tocfiles.markname[1,2] == "voorbeeld")
+totest.p_tocfiles_name("tocfiles", "doname", "do bestand", "file", "4")
+assert(totest.settings.tocfiles.markname[2,2] == "do bestand")
+totest.p_tocfiles_name("tocfiles", "name", "voorbeeld", "file", "4")
+assert(totest.settings.tocfiles.name == "voorbeeld")
+totest.p_tocfiles_name("tocfiles", "where", "voorbeeld", "file", "4")
+assert(totest.settings.tocfiles.where == "voorbeeld")
+end
