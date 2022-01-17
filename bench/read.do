@@ -435,3 +435,12 @@ totest = smclpres()
 totest.p_toc_itemize("toc","itemize", "", "file", "4")
 assert(totest.settings.toc.itemize == "itemize")
 end
+
+// p_toc_name
+mata:
+totest = smclpres()
+totest.p_toc_name("toc", "anc", "extra", "file", "4")
+assert(totest.settings.toc.anc == "extra")
+totest.p_toc_name("toc", "subtitle", "presentatie", "", "4")
+assert(totest.settings.toc.subtitle == "presentatie")
+end
