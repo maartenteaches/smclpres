@@ -212,34 +212,6 @@ assert(totest.pres_geq_val(1, (4,0,0))==1)
 assert(totest.pres_geq_val(24, (2,0,1))==0)
 end
 
-// p_hline
-mata:
-totest = smclpres()
-totest.p_hline("toc", "secthline", "", "file", "1")
-assert(totest.settings.toc.secthline=="hline")
-totest.p_hline("toc", "secbhline", "", "file", "1")
-assert(totest.settings.toc.secbhline=="hline")
-totest.p_hline("toc", "nosubtitlethline", "", "file", "1")
-assert(totest.settings.toc.subtitlethline=="nohline")
-totest.p_hline("toc", "nosubtitlebhline", "", "file", "1")
-assert(totest.settings.toc.subtitlebhline=="nohline")
-
-totest.p_hline("title", "thline", "", "file", "1")
-assert(totest.settings.title.thline=="hline")
-totest.p_hline("title", "bhline", "", "file", "1")
-assert(totest.settings.title.bhline=="hline")
-
-totest.p_hline("topbar", "thline", "", "file", "1")
-assert(totest.settings.topbar.thline=="hline")
-totest.p_hline("topbar", "bhline", "", "file", "1")
-assert(totest.settings.topbar.bhline=="hline")
-
-totest.p_hline("bottombar", "thline", "", "file", "1")
-assert(totest.settings.bottombar.thline=="hline")
-totest.p_hline("bottombar", "bhline", "", "file", "1")
-assert(totest.settings.bottombar.bhline=="hline")
-end
-
 // p_bib_opt()
 mata:
 totest = smclpres()
