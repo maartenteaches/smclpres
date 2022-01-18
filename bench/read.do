@@ -455,3 +455,10 @@ totest = smclpres()
 totest.p_tocfiles_customname("tocfiles", "customname", "foo bar blup; boo boooo", "file", "4")
 assert(totest.settings.tocfiles.markname[|16,1 \ 17,2|] == ("foo", " bar blup" \ "boo", " boooo"))
 end
+
+//p_tocfiles_p2()
+mata:
+totest = smclpres()
+totest.p_tocfiles_p2("tocfiles", "p2", "4 24 25 1", "file", "4")
+assert(totest.settings.tocfiles.p2 == "4 24 25 1")
+end
