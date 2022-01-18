@@ -437,7 +437,7 @@ totest.p_tocfiles_name("tocfiles", "where", "voorbeeld", "file", "4")
 assert(totest.settings.tocfiles.where == "voorbeeld")
 end
 
-// p_tocfiles_howdisplay()
+// p_tocfiles_howdisplay() p_tocfiles_howdisplay_default()
 mata:
 totest = smclpres()
 totest.p_tocfiles_howdisplay("tocfiles", "doedit", ".do .mata .sthlp", "file", "4")
@@ -447,4 +447,11 @@ assert(totest.settings.tocfiles.view == "smcl")
 totest.p_tocfiles_howdisplay_default()
 assert(totest.settings.tocfiles.doedit == "do mata sthlp ado dct class scheme style")
 assert(totest.settings.tocfiles.view == "smcl log hlp")
+end
+
+//p_tocfiles_customname()
+mata:
+totest = smclpres()
+totest.p_tocfiles_customname("tocfiles", "customname", "foo bar blup; boo boooo", "file", "4")
+assert(totest.settings.tocfiles.markname[|16,1 \ 17,2|] == ("foo", " bar blup" \ "boo", " boooo"))
 end
