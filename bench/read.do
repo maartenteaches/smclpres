@@ -439,28 +439,6 @@ totest.p_topbar_on_off("topbar", "off", "", "file", "4")
 assert(totest.settings.topbar.on == "off")
 end
 
-
-// p_bib_file
-local using "bench/incl_main.do"
-local replace "replace"
-
-mata:
-totest = smclpres()
-totest.parsedirs()
-totest.p_bib_file("bib","bibfile", "incl_main.do", "file", "1")
-assert(totest.bib.bibfile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
-
-totest.p_bib_file("bib","stylefile", "incl_main.do", "file", "1")
-assert(totest.bib.stylefile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
-end
-
-//p_tab
-mata:
-totest = smclpres()
-totest.p_tab("tabs", "spaces", "5", "file", "1")
-assert(totest.settings.other.tab == 5)
-end
-
 // p_bottombar_arrow_label()
 mata:
 totest = smclpres()
@@ -490,11 +468,44 @@ totest.p_bottombar_name("bottombar", "tpage", "bla", "file", "1")
 assert(totest.settings.bottombar.tpage == "bla")
 end
 
-//p_topbar_on_off()
+//p_tab
 mata:
 totest = smclpres()
-totest.p_topbar_on_off("topbar", "on", "", "file", "1")
-assert(totest.settings.topbar.on == "on")
-totest.p_topbar_on_off("topbar", "off", "", "file", "1")
-assert(totest.settings.topbar.on == "off")
+totest.p_tab("tabs", "spaces", "5", "file", "1")
+assert(totest.settings.other.tab == 5)
+end
+
+// p_bib_file
+local using "bench/incl_main.do"
+local replace "replace"
+
+mata:
+totest = smclpres()
+totest.parsedirs()
+totest.p_bib_file("bib","bibfile", "incl_main.do", "file", "1")
+assert(totest.bib.bibfile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
+
+totest.p_bib_file("bib","stylefile", "incl_main.do", "file", "1")
+assert(totest.bib.stylefile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
+end
+
+// p_bib_opt()
+mata:
+totest = smclpres()
+totest.p_bib_opt("bib", "and", "en", "file", "4")
+assert(totest.bib.and == "en")
+totest.p_bib_opt("bib", "authorstyle", "last first", "file", "4")
+assert(totest.bib.authorstyle == "last first")
+totest.p_bib_opt("bib", "write", "all", "file", "4")
+assert(totest.bib.write=="all")
+end
+
+// extract_args()
+mata:
+totest = smclpres()
+true = "foo", "" \
+       "bar", "" \
+       "bla", "5" \
+       "blup", "a b c "
+assert(totest.extract_args("foo bar bla(5) blup(a b c )") == true)
 end
