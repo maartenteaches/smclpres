@@ -462,3 +462,14 @@ totest = smclpres()
 totest.p_tocfiles_p2("tocfiles", "p2", "4 24 25 1", "file", "4")
 assert(totest.settings.tocfiles.p2 == "4 24 25 1")
 end
+
+//p_toc_nodigr() p_tocfiles_on_off()
+mata:
+totest = smclpres()
+totest.p_toc_nodigr("toc", "nodigr", "", "file", "4")
+assert(totest.settings.toc.nodigr == "nodigr")
+totest.p_tocfiles_on_off("tocfiles", "on", "", "file", "4")
+assert(totest.settings.tocfiles.on == "on")
+totest.p_tocfiles_on_off("tocfiles", "off", "", "file", "4")
+assert(totest.settings.tocfiles.on == "off")
+end
