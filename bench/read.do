@@ -474,11 +474,13 @@ totest.p_tocfiles_on_off("tocfiles", "off", "", "file", "4")
 assert(totest.settings.tocfiles.on == "off")
 end
 
-// p_digr()
+// p_digr() p_ex()
 mata:
 totest = smclpres()
 totest.p_digr("digress", "name", "blup", "file", "4")
 assert(totest.settings.digress.name == "blup")
 totest.p_digr("digress", "prefix", "-->", "file", "4")
 assert(totest.settings.digress.prefix == "-->")
+totest.p_ex("example", "name", "voorbeeld", "file", "4")
+assert(totest.settings.example.name == "voorbeeld")
 end

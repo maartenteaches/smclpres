@@ -370,7 +370,7 @@ void smclpres::p_toc_nodigr(string scalar cmd, string scalar opt, string scalar 
 
 void smclpres::p_tocfiles_on_off(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
-    no_arg_err(cmd, opt, arg, file, line)
+    no_arg_err(cmd, opt, arg, file, line)   
     settings.tocfiles.on = opt
 }
 
