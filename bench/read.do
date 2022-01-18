@@ -440,8 +440,11 @@ end
 // p_tocfiles_howdisplay()
 mata:
 totest = smclpres()
-totest.p_tocfiles_howdisplay("tocfiles", "doedit", ".do .mata", "file", "4")
-assert(totest.settings.tocfiles.doedit == "do mata")
-totest.p_tocfiles_howdisplay("tocfiles", "view", ".sthlp .smcl", "file", "4")
-assert(totest.settings.tocfiles.view == "sthlp smcl")
+totest.p_tocfiles_howdisplay("tocfiles", "doedit", ".do .mata .sthlp", "file", "4")
+assert(totest.settings.tocfiles.doedit == "do mata sthlp")
+totest.p_tocfiles_howdisplay("tocfiles", "view", ".smcl", "file", "4")
+assert(totest.settings.tocfiles.view == "smcl")
+totest.p_tocfiles_howdisplay_default()
+assert(totest.settings.tocfiles.doedit == "do mata sthlp ado dct class scheme style")
+assert(totest.settings.tocfiles.view == "smcl log hlp")
 end
