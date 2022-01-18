@@ -1,6 +1,6 @@
 cscript
 run  smclpres_main.mata
-local home = "D"
+local home = "C"
 
 // ----------------------------------- parsedirs()
 // absolute path
@@ -435,4 +435,13 @@ totest.p_tocfiles_name("tocfiles", "name", "voorbeeld", "file", "4")
 assert(totest.settings.tocfiles.name == "voorbeeld")
 totest.p_tocfiles_name("tocfiles", "where", "voorbeeld", "file", "4")
 assert(totest.settings.tocfiles.where == "voorbeeld")
+end
+
+// p_tocfiles_howdisplay()
+mata:
+totest = smclpres()
+totest.p_tocfiles_howdisplay("tocfiles", "doedit", ".do .mata", "file", "4")
+assert(totest.settings.tocfiles.doedit == "do mata")
+totest.p_tocfiles_howdisplay("tocfiles", "view", ".sthlp .smcl", "file", "4")
+assert(totest.settings.tocfiles.view == "sthlp smcl")
 end
