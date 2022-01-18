@@ -223,65 +223,6 @@ totest.p_bib_opt("bib", "write", "all", "file", "1")
 assert(totest.bib.write == "all")
 
 end
-// p_bib_file
-
-local using "bench/incl_main.do"
-local replace "replace"
-
-mata:
-totest = smclpres()
-totest.parsedirs()
-totest.p_bib_file("bib","bibfile", "incl_main.do", "file", "1")
-assert(totest.bib.bibfile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
-
-totest.p_bib_file("bib","stylefile", "incl_main.do", "file", "1")
-assert(totest.bib.stylefile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
-end
-
-//p_tab
-mata:
-totest = smclpres()
-totest.p_tab("tabs", "spaces", "5", "file", "1")
-assert(totest.settings.other.tab == 5)
-end
-
-// p_bottombar_arrow_label()
-mata:
-totest = smclpres()
-totest.p_bottombar_arrow_label("bottombar", "arrow", "", "file", "1")
-assert(totest.settings.bottombar.arrow == "arrow")
-totest.p_bottombar_arrow_label("bottombar", "label", "", "file", "1")
-assert(totest.settings.bottombar.arrow == "label")
-totest.p_bottombar_arrow_label("bottombar", "toc", "", "file", "1")
-assert(totest.settings.bottombar.toc == "toc")
-end
-
-// p_bottombar_name()
-mata:
-totest = smclpres()
-totest.p_bottombar_name("bottombar", "index", "bla", "file", "1")
-assert(totest.settings.bottombar.index == "bla")
-
-totest.p_bottombar_name("bottombar", "nextname", "bla", "file", "1")
-assert(totest.settings.bottombar.nextname == "bla")
-
-// tpage is not documented, and is also not used
-// it is the label for the title page
-// The label of a page is used when not using arrows but labels in the bottombar to link to the next page
-// Since with label we only link forwards, the label for the titlepage is never used
-// this is only added for when I want to also to link to the previous page when linking via labels
-totest.p_bottombar_name("bottombar", "tpage", "bla", "file", "1")
-assert(totest.settings.bottombar.tpage == "bla")
-end
-
-//p_topbar_on_off()
-mata:
-totest = smclpres()
-totest.p_topbar_on_off("topbar", "on", "", "file", "1")
-assert(totest.settings.topbar.on == "on")
-totest.p_topbar_on_off("topbar", "off", "", "file", "1")
-assert(totest.settings.topbar.on == "off")
-end
 
 //errors
 mata: totest = smclpres()
@@ -483,4 +424,77 @@ totest.p_digr("digress", "prefix", "-->", "file", "4")
 assert(totest.settings.digress.prefix == "-->")
 totest.p_ex("example", "name", "voorbeeld", "file", "4")
 assert(totest.settings.example.name == "voorbeeld")
+end
+
+//p_topbar_sep() p_topbar_nosubsec() p_topbar_on_off()
+mata:
+totest = smclpres()
+totest.p_topbar_sep("topbar", "sep", " | ", "file", "4")
+assert(totest.settings.topbar.sep == " | ")
+totest.p_topbar_nosubsec("topbar", "nosubsec", "", "file", "4")
+assert(totest.settings.topbar.subsec == "nosubsec")
+totest.p_topbar_on_off("topbar", "on", "", "file", "4")
+assert(totest.settings.topbar.on == "on")
+totest.p_topbar_on_off("topbar", "off", "", "file", "4")
+assert(totest.settings.topbar.on == "off")
+end
+
+
+// p_bib_file
+local using "bench/incl_main.do"
+local replace "replace"
+
+mata:
+totest = smclpres()
+totest.parsedirs()
+totest.p_bib_file("bib","bibfile", "incl_main.do", "file", "1")
+assert(totest.bib.bibfile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
+
+totest.p_bib_file("bib","stylefile", "incl_main.do", "file", "1")
+assert(totest.bib.stylefile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
+end
+
+//p_tab
+mata:
+totest = smclpres()
+totest.p_tab("tabs", "spaces", "5", "file", "1")
+assert(totest.settings.other.tab == 5)
+end
+
+// p_bottombar_arrow_label()
+mata:
+totest = smclpres()
+totest.p_bottombar_arrow_label("bottombar", "arrow", "", "file", "1")
+assert(totest.settings.bottombar.arrow == "arrow")
+totest.p_bottombar_arrow_label("bottombar", "label", "", "file", "1")
+assert(totest.settings.bottombar.arrow == "label")
+totest.p_bottombar_arrow_label("bottombar", "toc", "", "file", "1")
+assert(totest.settings.bottombar.toc == "toc")
+end
+
+// p_bottombar_name()
+mata:
+totest = smclpres()
+totest.p_bottombar_name("bottombar", "index", "bla", "file", "1")
+assert(totest.settings.bottombar.index == "bla")
+
+totest.p_bottombar_name("bottombar", "nextname", "bla", "file", "1")
+assert(totest.settings.bottombar.nextname == "bla")
+
+// tpage is not documented, and is also not used
+// it is the label for the title page
+// The label of a page is used when not using arrows but labels in the bottombar to link to the next page
+// Since with label we only link forwards, the label for the titlepage is never used
+// this is only added for when I want to also to link to the previous page when linking via labels
+totest.p_bottombar_name("bottombar", "tpage", "bla", "file", "1")
+assert(totest.settings.bottombar.tpage == "bla")
+end
+
+//p_topbar_on_off()
+mata:
+totest = smclpres()
+totest.p_topbar_on_off("topbar", "on", "", "file", "1")
+assert(totest.settings.topbar.on == "on")
+totest.p_topbar_on_off("topbar", "off", "", "file", "1")
+assert(totest.settings.topbar.on == "off")
 end
