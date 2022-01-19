@@ -1,6 +1,6 @@
 cscript
 run  smclpres_main.mata
-local home = "C"
+local home = "d"
 
 // ----------------------------------- parsedirs()
 // absolute path
@@ -483,10 +483,11 @@ mata:
 totest = smclpres()
 totest.parsedirs()
 totest.p_bib_file("bib","bibfile", "incl_main.do", "file", "1")
-assert(totest.bib.bibfile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
+ustrlower("`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do") == ustrlower(totest.bib.bibfile)
+assert(ustrlower(totest.bib.bibfile) == ustrlower("`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do"))
 
 totest.p_bib_file("bib","stylefile", "incl_main.do", "file", "1")
-assert(totest.bib.stylefile == "`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do")
+assert(ustrlower(totest.bib.stylefile) == ustrlower("`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do"))
 end
 
 // p_bib_opt()
@@ -508,4 +509,11 @@ true = "foo", "" \
        "bla", "5" \
        "blup", "a b c "
 assert(totest.extract_args("foo bar bla(5) blup(a b c )") == true)
+end
+
+// p_layout()
+mata:
+totest = smclpres()
+totest.p_layout("bib", "and", "en", "file", "4")
+assert(totest.bib.and == "en")
 end
