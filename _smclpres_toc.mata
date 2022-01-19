@@ -202,7 +202,7 @@ void smclpres::write_toc_top(real scalar dest) {
 				}
 			}
 			else if (titleopen& left != "/*toctitle"){
-				writetitle(source[rownr,1],dest)
+				write_title(source[rownr,1],dest)
 			}
 			else if (left == "/*toctxt") {
 				textopen = 1

@@ -217,3 +217,26 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_subtitle.test")
 end
+
+//write_toc_top
+mata:
+sourcemat = "//toctitle foo bar", "file", "1"
+totest = smclpres()
+totest.source = sourcemat
+totest.rows_source = 1
+unlink("bench/write_toc_top.test")
+fh = fopen("bench/write_toc_top.test", "w")
+totest.write_toc_top(fh)
+fclose(fh)
+fh = fopen("bench/write_toc_top.test", "r")
+assert(fget(fh)== "{smcl}")
+assert(fget(fh)=="")
+assert(fget(fh)=="{center:{bf:foo bar}}")
+assert(fget(fh)=="")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_top.test")
+end
+
+// still need to look at /*toctitle
+// in particular how it deals thline and bhline
