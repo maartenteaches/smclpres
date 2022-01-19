@@ -517,3 +517,11 @@ totest = smclpres()
 totest.p_layout("bib", "and", "en", "file", "4")
 assert(totest.bib.and == "en")
 end
+
+//parse_args()
+mata:
+totest = smclpres()
+totest.parse_args("bib", "and(en) write(all)", "file", 4 )
+assert(totest.bib.and == "en")
+assert(totest.bib.write=="all")
+end
