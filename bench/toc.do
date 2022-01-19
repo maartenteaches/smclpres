@@ -1,5 +1,7 @@
 cscript
 run  smclpres_main.mata
+
+//countslides
 local using "bench/minimalist.do"
 mata:
 totest = smclpres()
@@ -44,8 +46,10 @@ assert(totest.slide[3].title == "Third slide")
 assert(totest.tocslide.forw == 1)
 assert(totest.settings.other.index == "minimalist.smcl")
 assert(totest.titleslide.forw == 1)
+end
 
 // write_title()
+mata:
 totest = smclpres()
 unlink("bench/write_title.test")
 fh = fopen("bench/write_title.test", "w")
@@ -125,4 +129,91 @@ assert(fget(fh) == "{center:{it:an interesting title}}")
 assert(fget(fh) == "")
 assert(fget(fh) == J(0,0,""))
 fclose(fh)
+unlink("bench/write_title.test")
+end
+
+//write_toc_subtitle()
+mata:
+totest = smclpres()
+unlink("bench/write_toc_subtitle.test")
+fh = fopen("bench/write_toc_subtitle.test", "w")
+totest.write_toc_subtitle("slides", fh)
+fclose(fh)
+fh = fopen("bench/write_toc_subtitle.test", "r")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="{hline}")
+assert(fget(fh)=="{center:{bf:Slide table of contents}}")
+assert(fget(fh)=="{hline}")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_subtitle.test")
+
+totest = smclpres()
+unlink("bench/write_toc_subtitle.test")
+fh = fopen("bench/write_toc_subtitle.test", "w")
+totest.write_toc_subtitle("files", fh)
+fclose(fh)
+fh = fopen("bench/write_toc_subtitle.test", "r")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="{hline}")
+assert(fget(fh)=="{center:{bf:Supporting materials}}")
+assert(fget(fh)=="{hline}")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_subtitle.test")
+
+totest = smclpres()
+totest.settings.toc.subtitlebf="regular"
+totest.settings.toc.subtitleit="italic"
+unlink("bench/write_toc_subtitle.test")
+fh = fopen("bench/write_toc_subtitle.test", "w")
+totest.write_toc_subtitle("slides", fh)
+fclose(fh)
+fh = fopen("bench/write_toc_subtitle.test", "r")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="{hline}")
+assert(fget(fh)=="{center:{it:Slide table of contents}}")
+assert(fget(fh)=="{hline}")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_subtitle.test")
+
+totest = smclpres()
+totest.settings.toc.subtitlethline="nohline"
+totest.settings.toc.subtitlebhline="nohline"
+unlink("bench/write_toc_subtitle.test")
+fh = fopen("bench/write_toc_subtitle.test", "w")
+totest.write_toc_subtitle("slides", fh)
+fclose(fh)
+fh = fopen("bench/write_toc_subtitle.test", "r")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="{center:{bf:Slide table of contents}}")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_subtitle.test")
+
+totest = smclpres()
+totest.settings.toc.subtitlepos="left"
+unlink("bench/write_toc_subtitle.test")
+fh = fopen("bench/write_toc_subtitle.test", "w")
+totest.write_toc_subtitle("slides", fh)
+fclose(fh)
+fh = fopen("bench/write_toc_subtitle.test", "r")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="")
+assert(fget(fh)=="{hline}")
+assert(fget(fh)=="{p}{bf:Slide table of contents}{p_end}")
+assert(fget(fh)=="{hline}")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_subtitle.test")
 end
