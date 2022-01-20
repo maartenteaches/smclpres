@@ -191,6 +191,7 @@ void smclpres::write_toc_top(real scalar dest) {
 			}
 			else if (left == "/*toctitle") {
 				titleopen = 1
+				fput(dest, "")
 				if (settings.title.thline == "hline") {
 					fput(dest, "{hline}")
 				}
@@ -200,9 +201,10 @@ void smclpres::write_toc_top(real scalar dest) {
 				if (settings.title.bhline == "hline") {
 					fput(dest, "{hline}")
 				}
+				fput(dest,"")
 			}
 			else if (titleopen& left != "/*toctitle"){
-				write_title(source[rownr,1],dest)
+				write_title(source[rownr,1],dest, "multiline")
 			}
 			else if (left == "/*toctxt") {
 				textopen = 1

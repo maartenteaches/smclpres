@@ -1,7 +1,7 @@
 mata:
-void smclpres::write_title( string scalar line, real scalar dest) {
-	fput(dest,"")	
-	if (settings.title.thline == "hline") {
+void smclpres::write_title( string scalar line, real scalar dest, | string scalar multiline) {
+	if (args() == 2) fput(dest,"")	
+	if (settings.title.thline == "hline" & args()==2) {
 		fput(dest, "{hline}")
 	}
 	if (settings.title.bold == "bold") {
@@ -17,10 +17,10 @@ void smclpres::write_title( string scalar line, real scalar dest) {
 		line = "{p}" + line + "{p_end}"
 	}
 	fput(dest, line)
-	if (settings.title.bhline == "hline") {
+	if (settings.title.bhline == "hline" & args()==2) {
 		fput(dest, "{hline}")
 	}
-	fput(dest,"")
+	if (args()==2) fput(dest,"")
 }
 
 void smclpres::write_topbar(real scalar dest, real scalar snr) {

@@ -236,7 +236,51 @@ assert(fget(fh)=="")
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_top.test")
-end
 
-// still need to look at /*toctitle
-// in particular how it deals thline and bhline
+sourcemat = "/*toctitle", "file", "1" \
+           "line 1", "file", "2" \
+           "line 2", "file", "3" \
+           "toctitle*/", "file", "4"
+totest = smclpres() 
+totest.source = sourcemat 
+totest.rows_source = 4         
+unlink("bench/write_toc_top.test")
+fh = fopen("bench/write_toc_top.test", "w")
+totest.write_toc_top(fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_top.test"', "r")
+assert(fget(fh)==`"{smcl}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"{center:{bf:line 1}}"')
+assert(fget(fh)==`"{center:{bf:line 2}}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_top.test")
+
+sourcemat = "/*toctitle", "file", "1" \
+           "line 1", "file", "2" \
+           "line 2", "file", "3" \
+           "toctitle*/", "file", "4"
+totest = smclpres() 
+totest.source = sourcemat 
+totest.rows_source = 4         
+totest.settings.title.thline = "hline"
+totest.settings.title.bhline = "hline"
+unlink("bench/write_toc_top.test")
+fh = fopen("bench/write_toc_top.test", "w")
+totest.write_toc_top(fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_top.test"', "r")
+assert(fget(fh)==`"{smcl}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`"{center:{bf:line 1}}"')
+assert(fget(fh)==`"{center:{bf:line 2}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_top.test")
+
+end
