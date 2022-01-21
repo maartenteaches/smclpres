@@ -434,3 +434,51 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_section.test")
 end
+
+// write_toc_subsection
+mata:
+totest = smclpres()
+totest.slide = strslide(10)
+totest.settings.other.l2 = "{p 8 9 2}"
+totest.slide[5].subsection = "bla bla"
+unlink("bench/write_toc_subsection.test")
+fh = fopen("bench/write_toc_subsection.test", "w")
+totest.write_toc_subsection(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_subsection.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 8 9 2}bla bla{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_subsection.test")
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.settings.other.l2 = "{p 8 9 2}"
+totest.slide[5].subsection = "bla bla"
+totest.settings.toc.link = "subsection"
+unlink("bench/write_toc_subsection.test")
+fh = fopen("bench/write_toc_subsection.test", "w")
+totest.write_toc_subsection(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_subsection.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 8 9 2}{view slide5.smcl : bla bla}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_subsection.test")
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.settings.other.l2 = "{p 8 9 2}"
+totest.slide[5].subsection = "bla bla"
+totest.settings.toc.subsecit = "italic"
+unlink("bench/write_toc_subsection.test")
+fh = fopen("bench/write_toc_subsection.test", "w")
+totest.write_toc_subsection(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_subsection.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 8 9 2}{it:bla bla}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_subsection.test")
+
+end
