@@ -367,3 +367,70 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_top.test")
 end
+
+//write_toc_section()
+mata:
+totest = smclpres()
+totest.slide = strslide(10)
+totest.settings.other.l1 = "{p 4 5 2}"
+totest.slide[5].section = "bla bla"
+unlink("bench/write_toc_section.test")
+fh = fopen("bench/write_toc_section.test", "w")
+totest.write_toc_section(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_section.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* tocline }{p 4 5 2}{view slide5.smcl : bla bla}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_section.test")
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.settings.toc.link = "subsection"
+totest.slide[5].section = "bla bla"
+totest.settings.other.l1 = "{p 4 5 2}"
+fh = fopen("bench/write_toc_section.test", "w")
+totest.write_toc_section(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_section.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* tocline }{p 4 5 2}bla bla{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_section.test")
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.settings.toc.link = "subsection"
+totest.slide[5].section = "bla bla"
+totest.settings.other.l1 = "{p 4 5 2}"
+totest.settings.toc.secbf = "bold"
+fh = fopen("bench/write_toc_section.test", "w")
+totest.write_toc_section(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_section.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* tocline }{p 4 5 2}{bf:bla bla}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_section.test")
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.settings.toc.link = "subsection"
+totest.slide[5].section = "bla bla"
+totest.settings.other.l1 = "{p 4 5 2}"
+totest.settings.toc.secbf = "bold"
+totest.settings.toc.secbhline = "hline"
+fh = fopen("bench/write_toc_section.test", "w")
+totest.write_toc_section(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_section.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* tocline }{p 4 5 2}{bf:bla bla}{p_end}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_toc_section.test")
+end
