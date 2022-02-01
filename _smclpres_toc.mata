@@ -512,19 +512,19 @@ string scalar smclpres::buildfilerow(string scalar filename,
 	
 	toreturn = "{p2col:"
 	
-	if (rowsum(tokens(settings.tocfiles.doedit):==ext)) {
+	if (anyof(tokens(settings.tocfiles.doedit),ext)) {
 		toreturn = toreturn + `"{stata "doedit "' + filename + `"":"' + filename + "}"
 	}
-	else if (rowsum(tokens(settings.tocfiles.view):==ext)) {
+	else if (anyof(tokens(settings.tocfiles.view),ext)) {
 		toreturn = toreturn + "{view " + filename + "}"
 	}
-	else if (rowsum(tokens(settings.tocfiles.gruse):==ext)) {
+	else if (anyof(tokens(settings.tocfiles.gruse),ext)) {
 		toreturn = toreturn + `"{stata "graph use "' + filename + `"":"' + filename + "}"
 	}
-	else if (rowsum(tokens(settings.tocfiles.euse):==ext)) {
+	else if (anyof(tokens(settings.tocfiles.euse),ext)) {
 		toreturn = toreturn + `"{stata "est use "' + filename + `"":"' + filename + "}"
 	}
-	else if (rowsum(tokens(settings.tocfiles.use):==ext)) {
+	else if (anyof(tokens(settings.tocfiles.use),ext)) {
 		toreturn = toreturn + `"{stata "use "' + filename + `", clear":"' + filename + "}"
 	}
 	else {

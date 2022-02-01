@@ -651,5 +651,11 @@ fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+end
 
+// buildfilerow()
+mata:
+totest = smclpres()
+totest.p_tocfiles_howdisplay_default()
+assert(totest.buildfilerow("foo.do", "bla bla", "slide4.smcl") == `"{p2col:{stata "doedit foo.do":foo.do}}bla bla; on slide {view slide4.smcl}{p_end}"')
 end
