@@ -480,5 +480,176 @@ assert(fget(fh)==`"{* tocline }{p 8 9 2}{it:bla bla}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_subsection.test")
+end
+
+// write_toc_title()
+mata:
+totest = smclpres()
+totest.settings.toc.title = "subsubsection"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "regular"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 12 12 2}foo{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsubsection"
+totest.settings.toc.link = "subsubsection"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "regular"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 12 12 2}{view slide5.smcl : foo}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "notitle"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "regular"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "notitle"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "ancillary"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl : foo} (ancillary){p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsubsection"
+totest.settings.toc.subsubsecbf = "bold"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "regular"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 12 12 2}{bf:foo}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsubsection"
+totest.settings.toc.subsubsecit = "italic"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "regular"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 12 12 2}{it:foo}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsection"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "regular"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`"{* tocline }{p  8  8 2}foo{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsection"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "bibliography"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl : foo}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsection"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "digression"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 12 12 2}foo{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsubsection"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "digression"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==`"{* tocline }{p 16 16 2}foo{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsubsection"
+totest.settings.toc.nodigr = "nodigr"
+totest.slide = strslide(10)
+totest.slide[5].title = "foo"
+totest.slide[5].type = "digression"
+totest.toc_indent_settings()
+unlink("bench/write_toc_title.test")
+fh = fopen("bench/write_toc_title.test", "w")
+totest.write_toc_title(5,fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_title.test"', "r")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
 
 end
