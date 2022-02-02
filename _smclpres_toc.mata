@@ -428,7 +428,7 @@ void smclpres::write_toc_files(real scalar dest) {
 			}
 			else if (left=="//ex") {
 				if ( (lab = ustrltrim(tokenrest(t))) == "") {
-					lab = settings.tocfiles.exname + " " + strofreal(exnr)
+					lab = settings.tocfiles.exname + strofreal(exnr)
 				}
 				filename = "slide" + strofreal(snr) + "ex" + strofreal(exnr) + ".do"
 				slidename = "slide" + strofreal(snr) + ".smcl"
@@ -448,7 +448,7 @@ void smclpres::write_toc_files(real scalar dest) {
 				}
 				if (filetoc.exists(mark)) {
 					slidename = "slide" + strofreal(snr) + ".smcl"
-					row = sp_buildfilerow(filename,lab,slidename)
+					row = buildfilerow(filename,lab,slidename)
 					filetoc.put(mark, (filetoc.get(mark) \ row))
 				}
 				else {
@@ -478,9 +478,6 @@ void smclpres::write_toc_files(real scalar dest) {
 			}
 			if (settings.toc.secit=="italic") {
 				section = "{it:"+section+"}"
-			}
-			if (settings.toc.link == "section") {
-				section = "{view slide" + strofreal(snr) + ".smcl : " + section + "}"
 			}
 			section = settings.other.l1 + section + "{p_end}"
 			fput(dest, section)

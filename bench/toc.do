@@ -659,3 +659,79 @@ totest = smclpres()
 totest.p_tocfiles_howdisplay_default()
 assert(totest.buildfilerow("foo.do", "bla bla", "slide4.smcl") == `"{p2col:{stata "doedit foo.do":foo.do}}bla bla; on slide {view slide4.smcl}{p_end}"')
 end
+
+//write_toc_files
+mata:
+sourcemat = "//slide", "file", "1" \
+           "line 1", "file", "2" \
+           "line 2", "file", "3" \
+           "//endslide", "file", "4" \
+            "//slide", "file", "5" \
+           "line 1", "file", "6" \
+           "line 2", "file", "7" \
+           "//ex", "file", "8" \
+           " sysuse auto, clear", "file", "9" \
+           " reg price mpg i.rep78", "file", "10" \
+           "//endex", "file", "11" \
+           "//endslide", "file", "12" \
+            "//slide", "file", "13" \
+           " //tocfile do foo.do interesting stuff", "file", "14" \
+           "line 1", "file", "15" \
+           "line 2", "file", "16" \
+           "//endslide", "file", "17" 
+totest = smclpres() 
+totest.source = sourcemat 
+totest.rows_source = 17   
+totest.toc_indent_settings()      
+unlink("bench/write_toc_files.test")
+fh = fopen("bench/write_toc_files.test", "w")
+totest.write_toc_files(fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_files.test"', "r")
+assert(fget(fh)==`"{p2colset 5 25 26 0}{...}"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{p  4  4 2}Examples{p_end}"')
+assert(fget(fh)==`"{p2col:slide2ex1.do}example 1; on slide {view slide2.smcl}{p_end}"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{p  4  4 2}Do files{p_end}"')
+assert(fget(fh)==`"{p2col:foo.do}interesting stuff; on slide {view slide3.smcl}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+sourcemat = "//slide", "file", "1" \
+           "line 1", "file", "2" \
+           "line 2", "file", "3" \
+           "//endslide", "file", "4" \
+            "//slide", "file", "5" \
+           "line 1", "file", "6" \
+           "line 2", "file", "7" \
+           "//ex", "file", "8" \
+           " sysuse auto, clear", "file", "9" \
+           " reg price mpg i.rep78", "file", "10" \
+           "//endex", "file", "11" \
+           "//endslide", "file", "12" \
+            "//slide", "file", "13" \
+           " //tocfile do foo.do interesting stuff", "file", "14" \
+           "line 1", "file", "15" \
+           "line 2", "file", "16" \
+           "//endslide", "file", "17" 
+totest = smclpres() 
+totest.source = sourcemat 
+totest.rows_source = 17   
+totest.toc_indent_settings()  
+totest.settings.toc.secbf = "bold"    
+unlink("bench/write_toc_files.test")
+fh = fopen("bench/write_toc_files.test", "w")
+totest.write_toc_files(fh)
+fclose(fh)
+fh = fopen(`"bench/write_toc_files.test"', "r")
+assert(fget(fh)==`"{p2colset 5 25 26 0}{...}"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{p  4  4 2}{bf:Examples}{p_end}"')
+assert(fget(fh)==`"{p2col:slide2ex1.do}example 1; on slide {view slide2.smcl}{p_end}"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{p  4  4 2}{bf:Do files}{p_end}"')
+assert(fget(fh)==`"{p2col:foo.do}interesting stuff; on slide {view slide3.smcl}{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+end
