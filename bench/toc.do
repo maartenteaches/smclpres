@@ -734,4 +734,83 @@ assert(fget(fh)==`"{p  4  4 2}{bf:Do files}{p_end}"')
 assert(fget(fh)==`"{p2col:foo.do}interesting stuff; on slide {view slide3.smcl}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+unlink("bench/write_toc_files.test")
+end
+
+// write_pres_settings()
+mata:
+totest = smclpres()
+totest.settings.toc.title = "subsubsection"
+totest.slide = strslide(10)
+totest.slide[1].type = "regular"
+totest.slide[2].type = "regular"
+totest.slide[3].type = "regular"
+totest.slide[4].type = "regular"
+totest.slide[5].type = "digression"
+totest.slide[6].type = "regular"
+totest.slide[7].type = "ancillary"
+totest.slide[8].type = "regular"
+totest.slide[9].type = "regular"
+totest.slide[10].type = "bibliography"
+totest.toc_indent_settings()
+totest.settings.other.stub = "foo"
+unlink("bench/write_pres_settings.test")
+fh = fopen("bench/write_pres_settings.test", "w")
+totest.write_pres_settings(fh)
+fclose(fh)
+fh = fopen(`"bench/write_pres_settings.test"', "r")
+assert(fget(fh)==`"{* slides }{...}"')
+assert(fget(fh)==`"{* foo.smcl }{...}"')
+assert(fget(fh)==`"{* slide1.smcl }{...}"')
+assert(fget(fh)==`"{* slide2.smcl }{...}"')
+assert(fget(fh)==`"{* slide3.smcl }{...}"')
+assert(fget(fh)==`"{* slide4.smcl }{...}"')
+assert(fget(fh)==`"{* slide6.smcl }{...}"')
+assert(fget(fh)==`"{* slide8.smcl }{...}"')
+assert(fget(fh)==`"{* slide9.smcl }{...}"')
+assert(fget(fh)==`"{* slide5.smcl }{...}"')
+assert(fget(fh)==`"{* slide7.smcl }{...}"')
+assert(fget(fh)==`"{* slide10.smcl }{...}"')
+assert(fget(fh)==`"{* bottomstyle arrow }{...}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.settings.toc.title = "subsubsection"
+totest.slide = strslide(10)
+totest.slide[1].type = "regular"
+totest.slide[2].type = "regular"
+totest.slide[3].type = "regular"
+totest.slide[4].type = "regular"
+totest.slide[5].type = "digression"
+totest.slide[6].type = "regular"
+totest.slide[7].type = "ancillary"
+totest.slide[8].type = "regular"
+totest.slide[9].type = "regular"
+totest.slide[10].type = "bibliography"
+totest.toc_indent_settings()
+totest.settings.other.stub = "foo"
+totest.settings.other.titlepage = 1
+unlink("bench/write_pres_settings.test")
+fh = fopen("bench/write_pres_settings.test", "w")
+totest.write_pres_settings(fh)
+fclose(fh)
+fh = fopen(`"bench/write_pres_settings.test"', "r")
+assert(fget(fh)==`"{* slides }{...}"')
+assert(fget(fh)==`"{* foo.smcl }{...}"')
+assert(fget(fh)==`"{* index.smcl }{...}"')
+assert(fget(fh)==`"{* slide1.smcl }{...}"')
+assert(fget(fh)==`"{* slide2.smcl }{...}"')
+assert(fget(fh)==`"{* slide3.smcl }{...}"')
+assert(fget(fh)==`"{* slide4.smcl }{...}"')
+assert(fget(fh)==`"{* slide6.smcl }{...}"')
+assert(fget(fh)==`"{* slide8.smcl }{...}"')
+assert(fget(fh)==`"{* slide9.smcl }{...}"')
+assert(fget(fh)==`"{* slide5.smcl }{...}"')
+assert(fget(fh)==`"{* slide7.smcl }{...}"')
+assert(fget(fh)==`"{* slide10.smcl }{...}"')
+assert(fget(fh)==`"{* bottomstyle arrow }{...}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_pres_settings.test")
 end
