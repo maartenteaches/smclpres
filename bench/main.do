@@ -5,3 +5,4 @@ do smclpres_main.mata
 
 do bench/read.do 
 do bench/toc.do
+do bench/parts.do
