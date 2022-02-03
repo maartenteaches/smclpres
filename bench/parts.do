@@ -240,4 +240,130 @@ fclose(fh)
 fh = fopen(`"bench/write_topbar.test"', "r")
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+unlink("bench/write_topbar.test")
+end
+
+//write_bottombar()
+mata:
+totest = smclpres()
+totest.slide = strslide(10)
+totest.slide[5].forw = 7
+totest.slide[5].prev = 4
+totest.settings.other.stub = "foo"
+totest.settings.other.index = "foo.smcl"
+unlink("bench/write_bottombar.test")
+fh = fopen("bench/write_bottombar.test", "w")
+totest.write_bottombar(fh, 5, "regular")
+fclose(fh)
+fh = fopen(`"bench/write_bottombar.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:{view slide4.smcl:<<}   {view foo.smcl:index}   {view slide7.smcl:>>}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.titleslide = strslide()
+totest.titleslide.forw = 2
+totest.settings.other.titlepage = 1
+totest.settings.other.stub = "foo"
+totest.settings.other.index = "slide1.smcl"
+unlink("bench/write_bottombar.test")
+fh = fopen("bench/write_bottombar.test", "w")
+totest.write_bottombar(fh, 1, "title")
+fclose(fh)
+fh = fopen(`"bench/write_bottombar.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:     {view slide1.smcl:index}   {view slide2.smcl:>>}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.tocslide = strslide()
+totest.tocslide.forw = 2
+totest.settings.other.titlepage = 1
+totest.settings.other.stub = "foo"
+totest.settings.other.index = "slide1.smcl"
+unlink("bench/write_bottombar.test")
+fh = fopen("bench/write_bottombar.test", "w")
+totest.write_bottombar(fh, 1, "toc")
+fclose(fh)
+fh = fopen(`"bench/write_bottombar.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:{view foo.smcl:<<}   {view slide1.smcl:index}   {view slide2.smcl:>>}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.slide[5].forw = 7
+totest.slide[5].prev = 4
+totest.settings.other.stub = "foo"
+totest.settings.other.index = "foo.smcl"
+totest.settings.bottombar.arrow = "label"
+unlink("bench/write_bottombar.test")
+fh = fopen("bench/write_bottombar.test", "w")
+totest.write_bottombar(fh, 5, "regular")
+fclose(fh)
+fh = fopen(`"bench/write_bottombar.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{view foo.smcl:index}{right:{view slide7.smcl:next}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.slide[5].forw = 7
+totest.slide[5].prev = 4
+totest.settings.other.stub = "foo"
+totest.settings.other.index = "foo.smcl"
+totest.settings.bottombar.arrow = "label"
+totest.settings.bottombar.nextname = "volgende"
+unlink("bench/write_bottombar.test")
+fh = fopen("bench/write_bottombar.test", "w")
+totest.write_bottombar(fh, 5, "regular")
+fclose(fh)
+fh = fopen(`"bench/write_bottombar.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{view foo.smcl:index}{right:{view slide7.smcl:volgende}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.slide[5].forw = 7
+totest.slide[5].prev = 4
+totest.slide[7].label = "erg interessant"
+totest.settings.other.stub = "foo"
+totest.settings.other.index = "foo.smcl"
+totest.settings.bottombar.arrow = "label"
+unlink("bench/write_bottombar.test")
+fh = fopen("bench/write_bottombar.test", "w")
+totest.write_bottombar(fh, 5, "regular")
+fclose(fh)
+fh = fopen(`"bench/write_bottombar.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{view foo.smcl:index}{right:{view slide7.smcl:erg interessant}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_bottombar.test")
 end
