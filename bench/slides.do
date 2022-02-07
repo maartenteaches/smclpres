@@ -61,3 +61,40 @@ fclose(fh)
 unlink("bench/start_ex.test")
 unlink("bench/slide5ex1.do")
 end
+
+//end_ex()
+mata:
+totest = smclpres()
+state = strstate()
+state.exopen = 0
+state.slideopen = 1
+state.exnr = 0
+state.snr = 5
+unlink("bench/start_ex.test")
+unlink("bench/slide5ex1.do")
+state.dest = totest.sp_fopen("bench/start_ex.test", "w")
+totest.settings.other.destdir = pathjoin(pwd(), "bench")
+state = totest.start_ex(state)
+state = totest.end_ex(state)
+
+//end_ex() should close the example .do file
+//so we should be able to open it before we close all open files
+assert(state.exopen==0)
+fh = fopen(`"bench/slide5ex1.do"', "r")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+totest.sp_fcloseall()
+fh = fopen(`"bench/start_ex.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* ex slide5ex1 }{...}"')
+assert(fget(fh)==`"{cmd}"')
+assert(fget(fh)==`"{txt}{...}"')
+assert(fget(fh)==`"{pstd}({stata "do slide5ex1.do":{it:click to run}}){p_end}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"{* endex }{...}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/start_ex.test")
+unlink("bench/slide5ex1.do")
+end
