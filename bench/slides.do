@@ -30,5 +30,34 @@ assert(fget(fh)==`"{* "' + st_strscalar("c(current_date)") + `"}{...}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/foo.smcl")
+end
 
+//start_ex()
+mata:
+totest = smclpres()
+state = strstate()
+state.exopen = 0
+state.slideopen = 1
+state.exnr = 0
+state.snr = 5
+unlink("bench/start_ex.test")
+unlink("bench/slide5ex1.do")
+state.dest = totest.sp_fopen("bench/start_ex.test", "w")
+totest.settings.other.destdir = pathjoin(pwd(), "bench")
+state = totest.start_ex(state)
+totest.sp_fcloseall()
+assert(state.exnr==1)
+assert(state.exopen==1)
+assert(state.exname=="slide5ex1")
+fh = fopen(`"bench/start_ex.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* ex slide5ex1 }{...}"')
+assert(fget(fh)==`"{cmd}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+fh = fopen(`"bench/slide5ex1.do"', "r")
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/start_ex.test")
+unlink("bench/slide5ex1.do")
 end
