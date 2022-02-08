@@ -232,5 +232,36 @@ state=totest.write_dofiles("//apcodefile", state)
 assert(state.line==`"{* apcodefile read.do bla blup }{pstd}{stata "doedit read.do":bla blup}{p_end}"')
 assert(fileexists("bench/test/read.do"))
 unlink("bench/test/read.do")
+end
 
+// begin_slide()
+mata:
+totest = smclpres()
+totest.settings.other.destdir = pathjoin(pwd(), "bench")
+totest.settings.other.stub = "foo"
+totest.slide = strslide(10)
+totest.slide[2].section = "foo"
+totest.slide[2].subsection = "bar"
+totest.slide[2].type = "regular"
+unlink("bench/slide2.smcl")
+state=strstate()
+state.txtopen = 0
+state.exopen = 0
+state.exnr= 3
+state.slideopen = 0
+state.snr = 1
+state = totest.begin_slide(state)
+totest.sp_fclose(state.dest)
+fh = fopen(`"bench/slide2.smcl"', "r")
+assert(fget(fh)==`"{smcl}"')
+assert(fget(fh)==`"{* "' + st_strscalar("c(current_date)") + `"}{...}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`"{p}{bf:foo} {hline 2} bar{p_end}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+assert(state.snr==2)
+assert(state.slideopen==1)
+assert(state.exnr==0)
+unlink("bench/slide2.smcl")
 end
