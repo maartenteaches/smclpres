@@ -110,3 +110,23 @@ totest.slide[6].type="digression"
 state = totest.digr_replace(state)
 assert(state.line == `"ia zegt het ezeltje {* digr <a href="#slide6.smcl">&gt;&gt; digression</a>}{view slide6.smcl:>> digression}{* /digr} klim maar op mijn rug"')
 end
+
+// write_db()
+mata:
+state = strstate()
+state.line = `"//db bla read.do "stuff""'
+state.exopen = 0
+state.slideopen = 1
+state.txtopen = 1
+unlink("bench/test/bla.dlg")
+unlink("bench/test/read.do")
+totest = smclpres()
+totest.settings.other.sourcedir= pathjoin(pwd(), "bench")
+totest.settings.other.destdir= pathjoin(pwd(), "bench/test")
+state = totest.write_db(state)
+assert(state.line== `"{* dofile read.do }{pstd}{stata "db bla":stuff}{p_end}"')
+assert(fileexists("bench/test/bla.dlg"))
+assert(fileexists("bench/test/read.do"))
+unlink("bench/test/bla.dlg")
+unlink("bench/test/read.do")
+end
