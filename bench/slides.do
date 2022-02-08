@@ -32,6 +32,50 @@ fclose(fh)
 unlink("bench/foo.smcl")
 end
 
+// end_titlepage()
+mata:
+totest = smclpres()
+totest.settings.other.destdir = pathjoin(pwd(), "bench")
+totest.settings.other.stub = "foo"
+totest.slide = strslide(10)
+totest.titleslide = strslide()
+totest.titleslide.forw = 2
+totest.settings.other.titlepage = 1
+totest.settings.other.index = "slide1.smcl"
+unlink("bench/foo.smcl")
+state = strstate()
+state.dest = totest.start_slide(1, "titlepage")
+state.slideopen = 1
+state.exopen = 0
+state.txtopen = 0
+state = totest.end_titlepage(state)
+assert(totest.files.get(state.dest)=="closed")
+fh = fopen(`"bench/foo.smcl"', "r")
+assert(fget(fh)==`"{smcl}"')
+assert(fget(fh)==`"{* "' + st_strscalar("c(current_date)") + `"}{...}"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:     {view slide1.smcl:index}   {view slide2.smcl:>>}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`"{* slides }{...}"')
+assert(fget(fh)==`"{* foo.smcl }{...}"')
+assert(fget(fh)==`"{* index.smcl }{...}"')
+assert(fget(fh)==`"{* slide1.smcl }{...}"')
+assert(fget(fh)==`"{* slide2.smcl }{...}"')
+assert(fget(fh)==`"{* slide3.smcl }{...}"')
+assert(fget(fh)==`"{* slide4.smcl }{...}"')
+assert(fget(fh)==`"{* slide5.smcl }{...}"')
+assert(fget(fh)==`"{* slide6.smcl }{...}"')
+assert(fget(fh)==`"{* slide7.smcl }{...}"')
+assert(fget(fh)==`"{* slide8.smcl }{...}"')
+assert(fget(fh)==`"{* slide9.smcl }{...}"')
+assert(fget(fh)==`"{* slide10.smcl }{...}"')
+assert(fget(fh)==`"{* bottomstyle arrow }{...}"')
+fclose(fh)
+unlink("bench/foo.smcl")
+end
+
 //start_ex()
 mata:
 totest = smclpres()
