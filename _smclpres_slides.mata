@@ -142,7 +142,7 @@ struct strstate scalar smclpres::write_dofiles(string scalar what, struct strsta
 	noslideopen(state, "dofile")
 	notxtopen(state, "dofile")
 	if (cols(tline) == 0 | cols(tline) > 2) {
-		err = "{p}{err}the //dofile command must specify 1 file and a label{p_end}"
+		err = "{p}{err}the //" + what + " command must specify 1 file and a label{p_end}"
 		printf(err)
 		where_err(state.rownr)
 		exit(198)
@@ -164,7 +164,7 @@ struct strstate scalar smclpres::write_dofiles(string scalar what, struct strsta
 		state.line = "{* " + what + " " + tline[1] + " }{...}"
 	}
 	else {
-		desc = (what != "codefile" ? " " + tline[2]  : "" ) 
+		desc = " " + tline[2]  
 		state.line = "{* " + what + " " + tline[1] + desc + " }" + 
 	 		   "{pstd}{stata " + `"""' + "doedit " + tline[1] + `"""' + 
 			   ":" + tline[2] + "}{p_end}"

@@ -130,3 +130,63 @@ assert(fileexists("bench/test/read.do"))
 unlink("bench/test/bla.dlg")
 unlink("bench/test/read.do")
 end
+
+// write_dofiles()
+mata:
+state=strstate()
+state.txtopen = 1
+state.exopen = 0
+state.slideopen = 1
+state.line = `"read.do "bla blup""'
+totest=smclpres()
+unlink("bench/test/read.do")
+totest.settings.other.sourcedir= pathjoin(pwd(), "bench")
+totest.settings.other.destdir= pathjoin(pwd(), "bench/test")
+state=totest.write_dofiles("//dofile", state)
+assert(state.line==`"{* dofile read.do bla blup }{pstd}{stata "doedit read.do":bla blup}{p_end}"')
+assert(fileexists("bench/test/read.do"))
+unlink("bench/test/read.do")
+
+state=strstate()
+state.txtopen = 1
+state.exopen = 0
+state.slideopen = 1
+state.line = `"read.do "bla blup""'
+totest=smclpres()
+unlink("bench/test/read.do")
+totest.settings.other.sourcedir= pathjoin(pwd(), "bench")
+totest.settings.other.destdir= pathjoin(pwd(), "bench/test")
+state=totest.write_dofiles("//apdofile", state)
+assert(state.line==`"{* apdofile read.do bla blup }{pstd}{stata "doedit read.do":bla blup}{p_end}"')
+assert(fileexists("bench/test/read.do"))
+unlink("bench/test/read.do")
+
+state=strstate()
+state.txtopen = 1
+state.exopen = 0
+state.slideopen = 1
+state.line = `"read.do "bla blup""'
+totest=smclpres()
+unlink("bench/test/read.do")
+totest.settings.other.sourcedir= pathjoin(pwd(), "bench")
+totest.settings.other.destdir= pathjoin(pwd(), "bench/test")
+state=totest.write_dofiles("//codefile", state)
+assert(state.line==`"{* codefile read.do bla blup }{pstd}{stata "doedit read.do":bla blup}{p_end}"')
+assert(fileexists("bench/test/read.do"))
+unlink("bench/test/read.do")
+
+state=strstate()
+state.txtopen = 1
+state.exopen = 0
+state.slideopen = 1
+state.line = `"read.do "bla blup""'
+totest=smclpres()
+unlink("bench/test/read.do")
+totest.settings.other.sourcedir= pathjoin(pwd(), "bench")
+totest.settings.other.destdir= pathjoin(pwd(), "bench/test")
+state=totest.write_dofiles("//apcodefile", state)
+assert(state.line==`"{* apcodefile read.do bla blup }{pstd}{stata "doedit read.do":bla blup}{p_end}"')
+assert(fileexists("bench/test/read.do"))
+unlink("bench/test/read.do")
+
+end
