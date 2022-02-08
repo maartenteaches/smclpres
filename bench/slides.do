@@ -276,7 +276,7 @@ totest.slide[2].section = "foo"
 totest.slide[2].subsection = "bar"
 totest.slide[2].type = "regular"
 totest.slide[2].forw = 3
-totest.slide[5].prev = 1
+totest.slide[2].prev = 1
 totest.settings.other.index = "foo.smcl"
 unlink("bench/slide2.smcl")
 state=strstate()
@@ -296,7 +296,7 @@ assert(fget(fh)==`"{hline}"')
 assert(fget(fh)==`" "')
 assert(fget(fh)==`" "')
 assert(fget(fh)==`"{* /p}{hline}"')
-assert(fget(fh)==`"{* bottombar }{center:     {view foo.smcl:index}   {view slide3.smcl:>>}}"')
+assert(fget(fh)==`"{* bottombar }{center:{view slide1.smcl:<<}   {view foo.smcl:index}   {view slide3.smcl:>>}}"')
 assert(fget(fh)==`"{hline}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
