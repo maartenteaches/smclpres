@@ -98,3 +98,15 @@ fclose(fh)
 unlink("bench/start_ex.test")
 unlink("bench/slide5ex1.do")
 end
+
+//digr_replace()
+mata:
+totest=smclpres()
+state= strstate()
+totest.slide = strslide(10)
+state.snr=5
+state.line = "ia zegt het ezeltje /*digr*/ klim maar op mijn rug"
+totest.slide[6].type="digression"
+state = totest.digr_replace(state)
+assert(state.line == `"ia zegt het ezeltje {* digr <a href="#slide6.smcl">&gt;&gt; digression</a>}{view slide6.smcl:>> digression}{* /digr} klim maar op mijn rug"')
+end
