@@ -412,7 +412,7 @@ struct strstate scalar smclpres::write_ho_ignore(struct strstate scalar state)
 	exopen(state, "ho_ignore comment")
 	noslideopen(state, "ho_ignore comment")
 	notxtopen(state, "ho_ignore comment")
-	state.line = "{* ho_ignore }" + subinstr(state.line, "//ho_ignore", "", 1)
+	state.line = "{* ho_ignore }" + subinstr(state.line, "//ho_ignore ", "", 1)
 	return(state)
 }
 

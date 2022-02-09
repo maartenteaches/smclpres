@@ -461,3 +461,15 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_graph.test")
 end
+
+//write_ho_ignore()
+mata:
+totest = smclpres()
+state = strstate()
+state.exopen = 0
+state.slideopen = 1
+state.txtopen = 1
+state.line = "//ho_ignore bla blup"
+state = totest.write_ho_ignore(state)
+assert(state.line == "{* ho_ignore }bla blup")
+end
