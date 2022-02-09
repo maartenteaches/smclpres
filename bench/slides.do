@@ -473,3 +473,10 @@ state.line = "//ho_ignore bla blup"
 state = totest.write_ho_ignore(state)
 assert(state.line == "{* ho_ignore }bla blup")
 end
+
+// remove_tab()
+mata:
+totest = smclpres()
+totest.settings.other.tab = 8
+assert(totest.remove_tab("|"+char(9)+"|") == "|        |")
+end
