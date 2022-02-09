@@ -414,3 +414,28 @@ assert(direxists(pathjoin(totest.settings.other.destdir, "blup")))
 totest.write_dir(state, "blup")
 rmdir(pathjoin(totest.settings.other.destdir, "blup"))
 end
+
+//slides_done()
+mata:
+totest = smclpres()
+state = strstate()
+state.txtopen = 0
+state.exopen = 0
+state.slideopen = 0
+state.titlepageopen = 0
+totest.slides_done(state)
+end
+mata: state.txtopen = 1
+rcof "mata: totest.slides_done(state)" == 198
+
+mata: state.txtopen = 0
+mata: state.slideopen = 1
+rcof "mata: totest.slides_done(state)" == 198
+
+mata: state.slideopen = 0
+mata: state.exopen = 1
+rcof "mata: totest.slides_done(state)" == 198
+
+mata: state.exopen = 0
+mata: state.titlepageopen = 1
+rcof "mata: totest.slides_done(state)" == 198
