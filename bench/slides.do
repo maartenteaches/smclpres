@@ -341,3 +341,16 @@ mata: state.exopen = 1
 rcof `"noisily  mata: totest.exopen(state, "example")"' == 198
 mata: state.exopen = 0
 mata: totest.exopen(state, "example")
+
+// begin_txt end_txt
+mata:
+totest = smclpres()
+state = strstate()
+state.txtopen = 0
+state.exopen = 0
+state.slideopen = 1
+state = totest.begin_txt(state)
+assert(state.txtopen == 1)
+state = totest.end_txt(state)
+assert(state.txtopen == 0)
+end
