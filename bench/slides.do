@@ -391,3 +391,15 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_oneline_text.test")
 end
+
+//write_file()
+mata:
+totest = smclpres()
+totest.settings.other.sourcedir = pathjoin(pwd(),"bench")
+totest.settings.other.destdir = pathjoin(pwd(),"bench/test")
+unlink("bench/test/toc.do")
+state = strstate()
+totest.write_file(state, " toc.do")
+assert(fileexists("bench/test/toc.do"))
+unlink("bench/test/toc.do")
+end
