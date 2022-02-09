@@ -403,3 +403,14 @@ totest.write_file(state, " toc.do")
 assert(fileexists("bench/test/toc.do"))
 unlink("bench/test/toc.do")
 end
+
+//write_dir()
+mata:
+totest = smclpres()
+totest.settings.other.destdir = pathjoin(pwd(),"bench/test")
+state = strstate()
+totest.write_dir(state, "blup")
+assert(direxists(pathjoin(totest.settings.other.destdir, "blup")))
+totest.write_dir(state, "blup")
+rmdir(pathjoin(totest.settings.other.destdir, "blup"))
+end
