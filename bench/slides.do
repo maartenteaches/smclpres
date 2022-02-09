@@ -439,3 +439,25 @@ rcof "mata: totest.slides_done(state)" == 198
 mata: state.exopen = 0
 mata: state.titlepageopen = 1
 rcof "mata: totest.slides_done(state)" == 198
+
+// write_graph()
+mata:
+totest = smclpres()
+state = strstate()
+state.exopen = 0
+state.slideopen = 1
+state.txtopen = 1
+state = totest.write_graph(state, "Graph")
+assert(state.line == "{* graph Graph }{...}")
+
+unlink("bench/write_graph.test")
+state.dest = fopen("bench/write_graph.test", "w")
+state.txtopen = 0
+state = totest.write_graph(state, "Graph")
+fclose(state.dest)
+fh = fopen(`"bench/write_graph.test"', "r")
+assert(fget(fh)==`"{* graph Graph }{...}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_graph.test")
+end
