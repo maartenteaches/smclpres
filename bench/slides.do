@@ -480,3 +480,149 @@ totest = smclpres()
 totest.settings.other.tab = 8
 assert(totest.remove_tab("|"+char(9)+"|") == "|        |")
 end
+
+// write_slides()
+mata:
+sourcemat ="//section intro", "file", "1" \
+           "//slide", "file", "2" \
+           "//title o o", "file", "3" \
+           "/*txt", "file", "4" \
+           "line 1", "file", "5" \
+           "line 2", "file", "6" \
+           "txt*/", "file", "7" \
+           "//endslide", "file", "8" \
+            "//slide", "file", "9" \
+            "//title bla", "file", "10" \
+            "/*txt", "file", "11" \ 
+           "line 1", "file", "12" \
+           "line 2", "file", "13" \
+           "txt*/", "file", "14" \
+           "//ex", "file", "15" \
+           " sysuse auto, clear", "file", "16" \
+           " reg price mpg i.rep78", "file", "17" \
+           "//endex", "file", "18" \
+           "//endslide", "file", "19" \
+           "//section body", "file", "20" \
+            "//slide", "file", "21" \
+            "//title blup", "file", "22" \
+            "/*txt", "file", "23" \
+           "line 1 /*digr*/ blup", "file", "24" \
+           "line 2", "file", "25" \
+           "txt*/", "file", "26" \
+           "//endslide", "file", "27" \
+           "//digr", "file", "28" \
+           "//title blup blup" , "file", "29" \
+            "/*txt", "file", "30" \
+           "line 1", "file", "31" \
+            "txt*/", "file", "32" \
+           "//enddigr", "file", "33"
+totest = smclpres() 
+totest.source = sourcemat 
+totest.rows_source = 33  
+totest.settings.other.sourcedir = pathjoin(pwd(),"bench")
+totest.settings.other.destdir = pathjoin(pwd(),"bench\test2")
+totest.find_structure()
+unlink("bench/test2/slide4.smcl")
+unlink("bench/test2/slide3.smcl")
+unlink("bench/test2/slide2ex1.do")
+unlink("bench/test2/slide2.smcl")
+unlink("bench/test2/slide1.smcl")
+totest.write_slides()
+
+
+fh = fopen(`"bench/test2/slide1.smcl"', "r")
+assert(fget(fh)==`"{smcl}"')
+assert(fget(fh)==`"{* "' + st_strscalar("c(current_date)") + `"}{...}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`"{p}{bf:intro}{p_end}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"{center:{bf: o o}}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"line 1"')
+assert(fget(fh)==`"line 2"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:     {view .smcl:index}   {view slide2.smcl:>>}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/test2/slide1.smcl")
+
+fh = fopen(`"bench/test2/slide2.smcl"', "r")
+assert(fget(fh)==`"{smcl}"')
+assert(fget(fh)==`"{* "' + st_strscalar("c(current_date)") + `"}{...}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`"{p}{bf:intro}{p_end}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"{center:{bf: bla}}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"line 1"')
+assert(fget(fh)==`"line 2"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* ex slide2ex1 }{...}"')
+assert(fget(fh)==`"{cmd}"')
+assert(fget(fh)==`"         sysuse auto, clear"')
+assert(fget(fh)==`"         reg price mpg i.rep78"')
+assert(fget(fh)==`"{txt}{...}"')
+assert(fget(fh)==`"{pstd}({stata "do slide2ex1.do":{it:click to run}}){p_end}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"{* endex }{...}"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:{view slide1.smcl:<<}   {view .smcl:index}   {view slide3.smcl:>>}}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/test2/slide2.smcl")
+
+fh = fopen(`"bench/test2/slide2ex1.do"', "r")
+assert(fget(fh)==`" sysuse auto, clear"')
+assert(fget(fh)==`" reg price mpg i.rep78"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/test2/slide2ex1.do")
+
+fh = fopen(`"bench/test2/slide3.smcl"', "r")
+assert(fget(fh)==`"{smcl}"')
+assert(fget(fh)==`"{* "' + st_strscalar("c(current_date)") + `"}{...}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`"{p}{bf:body}{p_end}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"{center:{bf: blup}}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"line 1 {* digr <a href="#slide4.smcl">&gt;&gt; digression</a>}{view slide4.smcl:>> digression}{* /digr} blup"')
+assert(fget(fh)==`"line 2"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:{view slide2.smcl:<<}   {view .smcl:index}     }"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/test2/slide3.smcl")
+
+fh = fopen(`"bench/test2/slide4.smcl"', "r")
+assert(fget(fh)==`"{smcl}"')
+assert(fget(fh)==`"{* "' + st_strscalar("c(current_date)") + `"}{...}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`"{p}{bf:digression}{p_end}"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"{center:{bf: blup blup}}"')
+assert(fget(fh)==`""')
+assert(fget(fh)==`"line 1"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:{view slide3.smcl:<<}   {view .smcl:index}     }"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/test2/slide4.smcl")
+end
