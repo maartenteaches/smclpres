@@ -354,3 +354,40 @@ assert(state.txtopen == 1)
 state = totest.end_txt(state)
 assert(state.txtopen == 0)
 end
+
+// write_oneline_text()
+mata:
+totest = smclpres()
+state = strstate()
+state.txtopen = 1
+state.slideopen = 1
+state.exopen = 0
+state.line = "T'as voulu voir Vierzon et on a vu Vierzon"
+unlink("bench/write_oneline_text.test")
+state.dest = fopen("bench/write_oneline_text.test", "w")
+totest.write_oneline_text(state)
+fclose(state.dest)
+fh = fopen(`"bench/write_oneline_text.test"', "r")
+assert(fget(fh)==`"T'as voulu voir Vierzon et on a vu Vierzon"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+totest = smclpres()
+state = strstate()
+state.txtopen = 1
+state.slideopen = 1
+state.exopen = 0
+state.line = "T'as voulu voir /*digr*/ Vierzon et on a vu Vierzon"
+state.snr=5
+totest.slide = strslide(10)
+totest.slide[6].type="digression"
+unlink("bench/write_oneline_text.test")
+state.dest = fopen("bench/write_oneline_text.test", "w")
+totest.write_oneline_text(state)
+fclose(state.dest)
+fh = fopen(`"bench/write_oneline_text.test"', "r")
+assert(fget(fh)==`"T'as voulu voir {* digr <a href="#slide6.smcl">&gt;&gt; digression</a>}{view slide6.smcl:>> digression}{* /digr} Vierzon et on a vu Vierzon"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_oneline_text.test")
+end
