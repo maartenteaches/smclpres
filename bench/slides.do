@@ -303,3 +303,41 @@ fclose(fh)
 assert(state.slideopen==0)
 unlink("bench/slide2.smcl")
 end
+
+// slideopen noslideopen txtopen notxtopen exopen
+mata:
+totest = smclpres()
+state = strstate()
+state.slideopen = 0 
+state.titlepageopen = 0
+state.rownr = 2
+sourcemat = "bla bla" , "file.do", "1" \
+            "blup"    , "file.do", "2"
+totest.source = sourcemat 
+totest.rows_source = 2  
+end
+rcof `"noisily  mata: totest.noslideopen(state, "example")"' == 198
+mata: totest.slideopen(state, "example")
+
+
+mata: state.slideopen = 1
+rcof `"noisily  mata: totest.slideopen(state, "example")"' == 198
+mata: totest.noslideopen(state, "example")
+
+mata: state.slideopen = 0
+mata: state.titlepageopen = 1
+rcof `"noisily  mata: totest.slideopen(state, "example")"' == 198
+mata: totest.noslideopen(state, "example")
+
+mata: state.txtopen = 0
+rcof `"noisily  mata: totest.notxtopen(state, "example")"' == 198
+mata: totest.txtopen(state, "example")
+
+mata: state.txtopen = 1
+rcof `"noisily  mata: totest.txtopen(state, "example")"' == 198
+mata: totest.notxtopen(state, "example")
+
+mata: state.exopen = 1
+rcof `"noisily  mata: totest.exopen(state, "example")"' == 198
+mata: state.exopen = 0
+mata: totest.exopen(state, "example")
