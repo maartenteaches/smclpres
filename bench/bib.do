@@ -1,6 +1,59 @@
 cscript
 run smclpres_main.mata
 
+//collect_bib()
+mata:
+sourcemat = "//bib", "file", "1" \
+"//title bibliograph", "file", "2" \
+"/*bib", "file", "3" \
+"@Article {gould01,", "file", "4" \
+"	author = {William W. Gould},", "file", "5" \
+"	title = {Statistical software certification},", "file", "6" \
+"	journal = {Stata Journal},", "file", "7" \
+"	volume = {1},", "file", "8" \
+"	number = {1},", "file", "9" \
+"	year = {2001},", "file", "10" \
+"	pages = {29-50},", "file", "11" \
+"}", "file", "12" \
+"", "file", "13" \
+"@Book {gould18, ", "file", "14" \
+"    author = {William W. Gould},", "file", "15" \
+"    title = {The Mata Book: A Book for Serious Programmers and Those Who Want to Be},", "file", "16" \
+"    publisher = {Stata Press},", "file", "17" \
+"    address = {College Station, TX},", "file", "18" \
+"    year = {2018},", "file", "19" \
+"}", "file", "20" \
+"bib*/", "file", "21" \
+"//endbib", "file", "22" 
+
+totest = smclpres()
+totest.source = sourcemat
+totest.rows_source = 22
+totest.bib.bibfile = pathjoin(pwd(),"bench/collect_bib.test")
+unlink(totest.bib.bibfile)
+totest.collect_bib()
+fh = fopen(`"bench/collect_bib.test"', "r")
+assert(fget(fh)==`"@Article {gould01,"')
+assert(fget(fh)==`"       author = {William W. Gould},"')
+assert(fget(fh)==`"       title = {Statistical software certification},"')
+assert(fget(fh)==`"       journal = {Stata Journal},"')
+assert(fget(fh)==`"       volume = {1},"')
+assert(fget(fh)==`"       number = {1},"')
+assert(fget(fh)==`"       year = {2001},"')
+assert(fget(fh)==`"       pages = {29-50},"')
+assert(fget(fh)==`"}"')
+assert(fget(fh)==`"@Book {gould18, "')
+assert(fget(fh)==`"    author = {William W. Gould},"')
+assert(fget(fh)==`"    title = {The Mata Book: A Book for Serious Programmers and Those Who Want to Be},"')
+assert(fget(fh)==`"    publisher = {Stata Press},"')
+assert(fget(fh)==`"    address = {College Station, TX},"')
+assert(fget(fh)==`"    year = {2018},"')
+assert(fget(fh)==`"}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink(totest.bib.bibfile)
+end
+
 // extract_rawrefs()
 mata:
 totest = smclpres()
@@ -29,6 +82,6 @@ sourcemat = "/*txt", "file", "1" \
 totest.source = sourcemat
 totest.rows_source = 4
 totest.collect_refs() 
-assert(totest.bib.refs == ("buis01" \  "buis02" \ "cox22"))
+assert(totest.bib.refs == ("buis02" \  "buis01" \ "cox22"))
 
 end
