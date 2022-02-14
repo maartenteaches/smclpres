@@ -1,13 +1,29 @@
 mata:
 void smclpres::read_bib() {
+	real       scalar    i
+	string     colvector entries
+
+	entries = collect_entries()
+	for(i=1; i<=rows(entries); i++) {
+		parse_entry(entries[i])
+	}
+	
+	parse_authors()
+}
+
+string colvector smclpres::collect_entries()
+{
 	real          scalar in_entry, fh, openbraces, closebraces
 	string        scalar line, entry
-	
+	string     colvector res
+
+	res = J(0,1,"")
 	in_entry = 0
 	fh = sp_fopen( bib.bibfile, "r") 
 
 	while ( (line = fget(fh)) != J(0,0,"") ) {
 		line = remove_tab(line) 
+		line = ustrltrim(line)
 		if ( in_entry == 0 & usubstr(ustrltrim(line),1,1) == "@") {
 			in_entry = 1
 			openbraces = 0
@@ -20,12 +36,12 @@ void smclpres::read_bib() {
 			entry = entry + line
 			if (openbraces - closebraces == 0) {
 				in_entry = 0
-				parse_entry(entry)
+				res = res \ entry
 			}
 		}
 	}
-	sp_fclose(fh)
-	parse_authors()
+	sp_fclose(fh)	
+	return(res)
 }
 
 void smclpres::parse_entry(string scalar entry) 
@@ -550,12 +566,7 @@ void smclpres::collect_refs()
 				if (anyof(tline, "/*cite")) {
 					refs = extract_refs(rownr)
 					for(i = 1 ; i <= rows(refs); i++) {
-						if (bib.refs == J(0,1,"")) {
-							bib.refs = refs[i]
-						}
-						else if (!anyof(bib.refs,refs[i])) {
-							bib.refs = bib.refs \ refs[i]
-						}					
+						bib.refs = bib.refs \ refs[i]					
 					}
 				}
 			}
@@ -582,7 +593,8 @@ string colvector smclpres::extract_refs(real scalar rownr)
 	for (i = 1 ; i <= rows(rawrefs) ; i++) {
 		tokenset(t, rawrefs[i])
 		while ( (token = tokenget(t)) != "") {
-            if ( usubstr(token,1,1) != "{" ) {
+            if ( usubstr(token,1,1) != "{" & !anyof((bib.refs \ res),token)) {
+				key_not_found(token,rownr)
 				res = res \ token
 			}
         }
@@ -590,6 +602,16 @@ string colvector smclpres::extract_refs(real scalar rownr)
 	return(res)
 }
 
+void smclpres::key_not_found(string scalar key, real scalar rownr) 
+{
+	string scalar errmsg
+	if (!bib.bibdb.exists((key,"author"))) {
+		errmsg = "{err}Could not find the key {res} " + key + " {err} in the bibliography"
+		printf(errmsg)
+		where_err(rownr)
+		exit(198)
+	}
+}
 string colvector smclpres::extract_rawrefs( real scalar rownr) 
 {
 	real   scalar    st, fi

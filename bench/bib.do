@@ -54,6 +54,18 @@ fclose(fh)
 unlink(totest.bib.bibfile)
 end
 
+// nbraces
+mata:
+totest = smclpres()
+test = "jkl(sdf[kid{dkdk { {kdkd [ kdep ()})]} ]"
+assert(totest.nbrace(test,"[")==2)
+assert(totest.nbrace(test,"{")==3)
+assert(totest.nbrace(test,"(")==2)
+assert(totest.nbrace(test,"]")==2)
+assert(totest.nbrace(test,"}")==2)
+assert(totest.nbrace(test,")")==2)
+end
+
 // extract_rawrefs()
 mata:
 totest = smclpres()
