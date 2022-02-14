@@ -24,7 +24,7 @@ void smclpres::count_slides() {
 void smclpres::where_err(real scalar rownr)
 {
 	string scalar errmsg
-	errmsg = "{p}{err}This error occured on line " + source[rownr,3] + " in " + source[rownr,2] + "{p_end}"
+	errmsg = "{p}{err}This error occured on line {res}" + source[rownr,3] + " {err}in {res}" + source[rownr,2] + "{p_end}"
 	printf(errmsg)
 }
 
