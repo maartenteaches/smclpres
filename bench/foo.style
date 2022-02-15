@@ -1,0 +1,4 @@
+@book{{p 4 8 2}[author] ([year]), {it:[title]}.
+ [address]: [publisher].{p_end}}
+@article{{p 4 8 2}[author] ([year]), [title],
+ {it:[journal]}, {bf:[volume]}([number]):[pages].{p_end}}

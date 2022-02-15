@@ -174,6 +174,65 @@ assert(totest.bib.bibdb.get(("buis05", "author_last")) == "Buis")
 assert(totest.bib.bibdb.get(("buis_cox05", "author_first")) == ("M.L." \ "N.J."))
 assert(totest.bib.bibdb.get(("buis_cox05", "author_last")) == ("Buis"\"Cox"))
 end
+
+// read_bib()
+mata:
+totest = smclpres()
+totest.bib.bibfile = "bench/mata/source/mata.bib"
+totest.read_bib()
+assert(totest.bib.bibdb.get(("buis14", "type"))=="article")
+assert(totest.bib.bibdb.get(("buis14", "author"))=="Maarten L. Buis")
+assert(totest.bib.bibdb.get(("buis14", "author_first")) == "Maarten L.")
+assert(totest.bib.bibdb.get(("buis14", "author_last")) == "Buis")
+assert(totest.bib.bibdb.get(("buis14", "title"))== "Stata tip 120: Certifying subroutines")
+assert(totest.bib.bibdb.get(("buis14", "journal"))=="Stata Journal")
+assert(totest.bib.bibdb.get(("buis14", "volume")) == "14")
+assert(totest.bib.bibdb.get(("buis14", "number")) == "2")
+assert(totest.bib.bibdb.get(("buis14", "year")) == "2014")
+assert(totest.bib.bibdb.get(("buis14", "pages")) == "449-450")
+
+assert(totest.bib.bibdb.get(("gould01", "type"))=="article")
+assert(totest.bib.bibdb.get(("gould01", "author"))=="William W. Gould")
+assert(totest.bib.bibdb.get(("gould01", "author_first")) == "William W.")
+assert(totest.bib.bibdb.get(("gould01", "author_last")) == "Gould")
+assert(totest.bib.bibdb.get(("gould01", "title"))== "Statistical software certification")
+assert(totest.bib.bibdb.get(("gould01", "journal"))=="Stata Journal")
+assert(totest.bib.bibdb.get(("gould01", "volume")) == "1")
+assert(totest.bib.bibdb.get(("gould01", "number")) == "1")
+assert(totest.bib.bibdb.get(("gould01", "year")) == "2001")
+assert(totest.bib.bibdb.get(("gould01", "pages")) == "29-50")
+
+assert(totest.bib.bibdb.get(("gould18", "type"))=="book")
+assert(totest.bib.bibdb.get(("gould18", "author"))=="William W. Gould")
+assert(totest.bib.bibdb.get(("gould18", "author_first")) == "William W.")
+assert(totest.bib.bibdb.get(("gould18", "author_last")) == "Gould")
+assert(totest.bib.bibdb.get(("gould18", "title"))== "The Mata Book: A Book for Serious Programmers and Those Who Want to Be")
+assert(totest.bib.bibdb.get(("gould18", "publisher"))=="Stata Press")
+assert(totest.bib.bibdb.get(("gould18", "address")) == "College Station, TX")
+assert(totest.bib.bibdb.get(("gould18", "year")) == "2018")
+
+assert(totest.bib.bibdb.get(("gould_etal10", "type"))=="book")
+assert(totest.bib.bibdb.get(("gould_etal10", "author"))== "William W. Gould and Jeffrey Pitblado and Brian Poi")
+assert(totest.bib.bibdb.get(("gould_etal10", "author_first")) == ("William W."\ "Jeffrey" \ "Brian"))
+assert(totest.bib.bibdb.get(("gould_etal10", "author_last")) == ("Gould"\"Pitblado"\"Poi"))
+assert(totest.bib.bibdb.get(("gould_etal10", "title"))== "Maximum Likelihood Estimation with Stata, Fourth Edition")
+assert(totest.bib.bibdb.get(("gould_etal10", "publisher"))=="Stata Press")
+assert(totest.bib.bibdb.get(("gould_etal10", "address")) == "College Station, TX")
+assert(totest.bib.bibdb.get(("gould_etal10", "year")) == "2010")
+end
+
+//import_style()
+mata:
+totest=smclpres()
+totest.bib.stylefile = "bench/foo.style"
+totest.import_style()
+true = "{p 4 8 2}", "[author]", " (", "[year]", "), {it:", "[title]", "}. ", "[address]", ": ", "[publisher]",".{p_end}"
+assert(totest.bib.style.get("book") == true)
+true = "{p 4 8 2}","[author]", " (", "[year]", "), ", "[title]", ", {it:", "[journal]", "}, {bf:", "[volume]", "}(", "[number]", "):", "[pages]", ".{p_end}"
+assert(totest.bib.style.get("article") == true)
+end
+
+
 exit
 //key_not_found
 mata:
