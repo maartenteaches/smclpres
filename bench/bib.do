@@ -161,6 +161,19 @@ totest.bib.bibdb.put(("buis_cox05", "author"), "M.L. Buis and Cox, N.J.")
 assert(totest.parse_author("buis05")== ("M.L.", "Buis"))
 assert(totest.parse_author("buis_cox05") == ("M.L.", "Buis" \ "N.J.", "Cox"))
 end
+
+//parse_authors()
+mata:
+totest=smclpres()
+totest.bib.bibdb.put(("buis05", "author"), "M.L. Buis")
+totest.bib.bibdb.put(("buis_cox05", "author"), "M.L. Buis and Cox, N.J.")
+totest.bib.keys = "buis05" \ "buis_cox05"
+totest.parse_authors()
+assert(totest.bib.bibdb.get(("buis05", "author_first")) == "M.L.")
+assert(totest.bib.bibdb.get(("buis05", "author_last")) == "Buis")
+assert(totest.bib.bibdb.get(("buis_cox05", "author_first")) == ("M.L." \ "N.J."))
+assert(totest.bib.bibdb.get(("buis_cox05", "author_last")) == ("Buis"\"Cox"))
+end
 exit
 //key_not_found
 mata:
