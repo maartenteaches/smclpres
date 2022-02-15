@@ -151,7 +151,15 @@ author = "Buis, Maarten L."
 assert(totest.parse_name(author) == ("Maarten L.", "Buis"))
 author = "{van Buis}, Maarten L."
 assert(totest.parse_name(author) == ("Maarten L.", "van Buis"))
+end
 
+// parse_author()
+mata:
+totest=smclpres()
+totest.bib.bibdb.put(("buis05", "author"), "M.L. Buis")
+totest.bib.bibdb.put(("buis_cox05", "author"), "M.L. Buis and Cox, N.J.")
+assert(totest.parse_author("buis05")== ("M.L.", "Buis"))
+assert(totest.parse_author("buis_cox05") == ("M.L.", "Buis" \ "N.J.", "Cox"))
 end
 exit
 //key_not_found
