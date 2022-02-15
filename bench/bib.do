@@ -117,7 +117,6 @@ assert(totest.collect_entries() == true)
 end
 
 //parse_entry()
-
 mata:
 totest = smclpres()
 entry = "@Article {buis14,author = {Maarten L. Buis},title = {Stata tip 120: Certifying subroutines},journal = {Stata Journal},volume = {14},number = {2},year = {2014},pages = {449-450},}"
@@ -128,6 +127,17 @@ assert(totest.bib.bibdb.get(("buis14","journal")) == "Stata Journal")
 assert(totest.bib.bibdb.get(("buis14","volume")) == "14")
 assert(totest.bib.bibdb.get(("buis14","number")) == "2")
 assert(totest.bib.bibdb.get(("buis14","pages")) == "449-450")
+end
+
+// split_on_and
+mata:
+totest = smclpres()
+authors = "M.L. Buis"
+assert(totest.split_on_and(authors)==authors)
+authors = "M.L. Buis and N.J. Cox"
+assert(totest.split_on_and(authors) == ("M.L. Buis" \ "N.J. Cox"))
+authors = "M.L. Buis and N.J. Cox and S. Jenkins"
+assert(totest.split_on_and(authors) == ("M.L. Buis" \ "N.J. Cox" \ "S. Jenkins"))
 end
 exit
 //key_not_found

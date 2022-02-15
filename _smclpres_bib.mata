@@ -155,6 +155,7 @@ string colvector smclpres::split_on_and(string scalar str)
 		}
 	}
 	res = res \ temp
+	res = ustrtrim(res)
 	return(res)
 }
 
