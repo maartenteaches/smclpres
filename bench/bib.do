@@ -66,6 +66,17 @@ assert(totest.nbrace(test,"}")==2)
 assert(totest.nbrace(test,")")==2)
 end
 
+// stripbraces
+mata:
+totest=smclpres()
+test = "  {bla } "
+assert(totest.stripbraces(test) == "bla ")
+test = " d{bla }"
+assert(totest.stripbraces(test)==test)
+test = "{bla} d"
+assert(totest.stripbraces(test)==test)
+end
+exit
 //key_not_found
 mata:
 totest = smclpres()
@@ -74,7 +85,7 @@ totest.source = "bla", "file", "1"
 totest.key_not_found("bla",1)
 end
 rcof `"noi mata:totest.key_not_found("buis",1)"' == 198
-exit
+
 // extract_rawrefs()
 mata:
 totest = smclpres()
