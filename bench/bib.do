@@ -66,6 +66,15 @@ assert(totest.nbrace(test,"}")==2)
 assert(totest.nbrace(test,")")==2)
 end
 
+//key_not_found
+mata:
+totest = smclpres()
+totest.bib.bibdb.put(("bla", "author"), "blup")
+totest.source = "bla", "file", "1"
+totest.key_not_found("bla",1)
+end
+rcof `"noi mata:totest.key_not_found("buis",1)"' == 198
+exit
 // extract_rawrefs()
 mata:
 totest = smclpres()
