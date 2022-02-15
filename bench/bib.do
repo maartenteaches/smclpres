@@ -71,10 +71,25 @@ mata:
 totest=smclpres()
 test = "  {bla } "
 assert(totest.stripbraces(test) == "bla ")
+test = "  {bla {foo}} "
+assert(totest.stripbraces(test) == "bla {foo}")
 test = " d{bla }"
 assert(totest.stripbraces(test)==test)
 test = "{bla} d"
 assert(totest.stripbraces(test)==test)
+end
+
+// stripbrackets
+mata:
+totest=smclpres()
+test = "  [bla ] "
+assert(totest.stripbrackets(test) == "bla ")
+test = "  [bla [foo]] "
+assert(totest.stripbrackets(test) == "bla [foo]")
+test = " d[bla ]"
+assert(totest.stripbrackets(test)==test)
+test = "[bla] d"
+assert(totest.stripbrackets(test)==test)
 end
 exit
 //key_not_found
