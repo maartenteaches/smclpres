@@ -91,6 +91,21 @@ assert(totest.stripbrackets(test)==test)
 test = "[bla] d"
 assert(totest.stripbrackets(test)==test)
 end
+
+//remove_all_braces
+mata:
+totest=smclpres()
+test = "  {bla } "
+assert(totest.remove_all_braces(test) == "  bla  ")
+test = "  {bla {foo}} "
+assert(totest.remove_all_braces(test) == "  bla foo ")
+test = " d{bla }"
+assert(totest.remove_all_braces(test)==" dbla ")
+test = "{bla} d"
+assert(totest.remove_all_braces(test)=="bla d")
+end
+
+
 exit
 //key_not_found
 mata:
