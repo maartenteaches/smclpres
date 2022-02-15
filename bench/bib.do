@@ -139,6 +139,20 @@ assert(totest.split_on_and(authors) == ("M.L. Buis" \ "N.J. Cox"))
 authors = "M.L. Buis and N.J. Cox and S. Jenkins"
 assert(totest.split_on_and(authors) == ("M.L. Buis" \ "N.J. Cox" \ "S. Jenkins"))
 end
+
+// parse_name()
+mata:
+totest = smclpres()
+author = "M.L. Buis"
+assert(totest.parse_name(author) == ("M.L.", "Buis"))
+author = "Maarten L. Buis"
+assert(totest.parse_name(author) == ("Maarten L.", "Buis"))
+author = "Buis, Maarten L."
+assert(totest.parse_name(author) == ("Maarten L.", "Buis"))
+author = "{van Buis}, Maarten L."
+assert(totest.parse_name(author) == ("Maarten L.", "van Buis"))
+
+end
 exit
 //key_not_found
 mata:
