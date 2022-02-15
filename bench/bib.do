@@ -105,7 +105,16 @@ test = "{bla} d"
 assert(totest.remove_all_braces(test)=="bla d")
 end
 
-
+//collect_entries()
+mata:
+totest = smclpres()
+totest.bib.bibfile = "bench/mata/source/mata.bib"
+true = "@Article {buis14,author = {Maarten L. Buis},title = {Stata tip 120: Certifying subroutines},journal = {Stata Journal},volume = {14},number = {2},year = {2014},pages = {449-450},}" \
+       "@Article {gould01,author = {William W. Gould},title = {Statistical software certification},journal = {Stata Journal},volume = {1},number = {1},year = {2001},pages = {29-50},}" \
+       "@Book {gould18, author = {William W. Gould},title = {The Mata Book: A Book for Serious Programmers and Those Who Want to Be},publisher = {Stata Press},address = {College Station, TX},year = {2018},}" \
+       "@Book {gould_etal10, author = {William W. Gould and Jeffrey Pitblado and Brian Poi},title = {Maximum Likelihood Estimation with Stata, Fourth Edition},publisher = {Stata Press},address = {College Station, TX},year = {2010},}"
+assert(totest.collect_entries() == true)
+end
 exit
 //key_not_found
 mata:

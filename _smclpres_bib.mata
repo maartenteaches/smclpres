@@ -78,6 +78,7 @@ void smclpres::parse_entry(string scalar entry)
 		}
 		if (k == 2) {
 			if (token != "=") {
+				printf("{err}a problem occured with bibliography entry {res}"+ type )
 				error(198)
 			}
 		}
