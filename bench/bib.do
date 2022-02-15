@@ -115,6 +115,20 @@ true = "@Article {buis14,author = {Maarten L. Buis},title = {Stata tip 120: Cert
        "@Book {gould_etal10, author = {William W. Gould and Jeffrey Pitblado and Brian Poi},title = {Maximum Likelihood Estimation with Stata, Fourth Edition},publisher = {Stata Press},address = {College Station, TX},year = {2010},}"
 assert(totest.collect_entries() == true)
 end
+
+//parse_entry()
+
+mata:
+totest = smclpres()
+entry = "@Article {buis14,author = {Maarten L. Buis},title = {Stata tip 120: Certifying subroutines},journal = {Stata Journal},volume = {14},number = {2},year = {2014},pages = {449-450},}"
+totest.parse_entry(entry)
+assert(totest.bib.bibdb.get(("buis14","author")) == "Maarten L. Buis")
+assert(totest.bib.bibdb.get(("buis14","title")) == "Stata tip 120: Certifying subroutines")
+assert(totest.bib.bibdb.get(("buis14","journal")) == "Stata Journal")
+assert(totest.bib.bibdb.get(("buis14","volume")) == "14")
+assert(totest.bib.bibdb.get(("buis14","number")) == "2")
+assert(totest.bib.bibdb.get(("buis14","pages")) == "449-450")
+end
 exit
 //key_not_found
 mata:
