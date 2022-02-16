@@ -232,6 +232,14 @@ true = "{p 4 8 2}","[author]", " (", "[year]", "), ", "[title]", ", {it:", "[jou
 assert(totest.bib.style.get("article") == true)
 end
 
+// parse_style_entry
+mata:
+totest = smclpres()
+style =  "@book{{p 4 8 2}[author] ([year]), {it:[title]}.  [address]: [publisher].{p_end}}"
+totest.parse_style_entry(style)
+true = "{p 4 8 2}", "[author]", " (", "[year]", "), {it:", "[title]", "}.  ", "[address]", ": ", "[publisher]",".{p_end}"
+assert(totest.bib.style.get("book") == true)
+end
 
 exit
 //key_not_found
