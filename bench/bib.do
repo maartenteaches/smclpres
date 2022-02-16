@@ -280,7 +280,7 @@ totest.source = "bla", "file", "1"
 totest.key_not_found("bla",1)
 end
 rcof `"noi mata:totest.key_not_found("buis",1)"' == 198
-exit
+
 // extract_rawrefs()
 mata:
 totest = smclpres()
@@ -296,6 +296,7 @@ totest = smclpres()
 sourcemat = "bla /*cite buis01 buis02*/ blup /*cite cox22*/ blabla", "file", "1"
 totest.source = sourcemat
 totest.rows_source = 1
+totest.bib.keys = "buis01" \ "buis02" \ "cox22"
 assert(totest.extract_refs(1) == ("buis01" \  "buis02" \ "cox22"))
 end
 
@@ -303,12 +304,30 @@ end
 mata:
 totest = smclpres()
 sourcemat = "/*txt", "file", "1" \
-"bla /*cite buis01 buis02*/ blup /*cite cox22*/ blabla", "file", "2" \
-"blup /*cite buis02*/ blup blup", "file", "3" \
+"bla /*cite buis14 gould01*/ blup /*cite gould18*/ blabla", "file", "2" \
+"blup /*cite buis14*/ blup blup", "file", "3" \
 "txt*/", "file", "4"
 totest.source = sourcemat
 totest.rows_source = 4
+totest.bib.bibfile = "bench/mata/source/mata.bib"
+totest.read_bib()
 totest.collect_refs() 
-assert(totest.bib.refs == ("buis02" \  "buis01" \ "cox22"))
-
+assert(totest.bib.refs == ("buis14" \  "gould01" \ "gould18"))
 end
+
+//fix_collisions()
+mata:
+totest = smclpres()
+totest.bib.refs = "buis15" \ "buis14a" \ "buis14b" \ "buis12a" \ "buis12b" \ "buis12c" \ "buis12d"
+totest.bib.bibfile = "bench/conflict.bib"
+totest.read_bib()
+totest.fix_collisions()
+assert(totest.bib.bibdb.get(("buis15", "postfix")) == "")
+assert(totest.bib.bibdb.get(("buis14a", "postfix")) == "b")
+assert(totest.bib.bibdb.get(("buis14b", "postfix")) == "a")
+assert(totest.bib.bibdb.get(("buis12a", "postfix")) == "d")
+assert(totest.bib.bibdb.get(("buis12b", "postfix")) == "c")
+assert(totest.bib.bibdb.get(("buis12c", "postfix")) == "b")
+assert(totest.bib.bibdb.get(("buis12d", "postfix")) == "a")
+end
+exit
