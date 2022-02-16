@@ -406,6 +406,39 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/bib_entry.test")
 end
+
+//write_bib
+
+mata:
+totest = smclpres()
+totest.bib.bibfile = "bench/conflict.bib"
+totest.bib.refs = "buis12a" \ "buis12c" \ "buis14a"
+totest.read_bib()
+totest.fix_collisions()
+totest.set_style()
+totest.bib.bibslide = 18
+state = strstate()
+state.exopen = 0
+state.txtopen = 0
+state.slideopen = 1
+state.snr = 18
+unlink("bench/write_bib.test")
+state.dest = fopen("bench/write_bib.test", "w")
+totest.write_bib(state)
+fclose(state.dest)
+fh = fopen(`"bench/write_bib.test"', "r")
+assert(fget(fh)==`"{marker buis12c}{...}"')
+assert(fget(fh)==`"{p 4 8  2}M.L. Buis (2012a), "Stata tip 107: The baseline is now reported", {it:The Stata Journal}, {bf:12}(1), pp. 165-166.{p_end}"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{marker buis12a}{...}"')
+assert(fget(fh)==`"{p 4 8  2}M.L. Buis (2012b), "Stata tip 112: Where did my p-values go? (part 2)", {it:The Stata Journal}, {bf:12}(4), pp. 759-760.{p_end}"')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{marker buis14a}{...}"')
+assert(fget(fh)==`"{p 4 8  2}M.L. Buis (2014), "Stata tip 120: Certifying subroutines", {it:The Stata Journal}, {bf:14}(2), pp. 449-450.{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_bib.test")
+end
 exit
 
 
