@@ -511,3 +511,4 @@ string scalar smclpres::remove_tab(string scalar str)
 	return(usubinstr(str, char(9), settings.other.tab*" ", .))
 }
 end
+exit

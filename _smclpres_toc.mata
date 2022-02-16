@@ -560,3 +560,4 @@ void smclpres::write_pres_settings(real scalar dest) {
 }
 
 end
+exit
