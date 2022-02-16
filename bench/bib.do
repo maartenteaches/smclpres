@@ -252,6 +252,26 @@ assert(totest.bib.style.exists("phdthesis"))
 assert(totest.bib.style.exists("unpublished"))
 end
 
+//set_style
+mata:
+totest=smclpres()
+totest.bib.stylefile = "bench/foo.style"
+totest.set_style()
+assert(totest.bib.style.exists("book"))
+assert(totest.bib.style.exists("article"))
+assert(!totest.bib.style.exists("incollection"))
+assert(!totest.bib.style.exists("phdthesis"))
+assert(!totest.bib.style.exists("unpublished"))
+
+totest=smclpres()
+totest.set_style()
+assert(totest.bib.style.exists("book"))
+assert(totest.bib.style.exists("article"))
+assert(totest.bib.style.exists("incollection"))
+assert(totest.bib.style.exists("phdthesis"))
+assert(totest.bib.style.exists("unpublished"))
+end
+
 exit
 //key_not_found
 mata:
