@@ -341,5 +341,28 @@ assert(totest.write_ref("{bla} buis14") == "(bla{view slide18.smcl##buis14:Buis 
 assert(totest.write_ref("{pre } buis14 { post}") == "(pre {view slide18.smcl##buis14:Buis 2014} post)")
 assert(totest.write_ref("buis14 gould01 gould18") == "({view slide18.smcl##buis14:Buis 2014}; {view slide18.smcl##gould01:Gould 2001}; {view slide18.smcl##gould18:Gould 2018})")
 assert(totest.write_ref("{pre1 } buis14 {} {pre2} gould01 { post2} {pre 3 } gould18 { post 3}") == "(pre1 {view slide18.smcl##buis14:Buis 2014}; pre2{view slide18.smcl##gould01:Gould 2001} post2; pre 3 {view slide18.smcl##gould18:Gould 2018} post 3)")
+
+mata:
+totest = smclpres()
+totest.bib.bibfile = "bench/conflict.bib"
+totest.bib.bibslide = 18
+totest.read_bib()
+totest.bib.refs = "buis12a" \ "buis12c"
+totest.fix_collisions()
+assert(totest.write_ref("buis12a") == "({view slide18.smcl##buis12a:Buis 2012b})")
+end
+
+// ref_replace()
+mata:
+totest = smclpres()
+totest.bib.bibfile = "bench/conflict.bib"
+totest.bib.bibslide = 18
+totest.read_bib()
+totest.bib.refs = "buis12a" \ "buis12c"
+totest.fix_collisions()
+state = strstate()
+state.line = "{pstd}Bla bla /*cite buis12a { pp. 2 } buis12c*/ blup blup.{p_end}"
+state = totest.ref_replace(state)
+assert(state.line == "{pstd}Bla bla ({view slide18.smcl##buis12a:Buis 2012b} pp. 2 ; {view slide18.smcl##buis12c:Buis 2012a}) blup blup.{p_end}")
 end
 exit
