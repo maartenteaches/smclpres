@@ -440,5 +440,3 @@ fclose(fh)
 unlink("bench/write_bib.test")
 end
 exit
-
-
