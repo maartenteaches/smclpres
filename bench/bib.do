@@ -330,4 +330,16 @@ assert(totest.bib.bibdb.get(("buis12b", "postfix")) == "c")
 assert(totest.bib.bibdb.get(("buis12c", "postfix")) == "b")
 assert(totest.bib.bibdb.get(("buis12d", "postfix")) == "a")
 end
+
+// write_ref()
+mata:
+totest.bib.bibfile = "bench/mata/source/mata.bib"
+totest.bib.bibslide = 18
+totest.read_bib()
+assert(totest.write_ref("buis14") == "({view slide18.smcl##buis14:Buis 2014})")
+assert(totest.write_ref("{bla} buis14") == "(bla{view slide18.smcl##buis14:Buis 2014})")
+assert(totest.write_ref("{pre } buis14 { post}") == "(pre {view slide18.smcl##buis14:Buis 2014} post)")
+assert(totest.write_ref("buis14 gould01 gould18") == "({view slide18.smcl##buis14:Buis 2014}; {view slide18.smcl##gould01:Gould 2001}; {view slide18.smcl##gould18:Gould 2018})")
+assert(totest.write_ref("{pre1 } buis14 {} {pre2} gould01 { post2} {pre 3 } gould18 { post 3}") == "(pre1 {view slide18.smcl##buis14:Buis 2014}; pre2{view slide18.smcl##gould01:Gould 2001} post2; pre 3 {view slide18.smcl##gould18:Gould 2018} post 3)")
+end
 exit
