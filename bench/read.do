@@ -1,6 +1,4 @@
 cscript
-run  smclpres_main.mata
-local home = "d"
 
 // ----------------------------------- parsedirs()
 // absolute path
@@ -483,11 +481,12 @@ mata:
 totest = smclpres()
 totest.parsedirs()
 totest.p_bib_file("bib","bibfile", "incl_main.do", "file", "1")
-ustrlower("`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do") == ustrlower(totest.bib.bibfile)
-assert(ustrlower(totest.bib.bibfile) == ustrlower("`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do"))
+
+assert(ustrlower(pathjoin(pwd(), "bench\incl_main.do")) == ustrlower(totest.bib.bibfile))
+assert(ustrlower(totest.bib.bibfile) == ustrlower(pathjoin(pwd(), "bench\incl_main.do")))
 
 totest.p_bib_file("bib","stylefile", "incl_main.do", "file", "1")
-assert(ustrlower(totest.bib.stylefile) == ustrlower("`home'" + ":\Mijn documenten\projecten\stata\smclpres\bench\incl_main.do"))
+assert(ustrlower(totest.bib.stylefile) == ustrlower(pathjoin(pwd(),"bench\incl_main.do")))
 end
 
 // p_bib_opt()

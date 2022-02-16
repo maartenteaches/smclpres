@@ -293,7 +293,7 @@ string scalar smclpres::write_ref(string scalar str)
 		else  {
 			ncomment = ncomment + 1
 			if (nrefs >= 1 & ncomment == 2) res = res + "; "
-			res = res + sp_stripbraces(token)
+			res = res + stripbraces(token)
 		}
     }
 	res = "(" + res + ")"
@@ -520,8 +520,8 @@ void smclpres::import_style()
 			entry = ""
 		}
 		if (in_entry == 1) {
-			openbraces = openbraces + sp_nbrace(line, "{")
-			closebraces = closebraces + sp_nbrace(line, "}")
+			openbraces = openbraces + nbrace(line, "{")
+			closebraces = closebraces + nbrace(line, "}")
 			entry = entry + line
 			if (openbraces - closebraces == 0) {
 				in_entry = 0

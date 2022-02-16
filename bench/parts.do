@@ -1,5 +1,4 @@
 cscript
-run  smclpres_main.mata
 
 // write_title()
 mata:

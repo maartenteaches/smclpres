@@ -1,5 +1,4 @@
 cscript
-run smclpres_main.mata
 
 //collect_bib()
 mata:

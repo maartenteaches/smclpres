@@ -1,5 +1,4 @@
 cscript
-run  smclpres_main.mata
 
 //countslides
 local using "bench/minimalist.do"

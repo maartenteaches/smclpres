@@ -1,5 +1,5 @@
 cscript
-run smclpres_main.mata
+
 
 //start slide
 mata:
