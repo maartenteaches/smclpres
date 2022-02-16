@@ -272,16 +272,15 @@ assert(totest.bib.style.exists("phdthesis"))
 assert(totest.bib.style.exists("unpublished"))
 end
 
-exit
 //key_not_found
 mata:
 totest = smclpres()
-totest.bib.bibdb.put(("bla", "author"), "blup")
+totest.bib.keys = "bla" \ "blup" \ "foo" \ "bar"
 totest.source = "bla", "file", "1"
 totest.key_not_found("bla",1)
 end
 rcof `"noi mata:totest.key_not_found("buis",1)"' == 198
-
+exit
 // extract_rawrefs()
 mata:
 totest = smclpres()

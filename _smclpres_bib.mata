@@ -607,7 +607,8 @@ string colvector smclpres::extract_refs(real scalar rownr)
 void smclpres::key_not_found(string scalar key, real scalar rownr) 
 {
 	string scalar errmsg
-	if (!bib.bibdb.exists((key,"author"))) {
+	
+	if (!anyof(bib.keys,key)) {
 		errmsg = "{err}Could not find the key {res} " + key + " {err} in the bibliography"
 		printf(errmsg)
 		where_err(rownr)
