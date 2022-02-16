@@ -241,6 +241,17 @@ true = "{p 4 8 2}", "[author]", " (", "[year]", "), {it:", "[title]", "}.  ", "[
 assert(totest.bib.style.get("book") == true)
 end
 
+// base_style
+mata:
+totest = smclpres()
+totest.base_style()
+assert(totest.bib.style.exists("book"))
+assert(totest.bib.style.exists("article"))
+assert(totest.bib.style.exists("incollection"))
+assert(totest.bib.style.exists("phdthesis"))
+assert(totest.bib.style.exists("unpublished"))
+end
+
 exit
 //key_not_found
 mata:
