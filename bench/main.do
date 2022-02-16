@@ -7,3 +7,4 @@ do bench/toc.do
 do bench/parts.do
 do bench/slides.do
 do bench/bib.do
+do bench/presentations.do
