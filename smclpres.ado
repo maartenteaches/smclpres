@@ -1,4 +1,4 @@
-*! version 4.0.0 MLB 05Aug2019
+*! version 4.0.0 MLB 16Feb2022
 *  rewrite as a Mata class
 *  allow source files to include other source files
 *  add version numbers, and with that backwards compatability (from 4.0.0 on)
@@ -40,6 +40,7 @@ program define smclpres_main, rclass
 end
 
 program define Closingmsg
+	version 14.2
 	syntax, pres(string)
 	
 	mata st_local("dir", `pres'.settings.other.destdir)
