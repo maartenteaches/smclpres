@@ -365,4 +365,47 @@ state.line = "{pstd}Bla bla /*cite buis12a { pp. 2 } buis12c*/ blup blup.{p_end}
 state = totest.ref_replace(state)
 assert(state.line == "{pstd}Bla bla ({view slide18.smcl##buis12a:Buis 2012b} pp. 2 ; {view slide18.smcl##buis12c:Buis 2012a}) blup blup.{p_end}")
 end
+
+//write_bib_entry()
+mata:
+totest = smclpres()
+totest.bib.bibfile = "bench/conflict.bib"
+totest.bib.refs = "buis12a" \ "buis12c" \ "buis14a"
+totest.read_bib()
+totest.fix_collisions()
+totest.set_style()
+state = strstate()
+unlink("bench/bib_entry.test")
+state.dest = fopen("bench/bib_entry.test", "w")
+totest.write_bib_entry(state, "buis12a")
+fclose(state.dest)
+fh = fopen(`"bench/bib_entry.test"', "r")
+assert(fget(fh)==`"{marker buis12a}{...}"')
+assert(fget(fh)==`"{p 4 8  2}M.L. Buis (2012b), "Stata tip 112: Where did my p-values go? (part 2)", {it:The Stata Journal}, {bf:12}(4), pp. 759-760.{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+unlink("bench/bib_entry.test")
+state.dest = fopen("bench/bib_entry.test", "w")
+totest.write_bib_entry(state, "buis12c")
+fclose(state.dest)
+fh = fopen(`"bench/bib_entry.test"', "r")
+assert(fget(fh)==`"{marker buis12c}{...}"')
+assert(fget(fh)==`"{p 4 8  2}M.L. Buis (2012a), "Stata tip 107: The baseline is now reported", {it:The Stata Journal}, {bf:12}(1), pp. 165-166.{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+
+unlink("bench/bib_entry.test")
+state.dest = fopen("bench/bib_entry.test", "w")
+totest.write_bib_entry(state, "buis14a")
+fclose(state.dest)
+fh = fopen(`"bench/bib_entry.test"', "r")
+assert(fget(fh)==`"{marker buis14a}{...}"')
+assert(fget(fh)==`"{p 4 8  2}M.L. Buis (2014), "Stata tip 120: Certifying subroutines", {it:The Stata Journal}, {bf:14}(2), pp. 449-450.{p_end}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/bib_entry.test")
+end
 exit
+
+
