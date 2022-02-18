@@ -1,0 +1,18 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:Standardization to compare tables}{p_end}
+{hline}
+
+{center:{bf: Try it yourself}}
+
+{pstd}Standardize the tables in {cmd:place.dta} such that the margins for all 
+cohorts correspond to the margins of the 1950 cohort.{p_end}
+
+
+{* apcodefile raking_sol2.do Solution }{pstd}{stata "doedit raking_sol2.do":Solution}{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide9.smcl:<<}   {view index.smcl:index}   {view slide11.smcl:>>}}
+{hline}

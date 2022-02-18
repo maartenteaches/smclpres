@@ -1,0 +1,105 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:line plots}{p_end}
+{hline}
+
+{center:{bf: Line graph}}
+
+{pstd}Lets look at a spagetti plot{p_end}
+ 
+{* ex slide6ex1 }{...}
+{cmd}
+        graph drop _all
+        sysuse nlsw88, clear
+        gen ed2 = grade + 1
+        
+        bys industry : egen mwage = mean(wage)
+        replace mwage = -mwage
+        egen Industry = axis(mwage industry), label(industry)
+        
+        gen wagehat = .
+        forvalues i = 1/12 {
+            fp <ed2>, replace : poisson wage <ed2> if industry == `i'
+            predict wage`i' if e(sample)
+            replace wagehat = wage`i' if industry == `i'
+            local gr `gr' line wage`i' grade , sort ||
+        }
+        sort industry grade
+        twoway line wagehat grade, connect(L) name(spagetti1, replace)
+{txt}{...}
+{pstd}({stata "do slide6ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  spagetti1 }{...}
+{pstd}Maybe this becomes more informative if we plot these lines by industry 
+with all the lines as a grey background ({view slide7.smcl##cox10:Cox 2010}){p_end}
+ 
+{* ex slide6ex2 }{...}
+{cmd}
+        bys Industry : gen id = _n
+        fillin Industry id
+        tempfile temp
+        save `temp'
+        forvalues i = 1/12 {
+            bys id (wage`i') : replace wage`i' = wage`i'[1]
+            by id : gen grade`i' = grade[1]
+        }
+        keep if Industry == 1
+        keep id grade? grade?? wage? wage??
+        merge 1:m id using `temp'
+        
+        local gr ""
+        forvalues i = 1/12 {
+            local gr `gr' line wage`i' grade`i' , ///
+                lpattern(solid) lcolor(gs12) sort ||
+        }
+        
+        twoway `gr'                                           ///
+               line wagehat grade ,                           ///
+                   by(Industry, legend(off) compact note("")) ///
+                   sort yscale(log) ylab(2.5 5 10 20)         ///
+                   lpattern(solid) lcolor(black) lwidth(*3)   ///      
+                   xtitle(grade) ytitle(predicted wage)       ///
+                   name(spagetti2, replace)
+{txt}{...}
+{pstd}({stata "do slide6ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  spagetti2 }{...}
+{pstd}We can also display a "rug" underneat to show the number of observations 
+on which these lines are based ({view slide7.smcl##cox04:Cox 2004}).{p_end}
+ 
+{* ex slide6ex3 }{...}
+{cmd}
+        gen pipe = "|"
+        gen y = 1.8
+        gen gradej = grade + .5*runiform()
+        local gr ""
+        forvalues i = 1/12 {
+            local gr `gr' line wage`i' grade`i' , ///
+                lpattern(solid) lcolor(gs12) sort ||
+        }
+        
+        twoway `gr'                                           ///
+               line wagehat grade ,                           ///
+                   by(Industry, legend(off) compact note("")) ///
+                   sort yscale(log) ylab(2.5 5 10 20)         ///
+                   lpattern(solid) lcolor(black) lwidth(*3)   ///      
+                   xtitle(grade) ytitle(predicted wage) ||    ///
+               scatter y gradej,                              ///
+                   mlabel(pipe) mlabpos(0) mlabsize(vsmall)   ///
+                   msymbol(i) name(spagetti3, replace)
+{txt}{...}
+{pstd}({stata "do slide6ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  spagetti3 }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide5.smcl:<<}   {view background_grey.smcl:index}     }
+{hline}

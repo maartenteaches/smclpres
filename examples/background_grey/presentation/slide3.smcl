@@ -1,0 +1,111 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:scatterplots}{p_end}
+{hline}
+
+{center:{bf: Highlighting sub-populations in a scatter plot}}
+
+{pstd}We may want to highlight a certain sub-polation in a scatter plot{p_end}
+
+{pstd}We start with a simple scatter plot{p_end}
+ 
+{* ex slide3ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        graph drop _all
+        scatter wage grade,         ///
+            name(scatter1, replace)
+{txt}{...}
+{pstd}({stata "do slide3ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  scatter1 }{...}
+{pstd}Grade is discrete, but we can show the individual values by adding the 
+jitter() option.{p_end}
+ 
+{* ex slide3ex2 }{...}
+{cmd}
+        scatter wage grade, jitter(2) ///
+            name(scatter2, replace)
+{txt}{...}
+{pstd}({stata "do slide3ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  scatter2 }{...}
+{pstd}The jitter() option adds random noise in both the x and y direction, but 
+we only need a jitter in the x-direction{p_end}
+ 
+{* ex slide3ex3 }{...}
+{cmd}
+        gen grade2 = grade + .5*runiform()
+        scatter wage grade2,           ///
+            name(scatter3, replace)
+{txt}{...}
+{pstd}({stata "do slide3ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  scatter3 }{...}
+{pstd}It would be nice if we could copy the variable label from grade{p_end}
+ 
+{* ex slide3ex4 }{...}
+{cmd}
+        label var grade2 "`: var label grade'"
+        scatter wage grade2,            ///
+            name(scatter4, replace)
+{txt}{...}
+{pstd}({stata "do slide3ex4.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  scatter4 }{...}
+{pstd}It makes more sense to display wage on a log scal{p_end}
+ 
+{* ex slide3ex5 }{...}
+{cmd}
+        scatter wage grade2, yscale(log) ///
+            name(scatter5, replace)
+{txt}{...}
+{pstd}({stata "do slide3ex5.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  scatter5 }{...}
+{pstd}But we need to adjust the axis labels a bit.{p_end}
+ 
+{* ex slide3ex6 }{...}
+{cmd}
+        scatter wage grade2, yscale(log) ///
+            ylab(1.25 2.5 5 10 20 40)    ///
+            name(scatter6, replace)
+{txt}{...}
+{pstd}({stata "do slide3ex6.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  scatter6 }{...}
+{pstd}Now we can highlight the blacks{p_end}
+ 
+{* ex slide3ex7 }{...}
+{cmd}
+        scatter wage grade2, yscale(log)       ///
+            msymbol(Oh) mcolor(gs10) ||        ///
+        scatter wage grade2 if race == 2 ,     ///
+            msymbol(O) mcolor(gs2)             ///
+            yscale(log) legend(off)            ///
+            ylab(1.25 2.5 5 10 20 40)          ///                
+            name(scatter7, replace)
+{txt}{...}
+{pstd}({stata "do slide3ex7.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  scatter7 }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide2.smcl:<<}   {view background_grey.smcl:index}   {view slide4.smcl:>>}}
+{hline}

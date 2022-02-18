@@ -1,0 +1,79 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:scatterplots}{p_end}
+{hline}
+
+{center:{bf: Line on top of a scatter plot}}
+
+{pstd}We can plot a line on top of a scatter plot{p_end}
+ 
+{* ex slide4ex1 }{...}
+{cmd}
+        graph drop _all
+        sysuse nlsw88, clear
+        
+        gen grade2 = grade + .5*runiform()
+        label var grade2 "`: var label grade'"
+        
+        fp <grade> , scale: poisson wage <grade>
+        predict wagehat
+        twoway scatter wage grade2,                         ///
+                   yscale(log) ylab(1.25 2.5 5 10 20 40) || ///
+               line wagehat grade, sort legend(off)         ///
+                    name(fit1, replace)
+{txt}{...}
+{pstd}({stata "do slide4ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  fit1 }{...}
+{pstd}The scatter plot is a bit too dominant{p_end}
+ 
+{* ex slide4ex2 }{...}
+{cmd}
+        twoway scatter wage grade2, mcolor(gs10)            ///
+                   yscale(log) ylab(1.25 2.5 5 10 20 40) || ///
+               line wagehat grade, sort legend(off)         ///
+                    name(fit2, replace)
+{txt}{...}
+{pstd}({stata "do slide4ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  fit2 }{...}
+{pstd}The line can be made solid{p_end}
+ 
+{* ex slide4ex3 }{...}
+{cmd}
+        twoway scatter wage grade2, mcolor(gs10)            ///
+                   yscale(log) ylab(1.25 2.5 5 10 20 40) || ///
+               line wagehat grade, sort legend(off)         ///
+                   lpattern(solid)                          ///
+                   name(fit3, replace)
+{txt}{...}
+{pstd}({stata "do slide4ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  fit3 }{...}
+{pstd}We can also make the line thicker{p_end}
+ 
+{* ex slide4ex4 }{...}
+{cmd}
+        twoway scatter wage grade2, mcolor(gs10)            ///
+                   yscale(log) ylab(1.25 2.5 5 10 20 40) || ///
+               line wagehat grade, sort legend(off)         ///
+                   lpattern(solid) lwidth(*3)               ///
+                   name(fit4, replace)
+{txt}{...}
+{pstd}({stata "do slide4ex4.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  fit4 }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide3.smcl:<<}   {view background_grey.smcl:index}   {view slide5.smcl:>>}}
+{hline}

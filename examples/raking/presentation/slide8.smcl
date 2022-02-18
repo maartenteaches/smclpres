@@ -1,0 +1,18 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:Standardizing a table}{p_end}
+{hline}
+
+{center:{bf: Try it yourself}}
+
+{pstd}Use IPF to standardize the place of residence table ({cmd:place.dta}) to 
+have margins of all 100.{p_end}
+
+{* apcodefile raking_sol1.do Solution }{pstd}{stata "doedit raking_sol1.do":Solution}{p_end}
+
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide5.smcl:<<}   {view index.smcl:index}   {view slide9.smcl:>>}}
+{hline}

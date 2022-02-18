@@ -1,0 +1,23 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:digression}{p_end}
+{hline}
+
+{center:{bf: stdtable}}
+
+This method has been implemented in Stata as the {help stdtable} command.
+ 
+{* ex slide6ex1 }{...}
+{cmd}
+        stdtable meduc feduc
+{txt}{...}
+{pstd}({stata "do slide6ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide5.smcl:<<}   {view index.smcl:index}     }
+{hline}

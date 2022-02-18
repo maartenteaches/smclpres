@@ -1,0 +1,47 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:Standardizing a table}{p_end}
+{hline}
+
+{center:{bf: Making all the row totals 100}}
+
+{pstd}Notice, that I added the option {cmd:matcell(data)} to the {cmd:tab} 
+command. This leaves behind the table as a Stata matrix named data, which in turn
+can be read into Mata{p_end}
+ 
+{* ex slide2ex1 }{...}
+{cmd}
+        mata
+        data = st_matrix("data")
+        data
+        end
+{txt}{...}
+{pstd}({stata "do slide2ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}If we divide all cell entries by the rowsum, then the new rowsum will be 1.{p_end}
+
+{pstd}Multiply the new cell entries by a 100, and the rowsum will be a 100.{p_end}
+ 
+{* ex slide2ex2 }{...}
+{cmd}
+        mata
+        muhat = data
+        
+        muhat = muhat:/rowsum(muhat):*100
+        muhat
+        rowsum(muhat)
+        colsum(muhat)
+        end
+{txt}{...}
+{pstd}({stata "do slide2ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide1.smcl:<<}   {view index.smcl:index}   {view slide3.smcl:>>}}
+{hline}

@@ -1,0 +1,74 @@
+{smcl}
+
+{center:{bf:Table of content}}
+
+
+
+
+{hline}
+{center:{bf:Slide table of contents}}
+{hline}
+ 
+{* tocline }{p  4  4 2}{bf:Standardizing a table}{p_end}
+{* tocline }{p  8  8 2}{view slide1.smcl : Standardize the table for homogamy}{p_end}
+{* tocline }{p  8  8 2}{view slide2.smcl : Making all the row totals 100}{p_end}
+{* tocline }{p  8  8 2}{view slide3.smcl : Making all the colum totals 100}{p_end}
+{* tocline }{p  8  8 2}{view slide4.smcl : Repeat}{p_end}
+{* tocline }{p  8  8 2}{view slide5.smcl : Iterative Proportional Fitting}{p_end}
+{* tocline }{p 12 12 2}{view slide6.smcl : {it:stdtable}}{p_end}
+{* tocline }{p  8  8 2}{view slide7.smcl : Can all tables be standardized?} (ancillary){p_end}
+{* tocline }{p  8  8 2}{view slide8.smcl : Try it yourself}{p_end}
+ 
+{* tocline }{p  4  4 2}{bf:Standardization to compare tables}{p_end}
+{* tocline }{p  8  8 2}{view slide9.smcl : comparing tables}{p_end}
+{* tocline }{p  8  8 2}{view slide10.smcl : Try it yourself}{p_end}
+ 
+{* tocline }{p  4  4 2}{bf:keep the margins as observed, but change the pattern}{p_end}
+{* tocline }{p  8  8 2}{view slide11.smcl : Independence revisited}{p_end}
+ 
+{* tocline }{p  4  4 2}{bf:Standardization to known margins in the population}{p_end}
+{* tocline }{p  8  8 2}{view slide12.smcl : Margins in our sample and margins in the population}{p_end}
+{* tocline }{p  8  8 2}{view slide13.smcl : Computing post-stratification weights for the cohort 1940-1945}{p_end}
+ 
+{* tocline }{p  8  8 2}{view slide14.smcl : Bibliography}{p_end}
+
+
+
+{hline}
+{center:{bf:Supporting materials}}
+{hline}
+{p2colset 5 26 27 0}{...}
+ 
+{p  4  4 2}{bf:Examples}{p_end}
+{p2col:slide1ex1.do}initial look at the homogamy data; on slide {view slide1.smcl}{p_end}
+{p2col:slide2ex1.do}load the data in Mata; on slide {view slide2.smcl}{p_end}
+{p2col:slide2ex2.do}adjust the rows to sum to 100; on slide {view slide2.smcl}{p_end}
+{p2col:slide3ex1.do}adjust the columns to sum to 100; on slide {view slide3.smcl}{p_end}
+{p2col:slide4ex1.do}repeat adjusting rows and colums; on slide {view slide4.smcl}{p_end}
+{p2col:slide5ex1.do}write that up in a loop; on slide {view slide5.smcl}{p_end}
+{p2col:slide5ex2.do}odds ratio in raw data; on slide {view slide5.smcl}{p_end}
+{p2col:slide5ex3.do}odds ratio in adjusted data; on slide {view slide5.smcl}{p_end}
+{p2col:slide5ex4.do}do this standardization with stdtable; on slide {view slide5.smcl}{p_end}
+{p2col:slide8ex1.do}load data by cohort in Mata; on slide {view slide8.smcl}{p_end}
+{p2col:slide8ex2.do}store the desired margins; on slide {view slide8.smcl}{p_end}
+{p2col:slide8ex3.do}standardize the 1940 table to 1960 margins; on slide {view slide8.smcl}{p_end}
+{p2col:slide8ex4.do}do this with stdtable; on slide {view slide8.smcl}{p_end}
+{p2col:slide10ex1.do}use IPF to find the counts under independence; on slide {view slide10.smcl}{p_end}
+{p2col:slide12ex1.do}load data and census margins in Stata; on slide {view slide12.smcl}{p_end}
+{p2col:slide12ex2.do}load data and census margins in Mata; on slide {view slide12.smcl}{p_end}
+{p2col:slide12ex3.do}adjust table to fit census margins; on slide {view slide12.smcl}{p_end}
+{p2col:slide12ex4.do}use these adjusted counts to create weights; on slide {view slide12.smcl}{p_end}
+ 
+{p  4  4 2}{bf:Datasets}{p_end}
+{p2col:homogamy_allbus.dta}ALLBUS 1980 - 2016; on slide {view slide1.smcl}{p_end}
+{p2col:place.dta}German Live History Study I; on slide {view slide7.smcl}{p_end}
+{p2col:margins1940.dta}Volks- und Berufszählung 1970 and 1987; on slide {view slide12.smcl}{p_end}
+ 
+{p  4  4 2}{bf: solutions to "Try it yourself"}{p_end}
+{p2col:raking_sol1.do}sollution; on slide {view slide7.smcl}{p_end}
+{p2col:raking_sol2.do}sollution; on slide {view slide9.smcl}{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view raking.smcl:<<}   {view index.smcl:index}   {view slide1.smcl:>>}}
+{hline}

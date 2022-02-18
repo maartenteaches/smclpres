@@ -1,0 +1,49 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:histograms and bar graphs}{p_end}
+{hline}
+
+{center:{bf: Highlighting sub-populations in a histogram}}
+
+{pstd}We can compare distributions using {cmd:histogram} with the {cmd:by()} 
+option.{p_end}
+ 
+{* ex slide1ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        twoway histogram wage,     ///
+            width(1) freq          ///
+            by(collgrad, note("")) ///
+            name(hist1, replace)
+{txt}{...}
+{pstd}({stata "do slide1ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  hist1 }{...}
+{pstd}We can also highlight the part of the histogram that are college 
+graduates ({view slide7.smcl##cox09:Cox 2009}){p_end}
+ 
+{* ex slide1ex2 }{...}
+{cmd}
+        twoway histogram wage,                       ///
+            width(1) freq                            ///
+            bcolor(gs14)  blw(*.4) blcolor(black) || /// 
+        histogram wage if collgrad,                  ///
+            width(1) freq legend(off)                ///
+            bcolor(gs6) blw(*.4) blcolor(black)      ///
+            title(distribution of hourly wage)       ///
+            subtitle(college graduates highlighted)  ///
+            name(hist2, replace) 
+{txt}{...}
+{pstd}({stata "do slide1ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  hist2 }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:     {view background_grey.smcl:index}   {view slide2.smcl:>>}}
+{hline}

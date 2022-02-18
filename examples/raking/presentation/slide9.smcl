@@ -1,0 +1,93 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:Standardization to compare tables}{p_end}
+{hline}
+
+{center:{bf: comparing tables}}
+
+{pstd}Say we want to compare the tables for the cohorts born in 1940-1945 (i.e.
+were 20 in 1960-1965) and born in 1960-1965 (i.e. were 20 in 1980-1985).{p_end}
+
+{pstd}What if we standardize the table from 1940-1945 to have the margins of the
+table from 1960-1965?{p_end}
+
+{pstd}This way we can easier compare across cohorts, and still have margins that
+are more realistic than all 100s.{p_end}
+
+{pstd}We start with preparing the data and loading it into Mata{p_end}
+ 
+{* ex slide9ex1 }{...}
+{cmd}
+        use homogamy_allbus.dta, clear
+        gen coh = cond(inrange(byr, 1960, 1965), 1, ///
+                  cond(inrange(byr, 1940, 1945), 0, .))
+        label define coh 0 "1940-1945" 1 "1960-1965"
+        label value coh coh
+        label var coh "resp. birth cohort"
+        tab meduc feduc if coh==0, matcell(data1940)
+        tab meduc feduc if coh==1, matcell(data1960)
+        mata
+        data1940 = st_matrix("data1940")
+        data1960 = st_matrix("data1960")
+        end
+{txt}{...}
+{pstd}({stata "do slide9ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}We extract the desired row and column totals{p_end}
+ 
+{* ex slide9ex2 }{...}
+{cmd}
+        mata
+        col = colsum(data1960)
+        row = rowsum(data1960)
+        end
+{txt}{...}
+{pstd}({stata "do slide9ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}We can now apply these row and column totals instead of 100.{p_end}
+
+{pstd}We can see that a large part of the apparent difference between the 
+cohorts is due to the change in distribution of education between the cohorts.{p_end}
+ 
+{* ex slide9ex3 }{...}
+{cmd}
+        mata
+        muhat = data1940
+        muhat2 = 0:*data1940
+        i = 1
+        while(i<30 & mreldif(muhat2,muhat)>1e-8) {
+            muhat2 = muhat
+            muhat = muhat:/rowsum(muhat):*row
+            muhat = muhat:/colsum(muhat):*col
+            printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldif(muhat2,muhat))
+            i = i + 1
+        }
+        data1940
+        muhat
+        data1960
+        end
+{txt}{...}
+{pstd}({stata "do slide9ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}Alternatively, we can use {cmd:stdtable}{p_end}
+ 
+{* ex slide9ex4 }{...}
+{cmd}
+        stdtable meduc feduc, by(coh,baseline(1))
+{txt}{...}
+{pstd}({stata "do slide9ex4.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide8.smcl:<<}   {view index.smcl:index}   {view slide10.smcl:>>}}
+{hline}

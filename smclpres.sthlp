@@ -1953,7 +1953,8 @@ The ancillary files contain two further examples that illustrate more advanced o
       maarten.buis@uni.kn	  
 	  
 	  
-{title:Acknowledgements}	  
+{title:Source code}	  
 
 {pstd}
-Danae Roumis provided a helpful bug report.
+Much of the work inside {cmd:smclpres} is done by a compiled Mata library. The source 
+code can be found here: {browse "https://github.com/maartenteaches/smclpres"}

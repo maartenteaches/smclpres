@@ -1,0 +1,30 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:ancillary}{p_end}
+{hline}
+
+{center:{bf: Can all tables be standardized?}}
+
+{pstd}Consider the following table{p_end}
+
+        0 0 2
+        1 5 2
+        8 7 0
+    
+{pstd}In order to make the first row total 100, the top right cell {it:must} be 
+100{p_end}    
+
+{pstd}In order to make the last column total 100, the top right cell {it:cannot} 
+be 100{p_end}
+
+{pstd}This is an example of a table that cannot be standardized. The Mata program
+we created above will stop after 30 iterations, but the condition 
+{cmd:mreldif(muhat2,muhat)>1e-8} will not be met. In other words the algorithm 
+has not converged. The {cmd:stdtable} command will give a more explicit warning 
+when that happens.
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:     {view index.smcl:index}     }
+{hline}

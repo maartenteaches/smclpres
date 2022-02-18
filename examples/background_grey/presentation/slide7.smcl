@@ -1,0 +1,18 @@
+{smcl}
+{* 18 Feb 2022}{...}
+
+{center:{bf: Bibliography}}
+
+{marker cox04}{...}
+{p 4 8  2}Nicholas J. Cox (2004), "Speaking Stata: Graphing distributions", {it:The Stata Journal}, {bf:4}(1), pp. 66-88.{p_end}
+ 
+{marker cox09}{...}
+{p 4 8  2}Nicholas J. Cox (2009), "Stata tip 78: Going gray gracefully: Highlighting subsets and downplaying substrates", {it:The Stata Journal}, {bf:9}(3), pp. 499-503.{p_end}
+ 
+{marker cox10}{...}
+{p 4 8  2}Nicholas J. Cox (2010), "Speaking Stata: Graphing subsets", {it:The Stata Journal}, {bf:20}(4), pp. 670-681.{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:     {view background_grey.smcl:index}     }
+{hline}

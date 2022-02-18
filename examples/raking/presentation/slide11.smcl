@@ -1,0 +1,58 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:keep the margins as observed, but change the pattern}{p_end}
+{hline}
+
+{center:{bf: Independence revisited}}
+
+{pstd}We have until now keept the patern as observed in the data, and changed 
+the margins. Can we not turn that around: Keep the margins as observed in the 
+data, and change the pattern?{p_end}
+
+{pstd}An interesting baseline pattern would be independence. We would start with
+a table that satisfies independence, and change the values such that the margins
+correspond to the observed margins. A table that satisfies independence is a 
+table with all 1s.{p_end}
+ 
+{* ex slide11ex1 }{...}
+{cmd}
+        mata:
+        row = rowsum(data)
+        col = colsum(data)
+        muhat = J(5,5,1)
+        muhat2 = 0:*muhat
+        muhat
+        i = 1
+        while(i<30 & mreldif(muhat2,muhat)>1e-8) {
+            muhat2 = muhat
+            muhat = muhat:/rowsum(muhat):*row
+            muhat = muhat:/colsum(muhat):*col
+            printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldif(muhat2,muhat))
+            i = i + 1
+        }
+        muhat
+        end
+        tab meduc feduc , exp nofreq
+{txt}{...}
+{pstd}({stata "do slide11ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}Notice that the second iteration added nothing, so the IPF converged in 
+one iteration. Also, the estimated counts correspond to the counts we computed 
+last week.{p_end}
+
+{pstd}This is not a coincidence:{p_end}
+
+{pmore}In the first step of the first iteration, each cell gets 1/5 rowtotal{p_end}
+
+{pmore}At the begining of the second step of the first iteration, the collumn 
+totals are 1/5th of N{p_end}
+
+{pmore}So we get: (rowtotal/5)/(N/5)*coltotal = (rowtotal*coltotal)/N {p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide10.smcl:<<}   {view index.smcl:index}   {view slide12.smcl:>>}}
+{hline}

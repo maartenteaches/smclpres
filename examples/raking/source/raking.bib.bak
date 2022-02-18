@@ -1,0 +1,80 @@
+% Encoding: UTF-8
+@Article{yule12,
+  author  = {G. Udny Yule},
+  title   = {On the Methods of Measuring Association Between Two Attributes},
+  journal = {Journal of the Royal Statistical Society},
+  year    = {1912},
+  volume  = {75},
+  number  = {6},
+  pages   = {579-652},
+}
+
+@Article{mosteller68,
+  author    = {Frederick Mosteller},
+  title     = {Association and Estimation in Contingency Tables},
+  journal   = {Journal of the American Statistical Association},
+  year      = {1968},
+  volume    = {63},
+  number    = {321},
+  pages     = {1-28},
+  doi       = {10.1080/01621459.1968.11009219},
+  eprint    = {https://amstat.tandfonline.com/doi/pdf/10.1080/01621459.1968.11009219},
+  publisher = {Taylor \& Francis},
+  url       = { 
+        https://amstat.tandfonline.com/doi/abs/10.1080/01621459.1968.11009219
+    
+},
+}
+
+@Article{kruithof37,
+  author  = {Kruithof, J.},
+  title   = {Telefoonverkeersrekening},
+  journal = {De Ingenieur},
+  year    = {1937},
+  volume  = {52},
+  number  = {8},
+  pages   = {E15-E25},
+}
+
+@Book{shavit_blossfeld93,
+  title     = {Persistent Inequality: Changing Educational Attainment in Thirteen Countries},
+  publisher = {Westview Press},
+  year      = {1993},
+  author    = {Yossi Shavit and Hans-Peter Blossfeld},
+  address   = {Boulder, CO},
+}
+
+@Article{waren_etal00,
+  author   = {John Robert Warren and Paul C. LePore and Robert D. Mare},
+  title    = {Employment During High School: Consequences for Students' Grades in Academic Courses},
+  journal  = {American Educational Research Journal},
+  year     = {2000},
+  volume   = {37},
+  number   = {4},
+  pages    = {943-969},
+  abstract = { High school students who work intensively at paid jobs tend to have lower grades in academic courses. Prior research has not properly tested theories about the source of the relationship between student employment and grades (or other outcomes), and has not explicitly modeled the potentially reciprocal nature of this relationship. We focus on both the short- and long-term effects of adolescent employment on grades in academic courses and simultaneously consider the extent to which grades may influence employment behaviors. We find no evidence that high school employment has either short-or long-term effects on grades in academic courses or that grades in these courses influence employment activities. Pre-existing differences between more and less intensively employed students fully account for the association between employment intensity and grades in academic courses. },
+  doi      = {10.3102/00028312037004943},
+  eprint   = {https://doi.org/10.3102/00028312037004943},
+  url      = { 
+        https://doi.org/10.3102/00028312037004943
+    
+},
+}
+
+@Article{yule12b,
+  author  = {G. Udny Yule},
+  title   = {foo},
+  journal = {bar},
+  year    = {1912},
+  volume  = {4},
+  number  = {3},
+  pages   = {55-77},
+}
+
+@Unpublished{stata,
+  author = {{Stata Corp}},
+  title  = {Stata 16},
+  note   = {College Station, TX},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

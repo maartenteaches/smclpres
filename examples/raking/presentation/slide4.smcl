@@ -1,0 +1,33 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:Standardizing a table}{p_end}
+{hline}
+
+{center:{bf: Repeat}}
+
+ 
+{* ex slide4ex1 }{...}
+{cmd}
+        mata
+        muhat = muhat:/rowsum(muhat):*100
+        muhat
+        rowsum(muhat)
+        colsum(muhat)
+        
+        muhat = muhat:/colsum(muhat):*100
+        muhat
+        rowsum(muhat)
+        colsum(muhat)
+        end
+{txt}{...}
+{pstd}({stata "do slide4ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}Notice that each time we get a bit closer to our goal{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide3.smcl:<<}   {view index.smcl:index}   {view slide5.smcl:>>}}
+{hline}

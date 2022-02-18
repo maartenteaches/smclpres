@@ -1,0 +1,63 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:Standardizing a table}{p_end}
+{hline}
+
+{center:{bf: Iterative Proportional Fitting}}
+
+{pstd}The algorithm is called Iterative Proportional Fitting (IPF) ({view slide14.smcl##kruithof37:Kruithof 1937}; {view slide14.smcl##deming_stephan40:Deming and Stephan 1940}){p_end}
+
+{pstd}We can automate this repeating using a loop, and in particular we want to
+continue the loop until the table does not change anymore.{p_end}
+ 
+{* ex slide5ex1 }{...}
+{cmd}
+        mata
+        muhat = data
+        muhat2 = 0:*data
+        i = 1
+        while(i<30 & mreldif(muhat2,muhat)>1e-8) {
+            muhat2 = muhat
+            muhat = muhat:/rowsum(muhat):*100
+            muhat = muhat:/colsum(muhat):*100
+            printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldif(muhat2,muhat))
+            i = i + 1
+        }
+        muhat
+        data
+        end
+{txt}{...}
+{pstd}({stata "do slide5ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}In the raw data the odds of men with lower voc marying a women with lower 
+vocational instead of low is 4.6 times the odds of men with low education 
+marying a women with lower vocational:{p_end}
+ 
+{* ex slide5ex2 }{...}
+{cmd}
+        di (7665 / 3864 ) / (600 / 1378 )
+{txt}{...}
+{pstd}({stata "do slide5ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}In our new table we get the exact same odds ratio:{p_end}
+ 
+{* ex slide5ex3 }{...}
+{cmd}
+        di (47.28612524 / 27.29231899) / (21.01486714 / 55.2594258)
+{txt}{...}
+{pstd}({stata "do slide5ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}Standardizing a table like this is nice in a teaching setting, because 
+you can see what is going on. In a real analysis you use the {* digr <a href="#slide6.smcl">&gt;&gt; stdtable</a>}{view slide6.smcl:>> stdtable}{* /digr} package{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide4.smcl:<<}   {view index.smcl:index}   {view slide8.smcl:>>}}
+{hline}

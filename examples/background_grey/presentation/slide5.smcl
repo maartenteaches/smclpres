@@ -1,0 +1,90 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:scatterplots}{p_end}
+{hline}
+
+{center:{bf: By graph}}
+
+{pstd}Lets look at the relationship between wage and education by industry{p_end}
+ 
+{* ex slide5ex1 }{...}
+{cmd}
+        graph drop _all
+        sysuse nlsw88, clear
+        gen gradej = grade + .5*runiform()
+        label var gradej "`: var label grade'"
+        
+        scatter wage gradej, by(industr, note("") compact) ///
+            yscale(log) ylab(1.25 2.5 5 10 20 40)          ///
+            name(byscatter1, replace)
+{txt}{...}
+{pstd}({stata "do slide5ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  byscatter1 }{...}
+{pstd}We can sort the sub graphs by mean wage{p_end}
+ 
+{* ex slide5ex2 }{...}
+{cmd}
+        bys industry : egen mwage = mean(wage)
+        replace mwage = -mwage
+        egen Industry = axis(mwage industry), label(industry)
+        scatter wage gradej, by(Industr, note("") compact) ///
+            yscale(log) ylab(1.25 2.5 5 10 20 40)          ///
+            name(byscatter2, replace)
+{txt}{...}
+{pstd}({stata "do slide5ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  byscatter2 }{...}
+{pstd}We can display the entire sample as a background graph{p_end}
+ 
+{* ex slide5ex3 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        keep if !missing(industry, wage, grade)
+        bys industry : gen id = _n
+        fillin industry id
+        
+        gen gradej = grade + .5*runiform()
+        label var gradej "`: var label grade'"
+        
+        bys industry : egen mwage = mean(wage)
+        replace mwage = -mwage
+        egen Industry = axis(mwage industry), label(industry)
+        
+        tempfile temp
+        save `temp'
+        
+        keep wage industry gradej id
+        reshape wide wage gradej, j(industry) i(id)
+        merge 1:m id using `temp'
+        
+        forvalues i = 1/12 {
+            local backgr `backgr' scatter wage`i' gradej`i', ///
+                                  msymbol(Oh) mcolor(gs12) ||
+        }
+        
+        twoway `backgr'                        ///
+               scatter wage gradej,            ///
+                   msymbol(O) mcolor(black)    ///
+                   by(Industry, legend(off)    ///
+                      compact note(""))        ///
+                   ytitle(wage) xtitle(grade)  ///
+                   yscale(log)                 ///
+                   ylab(1.25 2.5 5 10 20 40)   ///
+                   name(byscatter3, replace)
+{txt}{...}
+{pstd}({stata "do slide5ex3.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  byscatter3 }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide4.smcl:<<}   {view background_grey.smcl:index}   {view slide6.smcl:>>}}
+{hline}

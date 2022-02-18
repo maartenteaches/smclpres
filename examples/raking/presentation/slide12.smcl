@@ -1,0 +1,28 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:Standardization to known margins in the population}{p_end}
+{hline}
+
+{center:{bf: Margins in our sample and margins in the population}}
+
+{pstd}Samples often deviate from the population because of{p_end}
+{phang2}The way the sample was drawn{p_end}
+{phang2}the way the data was collected{p_end}
+{phang2}some people are harder to contact{p_end}
+{phang2}some people are less likely to participate{p_end}
+
+{pstd}What if we had the marginal distriubtion of our variables from the 
+population?{p_end}
+
+{pstd}Can't we use the same trick to standardize our table to those population
+margins?{p_end}
+
+{pstd}This is a classic application of raking, and is often used when computing
+(post-stratification) weights.{p_end}
+
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide11.smcl:<<}   {view index.smcl:index}   {view slide13.smcl:>>}}
+{hline}

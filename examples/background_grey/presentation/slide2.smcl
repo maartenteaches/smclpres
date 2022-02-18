@@ -1,0 +1,47 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:histograms and bar graphs}{p_end}
+{hline}
+
+{center:{bf: Highlighting bars}}
+
+{pstd}We can {cmd:graph hbar} to display the mean wage by industry.{p_end}
+ 
+{* ex slide2ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        graph hbar (mean) wage,                       ///
+            over(industry, descending sort(1))        ///
+            name(bar1, replace)        
+{txt}{...}
+{pstd}({stata "do slide2ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  bar1 }{...}
+
+{pstd}Sometimes we want to highlight one bar.{p_end}
+
+{pstd}This is particularly common for presentations.{p_end}
+ 
+{* ex slide2ex2 }{...}
+{cmd}
+        collapse (mean) wage, by(industry)
+        separate wage, by(industry == 12)
+        graph hbar (asis) wage0 wage1,                   ///
+            over(industry, descending sort(wage)) nofill ///
+            bar(1, bfcolor(none)) legend(off)            ///
+            ytitle(mean wage)                            ///
+            name(bar2, replace)
+{txt}{...}
+{pstd}({stata "do slide2ex2.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{* graph  bar2 }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide1.smcl:<<}   {view background_grey.smcl:index}   {view slide3.smcl:>>}}
+{hline}

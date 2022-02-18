@@ -1,0 +1,21 @@
+{smcl}
+{* 18 Feb 2022}{...}
+
+{center:{bf: Bibliography}}
+
+{marker agresti02}{...}
+{p 4 8 2}Agresti, Alan (2002), {it:Categorical Data Analysis, 2nd edition}.  Hoboken, NJ: Wiley.{p_end}
+ 
+{marker deming_stephan40}{...}
+{p 4 8  2}Deming, W. Edwards and Stephan, Frederick F. (1940), "On a Least Squares Adjustment of a Sampled Frequency Table When the Expected Marginal Totals are Known", {it:The Annals of Mathematical Statistics}, {bf:11}(4), pp. 427--444.{p_end}
+ 
+{marker kruithof37}{...}
+{p 4 8  2}Kruithof, J. (1937), "Telefoonverkeersrekening", {it:De Ingenieur}, {bf:52}(8), pp. E15-E25.{p_end}
+ 
+{marker yule12}{...}
+{p 4 8  2}Yule, G. Udny (1912), "On the Methods of Measuring Association Between Two Attributes", {it:Journal of the Royal Statistical Society}, {bf:75}(6), pp. 579-652.{p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:     {view index.smcl:index}     }
+{hline}

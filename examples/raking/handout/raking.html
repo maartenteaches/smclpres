@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+        background-color: white;
+}
+pre.output {
+    border-left-style: solid;
+    width: 650px;
+    max-height: 500px;
+    overflow: auto;
+    border-left-color:grey;
+    border-width: 5px;
+    background-color: #f0f0f0;
+    padding: 0px 5px 0px 10px;
+    margin: 0px auto 0px auto;
+}
+pre.code {
+    border-left-style: solid;
+    width: 650px;
+    max-height: 500px;
+    overflow: auto;
+    border-left-color:grey;
+    border-width: 5px;
+    background-color: #f0f0f0;
+    padding: 0px 5px 0px 10px;
+    margin: 0px auto 0px auto;
+}
+pre.code:before {
+    counter-reset: listing;
+}
+pre.code code {
+  counter-increment: listing;
+}
+pre.code code::before {
+  content: counter(listing) ". ";
+  display: inline-block;
+  width: 35px;
+  padding-left: auto;
+  margin-left: auto;
+  text-align: right;
+}
+pre {
+    margin: 0px;
+}
+div.slide { 
+    max-width: 680px;
+    display: block;
+    padding: 5px;
+    margin: 10px auto 10px auto;
+    border-style: solid;
+    border-width: 1px;
+    background-color: white ;
+}
+div.txt { 
+    margin: 0px auto 0px auto;
+    max-width: 650px;
+}
+div.flex-container {
+    display: flex;
+    justify-content: space-around;
+}
+p.bottom {
+    display: block;
+    margin: 0px;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+<div class="slide" id="raking.smcl">
+<div class="txt"><pre>
+<br>
+<br>
+<br>
+<br>
+                               <b>Log-linear models</b>
+                               <b>Lecture 2: raking</b>
+<br>
+                                 Maarten Buis
+                                  office F532
+                              maarten.buis@uni.kn
+                          office hours by appointment
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"> <a href="#index.smcl">index</a> <a href="#slide1.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="index.smcl">
+<div class="txt"><pre>
+<br>
+                               <b>Table of content</b>
+<br>
+<br>
+<br>
+<br>
+-------------------------------------------------------------------------------
+                            <b>Slide table of contents</b>
+-------------------------------------------------------------------------------
+ 
+</pre>
+<pre>
+    <b>Standardizing a table</b>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide1.smcl"> Standardize the table for homogamy</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide2.smcl"> Making all the row totals 100</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide3.smcl"> Making all the colum totals 100</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide4.smcl"> Repeat</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide5.smcl"> Iterative Proportional Fitting</a>
+</pre>
+<pre>
+</pre>
+<pre>
+           <a href="#slide6.smcl"> <i>stdtable</i></a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide7.smcl"> Can all tables be standardized?</a>(ancillary)
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide8.smcl"> Try it yourself</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    <b>Standardization to compare tables</b>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide9.smcl"> comparing tables</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide10.smcl"> Try it yourself</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    <b>keep the margins as observed, but change the pattern</b>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide11.smcl"> Independence revisited</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    <b>Standardization to known margins in the population</b>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide12.smcl"> Margins in our sample and margins in the population</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide13.smcl"> Computing post-stratification weights for the cohort 1940-1945
+       </a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+       <a href="#slide14.smcl"> Bibliography</a>
+</pre>
+<pre>
+<br>
+<br>
+<br>
+-------------------------------------------------------------------------------
+                             <b>Supporting materials</b>
+-------------------------------------------------------------------------------
+ 
+    <b>Examples</b>
+    slide1ex1.do         initial look at the homogamy data; on slide 
+                          slide1.smcl
+    slide2ex1.do         load the data in Mata; on slide slide2.smcl
+    slide2ex2.do         adjust the rows to sum to 100; on slide slide2.smcl
+    slide3ex1.do         adjust the columns to sum to 100; on slide slide3.smcl
+    slide4ex1.do         repeat adjusting rows and colums; on slide slide4.smcl
+    slide5ex1.do         write that up in a loop; on slide slide5.smcl
+    slide5ex2.do         odds ratio in raw data; on slide slide5.smcl
+    slide5ex3.do         odds ratio in adjusted data; on slide slide5.smcl
+    slide5ex4.do         do this standardization with stdtable; on slide 
+                          slide5.smcl
+    slide8ex1.do         load data by cohort in Mata; on slide slide8.smcl
+    slide8ex2.do         store the desired margins; on slide slide8.smcl
+    slide8ex3.do         standardize the 1940 table to 1960 margins; on slide 
+                          slide8.smcl
+    slide8ex4.do         do this with stdtable; on slide slide8.smcl
+    slide10ex1.do        use IPF to find the counts under independence; on
+                          slide slide10.smcl
+    slide12ex1.do        load data and census margins in Stata; on slide 
+                          slide12.smcl
+    slide12ex2.do        load data and census margins in Mata; on slide 
+                          slide12.smcl
+    slide12ex3.do        adjust table to fit census margins; on slide 
+                          slide12.smcl
+    slide12ex4.do        use these adjusted counts to create weights; on slide 
+                          slide12.smcl
+ 
+    <b>Datasets</b>
+    homogamy_allbus.dta  ALLBUS 1980 - 2016; on slide slide1.smcl
+    place.dta            German Live History Study I; on slide slide7.smcl
+    margins1940.dta      Volks- und Berufszählung 1970 and 1987; on slide 
+                          slide12.smcl
+ 
+    <b>solutions to "Try it yourself"</b>
+    raking_sol1.do       sollution; on slide slide7.smcl
+    raking_sol2.do       sollution; on slide slide9.smcl
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#raking.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide1.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide1.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardizing a table</b>
+-------------------------------------------------------------------------------
+<br>
+                      <b> Standardize the table for homogamy</b>
+<br>
+    Consider the table of the education of the male and female partners in a
+    marriage or stable partnership.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. clear</b>
+<br>
+<b>. use homogamy_allbus.dta</b>
+(ALLBUS 1980 - 2016)
+<br>
+<b>. tab meduc feduc, matcell(data)</b>
+<br>
+<b>       </b>male |              female education
+  education |       low  lower voc  medium vo  higher vo |     Total
+------------+--------------------------------------------+----------
+        low |<b>     1,378        600        314         87 </b>|<b>     2,434 </b>
+ lower voc. |<b>     3,864      7,665      2,528        407 </b>|<b>    14,696 </b>
+medium voc. |<b>       815      1,847      4,802        809 </b>|<b>     8,849 </b>
+higher voc. |<b>       276        530      1,122        898 </b>|<b>     3,422 </b>
+ university |<b>       387        729      1,828      1,115 </b>|<b>     6,488 </b>
+------------+--------------------------------------------+----------
+      Total |<b>     6,720     11,371     10,594      3,316 </b>|<b>    35,889 </b>
+<br>
+<br>
+<b>            </b>|   female
+       male | education
+  education | universit |     Total
+------------+-----------+----------
+        low |<b>        55 </b>|<b>     2,434 </b>
+ lower voc. |<b>       232 </b>|<b>    14,696 </b>
+medium voc. |<b>       576 </b>|<b>     8,849 </b>
+higher voc. |<b>       596 </b>|<b>     3,422 </b>
+ university |<b>     2,429 </b>|<b>     6,488 </b>
+------------+-----------+----------
+      Total |<b>     3,888 </b>|<b>    35,889 </b>
+<br>
+</pre>
+<div class="txt"><pre>
+    It is hard to interpret this table as is, because of the differences in
+    the margins.
+<br>
+    For example, it appears that a <b>female with medium vocational education</b>
+    marying a <b>male with lower vocational education</b> is more common than <i>vice</i>
+    <i>versa</i>.
+<br>
+    This is contrary to the notion that partnerships where the men are better
+    educated are more common.
+<br>
+    But the observed pattern may be due to the fact that <b>lower vocational</b>
+    <b>education</b> is more common among men than women, and <b>medium vocational</b>
+    <b>education</b> is more common among women than men.
+<br>
+    Can't we change the table such that the pattern of association remains
+    constant, but all the margins are the same, e.g. 100?
+<br>
+    That would make it easier to see patterns.
+<br>
+    Last week we solved this problem by looking at how independence was
+    defined in a chi-square test:
+<br>
+    We imagined what the table would look like if the margins remained as we
+    observed them, but there is no other association between the row and
+    column variable
+<br>
+    This week we turn this around: We keep the association in the table as
+    observed, but change the margins. (Yule 1912; Agresti 2002 p. 345-346)
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#raking.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide2.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide2.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardizing a table</b>
+-------------------------------------------------------------------------------
+<br>
+                        <b> Making all the row totals 100</b>
+<br>
+    Notice, that I added the option <b>matcell(data)</b> to the <b>tab</b> command. This
+    leaves behind the table as a Stata matrix named data, which in turn can
+    be read into Mata
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: data = st_matrix("data")</b>
+<br>
+<b>: data</b>
+<b>       </b>   1      2      3      4      5
+    +------------------------------------+
+  1 |  <b>1378    600    314     87     55</b>  |
+  2 |  <b>3864   7665   2528    407    232</b>  |
+  3 |  <b> 815   1847   4802    809    576</b>  |
+  4 |  <b> 276    530   1122    898    596</b>  |
+  5 |  <b> 387    729   1828   1115   2429</b>  |
+    +------------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    If we divide all cell entries by the rowsum, then the new rowsum will be
+    1.
+<br>
+    Multiply the new cell entries by a 100, and the rowsum will be a 100.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: muhat = data</b>
+<br>
+<b>: </b>
+<b>: muhat = muhat:/rowsum(muhat):*100</b>
+<br>
+<b>: muhat</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>56.61462613   24.65078061   12.90057518   3.574363188   2.259654889</b>  |
+  2 |  <b>26.29286881   52.15704954   17.20195972   2.769461078    1.57866086</b>  |
+  3 |  <b>9.210080235   20.87241496   54.26601876   9.142275963    6.50921008</b>  |
+  4 |  <b>8.065458796    15.4880187   32.78784337   26.24196376   17.41671537</b>  |
+  5 |  <b>  5.9648582   11.23612824   28.17509248   17.18557337   37.43834772</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: rowsum(muhat)</b>
+<b>       </b>  1
+    +-------+
+  1 |  <b>100</b>  |
+  2 |  <b>100</b>  |
+  3 |  <b>100</b>  |
+  4 |  <b>100</b>  |
+  5 |  <b>100</b>  |
+    +-------+
+<br>
+<b>: colsum(muhat)</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>106.1478922    124.404392   145.3314895   58.91363736   65.20258892</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide1.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide3.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide3.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardizing a table</b>
+-------------------------------------------------------------------------------
+<br>
+                       <b> Making all the colum totals 100</b>
+<br>
+    The row totals are as we want them, but the column totals are not. What
+    if we repeat this process for the columns?
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: muhat = muhat:/colsum(muhat):*100</b>
+<br>
+<b>: muhat</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>53.33561032   19.81504045   8.876655176   6.067123587   3.465590748</b>  |
+  2 |  <b>24.77003384   41.92540848   11.83636098   4.700882855    2.42116285</b>  |
+  3 |  <b>8.676649198   16.77787626   37.33947746   15.51809797   9.983054643</b>  |
+  4 |  <b>7.598322144   12.44973626   22.56072891   44.54310571   26.71169299</b>  |
+  5 |  <b>  5.6193845   9.031938545   19.38677748   29.17078988   57.41849877</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: rowsum(muhat)</b>
+<b>       </b>          1
+    +---------------+
+  1 |  <b>91.56002028</b>  |
+  2 |  <b>85.65384901</b>  |
+  3 |  <b>88.29515553</b>  |
+  4 |  <b> 113.863586</b>  |
+  5 |  <b>120.6273892</b>  |
+    +---------------+
+<br>
+<b>: colsum(muhat)</b>
+<b>       </b>  1     2     3     4     5
+    +-------------------------------+
+  1 |  <b>100   100   100   100   100</b>  |
+    +-------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Now the column totals are as we want them, but now the row totals are a
+    bit off.
+<br>
+    However, the row totals are better than in the original table, so maybe
+    we need to repeat this process a couple of times?
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide2.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide4.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide4.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardizing a table</b>
+-------------------------------------------------------------------------------
+<br>
+                                    <b> Repeat</b>
+<br>
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: muhat = muhat:/rowsum(muhat):*100</b>
+<br>
+<b>: muhat</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>58.25207351   21.64158591   9.694903024   6.626389518   3.785048034</b>  |
+  2 |  <b>28.91876328   48.94748919    13.8188314   5.488233056   2.826683071</b>  |
+  3 |  <b>9.826868922   19.00203489   42.28938409   17.57525413   11.30645796</b>  |
+  4 |  <b>6.673180084   10.93390494   19.81382258   39.11971094   23.45938146</b>  |
+  5 |  <b> 4.65846483   7.487469145   16.07162155   24.18255927    47.5998852</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: rowsum(muhat)</b>
+<b>       </b>  1
+    +-------+
+  1 |  <b>100</b>  |
+  2 |  <b>100</b>  |
+  3 |  <b>100</b>  |
+  4 |  <b>100</b>  |
+  5 |  <b>100</b>  |
+    +-------+
+<br>
+<b>: colsum(muhat)</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>108.3293506   108.0124841   101.6885626   92.99214691   88.97745573</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: </b>
+<b>: muhat = muhat:/colsum(muhat):*100</b>
+<br>
+<b>: muhat</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>53.77312166   20.03618942   9.533916866   7.125751731    4.25394051</b>  |
+  2 |  <b>26.69522444   45.31651096   13.58936643   5.901824227   3.176853112</b>  |
+  3 |  <b> 9.07128942   17.59244318   41.58715886   18.89971865   12.70710414</b>  |
+  4 |  <b>6.160085005   10.12281593   19.48480936   42.06775759   26.36553413</b>  |
+  5 |  <b>4.300279474   6.932040503   15.80474848   26.00494781    53.4965681</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: rowsum(muhat)</b>
+<b>       </b>          1
+    +---------------+
+  1 |  <b>94.72292019</b>  |
+  2 |  <b>94.67977917</b>  |
+  3 |  <b>99.85771425</b>  |
+  4 |  <b> 104.201002</b>  |
+  5 |  <b>106.5385844</b>  |
+    +---------------+
+<br>
+<b>: colsum(muhat)</b>
+<b>       </b>  1     2     3     4     5
+    +-------------------------------+
+  1 |  <b>100   100   100   100   100</b>  |
+    +-------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Notice that each time we get a bit closer to our goal
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide3.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide5.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide5.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardizing a table</b>
+-------------------------------------------------------------------------------
+<br>
+                        <b> Iterative Proportional Fitting</b>
+<br>
+    The algorithm is called Iterative Proportional Fitting (IPF) (Kruithof
+    1937; Deming and Stephan 1940)
+<br>
+    We can automate this repeating using a loop, and in particular we want to
+    continue the loop until the table does not change anymore.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: muhat = data</b>
+<br>
+<b>: muhat2 = 0:*data</b>
+<br>
+<b>: i = 1</b>
+<br>
+<b>: while(i&lt;30 &amp; mreldif(muhat2,muhat)&gt;1e-8) {</b>
+<b>&gt;     muhat2 = muhat</b>
+<b>&gt;     muhat = muhat:/rowsum(muhat):*100</b>
+<b>&gt;     muhat = muhat:/colsum(muhat):*100</b>
+<b>&gt;     printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldi</b>
+<b>&gt; f(muhat2,muhat))</b>
+<b>&gt;     i = i + 1</b>
+<b>&gt; }</b>
+iteration <b>1 </b>relative change <b>196.018454</b>
+iteration <b>2 </b>relative change <b>.264736172</b>
+iteration <b>3 </b>relative change <b>.085845379</b>
+iteration <b>4 </b>relative change <b>.032427941</b>
+iteration <b>5 </b>relative change <b>.01302549</b>
+iteration <b>6 </b>relative change <b>.005266606</b>
+iteration <b>7 </b>relative change <b>.002120014</b>
+iteration <b>8 </b>relative change <b>.000852175</b>
+iteration <b>9 </b>relative change <b>.000342384</b>
+iteration <b>10 </b>relative change <b>.00013754</b>
+iteration <b>11 </b>relative change <b>.000055248</b>
+iteration <b>12 </b>relative change <b>.000022192</b>
+iteration <b>13 </b>relative change <b>8.9140e-06</b>
+iteration <b>14 </b>relative change <b>3.5805e-06</b>
+iteration <b>15 </b>relative change <b>1.4382e-06</b>
+iteration <b>16 </b>relative change <b>5.7769e-07</b>
+iteration <b>17 </b>relative change <b>2.3204e-07</b>
+iteration <b>18 </b>relative change <b>9.3206e-08</b>
+iteration <b>19 </b>relative change <b>3.7438e-08</b>
+iteration <b>20 </b>relative change <b>1.5038e-08</b>
+iteration <b>21 </b>relative change <b>6.0404e-09</b>
+<br>
+<b>: muhat</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b> 55.2594258   21.01486714   10.56463793    8.17117594   4.989893004</b>  |
+  2 |  <b>27.29231899   47.28612524   14.98125546   6.732957746   3.707342411</b>  |
+  3 |  <b>8.441187075   16.70825366   41.72879959   19.62468059   13.49707912</b>  |
+  4 |  <b>5.378131668    9.02020621   18.34353466   40.98329233   26.27483526</b>  |
+  5 |  <b>3.628936464   5.970547749   14.38177236   24.48789339   51.53085021</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: data</b>
+<b>       </b>   1      2      3      4      5
+    +------------------------------------+
+  1 |  <b>1378    600    314     87     55</b>  |
+  2 |  <b>3864   7665   2528    407    232</b>  |
+  3 |  <b> 815   1847   4802    809    576</b>  |
+  4 |  <b> 276    530   1122    898    596</b>  |
+  5 |  <b> 387    729   1828   1115   2429</b>  |
+    +------------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    In the raw data the odds of men with lower voc marying a women with lower
+    vocational instead of low is 4.6 times the odds of men with low education
+    marying a women with lower vocational:
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. di (7665 / 3864 ) / (600 / 1378 )</b>
+<b>4.5558877</b>
+<br>
+</pre>
+<div class="txt"><pre>
+    In our new table we get the exact same odds ratio:
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. di (47.28612524 / 27.29231899) / (21.01486714 / 55.2594258)</b>
+<b>4.5558877</b>
+<br>
+</pre>
+<div class="txt"><pre>
+    Standardizing a table like this is nice in a teaching setting, because
+    you can see what is going on. In a real analysis you use the
+    <a href="#slide6.smcl">&gt;&gt; stdtable</a>package
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide4.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide8.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide8.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardizing a table</b>
+-------------------------------------------------------------------------------
+<br>
+                               <b> Try it yourself</b>
+<br>
+    Use IPF to standardize the place of residence table (<b>place.dta</b>) to have
+    margins of all 100.
+<br>
+</pre>
+<pre><a href="#app0">Solution</a></pre>
+<pre>
+<br>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide5.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide9.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide9.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardization to compare tables</b>
+-------------------------------------------------------------------------------
+<br>
+                               <b> comparing tables</b>
+<br>
+    Say we want to compare the tables for the cohorts born in 1940-1945 (i.e.
+    were 20 in 1960-1965) and born in 1960-1965 (i.e. were 20 in 1980-1985).
+<br>
+    What if we standardize the table from 1940-1945 to have the margins of
+    the table from 1960-1965?
+<br>
+    This way we can easier compare across cohorts, and still have margins
+    that are more realistic than all 100s.
+<br>
+    We start with preparing the data and loading it into Mata
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. use homogamy_allbus.dta, clear</b>
+(ALLBUS 1980 - 2016)
+<br>
+<b>. gen coh = cond(inrange(byr, 1960, 1965), 1, ///</b>
+<b>&gt;           cond(inrange(byr, 1940, 1945), 0, .))</b>
+(36,808 missing values generated)
+<br>
+<b>. label define coh 0 "1940-1945" 1 "1960-1965"</b>
+<br>
+<b>. label value coh coh</b>
+<br>
+<b>. label var coh "resp. birth cohort"</b>
+<br>
+<b>. tab meduc feduc if coh==0, matcell(data1940)</b>
+<br>
+<b>       </b>male |              female education
+  education |       low  lower voc  medium vo  higher vo |     Total
+------------+--------------------------------------------+----------
+        low |<b>       146         81         36          9 </b>|<b>       278 </b>
+ lower voc. |<b>       493      1,432        384         48 </b>|<b>     2,388 </b>
+medium voc. |<b>        99        306        376         52 </b>|<b>       887 </b>
+higher voc. |<b>        29         83        119         62 </b>|<b>       338 </b>
+ university |<b>        75        157        312        113 </b>|<b>       955 </b>
+------------+--------------------------------------------+----------
+      Total |<b>       842      2,059      1,227        284 </b>|<b>     4,846 </b>
+<br>
+<br>
+<b>            </b>|   female
+       male | education
+  education | universit |     Total
+------------+-----------+----------
+        low |<b>         6 </b>|<b>       278 </b>
+ lower voc. |<b>        31 </b>|<b>     2,388 </b>
+medium voc. |<b>        54 </b>|<b>       887 </b>
+higher voc. |<b>        45 </b>|<b>       338 </b>
+ university |<b>       298 </b>|<b>       955 </b>
+------------+-----------+----------
+      Total |<b>       434 </b>|<b>     4,846 </b>
+<br>
+<b>. tab meduc feduc if coh==1, matcell(data1960)</b>
+<br>
+<b>       </b>male |              female education
+  education |       low  lower voc  medium vo  higher vo |     Total
+------------+--------------------------------------------+----------
+        low |<b>       120         44         56         23 </b>|<b>       249 </b>
+ lower voc. |<b>       181        477        365         73 </b>|<b>     1,115 </b>
+medium voc. |<b>        94        168      1,031        167 </b>|<b>     1,577 </b>
+higher voc. |<b>        44         47        217        185 </b>|<b>       616 </b>
+ university |<b>        30         34        223        174 </b>|<b>       818 </b>
+------------+--------------------------------------------+----------
+      Total |<b>       469        770      1,892        622 </b>|<b>     4,375 </b>
+<br>
+<br>
+<b>            </b>|   female
+       male | education
+  education | universit |     Total
+------------+-----------+----------
+        low |<b>         6 </b>|<b>       249 </b>
+ lower voc. |<b>        19 </b>|<b>     1,115 </b>
+medium voc. |<b>       117 </b>|<b>     1,577 </b>
+higher voc. |<b>       123 </b>|<b>       616 </b>
+ university |<b>       357 </b>|<b>       818 </b>
+------------+-----------+----------
+      Total |<b>       622 </b>|<b>     4,375 </b>
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: data1940 = st_matrix("data1940")</b>
+<br>
+<b>: data1960 = st_matrix("data1960")</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    We extract the desired row and column totals
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: col = colsum(data1960)</b>
+<br>
+<b>: row = rowsum(data1960)</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    We can now apply these row and column totals instead of 100.
+<br>
+    We can see that a large part of the apparent difference between the
+    cohorts is due to the change in distribution of education between the
+    cohorts.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: muhat = data1940</b>
+<br>
+<b>: muhat2 = 0:*data1940</b>
+<br>
+<b>: i = 1</b>
+<br>
+<b>: while(i&lt;30 &amp; mreldif(muhat2,muhat)&gt;1e-8) {</b>
+<b>&gt;     muhat2 = muhat</b>
+<b>&gt;     muhat = muhat:/rowsum(muhat):*row</b>
+<b>&gt;     muhat = muhat:/colsum(muhat):*col</b>
+<b>&gt;     printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldi</b>
+<b>&gt; f(muhat2,muhat))</b>
+<b>&gt;     i = i + 1</b>
+<b>&gt; }</b>
+iteration <b>1 </b>relative change <b>3.35926798</b>
+iteration <b>2 </b>relative change <b>.412621342</b>
+iteration <b>3 </b>relative change <b>.096720838</b>
+iteration <b>4 </b>relative change <b>.022674838</b>
+iteration <b>5 </b>relative change <b>.005356008</b>
+iteration <b>6 </b>relative change <b>.001267613</b>
+iteration <b>7 </b>relative change <b>.000300115</b>
+iteration <b>8 </b>relative change <b>.000071057</b>
+iteration <b>9 </b>relative change <b>.000016824</b>
+iteration <b>10 </b>relative change <b>3.9832e-06</b>
+iteration <b>11 </b>relative change <b>9.4306e-07</b>
+iteration <b>12 </b>relative change <b>2.2328e-07</b>
+iteration <b>13 </b>relative change <b>5.2864e-08</b>
+iteration <b>14 </b>relative change <b>1.2516e-08</b>
+iteration <b>15 </b>relative change <b>2.9633e-09</b>
+<br>
+<b>: data1940</b>
+<b>       </b>   1      2      3      4      5
+    +------------------------------------+
+  1 |  <b> 146     81     36      9      6</b>  |
+  2 |  <b> 493   1432    384     48     31</b>  |
+  3 |  <b>  99    306    376     52     54</b>  |
+  4 |  <b>  29     83    119     62     45</b>  |
+  5 |  <b>  75    157    312    113    298</b>  |
+    +------------------------------------+
+<br>
+<b>: muhat</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>107.9401832   41.79372109    63.5105883    23.4738278   12.28167952</b>  |
+  2 |  <b>206.3512558   418.3106688   383.5347872   70.87817787   35.92510995</b>  |
+  3 |  <b>101.1983989    218.300937   917.1484403   187.5222911   152.8299328</b>  |
+  4 |  <b>25.01236059    49.9609286   244.9159022   188.6511611   107.4596476</b>  |
+  5 |  <b>28.49780156   41.63374457   282.8902821    151.474542   313.5036302</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: data1960</b>
+<b>       </b>   1      2      3      4      5
+    +------------------------------------+
+  1 |  <b> 120     44     56     23      6</b>  |
+  2 |  <b> 181    477    365     73     19</b>  |
+  3 |  <b>  94    168   1031    167    117</b>  |
+  4 |  <b>  44     47    217    185    123</b>  |
+  5 |  <b>  30     34    223    174    357</b>  |
+    +------------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Alternatively, we can use <b>stdtable</b>
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. stdtable meduc feduc, by(coh,baseline(1))</b>
+<br>
+-----------------------------------------------------------------------------
+resp. birth |
+cohort and  |
+male        |                        female education                        
+education   |         low   lower voc.  medium voc.  higher voc.   university
+------------+----------------------------------------------------------------
+1940-1945   |
+        low |         <b>108         41.8         63.5         23.5         12.3</b>
+<b> </b>lower voc. |         <b>206          418          384         70.9         35.9</b>
+medium voc. |         <b>101          218          917          188          153</b>
+higher voc. |          <b>25           50          245          189          107</b>
+<b> </b>university |        <b>28.5         41.6          283          151          314</b>
+<b>            </b>| 
+      Total |         <b>469          770         1892          622          622</b>
+------------+----------------------------------------------------------------
+1960-1965   |
+        low |         <b>120           44           56           23            6</b>
+<b> </b>lower voc. |         <b>181          477          365           73           19</b>
+medium voc. |          <b>94          168         1031          167          117</b>
+higher voc. |          <b>44           47          217          185          123</b>
+<b> </b>university |          <b>30           34          223          174          357</b>
+<b>            </b>| 
+      Total |         <b>469          770         1892          622          622</b>
+-----------------------------------------------------------------------------
+<br>
+-------------------------
+resp. birth |
+cohort and  |   female   
+male        |  education 
+education   |       Total
+------------+------------
+1940-1945   |
+        low |         <b>249</b>
+<b> </b>lower voc. |        <b>1115</b>
+medium voc. |        <b>1577</b>
+higher voc. |         <b>616</b>
+<b> </b>university |         <b>818</b>
+<b>            </b>| 
+      Total |        <b>4375</b>
+------------+------------
+1960-1965   |
+        low |         <b>249</b>
+<b> </b>lower voc. |        <b>1115</b>
+medium voc. |        <b>1577</b>
+higher voc. |         <b>616</b>
+<b> </b>university |         <b>818</b>
+<b>            </b>| 
+      Total |        <b>4375</b>
+-------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide8.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide10.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide10.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardization to compare tables</b>
+-------------------------------------------------------------------------------
+<br>
+                               <b> Try it yourself</b>
+<br>
+    Standardize the tables in <b>place.dta</b> such that the margins for all cohorts
+    correspond to the margins of the 1950 cohort.
+<br>
+<br>
+</pre>
+<pre><a href="#app1">Solution</a></pre>
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide9.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide11.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide11.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>keep the margins as observed, but change the pattern</b>
+-------------------------------------------------------------------------------
+<br>
+                            <b> Independence revisited</b>
+<br>
+    We have until now keept the patern as observed in the data, and changed
+    the margins. Can we not turn that around: Keep the margins as observed in
+    the data, and change the pattern?
+<br>
+    An interesting baseline pattern would be independence. We would start
+    with a table that satisfies independence, and change the values such that
+    the margins correspond to the observed margins. A table that satisfies
+    independence is a table with all 1s.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata:</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: row = rowsum(data)</b>
+<br>
+<b>: col = colsum(data)</b>
+<br>
+<b>: muhat = J(5,5,1)</b>
+<br>
+<b>: muhat2 = 0:*muhat</b>
+<br>
+<b>: muhat</b>
+[symmetric]
+       1   2   3   4   5
+    +---------------------+
+  1 |  <b>1                </b>  |
+  2 |  <b>1   1            </b>  |
+  3 |  <b>1   1   1        </b>  |
+  4 |  <b>1   1   1   1    </b>  |
+  5 |  <b>1   1   1   1   1</b>  |
+    +---------------------+
+<br>
+<b>: i = 1</b>
+<br>
+<b>: while(i&lt;30 &amp; mreldif(muhat2,muhat)&gt;1e-8) {</b>
+<b>&gt;     muhat2 = muhat</b>
+<b>&gt;     muhat = muhat:/rowsum(muhat):*row</b>
+<b>&gt;     muhat = muhat:/colsum(muhat):*col</b>
+<b>&gt;     printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldi</b>
+<b>&gt; f(muhat2,muhat))</b>
+<b>&gt;     i = i + 1</b>
+<b>&gt; }</b>
+iteration <b>1 </b>relative change <b>.999570562</b>
+iteration <b>2 </b>relative change <b>3.3466e-16</b>
+<br>
+<b>: muhat</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>455.7519017    771.183761   718.4874474    224.891861   263.6850288</b>  |
+  2 |  <b>2751.737858   4656.251665   4338.081975   1357.851598   1592.076904</b>  |
+  3 |  <b>1656.922177   2803.699713   2612.118086   817.6121932   958.6478308</b>  |
+  4 |  <b> 640.748976   1084.219733   1010.133133   316.1791078   370.7190504</b>  |
+  5 |  <b>1214.839087   2055.645128   1915.179359     599.46524   702.8711862</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. tab meduc feduc , exp nofreq</b>
+<br>
+<b>       </b>male |              female education
+  education |       low  lower voc  medium vo  higher vo |     Total
+------------+--------------------------------------------+----------
+        low |<b>     455.8      771.2      718.5      224.9 </b>|<b>   2,434.0 </b>
+ lower voc. |<b>   2,751.7    4,656.3    4,338.1    1,357.9 </b>|<b>  14,696.0 </b>
+medium voc. |<b>   1,656.9    2,803.7    2,612.1      817.6 </b>|<b>   8,849.0 </b>
+higher voc. |<b>     640.7    1,084.2    1,010.1      316.2 </b>|<b>   3,422.0 </b>
+ university |<b>   1,214.8    2,055.6    1,915.2      599.5 </b>|<b>   6,488.0 </b>
+------------+--------------------------------------------+----------
+      Total |<b>   6,720.0   11,371.0   10,594.0    3,316.0 </b>|<b>  35,889.0 </b>
+<br>
+<br>
+<b>            </b>|   female
+       male | education
+  education | universit |     Total
+------------+-----------+----------
+        low |<b>     263.7 </b>|<b>   2,434.0 </b>
+ lower voc. |<b>   1,592.1 </b>|<b>  14,696.0 </b>
+medium voc. |<b>     958.6 </b>|<b>   8,849.0 </b>
+higher voc. |<b>     370.7 </b>|<b>   3,422.0 </b>
+ university |<b>     702.9 </b>|<b>   6,488.0 </b>
+------------+-----------+----------
+      Total |<b>   3,888.0 </b>|<b>  35,889.0 </b>
+<br>
+</pre>
+<div class="txt"><pre>
+    Notice that the second iteration added nothing, so the IPF converged in
+    one iteration. Also, the estimated counts correspond to the counts we
+    computed last week.
+<br>
+    This is not a coincidence:
+<br>
+        In the first step of the first iteration, each cell gets 1/5 rowtotal
+<br>
+        At the begining of the second step of the first iteration, the
+        collumn totals are 1/5th of N
+<br>
+        So we get: (rowtotal/5)/(N/5)*coltotal = (rowtotal*coltotal)/N
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide10.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide12.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide12.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardization to known margins in the population</b>
+-------------------------------------------------------------------------------
+<br>
+             <b> Margins in our sample and margins in the population</b>
+<br>
+    Samples often deviate from the population because of
+        The way the sample was drawn
+        the way the data was collected
+        some people are harder to contact
+        some people are less likely to participate
+<br>
+    What if we had the marginal distriubtion of our variables from the
+    population?
+<br>
+    Can't we use the same trick to standardize our table to those population
+    margins?
+<br>
+    This is a classic application of raking, and is often used when computing
+    (post-stratification) weights.
+<br>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide11.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> <a href="#slide13.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide13.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>Standardization to known margins in the population</b>
+-------------------------------------------------------------------------------
+<br>
+        <b> Computing post-stratification weights for the cohort 1940-1945</b>
+<br>
+    Lets get the observed data again and take a look at the population
+    margins
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. use homogamy_allbus, clear</b>
+(ALLBUS 1980 - 2016)
+<br>
+<b>. tab meduc feduc if inrange(byr,1940,1945), matcell(data1940)</b>
+<br>
+<b>       </b>male |              female education
+  education |       low  lower voc  medium vo  higher vo |     Total
+------------+--------------------------------------------+----------
+        low |<b>       146         81         36          9 </b>|<b>       278 </b>
+ lower voc. |<b>       493      1,432        384         48 </b>|<b>     2,388 </b>
+medium voc. |<b>        99        306        376         52 </b>|<b>       887 </b>
+higher voc. |<b>        29         83        119         62 </b>|<b>       338 </b>
+ university |<b>        75        157        312        113 </b>|<b>       955 </b>
+------------+--------------------------------------------+----------
+      Total |<b>       842      2,059      1,227        284 </b>|<b>     4,846 </b>
+<br>
+<br>
+<b>            </b>|   female
+       male | education
+  education | universit |     Total
+------------+-----------+----------
+        low |<b>         6 </b>|<b>       278 </b>
+ lower voc. |<b>        31 </b>|<b>     2,388 </b>
+medium voc. |<b>        54 </b>|<b>       887 </b>
+higher voc. |<b>        45 </b>|<b>       338 </b>
+ university |<b>       298 </b>|<b>       955 </b>
+------------+-----------+----------
+      Total |<b>       434 </b>|<b>     4,846 </b>
+<br>
+<b>. use margins1940, clear</b>
+<br>
+<b>. list</b>
+<br>
+     +-----------------------------------------+
+     | <b>female                   ed           p </b>|
+     |-----------------------------------------|
+  1. | <b>  male                basic   .14092565 </b>|
+  2. | <b>  male    vocational, lower   .53389831 </b>|
+  3. | <b>  male   vocational, middle   .12625549 </b>|
+  4. | <b>  male   vocational, higher   .03011818 </b>|
+  5. | <b>  male           university   .16880237 </b>|
+     |-----------------------------------------|
+  6. | <b>female                basic   .33888268 </b>|
+  7. | <b>female    vocational, lower   .40107984 </b>|
+  8. | <b>female   vocational, middle   .16634283 </b>|
+  9. | <b>female   vocational, higher   .02550338 </b>|
+ 10. | <b>female           university   .06819128 </b>|
+     +-----------------------------------------+
+<br>
+</pre>
+<div class="txt"><pre>
+    Lets get the data and the desired margins in Mata and compare them with
+    the observed margins.
+<br>
+    Notice the <b>'</b> at the end of the line starting with <b>col</b>. This turns the
+    columnvector <b>col</b> into a rowvector.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: data1940 = st_matrix("data1940")</b>
+<br>
+<b>: row = st_data((1,5),3)</b>
+<br>
+<b>: col = st_data((6,10),3)'</b>
+<br>
+<b>: n = sum(data1940)</b>
+<br>
+<b>: row = row:*n</b>
+<br>
+<b>: col = col:*n</b>
+<br>
+<b>: row</b>
+<b>       </b>          1
+    +---------------+
+  1 |  <b>682.9257144</b>  |
+  2 |  <b>2587.271186</b>  |
+  3 |  <b> 611.834118</b>  |
+  4 |  <b>145.9527007</b>  |
+  5 |  <b>818.0162805</b>  |
+    +---------------+
+<br>
+<b>: rowsum(data1940)</b>
+<b>       </b>   1
+    +--------+
+  1 |  <b> 278</b>  |
+  2 |  <b>2388</b>  |
+  3 |  <b> 887</b>  |
+  4 |  <b> 338</b>  |
+  5 |  <b> 955</b>  |
+    +--------+
+<br>
+<b>: col</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>1642.225466   1943.632883   806.0973572   123.5893736   330.4549203</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: colsum(data1940)</b>
+<b>       </b>   1      2      3      4      5
+    +------------------------------------+
+  1 |  <b> 842   2059   1227    284    434</b>  |
+    +------------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    Now we can apply the same trick as before.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: muhat = data1940</b>
+<br>
+<b>: muhat2 = 0:*data1940</b>
+<br>
+<b>: i = 1</b>
+<br>
+<b>: while(i&lt;30 &amp; mreldif(muhat2,muhat)&gt;1e-8) {</b>
+<b>&gt;     muhat2 = muhat</b>
+<b>&gt;     muhat = muhat:/rowsum(muhat):*row</b>
+<b>&gt;     muhat = muhat:/colsum(muhat):*col</b>
+<b>&gt;     printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldi</b>
+<b>&gt; f(muhat2,muhat))</b>
+<b>&gt;     i = i + 1</b>
+<b>&gt; }</b>
+iteration <b>1 </b>relative change <b>3.15360994</b>
+iteration <b>2 </b>relative change <b>.345717331</b>
+iteration <b>3 </b>relative change <b>.06376476</b>
+iteration <b>4 </b>relative change <b>.016214917</b>
+iteration <b>5 </b>relative change <b>.004553063</b>
+iteration <b>6 </b>relative change <b>.001271767</b>
+iteration <b>7 </b>relative change <b>.000354736</b>
+iteration <b>8 </b>relative change <b>.000098909</b>
+iteration <b>9 </b>relative change <b>.000027576</b>
+iteration <b>10 </b>relative change <b>7.6877e-06</b>
+iteration <b>11 </b>relative change <b>2.1432e-06</b>
+iteration <b>12 </b>relative change <b>5.9750e-07</b>
+iteration <b>13 </b>relative change <b>1.6657e-07</b>
+iteration <b>14 </b>relative change <b>4.6438e-08</b>
+iteration <b>15 </b>relative change <b>1.2946e-08</b>
+iteration <b>16 </b>relative change <b>3.6092e-09</b>
+<br>
+<b>: data1940</b>
+<b>       </b>   1      2      3      4      5
+    +------------------------------------+
+  1 |  <b> 146     81     36      9      6</b>  |
+  2 |  <b> 493   1432    384     48     31</b>  |
+  3 |  <b>  99    306    376     52     54</b>  |
+  4 |  <b>  29     83    119     62     45</b>  |
+  5 |  <b>  75    157    312    113    298</b>  |
+    +------------------------------------+
+<br>
+<b>: muhat</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>474.5208782   143.3508106   47.95215625   8.169263599   8.932605961</b>  |
+  2 |  <b>875.0072936   1383.950116   279.3181446   23.79271058   25.20292251</b>  |
+  3 |  <b>131.9710065   222.1147631   205.4160385   19.35907528   32.97323446</b>  |
+  4 |  <b>26.30712883   40.99833415   44.24106626   15.70742786   18.69874349</b>  |
+  5 |  <b>134.4191584   153.2188596   229.1699516   56.56089627   244.6474139</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+    So if the margins in our data corresponded with the margins in the
+    population then we would expect to find 475 couples with both low
+    education, but in our data we only found 146 such couples.
+<br>
+    So a single couple with both low education in our data stands for
+    475/146=3.3 observations in the table with the population margins.
+<br>
+    This 3.3 is our post-stratification weight
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. use homogamy_allbus</b>
+(ALLBUS 1980 - 2016)
+<br>
+<b>. mata</b>
+------------------------------------------------- mata (type <b>end</b> to exit) -----
+<b>: muhat:/data1940</b>
+<b>       </b>          1             2             3             4             5
+    +-----------------------------------------------------------------------+
+  1 |  <b>3.250143001   1.769763094    1.33200434   .9076959554    1.48876766</b>  |
+  2 |  <b>1.774862664   .9664456116   .7273910014   .4956814704   .8129975004</b>  |
+  3 |  <b> 1.33304047    .725865239   .5463192514   .3722899092    .610615453</b>  |
+  4 |  <b>.9071423736   .4939558331   .3717736661   .2533456107   .4155276332</b>  |
+  5 |  <b>1.792255446   .9759163033   .7345190755   .5005389051   .8209644761</b>  |
+    +-----------------------------------------------------------------------+
+<br>
+<b>: st_matrix("weights", muhat:/data1940)</b>
+<br>
+<b>: end</b>
+-------------------------------------------------------------------------------
+<br>
+<b>. gen weight = weights[meduc,feduc] if inrange(byr,1940,1945)</b>
+(43,748 missing values generated)
+<br>
+<b>. tab meduc feduc if inrange(byr, 1940, 1945) [iweight=weight]</b>
+<br>
+<b>       </b>male |              female education
+  education |       low  lower voc  medium vo  higher vo |     Total
+------------+--------------------------------------------+----------
+        low |<b> 474.52089  143.35081  47.952155  8.1692635 </b>|<b> 682.92572 </b>
+ lower voc. |<b>875.007285   1,383.95  279.31815 23.7927103 </b>|<b>2,587.2712 </b>
+medium voc. |<b> 131.97101  222.11476  205.41604  19.359075 </b>|<b> 611.83412 </b>
+higher voc. |<b>  26.30713  40.998333  44.241066  15.707428 </b>|<b>  145.9527 </b>
+ university |<b> 134.41916  153.21886  229.16995  56.560894 </b>|<b> 818.01627 </b>
+------------+--------------------------------------------+----------
+      Total |<b> 1,642.225  1,943.633  806.09735  123.58937 </b>|<b>     4,846 </b>
+<br>
+<br>
+<b>            </b>|   female
+       male | education
+  education | universit |     Total
+------------+-----------+----------
+        low |<b> 8.9326057 </b>|<b> 682.92572 </b>
+ lower voc. |<b> 25.202923 </b>|<b>2,587.2712 </b>
+medium voc. |<b> 32.973233 </b>|<b> 611.83412 </b>
+higher voc. |<b> 18.698744 </b>|<b>  145.9527 </b>
+ university |<b> 244.64741 </b>|<b> 818.01627 </b>
+------------+-----------+----------
+      Total |<b> 330.45491 </b>|<b>     4,846 </b>
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide12.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide6.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>digression</b>
+-------------------------------------------------------------------------------
+<br>
+                                   <b> stdtable</b>
+<br>
+This method has been implemented in Stata as the stdtable command.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. stdtable meduc feduc</b>
+<br>
+-----------------------------------------------------------------------------
+male        |                        female education                        
+education   |         low   lower voc.  medium voc.  higher voc.   university
+------------+----------------------------------------------------------------
+        low |        <b>55.3           21         10.6         8.17         4.99</b>
+<b> </b>lower voc. |        <b>27.3         47.3           15         6.73         3.71</b>
+medium voc. |        <b>8.44         16.7         41.7         19.6         13.5</b>
+higher voc. |        <b>5.38         9.02         18.3           41         26.3</b>
+<b> </b>university |        <b>3.63         5.97         14.4         24.5         51.5</b>
+<b>            </b>| 
+      Total |         <b>100          100          100          100          100</b>
+-----------------------------------------------------------------------------
+<br>
+-------------------------
+            |   female   
+male        |  education 
+education   |       Total
+------------+------------
+        low |         <b>100</b>
+<b> </b>lower voc. |         <b>100</b>
+medium voc. |         <b>100</b>
+higher voc. |         <b>100</b>
+<b> </b>university |         <b>100</b>
+<b>            </b>| 
+      Total |         <b>500</b>
+-------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide5.smcl">&lt;&lt;</a> <a href="#index.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide7.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>ancillary</b>
+-------------------------------------------------------------------------------
+<br>
+                       <b> Can all tables be standardized?</b>
+<br>
+    Consider the following table
+<br>
+        0 0 2
+        1 5 2
+        8 7 0
+    
+    In order to make the first row total 100, the top right cell <i>must</i> be 100
+    
+<br>
+    In order to make the last column total 100, the top right cell <i>cannot</i> be
+    100
+<br>
+    This is an example of a table that cannot be standardized. The Mata
+    program we created above will stop after 30 iterations, but the condition
+    <b>mreldif(muhat2,muhat)&gt;1e-8</b> will not be met. In other words the algorithm
+    has not converged. The <b>stdtable</b> command will give a more explicit warning
+    when that happens.
+<br>
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"> <a href="#index.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide14.smcl">
+<div class="txt"><pre>
+<br>
+                                 <b> Bibliography</b>
+<br>
+<a name="agresti02"></a>    Agresti, Alan (2002), <i>Categorical Data Analysis, 2nd edition</i>.  Hoboken,
+        NJ: Wiley.
+ 
+<a name="deming_stephan40"></a>    Deming, W. Edwards and Stephan, Frederick F. (1940), "On a Least Squares
+        Adjustment of a Sampled Frequency Table When the Expected Marginal
+        Totals are Known", <i>The Annals of Mathematical Statistics</i>, <b>11</b>(4), pp.
+        427--444.
+ 
+<a name="kruithof37"></a>    Kruithof, J. (1937), "Telefoonverkeersrekening", <i>De Ingenieur</i>, <b>52</b>(8), pp.
+        E15-E25.
+ 
+<a name="yule12"></a>    Yule, G. Udny (1912), "On the Methods of Measuring Association Between
+        Two Attributes", <i>Journal of the Royal Statistical Society</i>, <b>75</b>(6), pp.
+        579-652.
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"> <a href="#index.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="app0">
+<pre><p align="center"><b>Solution</b></p></pre><br><br>
+<pre class="code">
+<code>use place.dta, clear</code>
+<code>tab place15 place30, matcell(data)</code>
+<code>mata</code>
+<code>data = st_matrix("data")</code>
+<code>muhat = data</code>
+<code>muhat2 = 0:*data</code>
+<code>i = 1</code>
+<code>while(i&lt;30 & mreldif(muhat2,muhat)&gt;1e-8) {</code>
+<code>	muhat2 = muhat</code>
+<code>	muhat = muhat:/rowsum(muhat):*100</code>
+<code>	muhat = muhat:/colsum(muhat):*100</code>
+<code>	printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldif(muhat2,muhat))</code>
+<code>	i = i + 1</code>
+<code>}</code>
+<code>muhat</code>
+<code>data</code>
+<code>end</code>
+<code>stdtable place15 place30</code>
+</pre>
+<div class="txt"></p><pre>-------------------------------------------------------------------------------</pre>
+<pre><p align=center><a href="#slide8.smcl">&lt;&lt;</a></p></pre>
+<pre>-------------------------------------------------------------------------------</pre>
+</div></div><div class="slide" id="app1">
+<pre><p align="center"><b>Solution</b></p></pre><br><br>
+<pre class="code">
+<code>use place.dta, clear</code>
+<code>tab place15 place30 if coh==30, matcell(data30)</code>
+<code>tab place15 place30 if coh==40, matcell(data40)</code>
+<code>tab place15 place30 if coh==50, matcell(data50)</code>
+<code>mata</code>
+<code>data30 = st_matrix("data30")</code>
+<code>data40 = st_matrix("data40")</code>
+<code>data50 = st_matrix("data50")</code>
+<code>row = rowsum(data50)</code>
+<code>col = colsum(data50)</code>
+<code>muhat = data30</code>
+<code>muhat2 = 0:*data</code>
+<code>i = 1</code>
+<code>while(i&lt;30 & mreldif(muhat2,muhat)&gt;1e-8) {</code>
+<code>	muhat2 = muhat</code>
+<code>	muhat = muhat:/rowsum(muhat):*row</code>
+<code>	muhat = muhat:/colsum(muhat):*col</code>
+<code>	printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldif(muhat2,muhat))</code>
+<code>	i = i + 1</code>
+<code>}</code>
+<code>muhat30 = muhat</code>
+<code>muhat = data40</code>
+<code>muhat2 = 0:*data</code>
+<code>i = 1</code>
+<code>while(i&lt;30 & mreldif(muhat2,muhat)&gt;1e-8) {</code>
+<code>	muhat2 = muhat</code>
+<code>	muhat = muhat:/rowsum(muhat):*row</code>
+<code>	muhat = muhat:/colsum(muhat):*col</code>
+<code>	printf("{txt}iteration {res}%f {txt}relative change {res}%f\n", i, mreldif(muhat2,muhat))</code>
+<code>	i = i + 1</code>
+<code>}</code>
+<code>muhat40 = muhat</code>
+<code>muhat30</code>
+<code>muhat40</code>
+<code>data50</code>
+<code>end</code>
+<code>stdtable place15 place30, by(coh,baseline(50))</code>
+</pre>
+<div class="txt"></p><pre>-------------------------------------------------------------------------------</pre>
+<pre><p align=center><a href="#slide10.smcl">&lt;&lt;</a></p></pre>
+<pre>-------------------------------------------------------------------------------</pre>
+</div></div>
+</body>
+</html>

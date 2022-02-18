@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+        background-color: white;
+}
+pre.output {
+    border-left-style: solid;
+    width: 650px;
+    max-height: 500px;
+    overflow: auto;
+    border-left-color:grey;
+    border-width: 5px;
+    background-color: #f0f0f0;
+    padding: 0px 5px 0px 10px;
+    margin: 0px auto 0px auto;
+}
+pre.code {
+    border-left-style: solid;
+    width: 650px;
+    max-height: 500px;
+    overflow: auto;
+    border-left-color:grey;
+    border-width: 5px;
+    background-color: #f0f0f0;
+    padding: 0px 5px 0px 10px;
+    margin: 0px auto 0px auto;
+}
+pre.code:before {
+    counter-reset: listing;
+}
+pre.code code {
+  counter-increment: listing;
+}
+pre.code code::before {
+  content: counter(listing) ". ";
+  display: inline-block;
+  width: 35px;
+  padding-left: auto;
+  margin-left: auto;
+  text-align: right;
+}
+pre {
+    margin: 0px;
+}
+div.slide { 
+    max-width: 680px;
+    display: block;
+    padding: 5px;
+    margin: 10px auto 10px auto;
+    border-style: solid;
+    border-width: 1px;
+    background-color: white ;
+}
+div.txt { 
+    margin: 0px auto 0px auto;
+    max-width: 650px;
+}
+div.flex-container {
+    display: flex;
+    justify-content: space-around;
+}
+p.bottom {
+    display: block;
+    margin: 0px;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+<div class="slide" id="background_grey.smcl">
+<div class="txt"><pre>
+<br>
+                               <b>Graphics in Stata</b>
+                           <b>Graphs in the background</b>
+<br>
+ 
+                                 Maarten Buis
+                                  office F532
+                              maarten.buis@uni.kn
+                          office hours by appointment
+ 
+</pre>
+<pre>
+    histograms and bar graphs
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide1.smcl"> Highlighting sub-populations in a histogram</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide2.smcl"> Highlighting bars</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    scatterplots
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide3.smcl"> Highlighting sub-populations in a scatter plot</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide4.smcl"> Line on top of a scatter plot</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide5.smcl"> By graph</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+    line plots
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide6.smcl"> Line graph</a>
+</pre>
+<pre>
+ 
+</pre>
+<pre>
+       <a href="#slide7.smcl"> Bibliography</a>
+</pre>
+<pre>
+</pre>
+</div>
+</div>
+<div class="slide" id="slide1.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>histograms and bar graphs</b>
+-------------------------------------------------------------------------------
+<br>
+                 <b> Highlighting sub-populations in a histogram</b>
+<br>
+    We can compare distributions using <b>histogram</b> with the <b>by()</b> option.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. twoway histogram wage,     ///</b>
+<b>&gt;     width(1) freq          ///</b>
+<b>&gt;     by(collgrad, note("")) ///</b>
+<b>&gt;     name(hist1, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="hist1.png" width="630">
+<pre>
+    We can also highlight the part of the histogram that are college
+    graduates (Cox 2009)
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. twoway histogram wage,                       ///</b>
+<b>&gt;     width(1) freq                            ///</b>
+<b>&gt;     bcolor(gs14)  blw(*.4) blcolor(black) || /// </b>
+<b>&gt; histogram wage if collgrad,                  ///</b>
+<b>&gt;     width(1) freq legend(off)                ///</b>
+<b>&gt;     bcolor(gs6) blw(*.4) blcolor(black)      ///</b>
+<b>&gt;     title(distribution of hourly wage)       ///</b>
+<b>&gt;     subtitle(college graduates highlighted)  ///</b>
+<b>&gt;     name(hist2, replace) </b>
+<br>
+</pre>
+<div class="txt"><img src="hist2.png" width="630">
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"> <a href="#background_grey.smcl">index</a> <a href="#slide2.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide2.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>histograms and bar graphs</b>
+-------------------------------------------------------------------------------
+<br>
+                              <b> Highlighting bars</b>
+<br>
+    We can <b>graph hbar</b> to display the mean wage by industry.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. graph hbar (mean) wage,                       ///</b>
+<b>&gt;     over(industry, descending sort(1))        ///</b>
+<b>&gt;     name(bar1, replace)        </b>
+<br>
+</pre>
+<div class="txt"><img src="bar1.png" width="630">
+<pre>
+<br>
+    Sometimes we want to highlight one bar.
+<br>
+    This is particularly common for presentations.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. collapse (mean) wage, by(industry)</b>
+<br>
+<b>. separate wage, by(industry == 12)</b>
+<br>
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+-------------------------------------------------------------------------------
+<b>wage0          </b> float   %9.0g                 <b>wage, !(industry == 12)</b>
+<b>wage1          </b> float   %9.0g                 <b>wage, industry == 12</b>
+<br>
+<b>. graph hbar (asis) wage0 wage1,                   ///</b>
+<b>&gt;     over(industry, descending sort(wage)) nofill ///</b>
+<b>&gt;     bar(1, bfcolor(none)) legend(off)            ///</b>
+<b>&gt;     ytitle(mean wage)                            ///</b>
+<b>&gt;     name(bar2, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="bar2.png" width="630">
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide1.smcl">&lt;&lt;</a> <a href="#background_grey.smcl">index</a> <a href="#slide3.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide3.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>scatterplots</b>
+-------------------------------------------------------------------------------
+<br>
+                <b> Highlighting sub-populations in a scatter plot</b>
+<br>
+    We may want to highlight a certain sub-polation in a scatter plot
+<br>
+    We start with a simple scatter plot
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. graph drop _all</b>
+<br>
+<b>. scatter wage grade,         ///</b>
+<b>&gt;     name(scatter1, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="scatter1.png" width="630">
+<pre>
+    Grade is discrete, but we can show the individual values by adding the
+    jitter() option.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. scatter wage grade, jitter(2) ///</b>
+<b>&gt;     name(scatter2, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="scatter2.png" width="630">
+<pre>
+    The jitter() option adds random noise in both the x and y direction, but
+    we only need a jitter in the x-direction
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. gen grade2 = grade + .5*runiform()</b>
+(2 missing values generated)
+<br>
+<b>. scatter wage grade2,           ///</b>
+<b>&gt;     name(scatter3, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="scatter3.png" width="630">
+<pre>
+    It would be nice if we could copy the variable label from grade
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. label var grade2 "`: var label grade'"</b>
+<br>
+<b>. scatter wage grade2,            ///</b>
+<b>&gt;     name(scatter4, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="scatter4.png" width="630">
+<pre>
+    It makes more sense to display wage on a log scal
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. scatter wage grade2, yscale(log) ///</b>
+<b>&gt;     name(scatter5, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="scatter5.png" width="630">
+<pre>
+    But we need to adjust the axis labels a bit.
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. scatter wage grade2, yscale(log) ///</b>
+<b>&gt;     ylab(1.25 2.5 5 10 20 40)    ///</b>
+<b>&gt;     name(scatter6, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="scatter6.png" width="630">
+<pre>
+    Now we can highlight the blacks
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. scatter wage grade2, yscale(log)       ///</b>
+<b>&gt;     msymbol(Oh) mcolor(gs10) ||        ///</b>
+<b>&gt; scatter wage grade2 if race == 2 ,     ///</b>
+<b>&gt;     msymbol(O) mcolor(gs2)             ///</b>
+<b>&gt;     yscale(log) legend(off)            ///</b>
+<b>&gt;     ylab(1.25 2.5 5 10 20 40)          ///                </b>
+<b>&gt;     name(scatter7, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="scatter7.png" width="630">
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide2.smcl">&lt;&lt;</a> <a href="#background_grey.smcl">index</a> <a href="#slide4.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide4.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>scatterplots</b>
+-------------------------------------------------------------------------------
+<br>
+                        <b> Line on top of a scatter plot</b>
+<br>
+    We can plot a line on top of a scatter plot
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. graph drop _all</b>
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. </b>
+<b>. gen grade2 = grade + .5*runiform()</b>
+(2 missing values generated)
+<br>
+<b>. label var grade2 "`: var label grade'"</b>
+<br>
+<b>. </b>
+<b>. fp &lt;grade&gt; , scale: poisson wage &lt;grade&gt;</b>
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+       grade |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4   15353.13   1025.547    0.000               </b>
+      linear |<b>    3   14345.16     17.577    0.001   1           </b>
+       m = 1 |<b>    2   14345.16     17.577    0.000   1           </b>
+       m = 2 |<b>    0   14327.59      0.000       --   3 3         </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                     Number of obs = <b>  2,244</b>
+                                                       LR chi2(<b>2</b>)    = <b>1025.55</b>
+                                                       Prob &gt; chi2   = <b> 0.0000</b>
+Log likelihood = <b>-7163.793</b>                             Pseudo R2     = <b> 0.0668</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     grade_1 |<b>   .5388408   .0445881    12.08   0.000     .4514496    .6262319</b>
+     grade_2 |<b>  -.5224457   .0572099    -9.13   0.000     -.634575   -.4103163</b>
+       _cons |<b>   1.035362   .0659192    15.71   0.000     .9061632    1.164562</b>
+------------------------------------------------------------------------------
+<br>
+<b>. predict wagehat</b>
+(option <b>n</b> assumed; predicted number of events)
+(2 missing values generated)
+<br>
+<b>. twoway scatter wage grade2,                         ///</b>
+<b>&gt;            yscale(log) ylab(1.25 2.5 5 10 20 40) || ///</b>
+<b>&gt;        line wagehat grade, sort legend(off)         ///</b>
+<b>&gt;             name(fit1, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="fit1.png" width="630">
+<pre>
+    The scatter plot is a bit too dominant
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. twoway scatter wage grade2, mcolor(gs10)            ///</b>
+<b>&gt;            yscale(log) ylab(1.25 2.5 5 10 20 40) || ///</b>
+<b>&gt;        line wagehat grade, sort legend(off)         ///</b>
+<b>&gt;             name(fit2, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="fit2.png" width="630">
+<pre>
+    The line can be made solid
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. twoway scatter wage grade2, mcolor(gs10)            ///</b>
+<b>&gt;            yscale(log) ylab(1.25 2.5 5 10 20 40) || ///</b>
+<b>&gt;        line wagehat grade, sort legend(off)         ///</b>
+<b>&gt;            lpattern(solid)                          ///</b>
+<b>&gt;            name(fit3, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="fit3.png" width="630">
+<pre>
+    We can also make the line thicker
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. twoway scatter wage grade2, mcolor(gs10)            ///</b>
+<b>&gt;            yscale(log) ylab(1.25 2.5 5 10 20 40) || ///</b>
+<b>&gt;        line wagehat grade, sort legend(off)         ///</b>
+<b>&gt;            lpattern(solid) lwidth(*3)               ///</b>
+<b>&gt;            name(fit4, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="fit4.png" width="630">
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide3.smcl">&lt;&lt;</a> <a href="#background_grey.smcl">index</a> <a href="#slide5.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide5.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>scatterplots</b>
+-------------------------------------------------------------------------------
+<br>
+                                   <b> By graph</b>
+<br>
+    Lets look at the relationship between wage and education by industry
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. graph drop _all</b>
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. gen gradej = grade + .5*runiform()</b>
+(2 missing values generated)
+<br>
+<b>. label var gradej "`: var label grade'"</b>
+<br>
+<b>. </b>
+<b>. scatter wage gradej, by(industr, note("") compact) ///</b>
+<b>&gt;     yscale(log) ylab(1.25 2.5 5 10 20 40)          ///</b>
+<b>&gt;     name(byscatter1, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="byscatter1.png" width="630">
+<pre>
+    We can sort the sub graphs by mean wage
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. bys industry : egen mwage = mean(wage)</b>
+<br>
+<b>. replace mwage = -mwage</b>
+(2,246 real changes made)
+<br>
+<b>. egen Industry = axis(mwage industry), label(industry)</b>
+(14 missing values generated)
+<br>
+<b>. scatter wage gradej, by(Industr, note("") compact) ///</b>
+<b>&gt;     yscale(log) ylab(1.25 2.5 5 10 20 40)          ///</b>
+<b>&gt;     name(byscatter2, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="byscatter2.png" width="630">
+<pre>
+    We can display the entire sample as a background graph
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. keep if !missing(industry, wage, grade)</b>
+(16 observations deleted)
+<br>
+<b>. bys industry : gen id = _n</b>
+<br>
+<b>. fillin industry id</b>
+<br>
+<b>. </b>
+<b>. gen gradej = grade + .5*runiform()</b>
+(7,646 missing values generated)
+<br>
+<b>. label var gradej "`: var label grade'"</b>
+<br>
+<b>. </b>
+<b>. bys industry : egen mwage = mean(wage)</b>
+<br>
+<b>. replace mwage = -mwage</b>
+(9,876 real changes made)
+<br>
+<b>. egen Industry = axis(mwage industry), label(industry)</b>
+<br>
+<b>. </b>
+<b>. tempfile temp</b>
+<br>
+<b>. save `temp'</b>
+file<b> C:\Users\Admin\AppData\Local\Temp\ST_f0c_000008.tmp</b> saved as .dta format
+<br>
+<b>. </b>
+<b>. keep wage industry gradej id</b>
+<br>
+<b>. reshape wide wage gradej, j(industry) i(id)</b>
+(j = 1 2 3 4 5 6 7 8 9 10 11 12)
+<br>
+Data                               Long   -&gt;   Wide
+-----------------------------------------------------------------------------
+Number of observations     <b>       9,876   </b>-&gt;   <b>823         </b>
+Number of variables        <b>           4   </b>-&gt;   <b>25          </b>
+j variable (12 values)         <b>industry   </b>-&gt;   (dropped)
+xij variables:
+                                   <b>wage   </b>-&gt;   <b>wage1 wage2 ... wage12</b>
+<b>                                 gradej   </b>-&gt;   <b>gradej1 gradej2 ... gradej12</b>
+-----------------------------------------------------------------------------
+<br>
+<b>. merge 1:m id using `temp'</b>
+<br>
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched              <b>               0</b>
+    Matched                  <b>           9,876</b>  (_merge==3)
+    -----------------------------------------
+<br>
+<b>. </b>
+<b>. forvalues i = 1/12 {</b>
+  2<b>.     local backgr `backgr' scatter wage`i' gradej`i', ///</b>
+<b>&gt;                           msymbol(Oh) mcolor(gs12) ||</b>
+  3<b>. }</b>
+<br>
+<b>. </b>
+<b>. twoway `backgr'                        ///</b>
+<b>&gt;        scatter wage gradej,            ///</b>
+<b>&gt;            msymbol(O) mcolor(black)    ///</b>
+<b>&gt;            by(Industry, legend(off)    ///</b>
+<b>&gt;               compact note(""))        ///</b>
+<b>&gt;            ytitle(wage) xtitle(grade)  ///</b>
+<b>&gt;            yscale(log)                 ///</b>
+<b>&gt;            ylab(1.25 2.5 5 10 20 40)   ///</b>
+<b>&gt;            name(byscatter3, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="byscatter3.png" width="630">
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide4.smcl">&lt;&lt;</a> <a href="#background_grey.smcl">index</a> <a href="#slide6.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide6.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>line plots</b>
+-------------------------------------------------------------------------------
+<br>
+                                  <b> Line graph</b>
+<br>
+    Lets look at a spagetti plot
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. graph drop _all</b>
+<br>
+<b>. sysuse nlsw88, clear</b>
+(NLSW, 1988 extract)
+<br>
+<b>. gen ed2 = grade + 1</b>
+(2 missing values generated)
+<br>
+<b>. </b>
+<b>. bys industry : egen mwage = mean(wage)</b>
+<br>
+<b>. replace mwage = -mwage</b>
+(2,246 real changes made)
+<br>
+<b>. egen Industry = axis(mwage industry), label(industry)</b>
+(14 missing values generated)
+<br>
+<b>. </b>
+<b>. gen wagehat = .</b>
+(2,246 missing values generated)
+<br>
+<b>. forvalues i = 1/12 {</b>
+  2<b>.     fp &lt;ed2&gt;, replace : poisson wage &lt;ed2&gt; if industry == `i'</b>
+  3<b>.     predict wage`i' if e(sample)</b>
+  4<b>.     replace wagehat = wage`i' if industry == `i'</b>
+  5<b>.     local gr `gr' line wage`i' grade , sort ||</b>
+  6<b>. }</b>
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4     86.286      6.070    0.194               </b>
+      linear |<b>    3     81.524      1.308    0.727   1           </b>
+       m = 1 |<b>    2     81.178      0.962    0.618   0           </b>
+       m = 2 |<b>    0     80.216      0.000       --   3 3         </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>    17</b>
+                                                        LR chi2(<b>2</b>)    = <b>  6.07</b>
+                                                        Prob &gt; chi2   = <b>0.0481</b>
+Log likelihood = <b>-40.108089</b>                             Pseudo R2     = <b>0.0703</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>   .0026413   .0015905     1.66   0.097     -.000476    .0057586</b>
+       ed2_2 |<b>  -.0008486   .0005314    -1.60   0.110    -.0018901    .0001929</b>
+       _cons |<b>   .7990031   .4674919     1.71   0.087    -.1172642     1.71527</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,229 missing values generated)
+(17 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    2     62.963      0.000    1.000               </b>
+      linear |<b>    2     62.963      0.000    1.000   1           </b>
+       m = 1 |<b>    1     62.963      0.000    1.000   -2          </b>
+       m = 2 |<b>    0     62.963      0.000       --   -2 -2       </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                     Number of obs = <b>      4</b>
+                                                       LR chi2(<b>0</b>)    = <b>  -0.00</b>
+                                                       Prob &gt; chi2   = <b>      .</b>
+Log likelihood = <b>-31.481608</b>                            Pseudo R2     = <b>-0.0000</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>          0</b>  (omitted)
+       ed2_2 |<b>          0</b>  (omitted)
+       _cons |<b>   2.731089   .1276208    21.40   0.000     2.480957    2.981221</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,242 missing values generated)
+(4 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4    178.590     26.619    0.000               </b>
+      linear |<b>    3    157.834      5.863    0.118   1           </b>
+       m = 1 |<b>    2    155.601      3.630    0.163   3           </b>
+       m = 2 |<b>    0    151.971      0.000       --   -2 -1       </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>    29</b>
+                                                        LR chi2(<b>2</b>)    = <b> 26.62</b>
+                                                        Prob &gt; chi2   = <b>0.0000</b>
+Log likelihood = <b>-75.985466</b>                             Pseudo R2     = <b>0.1491</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>   659.2548   169.8953     3.88   0.000     326.2661    992.2436</b>
+       ed2_2 |<b>  -129.3304   29.20694    -4.43   0.000     -186.575   -72.08586</b>
+       _cons |<b>   7.916284   1.217063     6.50   0.000     5.530885    10.30168</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,217 missing values generated)
+(29 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4   2371.656    191.684    0.000               </b>
+      linear |<b>    3   2193.047     13.076    0.004   1           </b>
+       m = 1 |<b>    2   2181.346      1.374    0.503   3           </b>
+       m = 2 |<b>    0   2179.972      0.000       --   .5 .5       </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>   366</b>
+                                                        LR chi2(<b>2</b>)    = <b>191.68</b>
+                                                        Prob &gt; chi2   = <b>0.0000</b>
+Log likelihood = <b>-1089.9859</b>                             Pseudo R2     = <b>0.0808</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>  -8.405453   1.958896    -4.29   0.000    -12.24482   -4.566087</b>
+       ed2_2 |<b>   2.014951   .4257893     4.73   0.000      1.18042    2.849483</b>
+       _cons |<b>   13.60704   3.119369     4.36   0.000     7.493194     19.7209</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(1,880 missing values generated)
+(366 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4    614.541      5.878    0.208               </b>
+      linear |<b>    3    612.125      3.462    0.326   1           </b>
+       m = 1 |<b>    2    610.776      2.113    0.348   -2          </b>
+       m = 2 |<b>    0    608.664      0.000       --   -2 -2       </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>    90</b>
+                                                        LR chi2(<b>2</b>)    = <b>  5.88</b>
+                                                        Prob &gt; chi2   = <b>0.0529</b>
+Log likelihood = <b>-304.33176</b>                             Pseudo R2     = <b>0.0096</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>  -994.1185   674.1365    -1.47   0.140    -2315.402    327.1648</b>
+       ed2_2 |<b>   439.7353   314.1076     1.40   0.162    -175.9043    1055.375</b>
+       _cons |<b>   1.626314   .7887816     2.06   0.039     .0803306    3.172298</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,156 missing values generated)
+(90 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4   2156.287     73.605    0.000               </b>
+      linear |<b>    3   2086.225      3.542    0.315   1           </b>
+       m = 1 |<b>    2   2085.079      2.397    0.302   .5          </b>
+       m = 2 |<b>    0   2082.682      0.000       --   3 3         </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>   333</b>
+                                                        LR chi2(<b>2</b>)    = <b> 73.60</b>
+                                                        Prob &gt; chi2   = <b>0.0000</b>
+Log likelihood = <b>-1041.3412</b>                             Pseudo R2     = <b>0.0341</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>   .0021576   .0005586     3.86   0.000     .0010628    .0032524</b>
+       ed2_2 |<b>  -.0006669    .000184    -3.62   0.000    -.0010276   -.0003062</b>
+       _cons |<b>   .8044136   .1905101     4.22   0.000     .4310207    1.177807</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(1,913 missing values generated)
+(333 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4   1737.107     73.345    0.000               </b>
+      linear |<b>    3   1666.249      2.487    0.478   1           </b>
+       m = 1 |<b>    2   1665.643      1.882    0.390   0           </b>
+       m = 2 |<b>    0   1663.762      0.000       --   -2 -2       </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>   192</b>
+                                                        LR chi2(<b>2</b>)    = <b> 73.35</b>
+                                                        Prob &gt; chi2   = <b>0.0000</b>
+Log likelihood = <b>-831.88086</b>                             Pseudo R2     = <b>0.0422</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>   648.0126   294.5432     2.20   0.028     70.71854    1225.307</b>
+       ed2_2 |<b>  -377.2919    139.903    -2.70   0.007    -651.4967   -103.0871</b>
+       _cons |<b>   4.053157   .3835413    10.57   0.000      3.30143    4.804884</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,054 missing values generated)
+(192 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4    641.527     49.335    0.000               </b>
+      linear |<b>    3    595.436      3.244    0.355   1           </b>
+       m = 1 |<b>    2    595.436      3.244    0.197   1           </b>
+       m = 2 |<b>    0    592.192      0.000       --   3 3         </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>    86</b>
+                                                        LR chi2(<b>2</b>)    = <b> 49.33</b>
+                                                        Prob &gt; chi2   = <b>0.0000</b>
+Log likelihood = <b>-296.0959</b>                              Pseudo R2     = <b>0.0769</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>   .0025188   .0008848     2.85   0.004     .0007846    .0042531</b>
+       ed2_2 |<b>  -.0007744   .0002898    -2.67   0.008    -.0013425   -.0002064</b>
+       _cons |<b>   .7632976   .3117176     2.45   0.014     .1523424    1.374253</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,160 missing values generated)
+(86 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4    423.050      4.860    0.302               </b>
+      linear |<b>    3    418.671      0.480    0.923   1           </b>
+       m = 1 |<b>    2    418.591      0.400    0.819   2           </b>
+       m = 2 |<b>    0    418.191      0.000       --   -2 -1       </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>    97</b>
+                                                        LR chi2(<b>2</b>)    = <b>  4.86</b>
+                                                        Prob &gt; chi2   = <b>0.0881</b>
+Log likelihood = <b>-209.09541</b>                             Pseudo R2     = <b>0.0115</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>   130.0095   106.6677     1.22   0.223    -79.05536    339.0743</b>
+       ed2_2 |<b>  -30.43477   20.82213    -1.46   0.144    -71.24539    10.37584</b>
+       _cons |<b>   3.075397   .9746499     3.16   0.002     1.165118    4.985675</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,149 missing values generated)
+(97 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4    100.921      5.516    0.238               </b>
+      linear |<b>    3     99.544      4.139    0.247   1           </b>
+       m = 1 |<b>    2     98.785      3.379    0.185   3           </b>
+       m = 2 |<b>    0     95.405      0.000       --   -2 -2       </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>    17</b>
+                                                        LR chi2(<b>2</b>)    = <b>  5.52</b>
+                                                        Prob &gt; chi2   = <b>0.0634</b>
+Log likelihood = <b>-47.702622</b>                             Pseudo R2     = <b>0.0547</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>   1538.059   669.9163     2.30   0.022     225.0476    2851.071</b>
+       ed2_2 |<b>  -783.1929   337.3305    -2.32   0.020    -1444.348   -122.0373</b>
+       _cons |<b>   4.459298   1.073041     4.16   0.000     2.356176     6.56242</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,229 missing values generated)
+(17 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4   5214.918    468.916    0.000               </b>
+      linear |<b>    3   4752.161      6.159    0.104   1           </b>
+       m = 1 |<b>    2   4752.161      6.159    0.046   1           </b>
+       m = 2 |<b>    0   4746.002      0.000       --   3 3         </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>   823</b>
+                                                        LR chi2(<b>2</b>)    = <b>468.92</b>
+                                                        Prob &gt; chi2   = <b>0.0000</b>
+Log likelihood = <b>-2373.0012</b>                             Pseudo R2     = <b>0.0899</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>   .0015904   .0003063     5.19   0.000     .0009901    .0021908</b>
+       ed2_2 |<b>  -.0004678   .0000987    -4.74   0.000    -.0006613   -.0002743</b>
+       _cons |<b>   .9341858   .1233811     7.57   0.000     .6923632    1.176008</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(1,423 missing values generated)
+(823 real changes made)
+(fitting 44 models)
+(....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%)
+<br>
+Fractional polynomial comparisons:
+-------------------------------------------------------------------
+             | Test              Deviance
+         ed2 |   df   Deviance       diff.       P   Powers
+-------------+-----------------------------------------------------
+     omitted |<b>    4   1068.569     98.960    0.000               </b>
+      linear |<b>    3    972.108      2.499    0.475   1           </b>
+       m = 1 |<b>    2    969.831      0.222    0.895   3           </b>
+       m = 2 |<b>    0    969.609      0.000       --   3 3         </b>
+-------------------------------------------------------------------
+Note: <b>Test df</b> is degrees of freedom, and <b>P</b> = P &gt; chi2 is sig. level
+      for tests comparing models vs. model with m = 2 based on
+      deviance difference, chi2.
+<br>
+Poisson regression                                      Number of obs = <b>   176</b>
+                                                        LR chi2(<b>2</b>)    = <b> 98.96</b>
+                                                        Prob &gt; chi2   = <b>0.0000</b>
+Log likelihood = <b>-484.80427</b>                             Pseudo R2     = <b>0.0926</b>
+<br>
+------------------------------------------------------------------------------
+        wage | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       ed2_1 |<b>  -.0002407   .0008374    -0.29   0.774    -.0018821    .0014006</b>
+       ed2_2 |<b>   .0001278   .0002707     0.47   0.637    -.0004028    .0006583</b>
+       _cons |<b>    1.83251     .32752     5.60   0.000     1.190583    2.474438</b>
+------------------------------------------------------------------------------
+(option <b>n</b> assumed; predicted number of events)
+(2,070 missing values generated)
+(176 real changes made)
+<br>
+<b>. sort industry grade</b>
+<br>
+<b>. twoway line wagehat grade, connect(L) name(spagetti1, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="spagetti1.png" width="630">
+<pre>
+    Maybe this becomes more informative if we plot these lines by industry
+    with all the lines as a grey background (Cox 2010)
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. bys Industry : gen id = _n</b>
+<br>
+<b>. fillin Industry id</b>
+<br>
+<b>. tempfile temp</b>
+<br>
+<b>. save `temp'</b>
+file<b> C:\Users\Admin\AppData\Local\Temp\ST_f0c_000008.tmp</b> saved as .dta format
+<br>
+<b>. forvalues i = 1/12 {</b>
+  2<b>.     bys id (wage`i') : replace wage`i' = wage`i'[1]</b>
+  3<b>.     by id : gen grade`i' = grade[1]</b>
+  4<b>. }</b>
+(204 real changes made)
+(8,411 missing values generated)
+(48 real changes made)
+(8,567 missing values generated)
+(348 real changes made)
+(8,424 missing values generated)
+(4,392 real changes made)
+(5,356 missing values generated)
+(1,080 real changes made)
+(7,956 missing values generated)
+(3,996 real changes made)
+(5,811 missing values generated)
+(2,304 real changes made)
+(7,241 missing values generated)
+(1,032 real changes made)
+(8,021 missing values generated)
+(1,164 real changes made)
+(7,826 missing values generated)
+(204 real changes made)
+(8,632 missing values generated)
+(9,876 real changes made)
+(13 missing values generated)
+(2,112 real changes made)
+(7,189 missing values generated)
+<br>
+<b>. keep if Industry == 1</b>
+(9,888 observations deleted)
+<br>
+<b>. keep id grade? grade?? wage? wage??</b>
+<br>
+<b>. merge 1:m id using `temp'</b>
+(label <b>Industry</b> already defined)
+(label <b>indlbl</b> already defined)
+(label <b>unionlbl</b> already defined)
+(label <b>ccitylbl</b> already defined)
+(label <b>southlbl</b> already defined)
+(label <b>occlbl</b> already defined)
+(label <b>nev_mar</b> already defined)
+(label <b>marlbl</b> already defined)
+(label <b>racelbl</b> already defined)
+(label <b>smsalbl</b> already defined)
+(label <b>gradlbl</b> already defined)
+<br>
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched              <b>               0</b>
+    Matched                  <b>          10,712</b>  (_merge==3)
+    -----------------------------------------
+<br>
+<b>. </b>
+<b>. local gr ""</b>
+<br>
+<b>. forvalues i = 1/12 {</b>
+  2<b>.     local gr `gr' line wage`i' grade`i' , ///</b>
+<b>&gt;         lpattern(solid) lcolor(gs12) sort ||</b>
+  3<b>. }</b>
+<br>
+<b>. </b>
+<b>. twoway `gr'                                           ///</b>
+<b>&gt;        line wagehat grade ,                           ///</b>
+<b>&gt;            by(Industry, legend(off) compact note("")) ///</b>
+<b>&gt;            sort yscale(log) ylab(2.5 5 10 20)         ///</b>
+<b>&gt;            lpattern(solid) lcolor(black) lwidth(*3)   ///      </b>
+<b>&gt;            xtitle(grade) ytitle(predicted wage)       ///</b>
+<b>&gt;            name(spagetti2, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="spagetti2.png" width="630">
+<pre>
+    We can also display a "rug" underneat to show the number of observations
+    on which these lines are based (Cox 2004).
+ 
+</pre>
+</div><pre class="output">
+<br>
+<b>. gen pipe = "|"</b>
+<br>
+<b>. gen y = 1.8</b>
+<br>
+<b>. gen gradej = grade + .5*runiform()</b>
+(8,468 missing values generated)
+<br>
+<b>. local gr ""</b>
+<br>
+<b>. forvalues i = 1/12 {</b>
+  2<b>.     local gr `gr' line wage`i' grade`i' , ///</b>
+<b>&gt;         lpattern(solid) lcolor(gs12) sort ||</b>
+  3<b>. }</b>
+<br>
+<b>. </b>
+<b>. twoway `gr'                                           ///</b>
+<b>&gt;        line wagehat grade ,                           ///</b>
+<b>&gt;            by(Industry, legend(off) compact note("")) ///</b>
+<b>&gt;            sort yscale(log) ylab(2.5 5 10 20)         ///</b>
+<b>&gt;            lpattern(solid) lcolor(black) lwidth(*3)   ///      </b>
+<b>&gt;            xtitle(grade) ytitle(predicted wage) ||    ///</b>
+<b>&gt;        scatter y gradej,                              ///</b>
+<b>&gt;            mlabel(pipe) mlabpos(0) mlabsize(vsmall)   ///</b>
+<b>&gt;            msymbol(i) name(spagetti3, replace)</b>
+<br>
+</pre>
+<div class="txt"><img src="spagetti3.png" width="630">
+<pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide5.smcl">&lt;&lt;</a> <a href="#background_grey.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide7.smcl">
+<div class="txt"><pre>
+<br>
+                                 <b> Bibliography</b>
+<br>
+<a name="cox04"></a>    Nicholas J. Cox (2004), "Speaking Stata: Graphing distributions", <i>The</i>
+        <i>Stata Journal</i>, <b>4</b>(1), pp. 66-88.
+ 
+<a name="cox09"></a>    Nicholas J. Cox (2009), "Stata tip 78: Going gray gracefully:
+        Highlighting subsets and downplaying substrates", <i>The Stata Journal</i>,
+        <b>9</b>(3), pp. 499-503.
+ 
+<a name="cox10"></a>    Nicholas J. Cox (2010), "Speaking Stata: Graphing subsets", <i>The Stata</i>
+        <i>Journal</i>, <b>20</b>(4), pp. 670-681.
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"> <a href="#background_grey.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+</body>
+</html>

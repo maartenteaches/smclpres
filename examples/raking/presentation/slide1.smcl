@@ -1,0 +1,54 @@
+{smcl}
+{* 18 Feb 2022}{...}
+{hline}
+{p}{bf:Standardizing a table}{p_end}
+{hline}
+
+{center:{bf: Standardize the table for homogamy}}
+
+{pstd}Consider the table of the education of the male and female partners in a
+marriage or stable partnership. {p_end}
+ 
+{* ex slide1ex1 }{...}
+{cmd}
+        clear
+        use homogamy_allbus.dta
+        tab meduc feduc, matcell(data)
+{txt}{...}
+{pstd}({stata "do slide1ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+{pstd}It is hard to interpret this table as is, because of the differences in 
+the margins.{p_end}
+
+{pstd}For example, it appears that a {bf:female with medium vocational education} 
+marying a {bf:male with lower vocational education} is more common than 
+{it:vice versa}.{p_end}
+
+{pstd}This is contrary to the notion that partnerships where the men are better 
+educated are more common. {p_end}
+
+{pstd}But the observed pattern may be due to the fact that 
+{bf:lower vocational education} is more common among men than women, and 
+{bf:medium vocational education} is more common among women than men.{p_end}
+
+{pstd}Can't we change the table such that the pattern of association remains 
+constant, but all the margins are the same, e.g. 100?{p_end}
+
+{pstd}That would make it easier to see patterns.{p_end}
+
+{pstd}Last week we solved this problem by looking at how independence was defined
+in a chi-square test:{p_end}
+
+{pstd}We imagined what the table would look like if the margins remained as we 
+observed them, but there is no other association between the row and column 
+variable{p_end}
+
+{pstd}This week we turn this around: We keep the association in the table as 
+observed, but change the margins. ({view slide14.smcl##yule12:Yule 1912}; {view slide14.smcl##agresti02:Agresti 2002} p. 345-346){p_end}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view raking.smcl:<<}   {view index.smcl:index}   {view slide2.smcl:>>}}
+{hline}
