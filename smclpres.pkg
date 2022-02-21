@@ -1,0 +1,15 @@
+v 4.0.0
+d 'SMCLPRES': smclpres
+d 
+d Create a .smcl presentation from a .do file
+d 
+d Distribution-Date:   20220221
+d License: Creative Commons Attribution 4.0
+d 
+F lsmclpres.mlib
+F pres2html.ado
+F pres2html.sthlp
+F smclpres.ado
+F smclpres.sthlp
+f background_grey.zip
+f raking.zip

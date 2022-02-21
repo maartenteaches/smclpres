@@ -1,0 +1,8 @@
+v 4.0.0
+d Materials by Maarten L. Buis
+d University of Konstanz
+d maarten.buis@uni.kn
+
+d 'smclpres': Create a .smcl presentation from a .do file
+
+p smclpres
