@@ -1,5 +1,3 @@
-cscript
-
 // write_title()
 mata:
 totest = smclpres()

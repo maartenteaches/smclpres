@@ -1,5 +1,3 @@
-cscript
-
 //countslides
 local using "bench/minimalist.do"
 mata:
@@ -9,7 +7,146 @@ totest.read_file()
 totest.count_slides()
 assert(cols(totest.slide) == 3)
 assert(cols(totest.settings.other.regslides) == 3)
+
+totest = smclpres()
+sourcemat = "//slide ", "file", "1" \
+            "//title foo", "file", "2" \
+            "//endlside", "file", "3"
+totest.source = sourcemat
+totest.rows_source = 3
 end
+rcof "noisily mata: totest.count_slides()" == 198
+
+mata:
+totest = smclpres()
+sourcemat = "//digr ", "file", "1" \
+            "//title foo", "file", "2" \
+            "//edndigr", "file", "3"
+totest.source = sourcemat
+totest.rows_source = 3
+end
+rcof "noisily mata: totest.count_slides()" == 198
+
+mata:
+totest = smclpres()
+sourcemat = "//anc ", "file", "1" \
+            "//title foo", "file", "2" \
+            "//ednanc", "file", "3"
+totest.source = sourcemat
+totest.rows_source = 3
+end
+rcof "noisily mata: totest.count_slides()" == 198
+
+mata:
+totest = smclpres()
+sourcemat = "//bib ", "file", "1" \
+            "//title foo", "file", "2" \
+            "//ednbib", "file", "3"
+totest.source = sourcemat
+totest.rows_source = 3
+end
+rcof "noisily mata: totest.count_slides()" == 198
+
+mata:
+totest = smclpres()
+sourcemat = "//slide ", "file", "1" \
+            "//title foo", "file", "2" \
+            "//endlside", "file", "3" \
+            "//slide", "file", "4"
+totest.source = sourcemat
+totest.rows_source = 4
+end
+rcof "noisily mata: totest.count_slides()" == 198
+
+mata:
+totest = smclpres()
+sourcemat = "//digr ", "file", "1" \
+            "//title foo", "file", "2" \
+            "//edndigr", "file", "3" \
+            "//slide", "file", "4"
+totest.source = sourcemat
+totest.rows_source = 4
+end
+rcof "noisily mata: totest.count_slides()" == 198
+
+mata:
+totest = smclpres()
+sourcemat = "//anc ", "file", "1" \
+            "//title foo", "file", "2" \
+            "//ednanc", "file", "3" \
+            "//slide", "file", "4"
+totest.source = sourcemat
+totest.rows_source = 4
+end
+rcof "noisily mata: totest.count_slides()" == 198
+
+mata:
+totest = smclpres()
+sourcemat = "//bib ", "file", "1" \
+            "//title foo", "file", "2" \
+            "//ednbib", "file", "3" \
+            "//slide", "file", "4"
+totest.source = sourcemat
+totest.rows_source = 4
+end
+rcof "noisily mata: totest.count_slides()" == 198
+
+//chk_anyopen
+mata:
+totest = smclpres()
+sourcemat = "foo", "file", "1"
+totest.source = sourcemat
+totest.rows_source = 1
+totest.chk_anyopen(0, 0,0,0, 1)
+end
+rcof "noisily mata: totest.chk_anyopen(1, 0,0,0, 1)" == 198
+rcof "noisily mata: totest.chk_anyopen(0, 1,0,0, 1)" == 198
+rcof "noisily mata: totest.chk_anyopen(0, 0,1,0, 1)" == 198
+rcof "noisily mata: totest.chk_anyopen(0, 0,0,1, 1)" == 198
+
+//chk_slideopen()
+mata:
+totest = smclpres()
+sourcemat = "foo", "file", "1"
+totest.source = sourcemat
+totest.rows_source = 1
+totest.chk_slideopen("slide",0, 0,0,0, 1)
+end
+rcof `"noisily mata: totest.chk_slideopen("slide", 1, 0,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideopen("slide", 0, 1,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideopen("slide", 0, 0,1,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideopen("slide", 0, 0,0,1, 1)"' == 198
+
+//chk_slideclose()
+mata:
+totest = smclpres()
+sourcemat = "foo", "file", "1"
+totest.source = sourcemat
+totest.rows_source = 1
+totest.chk_slideclose("slide",1, 0,0,0, 1)
+totest.chk_slideclose("ancilary slide",0, 1,0,0, 1)
+totest.chk_slideclose("digression slide",0, 0,1,0, 1)
+totest.chk_slideclose("bibliography slide",0, 0,0,1, 1)
+end
+rcof `"noisily mata: totest.chk_slideclose("slide", 0, 0,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("slide", 1, 1,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("slide", 1, 0,1,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("slide", 1, 0,0,1, 1)"' == 198
+
+rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 0,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 1, 1,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 1,1,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 1,0,1, 1)"' == 198
+
+rcof `"noisily mata: totest.chk_slideclose("digression slide", 0, 0,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("digression slide", 1, 0,1,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("digression slide", 0, 1,1,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("digression slide", 0, 0,1,1, 1)"' == 198
+
+rcof `"noisily mata: totest.chk_slideclose("bibliography slide", 0, 0,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("bibliography slide", 1, 0,0,1, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("bibliography slide", 0, 1,0,1, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("bibliography slide", 0, 0,1,1, 1)"' == 198
 
 // find_structure()
 local using "bench/minimalist.do"

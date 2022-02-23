@@ -1,5 +1,3 @@
-cscript
-
 // ----------------------------------- parsedirs()
 // absolute path
 local using "c:\temp\bla.do"

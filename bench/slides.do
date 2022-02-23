@@ -1,6 +1,3 @@
-cscript
-
-
 //start slide
 mata:
 totest = smclpres()

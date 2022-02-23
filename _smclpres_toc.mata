@@ -1,22 +1,161 @@
 mata:
+
+void smclpres::chk_slideopen(string scalar what, real scalar sopen, real scalar aopen, 
+                             real scalar dopen, real scalar bopen, real scalar where)
+{
+	if (sopen == 1) {
+		printf("{p}{err}Tried openening a " + what +" but a slide was already open{p_end}")
+		where_err(where)
+		exit(198)
+	}
+	if (aopen == 1) {
+		printf("{p}{err}Tried openening a " + what +" but an ancilary slide was already open{p_end}")
+		where_err(where)
+		exit(198)
+	}
+	if (dopen == 1) {
+		printf("{p}{err}Tried openening a " + what +" but a digression slide was already open{p_end}")
+		where_err(where)
+		exit(198)
+	}
+	if (bopen == 1) {
+		printf("{p}{err}Tried openening a " + what +" but a bibliography slide was already open{p_end}")
+		where_err(where)
+		exit(198)
+	}
+}							 
+
+void smclpres::chk_slideclose(string scalar what, real scalar sopen, real scalar aopen, 
+                             real scalar dopen, real scalar bopen, real scalar where)
+{
+	if (sopen == 0 & what == "slide") {
+		printf("{p}{err}Tried closing a slide but no slide was open{p_end}")
+		where_err(where)
+		exit(198)
+	}
+	if (sopen == 1 & what != "slide") {
+		printf("{p}{err}Tried closing a " + what + " but a slide was open{p_end}") 
+		where_err(where)
+		exit(198)
+	}
+	if (aopen == 0 & what == "ancilary slide") {
+		printf("{p}{err}Tried closing a ancilary slide but no ancilary slide was open{p_end}")
+		where_err(where)
+		exit(198)
+	}
+	if (aopen == 1 & what != "ancilary slide") {
+		printf("{p}{err}Tried closing a " + what + " but a ancilary slide was open{p_end}") 
+		where_err(where)
+		exit(198)
+	}
+	if (dopen == 0 & what == "digression slide") {
+		printf("{p}{err}Tried closing a digression slide but no digression slide was open{p_end}")
+		where_err(where)
+		exit(198)
+	}
+	if (dopen == 1 & what != "digression slide") {
+		printf("{p}{err}Tried closing a " + what + " but a digression slide was open{p_end}") 
+		where_err(where)
+		exit(198)
+	}	
+	if (bopen == 0 & what == "bibliography slide") {
+		printf("{p}{err}Tried closing a bibliography slide but no bibliography slide was open{p_end}")
+		where_err(where)
+		exit(198)
+	}
+	if (bopen == 1 & what != "bibliography slide") {
+		printf("{p}{err}Tried closing a " + what + " but a bibliography slide was open{p_end}") 
+		where_err(where)
+		exit(198)
+	}	
+}
+
+void smclpres::chk_anyopen(real scalar sopen, real scalar aopen, 
+                             real scalar dopen, real scalar bopen, real scalar where)
+{
+	string scalar what 
+	real scalar problem
+	problem = 0
+	if (sopen == 1) {
+		what = "a slide"
+		problem = 1
+	}
+	if (aopen == 1) {
+		what = "an ancilary slide"
+		problem = 1
+	}
+	if (dopen == 1) {
+		what = "a digression slide" 
+		problem = 1
+	}
+	if (bopen == 1) {
+		what = "a bibliography slide"
+		problem = 1
+	}
+	if (problem == 1) {
+		printf("{p}{err}" + what +" was opened, but never closed{p_end}")
+		printf("{p}{err}the unclosed slide was opened on line {res}" + source[where,3] + " {err}in {res}" + source[where,2] + "{p_end}")
+		exit(198)
+	}
+}
 void smclpres::count_slides() {
-	real scalar i, snr, regsl
+	real scalar i, snr, regsl, sopen, dopen, aopen, bopen, where
 	string rowvector line
 
 	snr   = 0
 	regsl = 0
+	sopen = 0
+	dopen = 0
+	aopen = 0
+	bopen = 0
 	for(i=1; i<=rows_source; i++) {
 		line = tokens(source[i,1])
 		if (cols(line) > 0) {
-			if (line[1]=="//endslide") {
+			if (line[1]== "//slide") {
+				chk_slideopen("slide", sopen, aopen, dopen, bopen, i)
+				sopen = 1
+				where = i
+			}
+			else if (line[1]== "//anc"){
+				chk_slideopen("ancilary slide", sopen, aopen, dopen, bopen, i)
+				aopen = 1
+				where = i
+			}
+			else if (line[1]=="//digr") {
+				chk_slideopen("digression slide", sopen, aopen, dopen, bopen, i)
+				dopen = 1
+				where = i
+			}
+			else if (line[1]=="//bib") {
+				chk_slideopen("bibliography slide", sopen, aopen, dopen, bopen, i)
+				bopen = 1
+				where = i
+			}
+			else if (line[1]=="//endslide") {
+				chk_slideclose("slide", sopen, aopen, dopen, bopen, i)
+				sopen = 0
 				snr = snr + 1
 				regsl = regsl + 1
 			}
-			if (line[1]=="//enddigr"  | line[1]=="//endanc" | line[1]== "//endbib") {
+			else if (line[1]=="//endanc") {
+				chk_slideclose("ancilary slide", sopen, aopen, dopen, bopen, i)
+				aopen = 0
+				snr = snr + 1
+			}
+			else if (line[1]=="//enddigr") {
+				chk_slideclose("digression slide", sopen, aopen, dopen, bopen, i)
+				dopen = 0
+				snr = snr + 1
+			}
+			else if (line[1]== "//endbib") {
+				chk_slideclose("bibliography slide", sopen, aopen, dopen, bopen, i)
+				bopen = 0
 				snr = snr + 1
 			}
 		}
 	}
+
+	chk_anyopen(sopen, aopen, dopen, bopen, where)
 	settings.other.regslides = J(1,regsl,.)
 	slide=strslide(snr)
 }

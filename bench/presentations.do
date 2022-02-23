@@ -1,5 +1,3 @@
-cscript
-
 mata:
 unlink("bench/test/incl_main.smcl")
 unlink("bench/test/slide1.smcl")

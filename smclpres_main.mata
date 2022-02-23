@@ -71,6 +71,9 @@ class smclpres {
     void                             toc_indent_settings()
 
     // _smclpres_toc.mata
+    void                             chk_anyopen()
+    void                             chk_slideclose()
+    void                             chk_slideopen()
     void                             count_slides()
     void                             where_err()
     void                             find_structure()
