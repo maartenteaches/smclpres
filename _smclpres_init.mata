@@ -4,7 +4,7 @@ void smclpres:: new() {
     defaults()
 	files.reinit("real")
     source = J(0,3,"")
-	smclpres_version = (4,0,0)
+	smclpres_version = (4,0,1)
 	source_version = J(0,3,.)
 }
 
