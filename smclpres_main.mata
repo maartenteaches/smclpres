@@ -46,6 +46,7 @@ class smclpres {
     void                             p_layout()
     void                             p_toc_sec_sub_sub()
     void                             p_font()
+    void                             p_font_old()
     void                             p_pos()
     void                             p_hline()
     void                             p_toc_itemize()

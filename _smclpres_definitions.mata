@@ -4,22 +4,17 @@ struct strtoc {
 	string              scalar    title
 	string              scalar    itemize
 	string              scalar    subtitlepos
-	string              scalar    subtitlebf
-	string              scalar    subtitleit
+	string              scalar    subtitlefont
 	string              scalar    subtitlethline
 	string              scalar    subtitlebhline
 	string              scalar    subtitle
 	string              scalar    anc
 	string              scalar    secthline
 	string              scalar    secbhline
-	string              scalar    secbf
-	string              scalar    secit
-	string              scalar    subsecbf
-	string              scalar    subsecit
-	string              scalar    subsubsecbf
-	string              scalar    subsubsecit
-	string              scalar    subsubsubsecbf
-	string              scalar    subsubsubsecit
+	string              scalar    secfont
+	string              scalar    subsecfont
+	string              scalar    subsubsecfont
+	string              scalar    subsubsubsecfont
 	string              scalar    nodigr
 }
 struct strtocfiles {

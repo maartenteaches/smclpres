@@ -63,37 +63,58 @@ void smclpres::allowed_arg_err(string scalar cmd, string scalar opt, string scal
 
 void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
+    allowed_arg_err(cmd, opt, arg, file, line, ("bold", "italic", "regular"))
+    if (cmd == "toc") {
+        if (opt == "secfont" ) {
+            settings.toc.secfont = arg
+        }
+        else if (opt == "subsecfont") {
+            settings.toc.subsecfont = arg
+        }
+        else if (opt == "subsubsecfont") {
+            settings.toc.subsubsecfont = arg
+        }
+        else if (opt == "subsubsubsecfont") {
+            settings.toc.subsubsubsecfont = arg
+        }
+        else if (opt == "subtitlefont") {
+            settings.toc.subtitlefont = arg
+        }
+    }
+}
+void smclpres::p_font_old(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
     no_arg_err(cmd, opt, arg, file, line)
     if (cmd=="toc") {
         if (opt=="secbold") {
-            settings.toc.secbf = "bold"
+            settings.toc.secfont = "bold"
         }
         if (opt=="secitalic") {
-            settings.toc.secit = "italic"
+            settings.toc.secfont = "italic"
         }    
         if (opt=="subsecbold") {
-            settings.toc.subsecbf = "bold"
+            settings.toc.subsecfont = "bold"
         }
         if (opt=="subsecitalic") {
-            settings.toc.subsecit = "italic"
+            settings.toc.subsecfont = "italic"
         }
         if (opt=="subsubsecbold") {
-            settings.toc.subsubsecbf = "bold"
+            settings.toc.subsubsecfont = "bold"
         }
         if (opt=="subsubsecitalic") {
-            settings.toc.subsubsecit = "italic"
+            settings.toc.subsubsecfont = "italic"
         }        
         if (opt=="subsubsubsecbold") {
-            settings.toc.subsubsubsecbf = "bold"
+            settings.toc.subsubsubsecfont = "bold"
         }
         if (opt=="subsubsubsecitalic") {
-            settings.toc.subsubsubsecit = "italic"
+            settings.toc.subsubsubsecfont = "italic"
         }
         if (opt=="nosubtitlebold") {
-            settings.toc.subtitlebf = "regular"
+            settings.toc.subtitlefont = "regular"
         }
         if (opt=="subtitleitalic") {
-            settings.toc.subtitleit = "italic"
+            settings.toc.subtitlefont = "italic"
         }
     }    
     if (cmd=="title"){
@@ -516,16 +537,21 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 		else if (opt == "subtitlepos"       ) p_pos(cmd, opt, arg, file , line)
 		else if (opt == "link"              ) p_toc_sec_sub_sub(cmd, opt, arg, file , line)
 		else if (opt == "title"             ) p_toc_sec_sub_sub(cmd, opt, arg, file , line)
-		else if (opt == "secbold"           ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "secitalic"         ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsecbold"        ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsecitalic"      ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsubsecbold"     ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsubsecitalic"   ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsubsubsecbold"  ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsubsubsecitalic") p_font(cmd, opt, arg, file , line)
-		else if (opt == "nosubtitlebold"    ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subtitleitalic"    ) p_font(cmd, opt, arg, file , line)
+        else if (opt == "secfont"           ) p_font(cmd, opt, arg, file, line)
+        else if (opt == "subsecfont"        ) p_font(cmd, opt, arg, file, line)
+        else if (opt == "subsubsecfont"     ) p_font(cmd, opt, arg, file, line)
+        else if (opt == "subsubsubsecfont"  ) p_font(cmd, opt, arg, file, line)
+        else if (opt == "subtitlefont"      ) p_font(cmd, opt, arg, file, line)
+		else if (opt == "secbold"           ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "secitalic"         ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsecbold"        ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsecitalic"      ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsubsecbold"     ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsubsecitalic"   ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsubsubsecbold"  ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsubsubsecitalic") p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "nosubtitlebold"    ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subtitleitalic"    ) p_font_old(cmd, opt, arg, file , line)
 		else notallowed(cmd, opt, arg, file , line)
 	}
 	else if (cmd=="tocfiles"){
@@ -572,10 +598,10 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 		else if (opt == "nothline"          ) p_hline(cmd, opt, arg, file , line)
 		else if (opt == "nobhline"          ) p_hline(cmd, opt, arg, file , line)
 		else if (opt == "nosubsec"          ) p_topbar_nosubsec(cmd, opt, arg, file , line)
-		else if (opt == "nosecbold"         ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "secitalic"         ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsecbold"        ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsecitalic"      ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "nosecbold"         ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "secitalic"         ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsecbold"        ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsecitalic"      ) p_font_old(cmd, opt, arg, file , line)
 		else if (opt == "sep"               ) p_topbar_sep(cmd, opt, arg, file , line)		
 		else notallowed(cmd, opt, arg, file , line)
 	}
@@ -594,8 +620,8 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 	else if (cmd == "title") {
 		if      (opt == "thline"            ) p_hline(cmd, opt, arg, file , line)
 		else if (opt == "bhline"            ) p_hline(cmd, opt, arg, file , line)
-		else if (opt == "nobold"            ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "italic"            ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "nobold"            ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "italic"            ) p_font_old(cmd, opt, arg, file , line)
 		else if (opt == "left"              ) p_pos(cmd, opt, arg, file , line)
 		else if (opt == "center"            ) p_pos(cmd, opt, arg, file , line)
 		else notallowed(cmd, opt, arg, file , line)
