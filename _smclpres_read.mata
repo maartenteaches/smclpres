@@ -165,8 +165,14 @@ void smclpres::p_pos(string scalar cmd, string scalar opt, string scalar arg, st
         settings.toc.subtitlepos = arg
     }
     if (cmd=="title") {
-        no_arg_err(cmd, opt, arg, file, line)
-        settings.title.pos = opt 
+        if (opt == "pos") {
+            allowed_arg_err(cmd, opt, arg, file, line, ("left", "center"))
+            settings.title.pos = arg
+        }
+        else if (opt=="left"|opt == "center") {
+            no_arg_err(cmd, opt, arg, file, line)
+            settings.title.pos = opt 
+        }
     }
 }
 void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
@@ -638,6 +644,7 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 		else if (opt == "italic"            ) p_font_old(cmd, opt, arg, file , line)
 		else if (opt == "left"              ) p_pos(cmd, opt, arg, file , line)
 		else if (opt == "center"            ) p_pos(cmd, opt, arg, file , line)
+        else if (opt == "pos"               ) p_pos(cmd, opt, arg, file , line)
 		else notallowed(cmd, opt, arg, file , line)
 	}
 	else if (cmd == "tabs") {

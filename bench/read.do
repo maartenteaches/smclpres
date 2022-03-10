@@ -340,6 +340,11 @@ assert(totest.settings.bottombar.next == "right")
 totest.p_pos("toc", "subtitlepos", "left", "file", "4")
 assert(totest.settings.toc.subtitlepos == "left")
 
+totest.p_pos("title", "pos", "left", "file", "4")
+assert(totest.settings.title.pos == "left")
+totest.p_pos("title", "pos", "center", "file", "4")
+assert(totest.settings.title.pos == "center")
+
 totest.p_pos("title", "left", "", "file", "4")
 assert(totest.settings.title.pos == "left")
 totest.p_pos("title", "center", "", "file", "4")
