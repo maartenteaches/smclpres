@@ -57,10 +57,8 @@ void smclpres::defaults()
 	settings.topbar.thline      = "hline"
 	settings.topbar.bhline      = "hline"
 	settings.topbar.subsec      = "subsec"
-	settings.topbar.secbf       = "bold"
-	settings.topbar.secit       = "regular"
-	settings.topbar.subsecbf    = "regular"
-	settings.topbar.subsecit    = "regular"
+	settings.topbar.secfont     = "bold"
+	settings.topbar.subsecfont  = "regular"
 	settings.topbar.sep         = " {hline 2} "	
 	
 	settings.bottombar.thline   = "hline"
@@ -74,9 +72,8 @@ void smclpres::defaults()
 	settings.title.thline       = "nohline"
 	settings.title.bhline       = "nohline"
 	settings.title.pos          = "center"
-	settings.title.bold         = "bold"
-	settings.title.italic       = "regular"
-	
+	settings.title.font         = "bold"
+		
 	settings.other.titlepage    = 0
 	settings.other.tab          = 4
 	

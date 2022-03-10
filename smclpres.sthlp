@@ -1022,7 +1022,7 @@ link that runs the examples{p_end}
 {synoptline}
 {p2colreset}{...}
 
-{synoptset 20 tabbed}{...}
+{synoptset 23 tabbed}{...}
 {synopthdr:layout options}
 {synoptline}
 {syntab://layout title}
@@ -1032,8 +1032,7 @@ link that runs the examples{p_end}
 title{p_end}
 {synopt:{opt bhline}}display a horizontal line at the bottom of the 
 title{p_end}
-{synopt:{opt nobold}}title is not in bold font{p_end}
-{synopt:{opt italic}}title is in italic font{p_end}
+{synopt:{opt font(font)}}specifies font for title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:bold}{p_end}
 
 {syntab://layout topbar}
 {synopt:{opt off}}suppress the bar at the top of the slide{p_end}
@@ -1043,10 +1042,8 @@ title{p_end}
 bar{p_end}
 {synopt:{opt nobhline}}do not display a horizontal line at the bottom of the top 
 bar{p_end}
-{synopt:{opt nosecbold}}section title is not bold{p_end}
-{synopt:{opt secitalic}}section title is italic{p_end}
-{synopt:{opt subsecbold}}sub-section title is bold{p_end}
-{synopt:{opt subsecitalic}}sub-section title is italic{p_end}
+{synopt:{opt secfont(font)}}specifies font for section title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:bold}{p_end}
+{synopt:{opt subsecfont(font)}}specifies font for subsection title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
 {synopt:{opt sep(string)}}separator between the section and subsection, default 
 is " {c -(}hline 2{c )-} "{p_end}
 
@@ -1092,22 +1089,17 @@ not be preceded by a marker, and all markers are moved one level down.{p_end}
 {synopt:{opt secbhline}}draw a horizontal line below each section on the index 
 slide. If this is specified in combination with {cmd:itemize}, then the section 
 will not be preceded by a marker, and all markers are moved one level down.{p_end}
-{synopt:{opt secbold}}section name on index slide is in bold font{p_end}
-{synopt:{opt secitalic}}section name on index slide in in italic font{p_end}
-{synopt:{opt subsecbold}}subsection name on index slide is in bold font{p_end}
-{synopt:{opt subsecitalic}}subsection name on index slide in in italic font{p_end}
-{synopt:{opt subsubsecbold}}subsubsection name on index slide is in bold font{p_end}
-{synopt:{opt subsubsecitalic}}subsubsection name on index slide in in italic font{p_end}
-{synopt:{opt subsubsubsecbold}}subsubsubsection name on index slide is in bold font{p_end}
-{synopt:{opt subsubsubsecitalic}}subsubsubsection name on index slide in in italic font{p_end}
+{synopt:{opt secfont(font)}}specifies font for section title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
+{synopt:{opt subsecfont(font)}}specifies font for subsection title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
+{synopt:{opt subsubsecfont(font)}}specifies font for subsubsection title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
+{synopt:{opt subsubsubsecfont(font)}}specifies font for subsubsubsection title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
 {synopt:{opt subtitle(string)}}if {cmd://layout tocfiles on} is specified, then the index
 slide will consist of two parts: the index of slides followed by an index of 
 files used in the presentation. {it:string} will be used as a title for the index
 of slides. The default is "Slide table of contents"{p_end}
-{synopt:{cmd:subtitlepos(}{it:left}|{it:center}{opt )}}specifies whether the subtitle
-will be left justified or centered{p_end}
-{synopt:{opt nosubtitlebold}}specifies that the subtitle will not be bold{p_end}
-{synopt:{opt subtitleitalic}}specifies that the subtitle will be italic{p_end}
+{synopt:{opt subtitlepos(pos)}}specifies justification of the subtitle. {it:pos} can be either 
+{it:left} or {it:center}. Default is {it:center}{p_end}
+{synopt:{opt subtitlefont(font)}}specifies font for subtitle, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:bold}{p_end}
 {synopt:{opt nosubtitlethline}}specifies that there is no horizontal line above
 the subtitle{p_end}
 {synopt:{opt nosubtitlebhline}}specifies that there is no horizontal line below
@@ -1549,10 +1541,8 @@ at this point in the .html handout.
 {opt bhline} display a horizontal line at the bottom of the title
 
 {phang}
-{opt nobold} title is not in bold font
-
-{phang}
-{opt italic} title is in italic font
+{opt font(font)} Specifies the font used for the title. Can be {it:bold}, {it:italic}, 
+or {it:regular}. The default is {it:bold}.
 
 {dlgtab 4 2://layout topbar options}
 
@@ -1574,16 +1564,12 @@ at this point in the .html handout.
 {opt nobhline} do not draw a horizontal line below the topbar
 
 {phang}
-{opt nosecbold} do not display the section in bold font
+{opt secfont(font)} Specifies the font used for the subsection. Can be {it:bold}, {it:italic}, 
+or {it:regular}. The default is {it:bold}.
 
 {phang}
-{opt secitalic} section is in italic font
-
-{phang}
-{opt subsecbold} subsection is in bold font
-
-{phang}
-{opt subsecitalic} subsection is in italic font
+{opt subsecfont(font)} Specifies the font used for the title. Can be {it:bold}, {it:italic}, 
+or {it:regular}. The default is {it:regular}.
 
 {phang}
 {opt sep(string)} a string that separates the section from the subsection. The 
@@ -1670,36 +1656,28 @@ with the title of the ancillary slide. additionally, they will be marked with
 {opt secbhline} draw a horizontal line below each section on the index slide.
 
 {phang}
-{opt secbold} section name on index slide is in bold font
+{opt secfont(font)} Specifies the font used for the section name. Can be {it:bold}, {it:italic}, 
+or {it:regular}. The default is {it:regular}.
 
 {phang}
-{opt secitalic} section name on index slide is in italic font
+{opt subsecfont(font)} Specifies the font used for the subsection name. Can be {it:bold}, {it:italic}, 
+or {it:regular}. The default is {it:regular}.
 
 {phang}
-{opt subsecbold} subsection name on index slide is in bold font
-
-{phang}
-{opt subsectitalic} subsection name on index slide is in italic font
-
-{phang}
-{opt subsubsecbold} subsubsection name on index slide is in bold font
+{opt subsubsecfont(font)} Specifies the font used for the subsubsection name. Can be {it:bold}, {it:italic}, 
+or {it:regular}. The default is {it:regular}.
 
 {pmore}
 A subsubsections will be the titles of individual slides when the option 
        {opt title(subsubsection)} has been specified.
 
 {phang}
-{opt subsubsecitalic} subsubsection name on index slide is in italic font
-
-{phang}
-{opt subsubsubsecbold} subsubsubsection name on index slide is in bold font
+{opt subsubsubsecfont(font)} Specifies the font used for the subsubsubsection name. Can be {it:bold}, {it:italic}, 
+or {it:regular}. The default is {it:regular}.
 
 {pmore}
 A subsubsubsection will be a digression slide when the {opt title(subsubsection)} 
 options has been specified
-
-{phang}
-{opt subsubsubsecitalic} subsubsubsection name on index slide is in italic font
 
 {phang}
 {opt subtitle(string)} if {cmd://layout tocfiles on} is specified, then the index 
@@ -1713,10 +1691,8 @@ options has been specified
        will be left justified or centered
 
 {phang}
-{opt nosubtitlebold} specifies that the subtitle will not be bold
-
-{phang}
-{opt subtitleitalic} specifies that the subtitle be italic
+{opt subtitlefont(font)} Specifies the font used for the subtitle. Can be {it:bold}, {it:italic}, 
+or {it:regular}. The default is {it:bold}.
 
 {phang}
 {opt nosubtitlethline} suppresses a horizontal line above the subtitle

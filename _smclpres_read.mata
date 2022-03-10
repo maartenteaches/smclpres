@@ -81,6 +81,19 @@ void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, s
             settings.toc.subtitlefont = arg
         }
     }
+    else if (cmd == "title") {
+        if (opt == "font") {
+            settings.title.font = arg
+        }
+    }
+    else if (cmd == "topbar") {
+        if (opt == "secfont") {
+            settings.topbar.secfont = arg
+        }
+        else if (opt == "subsecfont") {
+            settings.topbar.subsecfont = arg
+        }
+    }
 }
 void smclpres::p_font_old(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
@@ -119,24 +132,24 @@ void smclpres::p_font_old(string scalar cmd, string scalar opt, string scalar ar
     }    
     if (cmd=="title"){
         if (opt=="nobold") {
-            settings.title.bold = "regular"
+            settings.title.font = "regular"
         }
         if (opt=="italic") {
-            settings.title.italic = "italic"
+            settings.title.font = "italic"
         }  
     }
     if (cmd=="topbar"){
         if (opt=="nosecbold") {
-            settings.topbar.secbf = "regular"
+            settings.topbar.secfont = "regular"
         }
         if (opt=="secitalic") {
-            settings.topbar.secit = "italic"
+            settings.topbar.secfont = "italic"
         }    
         if (opt=="subsecbold") {
-            settings.topbar.subsecbf = "bold"
+            settings.topbar.subsecfont = "bold"
         }
         if (opt=="subsecitalic") {
-            settings.topbar.subsecit = "italic"
+            settings.topbar.subsecfont = "italic"
         }
     }
 }
@@ -620,6 +633,7 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 	else if (cmd == "title") {
 		if      (opt == "thline"            ) p_hline(cmd, opt, arg, file , line)
 		else if (opt == "bhline"            ) p_hline(cmd, opt, arg, file , line)
+        else if (opt == "font"              ) p_font(cmd, opt, arg, file, line)
 		else if (opt == "nobold"            ) p_font_old(cmd, opt, arg, file , line)
 		else if (opt == "italic"            ) p_font_old(cmd, opt, arg, file , line)
 		else if (opt == "left"              ) p_pos(cmd, opt, arg, file , line)

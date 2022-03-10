@@ -42,10 +42,8 @@ struct strtopbar {
 	string              scalar    thline      
 	string              scalar    bhline      
 	string              scalar    subsec      
-	string              scalar    secbf       
-	string              scalar    secit       
-	string              scalar    subsecbf    
-	string              scalar    subsecit    
+	string              scalar    secfont       
+	string              scalar    subsecfont
 	string              scalar    sep         	
 }
 struct strbottombar {
@@ -62,8 +60,7 @@ struct strtitle {
 	string              scalar    thline    
 	string              scalar    bhline    
 	string              scalar    pos       
-	string              scalar    bold      
-	string              scalar    italic    
+	string              scalar    font      
 }
 struct strother {
 	real                rowvector regslides
