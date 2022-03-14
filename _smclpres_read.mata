@@ -36,19 +36,22 @@ void smclpres::no_arg_err(string scalar cmd, string scalar opt, string scalar ar
     }
 }
 
-void smclpres::allowed_arg_err(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line, string rowvector allowed)
+void smclpres::allowed_arg_err(string scalar cmd, string scalar opt, string rowvector arg, string scalar file, string scalar line, string rowvector allowed)
 {
 	string scalar errmsg, all_err
-    real scalar k, i
-    
-    if (anyof(allowed, arg)== 0) {
+    real scalar k, i, err
+    err = 0
+    for(i=1; i<=cols(arg);i++) {
+        err = err + !anyof(allowed, arg[i])
+    }
+    if (err== 1) {
         k = cols(allowed)
-        all_err = allowed[1]
+        all_err = "{res}" + allowed[1] + "{err}"
         if (k>1) {
             for(i=2; i<k; i++) {
-                all_err = all_err + ", " + allowed[i]
+                all_err = all_err + ", {res}" + allowed[i] + "{err}"
             }
-            all_err = all_err + ", or " + allowed[k]
+            all_err = all_err + ", or {res}" + allowed[k]
         }
     
         errmsg = "{p}{err} option {res}" + opt + "{err} in " +

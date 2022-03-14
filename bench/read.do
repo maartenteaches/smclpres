@@ -230,7 +230,10 @@ rcof `"noi mata: totest.no_arg_err("topbar", "italic", "regular", "file", "4")"'
 noi mata: totest.allowed_arg_err("topbar", "italic", "regular", "file", "4", ("regular", "italic"))
 noi mata: totest.allowed_arg_err("topbar", "italic", "italic", "file", "4", ("regular", "italic"))
 rcof `"noi mata: totest.allowed_arg_err("topbar", "italic", "bold", "file", "4", ("regular", "italic"))"' == 198
-
+noi mata : totest.allowed_arg_err("topbar", "hline", ("top","bottom"), "file", "4", ("bottom", "top"))
+noi mata : totest.allowed_arg_err("topbar", "hline", tokens("top bottom"), "file", "4", ("bottom", "top"))
+rcof `"noi mata : totest.allowed_arg_err("topbar", "hline", tokens("top middle bottom"), "file", "4", ("bottom", "top"))"' == 198
+exit
 //p_font()
 mata:
 totest = smclpres()
