@@ -1,13 +1,13 @@
 mata:
 void smclpres::write_title( string scalar line, real scalar dest, | string scalar multiline) {
 	if (args() == 2) fput(dest,"")	
-	if (settings.title.thline == "hline" & args()==2) {
+	if (settings.title.hline.top == "hline" & args()==2) {
 		fput(dest, "{hline}")
 	}
-	if (settings.title.bold == "bold") {
+	if (settings.title.font == "bold") {
 		line = "{bf:" + line + "}"
 	}
-	if (settings.title.italic == "italic" ) {
+	if (settings.title.font == "italic" ) {
 		line = "{it:" + line + "}"
 	}
 	if (settings.title.pos == "center") {
@@ -17,7 +17,7 @@ void smclpres::write_title( string scalar line, real scalar dest, | string scala
 		line = "{p}" + line + "{p_end}"
 	}
 	fput(dest, line)
-	if (settings.title.bhline == "hline" & args()==2) {
+	if (settings.title.hline.bottom == "hline" & args()==2) {
 		fput(dest, "{hline}")
 	}
 	if (args()==2) fput(dest,"")
@@ -34,20 +34,20 @@ void smclpres::write_topbar(real scalar dest, real scalar snr) {
 		
 		line = "{p}"
 		temp = slide[snr].section
-		if (settings.topbar.secbf == "bold") {
+		if (settings.topbar.secfont == "bold") {
 			temp = "{bf:" + temp + "}"
 		}
-		if (settings.topbar.secit == "italic") {
+		if (settings.topbar.secfont == "italic") {
 			temp = "{it:" + temp + "}"
 		}
 		line = line + temp
 		if (slide[snr].subsection != "" & 
 		    settings.topbar.subsec=="subsec") {
 			temp = slide[snr].subsection
-			if (settings.topbar.subsecbf == "bold") {
+			if (settings.topbar.subsecfont == "bold") {
 				temp = "{bf:" + temp + "}"
 			}
-			if (settings.topbar.subsecit == "italic") {
+			if (settings.topbar.subsecfont == "italic") {
 				temp = "{it:" + temp + "}"
 			}	
 			line = line + settings.topbar.sep + temp
@@ -57,30 +57,30 @@ void smclpres::write_topbar(real scalar dest, real scalar snr) {
 	}
 	else if (slide[snr].type == "ancillary") {
 		line = settings.toc.anc
-		if (settings.topbar.secbf == "bold") {
+		if (settings.topbar.secfont == "bold") {
 			line = "{bf:" + line + "}"
 		}
-		if (settings.topbar.secit == "italic") {
+		if (settings.topbar.secfont == "italic") {
 			line = "{it:" + line + "}"
 		}
 		line = "{p}" + line + "{p_end}"
 	}
 	else if (slide[snr].type == "digression") {
 		line = settings.digress.name
-		if (settings.topbar.secbf == "bold") {
+		if (settings.topbar.secfont == "bold") {
 			line = "{bf:" + line + "}"
 		}
-		if (settings.topbar.secit == "italic") {
+		if (settings.topbar.secfont == "italic") {
 			line = "{it:" + line + "}"
 		}
 		line = "{p}" + line + "{p_end}"
 	}
 	if (line != "") {
-		if (settings.topbar.thline=="hline") {
+		if (settings.topbar.hline.top=="hline") {
 			fput(dest, "{hline}")
 		}
 		fput(dest,line)
-		if (settings.topbar.bhline=="hline") {
+		if (settings.topbar.hline.bottom=="hline") {
 			fput(dest, "{hline}")
 		}	
 	}
@@ -125,7 +125,7 @@ void smclpres::write_bottombar( real scalar dest,
 	
 	fput(dest, " ")
 	fput(dest, " ")
-	if (settings.bottombar.thline == "hline") {
+	if (settings.bottombar.hline.top == "hline") {
 		fput(dest,"{* /p}{hline}")
 	}
 	line = "{* bottombar }"
@@ -164,7 +164,7 @@ void smclpres::write_bottombar( real scalar dest,
 		}
 	}
 	fput(dest, line)
-	if (settings.bottombar.bhline == "hline") {
+	if (settings.bottombar.hline.bottom == "hline") {
 		fput(dest,"{hline}")
 	}	
 }

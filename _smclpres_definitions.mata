@@ -4,23 +4,20 @@ struct strtoc {
 	string              scalar    title
 	string              scalar    itemize
 	string              scalar    subtitlepos
-	string              scalar    subtitlebf
-	string              scalar    subtitleit
-	string              scalar    subtitlethline
-	string              scalar    subtitlebhline
+	string              scalar    subtitlefont
+	struct strhline     scalar    subtitlehline
 	string              scalar    subtitle
 	string              scalar    anc
-	string              scalar    secthline
-	string              scalar    secbhline
-	string              scalar    secbf
-	string              scalar    secit
-	string              scalar    subsecbf
-	string              scalar    subsecit
-	string              scalar    subsubsecbf
-	string              scalar    subsubsecit
-	string              scalar    subsubsubsecbf
-	string              scalar    subsubsubsecit
+	struct strhline     scalar    sechline
+	string              scalar    secfont
+	string              scalar    subsecfont
+	string              scalar    subsubsecfont
+	string              scalar    subsubsubsecfont
 	string              scalar    nodigr
+}
+struct strhline {
+	string              scalar    top
+	string              scalar    bottom
 }
 struct strtocfiles {
 	string              scalar    on        
@@ -44,18 +41,14 @@ struct strexample {
 }
 struct strtopbar {
 	string              scalar    on          
-	string              scalar    thline      
-	string              scalar    bhline      
+	struct strhline     scalar    hline      
 	string              scalar    subsec      
-	string              scalar    secbf       
-	string              scalar    secit       
-	string              scalar    subsecbf    
-	string              scalar    subsecit    
+	string              scalar    secfont       
+	string              scalar    subsecfont
 	string              scalar    sep         	
 }
 struct strbottombar {
-	string              scalar    thline   
-	string              scalar    bhline   
+	struct strhline     scalar    hline   
 	string              scalar    arrow    
 	string              scalar    index    
 	string              scalar    nextname 
@@ -64,11 +57,9 @@ struct strbottombar {
 	string              scalar    toc
 }
 struct strtitle {
-	string              scalar    thline    
-	string              scalar    bhline    
+	struct strhline     scalar    hline    
 	string              scalar    pos       
-	string              scalar    bold      
-	string              scalar    italic    
+	string              scalar    font      
 }
 struct strother {
 	real                rowvector regslides

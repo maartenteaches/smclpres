@@ -1,6 +1,5 @@
-*! version 4.0.1 MLB 23Feb2022
-*  check if opening a slide is matched with closing a slide
-*  and give appropriate error message when that is not the case  
+*! version 4.0.2 MLB 15Mar2022
+*  new syntax for specifying font, position, and hline 
 
 program define smclpres, rclass
 	version 14.2

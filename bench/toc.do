@@ -220,8 +220,7 @@ fclose(fh)
 unlink("bench/write_toc_subtitle.test")
 
 totest = smclpres()
-totest.settings.toc.subtitlebf="regular"
-totest.settings.toc.subtitleit="italic"
+totest.settings.toc.subtitlefont="italic"
 unlink("bench/write_toc_subtitle.test")
 fh = fopen("bench/write_toc_subtitle.test", "w")
 totest.write_toc_subtitle("slides", fh)
@@ -238,8 +237,8 @@ fclose(fh)
 unlink("bench/write_toc_subtitle.test")
 
 totest = smclpres()
-totest.settings.toc.subtitlethline="nohline"
-totest.settings.toc.subtitlebhline="nohline"
+totest.settings.toc.subtitlehline.top="nohline"
+totest.settings.toc.subtitlehline.bottom="nohline"
 unlink("bench/write_toc_subtitle.test")
 fh = fopen("bench/write_toc_subtitle.test", "w")
 totest.write_toc_subtitle("slides", fh)
@@ -318,8 +317,8 @@ sourcemat = "/*toctitle", "file", "1" \
 totest = smclpres() 
 totest.source = sourcemat 
 totest.rows_source = 4         
-totest.settings.title.thline = "hline"
-totest.settings.title.bhline = "hline"
+totest.settings.title.hline.top = "hline"
+totest.settings.title.hline.bottom = "hline"
 unlink("bench/write_toc_top.test")
 fh = fopen("bench/write_toc_top.test", "w")
 totest.write_toc_top(fh)
@@ -343,8 +342,7 @@ sourcemat = "/*toctitle", "file", "1" \
 totest = smclpres() 
 totest.source = sourcemat 
 totest.rows_source = 4         
-totest.settings.title.bold = "regular"
-totest.settings.title.italic = "italic"
+totest.settings.title.font = "italic"
 unlink("bench/write_toc_top.test")
 fh = fopen("bench/write_toc_top.test", "w")
 totest.write_toc_top(fh)
@@ -369,8 +367,7 @@ sourcemat = "//toctitle foo bar", "file", "1" \
 totest = smclpres() 
 totest.source = sourcemat 
 totest.rows_source = 6         
-totest.settings.title.bold = "regular"
-totest.settings.title.italic = "italic"
+totest.settings.title.font = "italic"
 unlink("bench/write_toc_top.test")
 fh = fopen("bench/write_toc_top.test", "w")
 totest.write_toc_top(fh)
@@ -426,7 +423,7 @@ totest.slide = strslide(10)
 totest.settings.toc.link = "subsection"
 totest.slide[5].section = "bla bla"
 totest.settings.other.l1 = "{p 4 5 2}"
-totest.settings.toc.secbf = "bold"
+totest.settings.toc.secfont = "bold"
 fh = fopen("bench/write_toc_section.test", "w")
 totest.write_toc_section(5,fh)
 fclose(fh)
@@ -442,8 +439,8 @@ totest.slide = strslide(10)
 totest.settings.toc.link = "subsection"
 totest.slide[5].section = "bla bla"
 totest.settings.other.l1 = "{p 4 5 2}"
-totest.settings.toc.secbf = "bold"
-totest.settings.toc.secbhline = "hline"
+totest.settings.toc.secfont = "bold"
+totest.settings.toc.sechline.bottom = "hline"
 fh = fopen("bench/write_toc_section.test", "w")
 totest.write_toc_section(5,fh)
 fclose(fh)
@@ -491,7 +488,7 @@ totest = smclpres()
 totest.slide = strslide(10)
 totest.settings.other.l2 = "{p 8 9 2}"
 totest.slide[5].subsection = "bla bla"
-totest.settings.toc.subsecit = "italic"
+totest.settings.toc.subsecfont = "italic"
 unlink("bench/write_toc_subsection.test")
 fh = fopen("bench/write_toc_subsection.test", "w")
 totest.write_toc_subsection(5,fh)
@@ -567,7 +564,7 @@ fclose(fh)
 
 totest = smclpres()
 totest.settings.toc.title = "subsubsection"
-totest.settings.toc.subsubsecbf = "bold"
+totest.settings.toc.subsubsecfont = "bold"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
 totest.slide[5].type = "regular"
@@ -583,7 +580,7 @@ fclose(fh)
 
 totest = smclpres()
 totest.settings.toc.title = "subsubsection"
-totest.settings.toc.subsubsecit = "italic"
+totest.settings.toc.subsubsecfont = "italic"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
 totest.slide[5].type = "regular"
@@ -740,7 +737,7 @@ totest = smclpres()
 totest.source = sourcemat 
 totest.rows_source = 17   
 totest.toc_indent_settings()  
-totest.settings.toc.secbf = "bold"    
+totest.settings.toc.secfont = "bold"    
 unlink("bench/write_toc_files.test")
 fh = fopen("bench/write_toc_files.test", "w")
 totest.write_toc_files(fh)

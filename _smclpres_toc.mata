@@ -331,13 +331,13 @@ void smclpres::write_toc_top(real scalar dest) {
 			else if (left == "/*toctitle") {
 				titleopen = 1
 				fput(dest, "")
-				if (settings.title.thline == "hline") {
+				if (settings.title.hline.top == "hline") {
 					fput(dest, "{hline}")
 				}
 			}
 			else if (left == "toctitle*/") {
 				titleopen = 0
-				if (settings.title.bhline == "hline") {
+				if (settings.title.hline.bottom == "hline") {
 					fput(dest, "{hline}")
 				}
 				fput(dest,"")
@@ -376,7 +376,7 @@ void smclpres::write_toc_subtitle(string scalar which, real scalar dest) {
 	fput(dest,"")
 	fput(dest,"")
 	fput(dest,"")
-	if (settings.toc.subtitlethline == "hline"){
+	if (settings.toc.subtitlehline.top == "hline"){
 		fput(dest, "{hline}")
 	}
 	if (which == "slides") {
@@ -385,10 +385,10 @@ void smclpres::write_toc_subtitle(string scalar which, real scalar dest) {
 	if (which == "files" ) {
 		temp = settings.tocfiles.name
 	}
-	if (settings.toc.subtitlebf == "bold") {
+	if (settings.toc.subtitlefont == "bold") {
 		temp = "{bf:" + temp + "}"
 	}
-	if (settings.toc.subtitleit == "italic") {
+	if (settings.toc.subtitlefont == "italic") {
 		temp = "{it:" + temp + "}"
 	}
 	if (settings.toc.subtitlepos == "center") {
@@ -398,7 +398,7 @@ void smclpres::write_toc_subtitle(string scalar which, real scalar dest) {
 		temp = "{p}" + temp + "{p_end}"
 	}
 	fput(dest, temp)
-	if (settings.toc.subtitlebhline == "hline"){
+	if (settings.toc.subtitlehline.bottom == "hline"){
 		fput(dest, "{hline}")
 	}	
 }
@@ -430,15 +430,15 @@ void smclpres::write_toc_section(real scalar snr, real scalar dest) {
 
 	fput(dest, " ")
 	
-	if (settings.toc.secthline == "hline") {
+	if (settings.toc.sechline.top == "hline") {
 		fput(dest, "{hline}")
 	}
 	
 	section = slide[snr].section
-	if (settings.toc.secbf=="bold") {
+	if (settings.toc.secfont=="bold") {
 		section = "{bf:"+section+"}"
 	}
-	if (settings.toc.secit=="italic") {
+	if (settings.toc.secfont=="italic") {
 		section = "{it:"+section+"}"
 	}
 	if (settings.toc.link == "section") {
@@ -447,7 +447,7 @@ void smclpres::write_toc_section(real scalar snr, real scalar dest) {
 	section = "{* tocline }" + settings.other.l1 + section + "{p_end}"
 	fput(dest, section)
 	
-	if (settings.toc.secbhline == "hline") {
+	if (settings.toc.sechline.bottom == "hline") {
 		fput(dest, "{hline}")
 	}
 }
@@ -457,10 +457,10 @@ void smclpres::write_toc_subsection(real scalar snr, real scalar dest) {
 	
 	if (settings.toc.title != "subsection") {
 		subsection = slide[snr].subsection
-		if (settings.toc.subsecbf=="bold") {
+		if (settings.toc.subsecfont=="bold") {
 			subsection = "{bf:" + subsection + "}"
 		}
-		if (settings.toc.subsecit=="italic") {
+		if (settings.toc.subsecfont=="italic") {
 			subsection = "{it:" + subsection + "}"
 		}
 		if (settings.toc.link == "subsection") {
@@ -480,10 +480,10 @@ void smclpres::write_toc_title(real scalar snr, real scalar dest) {
 	if ( (settings.toc.title == "subsection" |
 	     (slide[snr].type=="ancillary" & settings.toc.title == "notitle")) &
 		 slide[snr].type != "digression" ) {
-		if (settings.toc.subsecbf ==  "bold") {
+		if (settings.toc.subsecfont ==  "bold") {
 			title = "{bf:" + title + "}"
 		}
-		if (settings.toc.subsecit == "italic") {
+		if (settings.toc.subsecfont == "italic") {
 			title = "{it:" + title + "}"
 		}
 		if (settings.toc.link == "subsection" | slide[snr].type == "ancillary" | 
@@ -497,10 +497,10 @@ void smclpres::write_toc_title(real scalar snr, real scalar dest) {
 		fput(dest,title)
 	}
 	if (settings.toc.title == "subsubsection" & slide[snr].type != "digression") {
-		if (settings.toc.subsubsecbf == "bold") {
+		if (settings.toc.subsubsecfont == "bold") {
 			title = "{bf:" + title + "}"
 		}
-		if (settings.toc.subsubsecit == "italic") {
+		if (settings.toc.subsubsecfont == "italic") {
 			title = "{it:" + title + "}"
 		}
 		if (settings.toc.link == "subsubsection" | slide[snr].type == "ancillary" | 
@@ -515,10 +515,10 @@ void smclpres::write_toc_title(real scalar snr, real scalar dest) {
 	}
 	if (settings.toc.title == "subsection" & slide[snr].type=="digression" & 
 	    settings.toc.nodigr != "nodigr") {
-		if (settings.toc.subsubsecbf == "bold") {
+		if (settings.toc.subsubsecfont == "bold") {
 			title = "{bf:" + title + "}"
 		}
-		if (settings.toc.subsubsecit == "italic") {
+		if (settings.toc.subsubsecfont == "italic") {
 			title = "{it:" + title + "}"
 		}
 		if (settings.toc.link == "subsection") {
@@ -529,10 +529,10 @@ void smclpres::write_toc_title(real scalar snr, real scalar dest) {
 	}
 	if (settings.toc.title == "subsubsection" & slide[snr].type=="digression" & 
 	    settings.toc.nodigr != "nodigr") {
-		if (settings.toc.subsubsubsecbf == "bold") {
+		if (settings.toc.subsubsubsecfont == "bold") {
 			title = "{bf:" + title + "}"
 		}
-		if (settings.toc.subsubsubsecit == "italic") {
+		if (settings.toc.subsubsubsecfont == "italic") {
 			title = "{it:" + title + "}"
 		}
 		if (settings.toc.link == "subsubsection") {
@@ -607,21 +607,21 @@ void smclpres::write_toc_files(real scalar dest) {
 		if (rows(filetoc.get(mark)) > 0 ) {
 			fput(dest, " ")
 			
-			if (settings.toc.secthline == "hline") {
+			if (settings.toc.sechline.top == "hline") {
 				fput(dest, "{hline}")
 			}
 			
 			section = settings.tocfiles.markname[i,2]
-			if (settings.toc.secbf=="bold") {
+			if (settings.toc.secfont=="bold") {
 				section = "{bf:"+section+"}"
 			}
-			if (settings.toc.secit=="italic") {
+			if (settings.toc.secfont=="italic") {
 				section = "{it:"+section+"}"
 			}
 			section = settings.other.l1 + section + "{p_end}"
 			fput(dest, section)
 			
-			if (settings.toc.secbhline == "hline") {
+			if (settings.toc.sechline.bottom == "hline") {
 				fput(dest, "{hline}")
 			}
 			for(j=1; j<=rows(filetoc.get(mark)); j++) {

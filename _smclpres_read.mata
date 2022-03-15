@@ -35,20 +35,38 @@ void smclpres::no_arg_err(string scalar cmd, string scalar opt, string scalar ar
         exit(198)
     }
 }
+void smclpres::n_arg_err(string scalar cmd, string scalar opt, string rowvector arg, string scalar file, string scalar line, real scalar limit)
+{
+    string scalar errmsg, s
 
-void smclpres::allowed_arg_err(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line, string rowvector allowed)
+    if (cols(arg) > limit) {
+        s = (limit>1 ? "s": "")
+        errmsg = "{p}{res}" + strofreal(limit) + "{err} argument" + s + 
+                 " allowed for option {res}" +
+                 opt + " {err} of {res}//layout " + cmd + " {p_end}" 
+        printf(errmsg)
+        errmsg = "{p}{err}This error occured on line {res}" + line + " {err}of  file {res}" + file +"{p_end}"
+        printf(errmsg)
+        exit(198)
+    }
+}
+
+void smclpres::allowed_arg_err(string scalar cmd, string scalar opt, string rowvector arg, string scalar file, string scalar line, string rowvector allowed)
 {
 	string scalar errmsg, all_err
-    real scalar k, i
-    
-    if (anyof(allowed, arg)== 0) {
+    real scalar k, i, err
+    err = 0
+    for(i=1; i<=cols(arg);i++) {
+        err = err + !anyof(allowed, arg[i])
+    }
+    if (err== 1) {
         k = cols(allowed)
-        all_err = allowed[1]
+        all_err = "{res}" + allowed[1] + "{err}"
         if (k>1) {
             for(i=2; i<k; i++) {
-                all_err = all_err + ", " + allowed[i]
+                all_err = all_err + ", {res}" + allowed[i] + "{err}"
             }
-            all_err = all_err + ", or " + allowed[k]
+            all_err = all_err + ", or {res}" + allowed[k]
         }
     
         errmsg = "{p}{err} option {res}" + opt + "{err} in " +
@@ -61,61 +79,124 @@ void smclpres::allowed_arg_err(string scalar cmd, string scalar opt, string scal
     }
 }
 
+void smclpres::incomp_arg_err(string scalar cmd, string scalar opt, string rowvector arg, string scalar file, string scalar line, string rowvector incomp)
+{
+    real scalar err, i, k
+    string scalar all_err, errmsg
+
+    err = 0
+    for(i=1; i<=cols(arg);i++) {
+        err = err + anyof(incomp, arg[i])
+    }
+    if (err > 1) {
+        k = cols(incomp)
+        all_err = "{res}" + incomp[1] + "{err}"
+        if (k>1) {
+            for(i=2; i<k; i++) {
+                all_err = all_err + ", {res}" + incomp[i] + "{err}"
+            }
+            all_err = all_err + ", or {res}" + incomp[k]
+        }
+    
+        errmsg = "{p}{err} option {res}" + opt + "{err} in " +
+                 "{res}//layout "+ cmd + "{err} may contain only one of " +
+                 all_err + "{p_end}"
+        printf(errmsg)
+        errmsg = "{p}{err}This error occured on line {res}" + line + " {err}of  file {res}" + file +"{p_end}"
+        printf(errmsg)
+        exit(198)
+    }
+}
+
 void smclpres::p_font(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    allowed_arg_err(cmd, opt, arg, file, line, ("bold", "italic", "regular"))
+    if (cmd == "toc") {
+        if (opt == "secfont" ) {
+            settings.toc.secfont = arg
+        }
+        else if (opt == "subsecfont") {
+            settings.toc.subsecfont = arg
+        }
+        else if (opt == "subsubsecfont") {
+            settings.toc.subsubsecfont = arg
+        }
+        else if (opt == "subsubsubsecfont") {
+            settings.toc.subsubsubsecfont = arg
+        }
+        else if (opt == "subtitlefont") {
+            settings.toc.subtitlefont = arg
+        }
+    }
+    else if (cmd == "title") {
+        if (opt == "font") {
+            settings.title.font = arg
+        }
+    }
+    else if (cmd == "topbar") {
+        if (opt == "secfont") {
+            settings.topbar.secfont = arg
+        }
+        else if (opt == "subsecfont") {
+            settings.topbar.subsecfont = arg
+        }
+    }
+}
+void smclpres::p_font_old(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     no_arg_err(cmd, opt, arg, file, line)
     if (cmd=="toc") {
         if (opt=="secbold") {
-            settings.toc.secbf = "bold"
+            settings.toc.secfont = "bold"
         }
         if (opt=="secitalic") {
-            settings.toc.secit = "italic"
+            settings.toc.secfont = "italic"
         }    
         if (opt=="subsecbold") {
-            settings.toc.subsecbf = "bold"
+            settings.toc.subsecfont = "bold"
         }
         if (opt=="subsecitalic") {
-            settings.toc.subsecit = "italic"
+            settings.toc.subsecfont = "italic"
         }
         if (opt=="subsubsecbold") {
-            settings.toc.subsubsecbf = "bold"
+            settings.toc.subsubsecfont = "bold"
         }
         if (opt=="subsubsecitalic") {
-            settings.toc.subsubsecit = "italic"
+            settings.toc.subsubsecfont = "italic"
         }        
         if (opt=="subsubsubsecbold") {
-            settings.toc.subsubsubsecbf = "bold"
+            settings.toc.subsubsubsecfont = "bold"
         }
         if (opt=="subsubsubsecitalic") {
-            settings.toc.subsubsubsecit = "italic"
+            settings.toc.subsubsubsecfont = "italic"
         }
         if (opt=="nosubtitlebold") {
-            settings.toc.subtitlebf = "regular"
+            settings.toc.subtitlefont = "regular"
         }
         if (opt=="subtitleitalic") {
-            settings.toc.subtitleit = "italic"
+            settings.toc.subtitlefont = "italic"
         }
     }    
     if (cmd=="title"){
         if (opt=="nobold") {
-            settings.title.bold = "regular"
+            settings.title.font = "regular"
         }
         if (opt=="italic") {
-            settings.title.italic = "italic"
+            settings.title.font = "italic"
         }  
     }
     if (cmd=="topbar"){
         if (opt=="nosecbold") {
-            settings.topbar.secbf = "regular"
+            settings.topbar.secfont = "regular"
         }
         if (opt=="secitalic") {
-            settings.topbar.secit = "italic"
+            settings.topbar.secfont = "italic"
         }    
         if (opt=="subsecbold") {
-            settings.topbar.subsecbf = "bold"
+            settings.topbar.subsecfont = "bold"
         }
         if (opt=="subsecitalic") {
-            settings.topbar.subsecit = "italic"
+            settings.topbar.subsecfont = "italic"
         }
     }
 }
@@ -131,49 +212,110 @@ void smclpres::p_pos(string scalar cmd, string scalar opt, string scalar arg, st
         settings.toc.subtitlepos = arg
     }
     if (cmd=="title") {
-        no_arg_err(cmd, opt, arg, file, line)
-        settings.title.pos = opt 
+        if (opt == "pos") {
+            allowed_arg_err(cmd, opt, arg, file, line, ("left", "center"))
+            settings.title.pos = arg
+        }
+        else if (opt=="left"|opt == "center") {
+            no_arg_err(cmd, opt, arg, file, line)
+            settings.title.pos = opt 
+        }
     }
+}
+
+struct strhline scalar smclpres::collect_hline(string rowvector args) {
+    real scalar i
+    struct strhline scalar res
+ 
+    for (i=1; i <= cols(args); i++) {
+        if (args[i] == "top") {
+            res.top = "hline"
+        }
+        else if (args[i] == "notop") {
+            res.top = "nohline"
+        }
+        else if (args[i] == "bottom") {
+            res.bottom = "hline"
+        }
+        else if (args[i] == "nobottom") {
+            res.bottom == "nohline"
+        }
+    }
+    return(res)
 }
 void smclpres::p_hline(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
+    string rowvector args
+
+    args = tokens(arg)
+
+    incomp_arg_err(cmd,opt,args,file,line,("top", "notop"))
+    incomp_arg_err(cmd,opt,args,file,line,("bottom", "nobottom"))
+    allowed_arg_err(cmd, opt, args, file, line, ("top", "bottom", "notop", "nobottom"))
+    n_arg_err(cmd, opt, args, file, line, 2)
     if (cmd == "toc") {
-        no_arg_err(cmd, opt, arg, file, line)
+        if (opt == "sechline") {
+            settings.toc.sechline = collect_hline(args)
+        }
+        else if (opt == "subtitlehline") {
+            settings.toc.subtitlehline = collect_hline(args)
+        }
+    }
+    else if (cmd == "title") {
+        if (opt == "hline") {
+            settings.title.hline = collect_hline(args)
+        }
+    }
+    else if (cmd == "topbar") {
+        if (opt == "hline") {
+            settings.topbar.hline = collect_hline(args)
+        }
+    }
+    else if (cmd == "bottombar") {
+        if (opt == "hline") {
+            settings.bottombar.hline = collect_hline(args)
+        }
+    }
+}
+void smclpres::p_hline_old(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
+{
+    no_arg_err(cmd, opt, arg, file, line)
+    if (cmd == "toc") {
         if (opt=="secthline") {
-            settings.toc.secthline = "hline"
+            settings.toc.sechline.top =  "hline"
         }
         if (opt=="secbhline") {
-            settings.toc.secbhline = "hline"
+            settings.toc.sechline.bottom = "hline"
         }
         if (opt=="nosubtitlethline") {
-            settings.toc.subtitlethline = "nohline"
+            settings.toc.subtitlehline.top = "nohline"
         }
         if (opt=="nosubtitlebhline"){
-            settings.toc.subtitlebhline = "nohline"
+            settings.toc.subtitlehline.bottom = "nohline"
         }
     }
     if (cmd == "title") {
         if (opt=="thline") {
-            settings.title.thline = "hline"
+            settings.title.hline.top = "hline"
         }
         if (opt=="bhline"){
-            settings.title.bhline = "hline"
+            settings.title.hline.bottom = "hline"
         }
     }
     if (cmd == "topbar") {
         if (opt=="nothline") {
-            settings.topbar.thline = "nohline"
+            settings.topbar.hline.top = "nohline"
         }
         if (opt=="nobhline"){
-            settings.topbar.bhline = "nohline"
+            settings.topbar.hline.bottom = "nohline"
         }
     }
     if (cmd == "bottombar") {
         if (opt=="nothline") {
-            settings.bottombar.thline = "nohline"
+            settings.bottombar.hline.top = "nohline"
         }
         if (opt=="nobhline"){
-            settings.bottombar.bhline = "nohline"
+            settings.bottombar.hline.bottom = "nohline"
         }
     }
 }
@@ -505,10 +647,12 @@ string matrix smclpres::extract_args(string scalar line)
 void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg, string scalar file, string scalar line)
 {
     if (cmd=="toc") {
-        if      (opt == "secthline"         ) p_hline(cmd, opt, arg, file , line)
-        else if (opt == "secbhline"         ) p_hline(cmd, opt, arg, file , line)
-		else if (opt == "nosubtitlethline"  ) p_hline(cmd, opt, arg, file , line)
-		else if (opt == "nosubtitlebhline"  ) p_hline(cmd, opt, arg, file , line)
+        if      (opt == "sechline"          ) p_hline(cmd, opt, arg, file, line)
+        else if (opt == "subtitlehline"     ) p_hline(cmd, opt, arg, file, line)
+        else if (opt == "secthline"         ) p_hline_old(cmd, opt, arg, file , line)
+        else if (opt == "secbhline"         ) p_hline_old(cmd, opt, arg, file , line)
+		else if (opt == "nosubtitlethline"  ) p_hline_old(cmd, opt, arg, file , line)
+		else if (opt == "nosubtitlebhline"  ) p_hline_old(cmd, opt, arg, file , line)
 		else if (opt == "itemize"           ) p_toc_itemize(cmd, opt, arg, file , line)
 		else if (opt == "anc"               ) p_toc_name(cmd, opt, arg, file , line)
 		else if (opt == "subtitle"          ) p_toc_name(cmd, opt, arg, file , line)
@@ -516,16 +660,21 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 		else if (opt == "subtitlepos"       ) p_pos(cmd, opt, arg, file , line)
 		else if (opt == "link"              ) p_toc_sec_sub_sub(cmd, opt, arg, file , line)
 		else if (opt == "title"             ) p_toc_sec_sub_sub(cmd, opt, arg, file , line)
-		else if (opt == "secbold"           ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "secitalic"         ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsecbold"        ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsecitalic"      ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsubsecbold"     ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsubsecitalic"   ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsubsubsecbold"  ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsubsubsecitalic") p_font(cmd, opt, arg, file , line)
-		else if (opt == "nosubtitlebold"    ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subtitleitalic"    ) p_font(cmd, opt, arg, file , line)
+        else if (opt == "secfont"           ) p_font(cmd, opt, arg, file, line)
+        else if (opt == "subsecfont"        ) p_font(cmd, opt, arg, file, line)
+        else if (opt == "subsubsecfont"     ) p_font(cmd, opt, arg, file, line)
+        else if (opt == "subsubsubsecfont"  ) p_font(cmd, opt, arg, file, line)
+        else if (opt == "subtitlefont"      ) p_font(cmd, opt, arg, file, line)
+		else if (opt == "secbold"           ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "secitalic"         ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsecbold"        ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsecitalic"      ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsubsecbold"     ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsubsecitalic"   ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsubsubsecbold"  ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsubsubsecitalic") p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "nosubtitlebold"    ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subtitleitalic"    ) p_font_old(cmd, opt, arg, file , line)
 		else notallowed(cmd, opt, arg, file , line)
 	}
 	else if (cmd=="tocfiles"){
@@ -569,19 +718,21 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 	else if (cmd == "topbar") {
         if      (opt == "on"                ) p_topbar_on_off(cmd, opt, arg, file , line)
 		else if (opt == "off"               ) p_topbar_on_off(cmd, opt, arg, file , line)
-		else if (opt == "nothline"          ) p_hline(cmd, opt, arg, file , line)
-		else if (opt == "nobhline"          ) p_hline(cmd, opt, arg, file , line)
+        else if (opt == "hline"             ) p_hline(cmd, opt, arg, file, line)
+		else if (opt == "nothline"          ) p_hline_old(cmd, opt, arg, file , line)
+		else if (opt == "nobhline"          ) p_hline_old(cmd, opt, arg, file , line)
 		else if (opt == "nosubsec"          ) p_topbar_nosubsec(cmd, opt, arg, file , line)
-		else if (opt == "nosecbold"         ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "secitalic"         ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsecbold"        ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "subsecitalic"      ) p_font(cmd, opt, arg, file , line)
+		else if (opt == "nosecbold"         ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "secitalic"         ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsecbold"        ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "subsecitalic"      ) p_font_old(cmd, opt, arg, file , line)
 		else if (opt == "sep"               ) p_topbar_sep(cmd, opt, arg, file , line)		
 		else notallowed(cmd, opt, arg, file , line)
 	}
 	else if (cmd == "bottombar") {
-		if      (opt == "nothline"          ) p_hline(cmd, opt, arg, file , line)
-		else if (opt == "nobhline"          ) p_hline(cmd, opt, arg, file , line)
+		if      (opt == "nothline"          ) p_hline_old(cmd, opt, arg, file , line)
+		else if (opt == "nobhline"          ) p_hline_old(cmd, opt, arg, file , line)
+        else if (opt == "hline"             ) p_hline(cmd, opt, arg, file, line)
 		else if (opt == "arrow"             ) p_bottombar_arrow_label(cmd, opt, arg, file , line)
 		else if (opt == "label"             ) p_bottombar_arrow_label(cmd, opt, arg, file , line)
 		else if (opt == "toc"               ) p_bottombar_arrow_label(cmd, opt, arg, file , line)
@@ -592,12 +743,15 @@ void smclpres::p_layout(string scalar cmd, string scalar opt, string scalar arg,
 		else notallowed(cmd, opt, arg, file , line)
 	}
 	else if (cmd == "title") {
-		if      (opt == "thline"            ) p_hline(cmd, opt, arg, file , line)
-		else if (opt == "bhline"            ) p_hline(cmd, opt, arg, file , line)
-		else if (opt == "nobold"            ) p_font(cmd, opt, arg, file , line)
-		else if (opt == "italic"            ) p_font(cmd, opt, arg, file , line)
+		if      (opt == "thline"            ) p_hline_old(cmd, opt, arg, file , line)
+		else if (opt == "bhline"            ) p_hline_old(cmd, opt, arg, file , line)
+        else if (opt == "hline"             ) p_hline(cmd, opt, arg, file, line)
+        else if (opt == "font"              ) p_font(cmd, opt, arg, file, line)
+		else if (opt == "nobold"            ) p_font_old(cmd, opt, arg, file , line)
+		else if (opt == "italic"            ) p_font_old(cmd, opt, arg, file , line)
 		else if (opt == "left"              ) p_pos(cmd, opt, arg, file , line)
 		else if (opt == "center"            ) p_pos(cmd, opt, arg, file , line)
+        else if (opt == "pos"               ) p_pos(cmd, opt, arg, file , line)
 		else notallowed(cmd, opt, arg, file , line)
 	}
 	else if (cmd == "tabs") {
@@ -695,16 +849,16 @@ void smclpres::read_file() {
 
 void smclpres::toc_indent_settings() {
     if (settings.toc.itemize   == "itemize" &
-	    settings.toc.secthline == "nohline" &
-		settings.toc.secbhline == "nohline" ) {
+	    settings.toc.sechline.top == "nohline" &
+		settings.toc.sechline.bottom == "nohline" ) {
 		settings.other.l1 = "{p  4  6 2}o "
 		settings.other.l2 = "{p  8 10 2}- "
 		settings.other.l3 = "{p 12 14 2}. "
 		settings.other.l4 = "{p 16 16 2}"
 	}
 	else if (settings.toc.itemize   == "itemize" & (
-	         settings.toc.secthline == "hline" |
-		     settings.toc.secbhline == "hline" ) ) {
+	         settings.toc.sechline.top == "hline" |
+		     settings.toc.sechline.bottom == "hline" ) ) {
 		settings.other.l1 = "{p  4  4 2}"
 		settings.other.l2 = "{p  8 10 2}o "
 		settings.other.l3 = "{p 12 14 2}- "
