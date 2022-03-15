@@ -1,8 +1,5 @@
-*! version 4.0.0 MLB 16Feb2022
-*  rewrite as a Mata class
-*  allow source files to include other source files
-*  add version numbers, and with that backwards compatability (from 4.0.0 on)
-*  fix to allow for very long presentations  
+*! version 4.0.2 MLB 15Mar2022
+*  new syntax for specifying font, position, and hline 
 
 program define smclpres, rclass
 	version 14.2

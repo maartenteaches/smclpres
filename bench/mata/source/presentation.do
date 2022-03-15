@@ -1,6 +1,6 @@
 //layout toc title(subsubsection)
 //layout toc link(subsubsection)
-//layout toc secbhline secbold 
+//layout toc sechline(bottom) secfont(bold) 
 //layout bib bibfile(mata.bib) authorstyle(last first)
 //toctitle Table of content
 

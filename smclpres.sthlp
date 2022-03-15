@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 4.0.0 16Feb2022 MLB}{...}
+{* *! version 4.0.2 15Mar2022 MLB}{...}
 {vieweralsosee "pres2html" "help pres2html"}
 {title:Title}
 
@@ -140,20 +140,20 @@ link that runs the examples{p_end}
 {synoptline}
 {syntab://layout title}
 {synopt:{opt pos(pos)}}justification of the title{p_end}
-{synopt:{opt thline}}display a horizontal line at the top of the 
-title{p_end}
-{synopt:{opt bhline}}display a horizontal line at the bottom of the 
-title{p_end}
+{synopt:{opt hline(what)}}determines whether a horizontal is displayed line(s) at 
+the top or bottom of the title. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(notop nobottom)}{p_end}
 {synopt:{opt font(font)}}specifies font for title{p_end}
 
 {syntab://layout topbar}
 {synopt:{opt off}}suppress the bar at the top of the slide{p_end}
 {synopt:{opt on}}display the bar at the top of the slide, the default{p_end}
 {synopt:{opt nosubsec}}only display the section name{p_end}
-{synopt:{opt nothline}}do not display a horizontal line at the top of the top 
-bar{p_end}
-{synopt:{opt nobhline}}do not display a horizontal line at the bottom of the top 
-bar{p_end}
+{synopt:{opt hline(what)}}determines whether a horizontal is displayed line(s) at 
+the top or bottom of the topbar. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(top bottom)}{p_end}
 {synopt:{opt secfont(font)}}specifies font for section title{p_end}
 {synopt:{opt subsecfont(font)}}specifies font for subsection title{p_end}
 {synopt:{opt sep(string)}}separator between the section and subsection, default 
@@ -176,10 +176,10 @@ slide if {cmd://layout bottombar label} has been specified. The default is
 {synopt:{opt index(name)}}specifies the label used for the link to the index 
 slide{p_end}
 {synopt:{opt toc}}display the bottombar on the index slide{p_end}
-{synopt:{opt nothline}}do not display a horizontal line at the top of the bottom 
-bar{p_end}
-{synopt:{opt nobhline}}do not display a horizontal line at the bottom of the 
-bottom bar{p_end}
+{synopt:{opt hline(what)}}determines whether a horizontal is displayed line at 
+the top or bottom of the bottombar. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(top bottom)}{p_end}
 
 {syntab://layout toc}
 {synopt:{cmd:link(}{it:section}|{it:subsection}|{it:subsubsection}{cmd:)}}specifies 
@@ -195,12 +195,10 @@ subsubsection by a "{cmd:. }".{p_end}
 with the title of the ancillary slide. additionally, they will be marked with
 ({it:name}). The default {it:name} is "ancillary".{p_end}
 {synopt:{cmd:nodigr}}do not display digression slides in the table of content{p_end}
-{synopt:{opt secthline}}draw a horizontal line above each section on the index 
-slide. If this is specified in combination with {cmd:itemize}, then the section will 
-not be preceded by a marker, and all markers are moved one level down.{p_end}
-{synopt:{opt secbhline}}draw a horizontal line below each section on the index 
-slide. If this is specified in combination with {cmd:itemize}, then the section 
-will not be preceded by a marker, and all markers are moved one level down.{p_end}
+{synopt:{opt sechline(what)}}determines whether a horizontal is displayed line at 
+the top or bottom of each section in the table of contents. {it:what} can be {it:top}, 
+{it:bottom}, {it:notop},  and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt sechline(notop nobottom)}{p_end}
 {synopt:{opt secfont(font)}}specifies font for section title{p_end}
 {synopt:{opt subsecfont(font)}}specifies font for subsection title{p_end}
 {synopt:{opt subsubsecfont(font)}}specifies font for subsubsection title{p_end}
@@ -211,10 +209,10 @@ files used in the presentation. {it:string} will be used as a title for the inde
 of slides. The default is "Slide table of contents"{p_end}
 {synopt:{opt subtitlepos(pos)}}specifies justification of the subtitle{p_end}
 {synopt:{opt subtitlefont(font)}}specifies font for subtitle{p_end}
-{synopt:{opt nosubtitlethline}}specifies that there is no horizontal line above
-the subtitle{p_end}
-{synopt:{opt nosubtitlebhline}}specifies that there is no horizontal line below
-the subtitle{p_end}
+{synopt:{opt subtitlehline(what)}}determines whether a horizontal is displayed line at 
+the top or bottom of the subtitle. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt subtitlehline(top bottom)}{p_end}
 
 {syntab://layout tocfiles}
 {synopt:{opt off}}do not display a list of files used in the presentation in the 
@@ -643,10 +641,10 @@ at this point in the .html handout.
 {opt pos(pos)} justification of the title, {it:pos} can be {it:left} or {it:center}. Default is {it:center}
 
 {phang}
-{opt thline} display a horizontal line at the top of the title
-
-{phang}
-{opt bhline} display a horizontal line at the bottom of the title
+{opt hline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the title. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(notop nobottom)}
 
 {phang}
 {opt font(font)} Specifies the font used for the title. Can be {it:bold}, {it:italic}, or {it:regular}. The default is {it:bold}.
@@ -665,10 +663,10 @@ at this point in the .html handout.
 {opt nosubsec} only display the section name
 
 {phang}
-{opt nothline} do not draw a horizontal line above the topbar
-
-{phang}
-{opt nobhline} do not draw a horizontal line below the topbar
+{opt hline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the topbar. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(top bottom)}
 
 {phang}
 {opt secfont(font)} Specifies the font used for the section title. Can be {it:bold}, {it:italic}, or {it:regular}. The default is {it:bold}.
@@ -718,10 +716,11 @@ slide will appear on the left or the right. The default is right.
 {opt toc} specifies that the bottombar will also appear on the indexslide
 
 {phang}
-{opt nothline} do not draw a horizontal line above the bottombar
+{opt hline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the bottombar. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(top bottom)}
 
-{phang}
-{opt nobhline} do not draw a horizontal line above the bottombar
 
 {dlgtab 4 2://layout toc options}
 
@@ -755,10 +754,10 @@ with the title of the ancillary slide. additionally, they will be marked with
 {opt nodigr} digression slides do not appear in the index.
 
 {phang}
-{opt secthline} draw a horizontal line above each section on the index slide.
-
-{phang}
-{opt secbhline} draw a horizontal line below each section on the index slide.
+{opt sechline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the section in the table of contents. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt sechline(notop nobottom)}
 
 {phang}
 {opt secfont(font)} Specifies the font used for the section title. Can be {it:bold}, {it:italic}, or {it:regular}. The default is {it:regular}.
@@ -795,10 +794,10 @@ options has been specified
 {opt subtitlefont(font)} Specifies the font used for the subtitle. Can be {it:bold}, {it:italic}, or {it:regular}. The default is {it:bold}. 
 
 {phang}
-{opt nosubtitlethline} suppresses a horizontal line above the subtitle
-
-{phang}
-{opt nosubtitlebhline} suppresses a horizontal line below the subtitle
+{opt subtitlehline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the subtitle. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt subtitlehline(top bottom)}
 
 
 {dlgtab 4 2://layout tocfiles options}
@@ -993,20 +992,20 @@ link that runs the examples{p_end}
 {synoptline}
 {syntab://layout title}
 {synopt:{opt pos(pos)}}justification of the title, {it:pos} can be {it:left} or {it:center}. Default is {it:center}{p_end}
-{synopt:{opt thline}}display a horizontal line at the top of the 
-title{p_end}
-{synopt:{opt bhline}}display a horizontal line at the bottom of the 
-title{p_end}
+{synopt:{opt hline(what)}}determines whether a horizontal is displayed line at 
+the top or bottom of the title. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(notop nobottom)}{p_end}
 {synopt:{opt font(font)}}specifies font for title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:bold}{p_end}
 
 {syntab://layout topbar}
 {synopt:{opt off}}suppress the bar at the top of the slide{p_end}
 {synopt:{opt on}}display the bar at the top of the slide, the default{p_end}
 {synopt:{opt nosubsec}}only display the section name{p_end}
-{synopt:{opt nothline}}do not display a horizontal line at the top of the top 
-bar{p_end}
-{synopt:{opt nobhline}}do not display a horizontal line at the bottom of the top 
-bar{p_end}
+{synopt:{opt hline(what)}}determines whether a horizontal is displayed line at 
+the top or bottom of the topbar. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(top bottom)}{p_end}
 {synopt:{opt secfont(font)}}specifies font for section title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:bold}{p_end}
 {synopt:{opt subsecfont(font)}}specifies font for subsection title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
 {synopt:{opt sep(string)}}separator between the section and subsection, default 
@@ -1029,10 +1028,10 @@ slide if {cmd://layout bottombar label} has been specified. The default is
 {synopt:{opt index(name)}}specifies the label used for the link to the index 
 slide{p_end}
 {synopt:{opt toc}}display the bottombar on the index slide{p_end}
-{synopt:{opt nothline}}do not display a horizontal line at the top of the bottom 
-bar{p_end}
-{synopt:{opt nobhline}}do not display a horizontal line at the bottom of the 
-bottom bar{p_end}
+{synopt:{opt hline(what)}}determines whether a horizontal is displayed line at 
+the top or bottom of the bottombar. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(top bottom)}{p_end}
 
 {syntab://layout toc}
 {synopt:{cmd:link(}{it:section}|{it:subsection}|{it:subsubsection}{cmd:)}}specifies 
@@ -1048,12 +1047,10 @@ subsubsection by a "{cmd:. }".{p_end}
 with the title of the ancillary slide. additionally, they will be marked with
 ({it:name}). The default {it:name} is "ancillary".{p_end}
 {synopt:{cmd:nodigr}}do not display digression slides in the table of content{p_end}
-{synopt:{opt secthline}}draw a horizontal line above each section on the index 
-slide. If this is specified in combination with {cmd:itemize}, then the section will 
-not be preceded by a marker, and all markers are moved one level down.{p_end}
-{synopt:{opt secbhline}}draw a horizontal line below each section on the index 
-slide. If this is specified in combination with {cmd:itemize}, then the section 
-will not be preceded by a marker, and all markers are moved one level down.{p_end}
+{synopt:{opt sechline(what)}}determines whether a horizontal is displayed line at 
+the top or bottom of the section title in the table of contents. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt sechline(notop nobottom)}{p_end}
 {synopt:{opt secfont(font)}}specifies font for section title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
 {synopt:{opt subsecfont(font)}}specifies font for subsection title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
 {synopt:{opt subsubsecfont(font)}}specifies font for subsubsection title, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:regular}{p_end}
@@ -1065,10 +1062,10 @@ of slides. The default is "Slide table of contents"{p_end}
 {synopt:{opt subtitlepos(pos)}}specifies justification of the subtitle. {it:pos} can be either 
 {it:left} or {it:center}. Default is {it:center}{p_end}
 {synopt:{opt subtitlefont(font)}}specifies font for subtitle, can be {it:bold},{it:italic}, or {it:regular}. Default is {it:bold}{p_end}
-{synopt:{opt nosubtitlethline}}specifies that there is no horizontal line above
-the subtitle{p_end}
-{synopt:{opt nosubtitlebhline}}specifies that there is no horizontal line below
-the subtitle{p_end}
+{synopt:{opt subtitlehline(what)}}determines whether a horizontal is displayed line at 
+the top or bottom of the subtitle. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt subtitlehline(top bottom)}{p_end}
 
 {syntab://layout tocfiles}
 {synopt:{opt off}}do not display a list of files used in the presentation in the 
@@ -1497,10 +1494,10 @@ at this point in the .html handout.
 {opt pos(pos)} justification of the slide title, {it:pos} can be {it:left} or {it:center}. Default is {it:center}
 
 {phang}
-{opt thline} display a horizontal line at the top of the title
-
-{phang}
-{opt bhline} display a horizontal line at the bottom of the title
+{opt hline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the title. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(notop nobottom)}
 
 {phang}
 {opt font(font)} Specifies the font used for the title. Can be {it:bold}, {it:italic}, 
@@ -1520,10 +1517,10 @@ or {it:regular}. The default is {it:bold}.
 {opt nosubsec} only display the section name
 
 {phang}
-{opt nothline} do not draw a horizontal line above the topbar
-
-{phang}
-{opt nobhline} do not draw a horizontal line below the topbar
+{opt hline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the topbar. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(top bottom)}
 
 {phang}
 {opt secfont(font)} Specifies the font used for the subsection. Can be {it:bold}, {it:italic}, 
@@ -1575,10 +1572,11 @@ slide will appear on the left or the right. The default is right.
 {opt toc} specifies that the bottombar will also appear on the indexslide
 
 {phang}
-{opt nothline} do not draw a horizontal line above the bottombar
+{opt hline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the bottombar. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt hline(top bottom)}
 
-{phang}
-{opt nobhline} do not draw a horizontal line above the bottombar
 
 {dlgtab 4 2://layout toc options}
 
@@ -1599,8 +1597,8 @@ slide will appear on the left or the right. The default is right.
 {phang}
 {opt itemize} specifies that on the index slide the section names are preceded by 
 a "{cmd:o }", the subsection names are preceded by a "{cmd:- }", and the 
-subsubsection by a "{cmd:. }". If the {opt secthline} or {opt secbhline} options
-have been specified, then the sections will not be preceded by anything, the 
+subsubsection by a "{cmd:. }". If one specified {it:top} and/or {it:bottom} in the 
+{opt sechline()} option, then the sections will not be preceded by anything, the 
 subsections will be preceded by a "{cmd:o }", etc.
 
 {phang}
@@ -1612,10 +1610,10 @@ with the title of the ancillary slide. additionally, they will be marked with
 {opt nodigr} digression slides do not appear in the index.
 
 {phang}
-{opt secthline} draw a horizontal line above each section on the index slide.
-
-{phang}
-{opt secbhline} draw a horizontal line below each section on the index slide.
+{opt sechline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the section title. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt sechline(notop nobottom)}
 
 {phang}
 {opt secfont(font)} Specifies the font used for the section name. Can be {it:bold}, {it:italic}, 
@@ -1657,10 +1655,10 @@ options has been specified
 or {it:regular}. The default is {it:bold}.
 
 {phang}
-{opt nosubtitlethline} suppresses a horizontal line above the subtitle
-
-{phang}
-{opt nosubtitlebhline} suppresses a horizontal line below the subtitle
+{opt subtitlehline(what)} determines whether a horizontal is displayed line at 
+the top or bottom of the subtitle. {it:what} can be {it:top}, {it:bottom}, {it:notop},
+ and {it:nobottom}. {it:top} and {it:notop} are mutually exclusive. The same is true 
+ for {it:bottom} and {it:nobottom}. The default is {opt subtitlehline(top bottom)}
 
 
 {dlgtab 4 2://layout tocfiles options}

@@ -331,13 +331,13 @@ void smclpres::write_toc_top(real scalar dest) {
 			else if (left == "/*toctitle") {
 				titleopen = 1
 				fput(dest, "")
-				if (settings.title.thline == "hline") {
+				if (settings.title.hline.top == "hline") {
 					fput(dest, "{hline}")
 				}
 			}
 			else if (left == "toctitle*/") {
 				titleopen = 0
-				if (settings.title.bhline == "hline") {
+				if (settings.title.hline.bottom == "hline") {
 					fput(dest, "{hline}")
 				}
 				fput(dest,"")
@@ -376,7 +376,7 @@ void smclpres::write_toc_subtitle(string scalar which, real scalar dest) {
 	fput(dest,"")
 	fput(dest,"")
 	fput(dest,"")
-	if (settings.toc.subtitlethline == "hline"){
+	if (settings.toc.subtitlehline.top == "hline"){
 		fput(dest, "{hline}")
 	}
 	if (which == "slides") {
@@ -398,7 +398,7 @@ void smclpres::write_toc_subtitle(string scalar which, real scalar dest) {
 		temp = "{p}" + temp + "{p_end}"
 	}
 	fput(dest, temp)
-	if (settings.toc.subtitlebhline == "hline"){
+	if (settings.toc.subtitlehline.bottom == "hline"){
 		fput(dest, "{hline}")
 	}	
 }
@@ -430,7 +430,7 @@ void smclpres::write_toc_section(real scalar snr, real scalar dest) {
 
 	fput(dest, " ")
 	
-	if (settings.toc.secthline == "hline") {
+	if (settings.toc.sechline.top == "hline") {
 		fput(dest, "{hline}")
 	}
 	
@@ -447,7 +447,7 @@ void smclpres::write_toc_section(real scalar snr, real scalar dest) {
 	section = "{* tocline }" + settings.other.l1 + section + "{p_end}"
 	fput(dest, section)
 	
-	if (settings.toc.secbhline == "hline") {
+	if (settings.toc.sechline.bottom == "hline") {
 		fput(dest, "{hline}")
 	}
 }
@@ -607,7 +607,7 @@ void smclpres::write_toc_files(real scalar dest) {
 		if (rows(filetoc.get(mark)) > 0 ) {
 			fput(dest, " ")
 			
-			if (settings.toc.secthline == "hline") {
+			if (settings.toc.sechline.top == "hline") {
 				fput(dest, "{hline}")
 			}
 			
@@ -621,7 +621,7 @@ void smclpres::write_toc_files(real scalar dest) {
 			section = settings.other.l1 + section + "{p_end}"
 			fput(dest, section)
 			
-			if (settings.toc.secbhline == "hline") {
+			if (settings.toc.sechline.bottom == "hline") {
 				fput(dest, "{hline}")
 			}
 			for(j=1; j<=rows(filetoc.get(mark)); j++) {

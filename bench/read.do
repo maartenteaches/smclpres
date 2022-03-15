@@ -1,6 +1,6 @@
 // ----------------------------------- parsedirs()
 // absolute path
-run smclpres_main.mata
+
 local using "c:\temp\bla.do"
 mata:
 pwd = strlower(pwd())
@@ -233,7 +233,12 @@ rcof `"noi mata: totest.allowed_arg_err("topbar", "italic", "bold", "file", "4",
 noi mata : totest.allowed_arg_err("topbar", "hline", ("top","bottom"), "file", "4", ("bottom", "top"))
 noi mata : totest.allowed_arg_err("topbar", "hline", tokens("top bottom"), "file", "4", ("bottom", "top"))
 rcof `"noi mata : totest.allowed_arg_err("topbar", "hline", tokens("top middle bottom"), "file", "4", ("bottom", "top"))"' == 198
-exit
+noi mata : totest.n_arg_err("topbar", "hline", tokens("top bottom"), "file", "4", 2)
+rcof `"noi mata : totest.n_arg_err("topbar", "hline", tokens("top middle bottom"), "file", "4", 2)"' == 198
+rcof `"noi mata : totest.n_arg_err("topbar", "hline", tokens("top middle bottom"), "file", "4", 1)"' == 198
+noi mata : totest.incomp_arg_err("topbar", "hline", tokens("top bottom"), "file", "4", ("top", "notop"))
+rcof `"noi mata : totest.incomp_arg_err("topbar", "hline", tokens("top notop"), "file", "4", ("top", "notop"))"' == 198
+
 //p_font()
 mata:
 totest = smclpres()
@@ -354,33 +359,33 @@ totest.p_pos("title", "center", "", "file", "4")
 assert(totest.settings.title.pos == "center")
 end
 
-//p_hline
+//p_hline_old
 mata:
 totest = smclpres()
-totest.p_hline("toc", "secthline", "", "file", "4")
-assert(totest.settings.toc.secthline=="hline")
-totest.p_hline("toc", "secbhline", "", "file", "4")
-assert(totest.settings.toc.secbhline=="hline")
+totest.p_hline_old("toc", "secthline", "", "file", "4")
+assert(totest.settings.toc.sechline.top=="hline")
+totest.p_hline_old("toc", "secbhline", "", "file", "4")
+assert(totest.settings.toc.sechline.bottom=="hline")
 
-totest.p_hline("toc", "nosubtitlethline", "", "file", "4")
-assert(totest.settings.toc.subtitlethline=="nohline")
-totest.p_hline("toc", "nosubtitlebhline", "", "file", "4")
-assert(totest.settings.toc.subtitlebhline=="nohline")
+totest.p_hline_old("toc", "nosubtitlethline", "", "file", "4")
+assert(totest.settings.toc.subtitlehline.top=="nohline")
+totest.p_hline_old("toc", "nosubtitlebhline", "", "file", "4")
+assert(totest.settings.toc.subtitlehline.bottom=="nohline")
 
-totest.p_hline("title", "thline", "", "file", "4")
-assert(totest.settings.title.thline=="hline")
-totest.p_hline("title", "bhline", "", "file", "4")
-assert(totest.settings.title.bhline=="hline")
+totest.p_hline_old("title", "thline", "", "file", "4")
+assert(totest.settings.title.hline.top=="hline")
+totest.p_hline_old("title", "bhline", "", "file", "4")
+assert(totest.settings.title.hline.bottom=="hline")
 
-totest.p_hline("topbar", "nothline", "", "file", "4")
-assert(totest.settings.topbar.thline=="nohline")
-totest.p_hline("topbar", "nobhline", "", "file", "4")
-assert(totest.settings.topbar.bhline=="nohline")
+totest.p_hline_old("topbar", "nothline", "", "file", "4")
+assert(totest.settings.topbar.hline.top=="nohline")
+totest.p_hline_old("topbar", "nobhline", "", "file", "4")
+assert(totest.settings.topbar.hline.bottom=="nohline")
 
-totest.p_hline("bottombar", "nothline", "", "file", "4")
-assert(totest.settings.bottombar.thline=="nohline")
-totest.p_hline("bottombar", "nobhline", "", "file", "4")
-assert(totest.settings.bottombar.bhline=="nohline")
+totest.p_hline_old("bottombar", "nothline", "", "file", "4")
+assert(totest.settings.bottombar.hline.top=="nohline")
+totest.p_hline_old("bottombar", "nobhline", "", "file", "4")
+assert(totest.settings.bottombar.hline.bottom=="nohline")
 end
 
 //p_toc_sub_sub()

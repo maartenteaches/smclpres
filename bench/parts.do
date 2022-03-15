@@ -23,7 +23,7 @@ assert(fget(fh) == J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
-totest.settings.title.bhline = "hline"
+totest.settings.title.hline.bottom = "hline"
 unlink("bench/write_title.test")
 fh = fopen("bench/write_title.test", "w")
 totest.write_title("an interesting title", fh)
@@ -37,7 +37,7 @@ assert(fget(fh) == J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
-totest.settings.title.bhline = "hline"
+totest.settings.title.hline.bottom = "hline"
 unlink("bench/write_title.test")
 fh = fopen("bench/write_title.test", "w")
 totest.write_title("an interesting title", fh, "multiline")
@@ -48,7 +48,7 @@ assert(fget(fh) == J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
-totest.settings.title.thline = "hline"
+totest.settings.title.hline.top = "hline"
 unlink("bench/write_title.test")
 fh = fopen("bench/write_title.test", "w")
 totest.write_title("an interesting title", fh)
@@ -62,7 +62,7 @@ assert(fget(fh) == J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
-totest.settings.title.thline = "hline"
+totest.settings.title.hline.top = "hline"
 unlink("bench/write_title.test")
 fh = fopen("bench/write_title.test", "w")
 totest.write_title("an interesting title", fh, "multiline")
@@ -86,7 +86,7 @@ assert(fget(fh) == J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
-totest.settings.title.bold = "regular"
+totest.settings.title.font = "regular"
 unlink("bench/write_title.test")
 fh = fopen("bench/write_title.test", "w")
 totest.write_title("an interesting title", fh)
@@ -99,8 +99,7 @@ assert(fget(fh) == J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
-totest.settings.title.italic = "italic"
-totest.settings.title.bold = "regular"
+totest.settings.title.font = "italic"
 unlink("bench/write_title.test")
 fh = fopen("bench/write_title.test", "w")
 totest.write_title("an interesting title", fh)
@@ -155,7 +154,7 @@ totest.slide = strslide(10)
 totest.slide[5].section = "foo"
 totest.slide[5].subsection = "bar"
 totest.slide[5].type = "regular"
-totest.settings.topbar.secbf = "bold"
+totest.settings.topbar.secfont = "bold"
 unlink("bench/write_topbar.test")
 fh = fopen("bench/write_topbar.test", "w")
 totest.write_topbar(fh,5)
@@ -172,8 +171,8 @@ totest.slide = strslide(10)
 totest.slide[5].section = "foo"
 totest.slide[5].subsection = "bar"
 totest.slide[5].type = "regular"
-totest.settings.topbar.secbf = "bold"
-totest.settings.topbar.subsecit = "italic"
+totest.settings.topbar.secfont = "bold"
+totest.settings.topbar.subsecfont = "italic"
 unlink("bench/write_topbar.test")
 fh = fopen("bench/write_topbar.test", "w")
 totest.write_topbar(fh,5)
@@ -190,8 +189,8 @@ totest.slide = strslide(10)
 totest.slide[5].section = "foo"
 totest.slide[5].subsection = "bar"
 totest.slide[5].type = "ancillary"
-totest.settings.topbar.secbf = "bold"
-totest.settings.topbar.subsecit = "italic"
+totest.settings.topbar.secfont = "bold"
+totest.settings.topbar.subsecfont = "italic"
 unlink("bench/write_topbar.test")
 fh = fopen("bench/write_topbar.test", "w")
 totest.write_topbar(fh,5)
@@ -208,8 +207,8 @@ totest.slide = strslide(10)
 totest.slide[5].section = "foo"
 totest.slide[5].subsection = "bar"
 totest.slide[5].type = "digression"
-totest.settings.topbar.secbf = "bold"
-totest.settings.topbar.subsecit = "italic"
+totest.settings.topbar.secfont = "bold"
+totest.settings.topbar.subsecfont = "italic"
 unlink("bench/write_topbar.test")
 fh = fopen("bench/write_topbar.test", "w")
 totest.write_topbar(fh,5)
@@ -228,8 +227,8 @@ totest.slide = strslide(10)
 totest.slide[5].section = "foo"
 totest.slide[5].subsection = "bar"
 totest.slide[5].type = "bibliography"
-totest.settings.topbar.secbf = "bold"
-totest.settings.topbar.subsecit = "italic"
+totest.settings.topbar.secfont = "bold"
+totest.settings.topbar.subsecfont = "italic"
 unlink("bench/write_topbar.test")
 fh = fopen("bench/write_topbar.test", "w")
 totest.write_topbar(fh,5)
