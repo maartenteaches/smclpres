@@ -1,3 +1,4 @@
+//layout toc title(subsection) link(subsection)
 //toctitle A minimalist example presentation
 
 /*toctxt
@@ -23,7 +24,7 @@ sum price
 //endslide ---------------------------------------------------------------------
 
 //digr -------------------------------------------------------------------------
-//title Second slide
+//title first digression
 //label this
 
 /*txt
@@ -35,7 +36,7 @@ txt*/
 //enddigr ----------------------------------------------------------------------
 
 //digr continue ----------------------------------------------------------------
-//title Third slide
+//title second digression
 
 /*txt
 {phang}
