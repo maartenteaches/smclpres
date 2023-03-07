@@ -1,5 +1,5 @@
-*! version 4.0.2 MLB 15Mar2022
-*  new syntax for specifying font, position, and hline 
+*! version 4.0.3 MLB 15Mar2022
+*  bugfix pres2html
 
 program define smclpres, rclass
 	version 14.2

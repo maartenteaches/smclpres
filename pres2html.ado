@@ -1,5 +1,5 @@
-*! version 4.0.0 MLB 16Feb2022
-*  work with smclpres 4.0.0
+*! version 4.0.3 MLB 07Mar2023
+*  bug fix with apdofile
 program define pres2html
 	version 14.2
 	local olddir = c(pwd)
