@@ -169,7 +169,7 @@ void smclpres::where_err(real scalar rownr)
 
 void smclpres::find_structure() {
 	real   scalar snr, regsl, titleopen, rownr
-	string scalar section, subsection, err 
+	string scalar section, subsection, err , argument
 	string rowvector left
 	transmorphic scalar t
 
@@ -206,9 +206,23 @@ void smclpres::find_structure() {
 			}
 			if (left=="//digr") {
 				slide[snr].type       = "digression"
-				if (regsl > 1) {
-					slide[snr].prev    = settings.other.regslides[regsl-1]
-				}
+                argument = tokenget(t)
+                if (argument != "continue") {
+                    if (regsl > 1) {
+					    slide[snr].prev    = settings.other.regslides[regsl-1]
+                    }
+                }
+                else {
+                    if (slide[snr-1].type != "digression") {
+                        err = "{p}{err}tried to create a follow up digression slide when the previous slide wasn't a digression{p_end}"
+                        printf(err)
+                        where_err(rownr)
+                        exit(198)
+                    }
+                    slide[snr].prev = snr-1
+                    slide[snr].regprev = settings.other.regslides[regsl-1]
+                    slide[snr-1].forw = snr
+                }
 			}
 			if (left=="//enddigr") {
 				snr = snr + 1

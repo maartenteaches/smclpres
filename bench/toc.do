@@ -184,6 +184,35 @@ assert(totest.settings.other.index == "minimalist.smcl")
 assert(totest.titleslide.forw == 1)
 end
 
+//find_structure() with long digression
+local using "bench/longdigr.do"
+mata:
+totest = smclpres()
+totest.parsedirs()
+totest.read_file()
+totest.find_structure()
+
+assert(totest.slide[1].type == "regular")
+assert(totest.slide[1].prev == .)
+assert(totest.slide[1].forw == 4)
+assert(totest.slide[1].regprev ==.)
+
+assert(totest.slide[2].type == "digression")
+assert(totest.slide[2].prev == 1)
+assert(totest.slide[2].forw == 3)
+assert(totest.slide[2].regprev == .)
+
+assert(totest.slide[3].type == "digression")
+assert(totest.slide[3].prev == 2)
+assert(totest.slide[3].forw == .)
+assert(totest.slide[3].regprev == 1)
+
+assert(totest.slide[4].type == "regular")
+assert(totest.slide[4].prev == 1)
+assert(totest.slide[4].forw == .)
+assert(totest.slide[4].regprev == .)
+end
+
 
 //write_toc_subtitle()
 mata:

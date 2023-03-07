@@ -95,6 +95,7 @@ struct strslide {
 	string              scalar    subsection
 	string              scalar    label
 	real                scalar    prev
+    real                scalar    regprev
 	real                scalar    forw         
 }
 struct strbib {
