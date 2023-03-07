@@ -88,7 +88,7 @@ void smclpres::write_topbar(real scalar dest, real scalar snr) {
 
 void smclpres::write_bottombar( real scalar dest, 
                      real scalar snr, string scalar special) {
-	string scalar line, forw, back, forwl
+	string scalar line, forw, back, regback, forwl
 	
 	if (special == "title" ) {
 		forw = "slide" + strofreal(titleslide.forw) + ".smcl"
@@ -114,6 +114,9 @@ void smclpres::write_bottombar( real scalar dest,
 		else if (slide[snr].prev != .){
 			back = "slide" + strofreal(slide[snr].prev) + ".smcl"
 		}
+        if (slide[snr].regprev != .) {
+            regback = "slide" + strofreal(slide[snr].regprev) + ".smcl"
+        }
 		if (slide[snr].forw != .) {
 			forw = "slide" + strofreal(slide[snr].forw) + ".smcl"
 			forwl = slide[slide[snr].forw].label
@@ -131,6 +134,10 @@ void smclpres::write_bottombar( real scalar dest,
 	line = "{* bottombar }"
 	if (settings.bottombar.arrow == "arrow") {
 		line = line + "{center:"
+		if (regback != "") {
+			line = line + "{view " + regback + ":<<<}   "
+		}
+        
 		if (back == "") {
 			line = line + "     "
 		}
@@ -145,6 +152,9 @@ void smclpres::write_bottombar( real scalar dest,
 		else {
 			line = line + "   {view " + forw + ":>>}"
 		}
+        if (regback != "") {
+            line = line + "      "
+        }
 		line = line + "}"
 	}
 	else {

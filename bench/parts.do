@@ -362,4 +362,26 @@ assert(fget(fh)==`"{hline}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_bottombar.test")
+
+totest = smclpres()
+totest.slide = strslide(10)
+totest.slide[5].forw = 7
+totest.slide[5].prev = 4
+totest.slide[5].regprev = 2
+totest.settings.other.stub = "foo"
+totest.settings.other.index = "foo.smcl"
+unlink("bench/write_bottombar.test")
+fh = fopen("bench/write_bottombar.test", "w")
+totest.write_bottombar(fh, 5, "regular")
+fclose(fh)
+fh = fopen(`"bench/write_bottombar.test"', "r")
+assert(fget(fh)==`" "')
+assert(fget(fh)==`" "')
+assert(fget(fh)==`"{* /p}{hline}"')
+assert(fget(fh)==`"{* bottombar }{center:{view slide2.smcl:<<<}   {view slide4.smcl:<<}   {view foo.smcl:index}   {view slide7.smcl:>>}      }"')
+assert(fget(fh)==`"{hline}"')
+assert(fget(fh)==J(0,0,""))
+fclose(fh)
+unlink("bench/write_bottombar.test")
+
 end
