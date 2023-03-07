@@ -124,7 +124,7 @@ sourcemat = "foo", "file", "1"
 totest.source = sourcemat
 totest.rows_source = 1
 totest.chk_slideclose("slide",1, 0,0,0, 1)
-totest.chk_slideclose("ancilary slide",0, 1,0,0, 1)
+totest.chk_slideclose("ancillary slide",0, 1,0,0, 1)
 totest.chk_slideclose("digression slide",0, 0,1,0, 1)
 totest.chk_slideclose("bibliography slide",0, 0,0,1, 1)
 end
@@ -133,10 +133,10 @@ rcof `"noisily mata: totest.chk_slideclose("slide", 1, 1,0,0, 1)"' == 198
 rcof `"noisily mata: totest.chk_slideclose("slide", 1, 0,1,0, 1)"' == 198
 rcof `"noisily mata: totest.chk_slideclose("slide", 1, 0,0,1, 1)"' == 198
 
-rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 0,0,0, 1)"' == 198
-rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 1, 1,0,0, 1)"' == 198
-rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 1,1,0, 1)"' == 198
-rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 1,0,1, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancillary slide", 0, 0,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancillary slide", 1, 1,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancillary slide", 0, 1,1,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancillary slide", 0, 1,0,1, 1)"' == 198
 
 rcof `"noisily mata: totest.chk_slideclose("digression slide", 0, 0,0,0, 1)"' == 198
 rcof `"noisily mata: totest.chk_slideclose("digression slide", 1, 0,1,0, 1)"' == 198
@@ -211,6 +211,16 @@ assert(totest.slide[4].type == "regular")
 assert(totest.slide[4].prev == 1)
 assert(totest.slide[4].forw == .)
 assert(totest.slide[4].regprev == .)
+
+assert(totest.slide[5].type == "ancillary")
+assert(totest.slide[5].prev == .)
+assert(totest.slide[5].forw == 6)
+assert(totest.slide[5].regprev == .)
+
+assert(totest.slide[6].type == "ancillary")
+assert(totest.slide[6].prev == 5)
+assert(totest.slide[6].forw == .)
+assert(totest.slide[6].regprev == .)
 end
 
 

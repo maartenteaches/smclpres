@@ -9,10 +9,14 @@
 {* tocline }{p 12 12 2}{view slide2.smcl : first digression}{p_end}
 {* tocline }{p 12 12 2}{view slide3.smcl : second digression}{p_end}
 {* tocline }{p  8  8 2}{view slide4.smcl : A second slide}{p_end}
+{* tocline }{p  8  8 2}{view slide5.smcl : First ancillary} (ancillary){p_end}
+{* tocline }{p  8  8 2}{view slide6.smcl : second ancillary} (ancillary){p_end}
 {* slides }{...}
 {* longdigr.smcl }{...}
 {* slide1.smcl }{...}
 {* slide4.smcl }{...}
 {* slide2.smcl }{...}
 {* slide3.smcl }{...}
+{* slide5.smcl }{...}
+{* slide6.smcl }{...}
 {* bottomstyle arrow }{...}

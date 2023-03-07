@@ -9,7 +9,7 @@ void smclpres::chk_slideopen(string scalar what, real scalar sopen, real scalar 
 		exit(198)
 	}
 	if (aopen == 1) {
-		printf("{p}{err}Tried openening a " + what +" but an ancilary slide was already open{p_end}")
+		printf("{p}{err}Tried openening a " + what +" but an ancillary slide was already open{p_end}")
 		where_err(where)
 		exit(198)
 	}
@@ -38,13 +38,13 @@ void smclpres::chk_slideclose(string scalar what, real scalar sopen, real scalar
 		where_err(where)
 		exit(198)
 	}
-	if (aopen == 0 & what == "ancilary slide") {
-		printf("{p}{err}Tried closing a ancilary slide but no ancilary slide was open{p_end}")
+	if (aopen == 0 & what == "ancillary slide") {
+		printf("{p}{err}Tried closing a ancillary slide but no ancillary slide was open{p_end}")
 		where_err(where)
 		exit(198)
 	}
-	if (aopen == 1 & what != "ancilary slide") {
-		printf("{p}{err}Tried closing a " + what + " but a ancilary slide was open{p_end}") 
+	if (aopen == 1 & what != "ancillary slide") {
+		printf("{p}{err}Tried closing a " + what + " but a ancillary slide was open{p_end}") 
 		where_err(where)
 		exit(198)
 	}
@@ -81,7 +81,7 @@ void smclpres::chk_anyopen(real scalar sopen, real scalar aopen,
 		problem = 1
 	}
 	if (aopen == 1) {
-		what = "an ancilary slide"
+		what = "an ancillary slide"
 		problem = 1
 	}
 	if (dopen == 1) {
@@ -117,7 +117,7 @@ void smclpres::count_slides() {
 				where = i
 			}
 			else if (line[1]== "//anc"){
-				chk_slideopen("ancilary slide", sopen, aopen, dopen, bopen, i)
+				chk_slideopen("ancillary slide", sopen, aopen, dopen, bopen, i)
 				aopen = 1
 				where = i
 			}
@@ -138,7 +138,7 @@ void smclpres::count_slides() {
 				regsl = regsl + 1
 			}
 			else if (line[1]=="//endanc") {
-				chk_slideclose("ancilary slide", sopen, aopen, dopen, bopen, i)
+				chk_slideclose("ancillary slide", sopen, aopen, dopen, bopen, i)
 				aopen = 0
 				snr = snr + 1
 			}
@@ -229,6 +229,17 @@ void smclpres::find_structure() {
 			}
 			if (left=="//anc") {
 				slide[snr].type       = "ancillary"
+                argument = tokenget(t)
+                if (argument == "continue") {
+                    if (slide[snr-1].type != "ancillary") {
+                        err = "{p}{err}tried to create a follow up ancillary slide when the previous slide wasn't a ancillary{p_end}"
+                        printf(err)
+                        where_err(rownr)
+                        exit(198)
+                    }
+                    slide[snr].prev = snr-1
+                    slide[snr-1].forw = snr
+                }
 			}
 			if (left=="//endanc") {
 				snr = snr + 1

@@ -1,0 +1,13 @@
+{smcl}
+{*  7 Mar 2023}{...}
+{hline}
+{p}{bf:ancillary}{p_end}
+{hline}
+
+{center:{bf: second ancillary}}
+
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide5.smcl:<<}   {view longdigr.smcl:index}     }
+{hline}
