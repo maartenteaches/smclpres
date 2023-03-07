@@ -147,6 +147,7 @@ program define Slide2html
 			file write `app' "</div>"
 			c_local appnumber = `appnumber' + 1
 			file open `temp' using `tempsmcl', write replace
+            local ignorel = 1
 		}
 		if `"`first'"' == "{*"  & `"`second'"' == "codefile" {
 			file close `temp'
