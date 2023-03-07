@@ -1,4 +1,4 @@
-_v. 4.0.0_  
+_v. 4.0.3_  
 
 `smclpres` : creating .smcl presentations from a .do file
 =====================
