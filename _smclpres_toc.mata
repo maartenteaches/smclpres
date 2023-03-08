@@ -222,6 +222,7 @@ void smclpres::find_structure() {
                     slide[snr].prev = snr-1
                     slide[snr].regprev = settings.other.regslides[regsl-1]
                     slide[snr-1].forw = snr
+                    slide[snr].cont = "continue"
                 }
 			}
 			if (left=="//enddigr") {
@@ -239,6 +240,7 @@ void smclpres::find_structure() {
                     }
                     slide[snr].prev = snr-1
                     slide[snr-1].forw = snr
+                    slide[snr].cont = "continue"
                 }
 			}
 			if (left=="//endanc") {

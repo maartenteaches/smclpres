@@ -196,31 +196,37 @@ assert(totest.slide[1].type == "regular")
 assert(totest.slide[1].prev == .)
 assert(totest.slide[1].forw == 4)
 assert(totest.slide[1].regprev ==.)
+assert(totest.slide[1].cont == "")
 
 assert(totest.slide[2].type == "digression")
 assert(totest.slide[2].prev == 1)
 assert(totest.slide[2].forw == 3)
 assert(totest.slide[2].regprev == .)
+assert(totest.slide[2].cont == "")
 
 assert(totest.slide[3].type == "digression")
 assert(totest.slide[3].prev == 2)
 assert(totest.slide[3].forw == .)
 assert(totest.slide[3].regprev == 1)
+assert(totest.slide[3].cont == "continue")
 
 assert(totest.slide[4].type == "regular")
 assert(totest.slide[4].prev == 1)
 assert(totest.slide[4].forw == .)
 assert(totest.slide[4].regprev == .)
+assert(totest.slide[4].cont == "")
 
 assert(totest.slide[5].type == "ancillary")
 assert(totest.slide[5].prev == .)
 assert(totest.slide[5].forw == 6)
 assert(totest.slide[5].regprev == .)
+assert(totest.slide[5].cont == "")
 
 assert(totest.slide[6].type == "ancillary")
 assert(totest.slide[6].prev == 5)
 assert(totest.slide[6].forw == .)
 assert(totest.slide[6].regprev == .)
+assert(totest.slide[6].cont == "continue")
 end
 
 

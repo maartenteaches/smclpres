@@ -94,6 +94,7 @@ struct strslide {
 	string              scalar    section
 	string              scalar    subsection
 	string              scalar    label
+    string              scalar    cont
 	real                scalar    prev
     real                scalar    regprev
 	real                scalar    forw         
