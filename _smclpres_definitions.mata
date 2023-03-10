@@ -14,6 +14,7 @@ struct strtoc {
 	string              scalar    subsubsecfont
 	string              scalar    subsubsubsecfont
 	string              scalar    nodigr
+    string              scalar    anctitle    
 }
 struct strhline {
 	string              scalar    top

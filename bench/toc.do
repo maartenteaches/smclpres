@@ -443,7 +443,7 @@ totest.write_toc_section(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_section.test"', "r")
 assert(fget(fh)==`" "')
-assert(fget(fh)==`"{* tocline }{p 4 5 2}{view slide5.smcl : bla bla}{p_end}"')
+assert(fget(fh)==`"{* tocline }{p 4 5 2}{view slide5.smcl :bla bla}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_section.test")
@@ -524,7 +524,7 @@ fh = fopen("bench/write_toc_subsection.test", "w")
 totest.write_toc_subsection(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_subsection.test"', "r")
-assert(fget(fh)==`"{* tocline }{p 8 9 2}{view slide5.smcl : bla bla}{p_end}"')
+assert(fget(fh)==`"{* tocline }{p 8 9 2}{view slide5.smcl :bla bla}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_subsection.test")
@@ -545,10 +545,35 @@ fclose(fh)
 unlink("bench/write_toc_subsection.test")
 end
 
+
+// bold_italic()
+mata:
+totest = smclpres()
+result = totest.bold_italic("bold", "de lucht hangt er laag")
+assert(result == "{bf:de lucht hangt er laag}")
+result = totest.bold_italic("italic", "de lucht hangt er laag")
+assert(result == "{it:de lucht hangt er laag}")
+result = totest.bold_italic("regular", "de lucht hangt er laag")
+assert(result == "de lucht hangt er laag")
+end
+
+// format_toc_line()
+mata:
+totest = smclpres()
+totest.settings.toc.title = "subsection"
+totest.settings.toc.subsecfont = "italic"
+totest.slide = strslide(10)
+totest.slide[5].type = "ancillary"
+result = totest.format_toc_line(totest.slide[5].type, "de lucht hangt er laag")
+assert(result == "{it:de lucht hangt er laag}")
+assert(totest.slide[5].type == "ancillary")
+end
+
 // write_toc_title()
 mata:
 totest = smclpres()
 totest.settings.toc.title = "subsubsection"
+totest.settings.toc.anctitle = "subsubsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
 totest.slide[5].type = "regular"
@@ -561,9 +586,12 @@ fh = fopen(`"bench/write_toc_title.test"', "r")
 assert(fget(fh)==`"{* tocline }{p 12 12 2}foo{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+end
 
+mata:
 totest = smclpres()
 totest.settings.toc.title = "subsubsection"
+totest.settings.toc.anctitle = "subsubsection"
 totest.settings.toc.link = "subsubsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
@@ -574,12 +602,15 @@ fh = fopen("bench/write_toc_title.test", "w")
 totest.write_toc_title(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
-assert(fget(fh)==`"{* tocline }{p 12 12 2}{view slide5.smcl : foo}{p_end}"')
+assert(fget(fh)==`"{* tocline }{p 12 12 2}{view slide5.smcl :foo}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+end
 
+mata:
 totest = smclpres()
 totest.settings.toc.title = "notitle"
+totest.settings.toc.anctitle = "subsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
 totest.slide[5].type = "regular"
@@ -591,9 +622,12 @@ fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+end
 
+mata:
 totest = smclpres()
 totest.settings.toc.title = "notitle"
+totest.settings.toc.anctitle = "subsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
 totest.slide[5].type = "ancillary"
@@ -603,7 +637,7 @@ fh = fopen("bench/write_toc_title.test", "w")
 totest.write_toc_title(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
-assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl : foo} (ancillary){p_end}"')
+assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl :foo} (ancillary){p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
@@ -666,7 +700,7 @@ totest.write_toc_title(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
 assert(fget(fh)==`" "')
-assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl : foo}{p_end}"')
+assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl :foo}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
