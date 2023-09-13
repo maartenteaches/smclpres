@@ -1,0 +1,24 @@
+{smcl}
+{* 13 Sep 2023}{...}
+{hline}
+{p}{bf:section one} {hline 2} Part one point one{p_end}
+{hline}
+
+{center:{bf: Another topic}}
+
+Some other text
+ 
+{* ex slide2ex1 }{...}
+{cmd}
+        sysuse nlsw88, clear
+        reg wage i.race i.union i.south ttl_exp
+{txt}{...}
+{pstd}({stata "do slide2ex1.do":{it:click to run}}){p_end}
+
+
+{* endex }{...}
+ 
+ 
+{* /p}{hline}
+{* bottombar }{center:{view slide1.smcl:<<}   {view incl_main.smcl:index}   {view slide3.smcl:>>}}
+{hline}

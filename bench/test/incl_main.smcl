@@ -1,0 +1,20 @@
+{smcl}
+
+{center:{bf:Including other files}}
+
+ 
+{center:Maarten Buis}
+{center:maarten.buis@uni.kn}
+ 
+{* tocline }{p  4  4 2}{view slide1.smcl :section one}{p_end}
+{* tocline }{p  8  8 2}Part one point one{p_end}
+{* tocline }{p  8  8 2}part one point two{p_end}
+ 
+{* tocline }{p  4  4 2}{view slide4.smcl :conclusion}{p_end}
+{* slides }{...}
+{* incl_main.smcl }{...}
+{* slide1.smcl }{...}
+{* slide2.smcl }{...}
+{* slide3.smcl }{...}
+{* slide4.smcl }{...}
+{* bottomstyle arrow }{...}

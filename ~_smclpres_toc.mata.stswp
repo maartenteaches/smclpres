@@ -572,7 +572,7 @@ string scalar smclpres::toc_indent(string scalar what, string scalar line)
     if (type == "digression" & settings.toc.anctitle  == "subsection") {
         pos = settings.other.l3
     }
-    else if (type == "digression" & settings.toc.anctitle  == "subsubsection") {
+    else if (type == "digression" & settings.toc.title  == "subsubsection") {
         pos = settings.other.l4
     }
     else if (type == "regular" & settings.toc.anctitle == "subsection") {
