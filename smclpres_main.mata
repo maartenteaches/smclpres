@@ -27,7 +27,6 @@ class smclpres {
     void                             read_file()
     real                   scalar    _read_file()
     void                             parsedirs()
-    void                             cd()
     real                   rowvector parse_version()
     real                   scalar    pres_lt_val()
     real                   scalar    pres_leq_val()
