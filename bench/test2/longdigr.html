@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+        background-color: white;
+}
+pre.output {
+    border-left-style: solid;
+    width: 650px;
+    max-height: 500px;
+    overflow: auto;
+    border-left-color:grey;
+    border-width: 5px;
+    background-color: #f0f0f0;
+    padding: 0px 5px 0px 10px;
+    margin: 0px auto 0px auto;
+}
+pre.code {
+    border-left-style: solid;
+    width: 650px;
+    max-height: 500px;
+    overflow: auto;
+    border-left-color:grey;
+    border-width: 5px;
+    background-color: #f0f0f0;
+    padding: 0px 5px 0px 10px;
+    margin: 0px auto 0px auto;
+}
+pre.code:before {
+    counter-reset: listing;
+}
+pre.code code {
+  counter-increment: listing;
+}
+pre.code code::before {
+  content: counter(listing) ". ";
+  display: inline-block;
+  width: 35px;
+  padding-left: auto;
+  margin-left: auto;
+  text-align: right;
+}
+pre {
+    margin: 0px;
+}
+div.slide { 
+    max-width: 680px;
+    display: block;
+    padding: 5px;
+    margin: 10px auto 10px auto;
+    border-style: solid;
+    border-width: 1px;
+    background-color: white ;
+}
+div.txt { 
+    margin: 0px auto 0px auto;
+    max-width: 650px;
+}
+div.flex-container {
+    display: flex;
+    justify-content: space-around;
+}
+p.bottom {
+    display: block;
+    margin: 0px;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+<div class="slide" id="longdigr.smcl">
+<div class="txt"><pre>
+<br>
+                       <b>A minimalist example presentation</b>
+<br>
+ 
+                                 Maarten Buis
+                              maarten.buis@uni.kn
+</pre>
+<pre>
+       <a href="#slide1.smcl">First slide</a>
+</pre>
+<pre>
+</pre>
+<pre>
+           <a href="#slide2.smcl">first digression</a>
+</pre>
+<pre>
+</pre>
+<pre>
+           <a href="#slide3.smcl">second digression</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide4.smcl">A second slide</a>
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide5.smcl">First ancillary</a>(ancillary)
+</pre>
+<pre>
+</pre>
+<pre>
+       <a href="#slide6.smcl">second ancillary</a>(ancillary)
+</pre>
+<pre>
+</pre>
+</div>
+</div>
+<div class="slide" id="slide1.smcl">
+<div class="txt"><pre>
+<br>
+                                 <b> First slide</b>
+<br>
+    Some interesting text about regress
+<br>
+    But you me also be intereseted in <a href="#slide2.smcl">&gt;&gt; this</a>
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. sysuse auto, clear</b>
+(1978 Automobile Data)
+<br>
+<b>. sum price</b>
+<br>
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       price |<b>         74    6165.257    2949.496       3291      15906</b>
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"> <a href="#longdigr.smcl">index</a> <a href="#slide4.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide4.smcl">
+<div class="txt"><pre>
+<br>
+                                <b> A second slide</b>
+<br>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide1.smcl">&lt;&lt;</a> <a href="#longdigr.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide2.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>digression</b>
+-------------------------------------------------------------------------------
+<br>
+                               <b> first digression</b>
+<br>
+    Kwaak, kwaak, kikker kwaak. Als ik grote sprongen maak. Doe ik net zo gek
+        als jij, en ik kwaak er ook nog bij.
+    Kwaak, kwaak, kwaak maar door. Kom maar in het kikker koor.  Kwaak van
+        dit en kwaak van dat. Kikkers kwaken altijd wat.
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide1.smcl">&lt;&lt;</a> <a href="#longdigr.smcl">index</a> <a href="#slide3.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide3.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>digression</b>
+-------------------------------------------------------------------------------
+<br>
+                              <b> second digression</b>
+<br>
+    Ia zegt het ezeltje, klim maar op mijn rug. Ik draag jou de hele weg,
+        heen end weer terug.
+<br>
+    Ia zegt het ezeltje. Ik loop van hier naar daar, en als je met me mee wil
+        hoor ik graag, ia ia.
+<br>
+</pre>
+</div><pre class="output">
+<br>
+<b>. reg price i.rep78 </b>
+<br>
+      Source |       SS           df       MS      Number of obs   =<b>        69</b>
+-------------+----------------------------------   F(4, 64)        = <b>     0.24</b>
+       Model | <b> 8360542.63         4  2090135.66   </b>Prob &gt; F        =<b>    0.9174</b>
+    Residual | <b>  568436416        64     8881819   </b>R-squared       =<b>    0.0145</b>
+-------------+----------------------------------   Adj R-squared   =<b>   -0.0471</b>
+       Total | <b>  576796959        68  8482308.22   </b>Root MSE        =   <b> 2980.2</b>
+<br>
+------------------------------------------------------------------------------
+       price |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       rep78 |
+          2  |<b>   1403.125   2356.085     0.60   0.554    -3303.696    6109.946</b>
+          3  |<b>   1864.733   2176.458     0.86   0.395    -2483.242    6212.708</b>
+          4  |<b>       1507   2221.338     0.68   0.500    -2930.633    5944.633</b>
+          5  |<b>     1348.5   2290.927     0.59   0.558    -3228.153    5925.153</b>
+             |
+       _cons |<b>     4564.5   2107.347     2.17   0.034     354.5913    8774.409</b>
+------------------------------------------------------------------------------
+<br>
+</pre>
+<div class="txt"><pre>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide1.smcl">&lt;&lt;<</a> <a href="#slide2.smcl"><<</a> <a href="#longdigr.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide5.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>ancillary</b>
+-------------------------------------------------------------------------------
+<br>
+                               <b> First ancillary</b>
+<br>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"> <a href="#longdigr.smcl">index</a> <a href="#slide6.smcl">&gt;&gt;</a></a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+<div class="slide" id="slide6.smcl">
+<div class="txt"><pre>
+-------------------------------------------------------------------------------
+<b>ancillary</b>
+-------------------------------------------------------------------------------
+<br>
+                               <b> second ancillary</b>
+<br>
+ 
+ 
+-------------------------------------------------------------------------------
+</pre>
+<pre><p class="bottom"><a href="#slide5.smcl">&lt;&lt;</a> <a href="#longdigr.smcl">index</a> </a></pre>
+<pre>
+-------------------------------------------------------------------------------
+</pre>
+</div>
+</div>
+</body>
+</html>
