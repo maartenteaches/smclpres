@@ -539,16 +539,17 @@ string scalar smclpres::format_toc_line(string scalar what, string scalar line)
     return(line)
 }
 
-string scalar smclpres::toc_link(string scalar what,string scalar line,real scalar snr)
+string scalar smclpres::toc_link(string scalar what,string scalar line,real scalar snr, | string scalar istitle)
 {
     real scalar tolink
     
     tolink = (settings.toc.link == what)
-    tolink = tolink | (slide[snr].type == "ancillary" )
-    tolink = tolink | (slide[snr].type == "bibliography")
-    tolink = tolink | (slide[snr].type == "digression" & settings.toc.title == settings.toc.link)
-    tolink = tolink | (slide[snr].type == "regular" & settings.toc.title == settings.toc.link)
-    
+	if (args()==4) {
+		tolink = tolink | (slide[snr].type == "ancillary" )
+		tolink = tolink | (slide[snr].type == "bibliography")
+		tolink = tolink | (slide[snr].type == "digression" & settings.toc.title == settings.toc.link)
+		tolink = tolink | (slide[snr].type == "regular" & settings.toc.title == settings.toc.link)
+	}
     if (tolink) {
         line = "{view slide" + strofreal(snr) + ".smcl :" + line + "}"
     }
@@ -605,7 +606,7 @@ void smclpres::write_toc_title(real scalar snr, real scalar dest) {
 	
     if (toprint) {
         title = format_toc_line(slide[snr].type, title)
-        title = toc_link(settings.toc.title, title, snr)
+        title = toc_link(settings.toc.title, title, snr, "title")
         title = toc_indent(slide[snr].type,title)
 		fput(dest,title)
     }
