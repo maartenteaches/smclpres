@@ -1,7 +1,7 @@
-*! version 4.0.3 MLB 07Mar2023
-*  bug fix with apdofile
+*! version 4.1.0 MLB 15Sep2023
+*  longer digression and ancillary files
+*  pres2html examples don't get affected by version
 program define pres2html
-	version 14.2
 	local olddir = c(pwd)
 	capture noisily pres2html_main `0'
 	if _rc {
@@ -12,6 +12,7 @@ program define pres2html
 end
 
 program define pres2html_main
+	local version = c(version)
 	version 14.2
 	syntax using/ , [replace dir(passthru)]
 
@@ -63,7 +64,7 @@ program define pres2html_main
 	local appnumber = 0
 	foreach slide of local slides {
 		Slide2html using `slide', tofill(`tofill') bottomstyle(`bottomstyle') ///
-		     app(`appendix') appnumber(`appnumber') ddir(`ddir') `replace'
+		     app(`appendix') appnumber(`appnumber') ddir(`ddir') `replace' version(`version')
 	}
 	
 	file close `appendix'
@@ -79,7 +80,7 @@ end
 
 program define Slide2html	
 	version 14.2
-	syntax using/, tofill(string) bottomstyle(string) app(string) appnumber(integer) ddir(string) [replace]
+	syntax using/, tofill(string) bottomstyle(string) app(string) appnumber(integer) ddir(string) version(real) [replace]
 	
 	file write `tofill' `"<div class="slide" id="`using'">"' _n
 	file write `tofill' `"<div class="txt">"'
@@ -106,7 +107,7 @@ program define Slide2html
 			Fileappend, file(`temphtml') appendto(`tofill')
 			file write `tofill' "</div>"
 			gettoken rest : rest, parse("}")
-			Dohtml using `rest', gen(`temphtml') replace
+			Dohtml using `rest', gen(`temphtml') replace version(`version')
 			Fileappend, file(`temphtml') appendto(`tofill')
 			local ignore = 1
 		}
@@ -118,7 +119,7 @@ program define Slide2html
 			Fileappend, file(`temphtml') appendto(`tofill')
 			file write `tofill' `"</div>"'
 			gettoken rest : rest, parse("}")
-			Dohtml using `rest', gen(`temphtml') replace
+			Dohtml using `rest', gen(`temphtml') replace version(`version')
 			Fileappend, file(`temphtml') appendto(`tofill')
 			file write `tofill' `"<div class="txt">"'
 			file open `temp' using `tempsmcl', write replace
@@ -134,7 +135,7 @@ program define Slide2html
 			gettoken dofilesource rest : rest
 			local rest = ustrtrim(`"`rest'"')
 			file write `tofill' `"<pre><a href="#app`appnumber'">`rest'</a></pre>"'_n
-			Dohtml using `dofilesource', gen(`temphtml') replace
+			Dohtml using `dofilesource', gen(`temphtml') replace version(`version')
 			file write `app' `"<div class="slide" id="app`appnumber'">"'_n
 			file write `app' `"<pre><p align="center"><b>`rest'</b></p></pre><br><br>"'_n
 			Fileappend, file(`temphtml') appendto(`app')
@@ -285,7 +286,7 @@ end
 
 program define Dohtml
 	version 14.2
-	syntax using/, [replace] gen(string)
+	syntax using/, [replace] gen(string) version(real)
 
 	// this will also be the name of the .html file that will be created
 	capture confirm new file `gen'
@@ -300,9 +301,11 @@ program define Dohtml
 	// do the example and store the output in a log file	
 	local ls = c(linesize)
 	set linesize 79
+	version `version'
 	qui log using `log', replace name(`logname')
 	do `using' , nostop
 	qui log close `logname'
+	version 14.2
 	set linesize `ls'
 	
 	// turn the log file in an .html file

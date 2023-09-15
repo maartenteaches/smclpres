@@ -14,6 +14,7 @@ struct strtoc {
 	string              scalar    subsubsecfont
 	string              scalar    subsubsubsecfont
 	string              scalar    nodigr
+    string              scalar    anctitle    
 }
 struct strhline {
 	string              scalar    top
@@ -94,7 +95,9 @@ struct strslide {
 	string              scalar    section
 	string              scalar    subsection
 	string              scalar    label
+    string              scalar    cont
 	real                scalar    prev
+    real                scalar    regprev
 	real                scalar    forw         
 }
 struct strbib {

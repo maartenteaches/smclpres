@@ -124,7 +124,7 @@ sourcemat = "foo", "file", "1"
 totest.source = sourcemat
 totest.rows_source = 1
 totest.chk_slideclose("slide",1, 0,0,0, 1)
-totest.chk_slideclose("ancilary slide",0, 1,0,0, 1)
+totest.chk_slideclose("ancillary slide",0, 1,0,0, 1)
 totest.chk_slideclose("digression slide",0, 0,1,0, 1)
 totest.chk_slideclose("bibliography slide",0, 0,0,1, 1)
 end
@@ -133,10 +133,10 @@ rcof `"noisily mata: totest.chk_slideclose("slide", 1, 1,0,0, 1)"' == 198
 rcof `"noisily mata: totest.chk_slideclose("slide", 1, 0,1,0, 1)"' == 198
 rcof `"noisily mata: totest.chk_slideclose("slide", 1, 0,0,1, 1)"' == 198
 
-rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 0,0,0, 1)"' == 198
-rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 1, 1,0,0, 1)"' == 198
-rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 1,1,0, 1)"' == 198
-rcof `"noisily mata: totest.chk_slideclose("ancilary slide", 0, 1,0,1, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancillary slide", 0, 0,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancillary slide", 1, 1,0,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancillary slide", 0, 1,1,0, 1)"' == 198
+rcof `"noisily mata: totest.chk_slideclose("ancillary slide", 0, 1,0,1, 1)"' == 198
 
 rcof `"noisily mata: totest.chk_slideclose("digression slide", 0, 0,0,0, 1)"' == 198
 rcof `"noisily mata: totest.chk_slideclose("digression slide", 1, 0,1,0, 1)"' == 198
@@ -182,6 +182,51 @@ assert(totest.slide[3].title == "Third slide")
 assert(totest.tocslide.forw == 1)
 assert(totest.settings.other.index == "minimalist.smcl")
 assert(totest.titleslide.forw == 1)
+end
+
+//find_structure() with long digression
+local using "bench/longdigr.do"
+mata:
+totest = smclpres()
+totest.parsedirs()
+totest.read_file()
+totest.find_structure()
+
+assert(totest.slide[1].type == "regular")
+assert(totest.slide[1].prev == .)
+assert(totest.slide[1].forw == 4)
+assert(totest.slide[1].regprev ==.)
+assert(totest.slide[1].cont == "")
+
+assert(totest.slide[2].type == "digression")
+assert(totest.slide[2].prev == 1)
+assert(totest.slide[2].forw == 3)
+assert(totest.slide[2].regprev == .)
+assert(totest.slide[2].cont == "")
+
+assert(totest.slide[3].type == "digression")
+assert(totest.slide[3].prev == 2)
+assert(totest.slide[3].forw == .)
+assert(totest.slide[3].regprev == 1)
+assert(totest.slide[3].cont == "continue")
+
+assert(totest.slide[4].type == "regular")
+assert(totest.slide[4].prev == 1)
+assert(totest.slide[4].forw == .)
+assert(totest.slide[4].regprev == .)
+assert(totest.slide[4].cont == "")
+
+assert(totest.slide[5].type == "ancillary")
+assert(totest.slide[5].prev == .)
+assert(totest.slide[5].forw == 6)
+assert(totest.slide[5].regprev == .)
+assert(totest.slide[5].cont == "")
+
+assert(totest.slide[6].type == "ancillary")
+assert(totest.slide[6].prev == 5)
+assert(totest.slide[6].forw == .)
+assert(totest.slide[6].regprev == .)
+assert(totest.slide[6].cont == "continue")
 end
 
 
@@ -398,7 +443,7 @@ totest.write_toc_section(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_section.test"', "r")
 assert(fget(fh)==`" "')
-assert(fget(fh)==`"{* tocline }{p 4 5 2}{view slide5.smcl : bla bla}{p_end}"')
+assert(fget(fh)==`"{* tocline }{p 4 5 2}{view slide5.smcl :bla bla}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_section.test")
@@ -479,7 +524,7 @@ fh = fopen("bench/write_toc_subsection.test", "w")
 totest.write_toc_subsection(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_subsection.test"', "r")
-assert(fget(fh)==`"{* tocline }{p 8 9 2}{view slide5.smcl : bla bla}{p_end}"')
+assert(fget(fh)==`"{* tocline }{p 8 9 2}{view slide5.smcl :bla bla}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 unlink("bench/write_toc_subsection.test")
@@ -500,10 +545,36 @@ fclose(fh)
 unlink("bench/write_toc_subsection.test")
 end
 
+
+// bold_italic()
+mata:
+totest = smclpres()
+result = totest.bold_italic("bold", "de lucht hangt er laag")
+assert(result == "{bf:de lucht hangt er laag}")
+result = totest.bold_italic("italic", "de lucht hangt er laag")
+assert(result == "{it:de lucht hangt er laag}")
+result = totest.bold_italic("regular", "de lucht hangt er laag")
+assert(result == "de lucht hangt er laag")
+end
+
+// format_toc_line()
+mata:
+totest = smclpres()
+totest.settings.toc.title = "subsection"
+totest.settings.toc.anctitle = "subsection"
+totest.settings.toc.subsecfont = "italic"
+totest.slide = strslide(10)
+totest.slide[5].type = "ancillary"
+result = totest.format_toc_line(totest.slide[5].type, "de lucht hangt er laag")
+assert(result == "{it:de lucht hangt er laag}")
+assert(totest.slide[5].type == "ancillary")
+end
+
 // write_toc_title()
 mata:
 totest = smclpres()
 totest.settings.toc.title = "subsubsection"
+totest.settings.toc.anctitle = "subsubsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
 totest.slide[5].type = "regular"
@@ -516,9 +587,12 @@ fh = fopen(`"bench/write_toc_title.test"', "r")
 assert(fget(fh)==`"{* tocline }{p 12 12 2}foo{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+end
 
+mata:
 totest = smclpres()
 totest.settings.toc.title = "subsubsection"
+totest.settings.toc.anctitle = "subsubsection"
 totest.settings.toc.link = "subsubsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
@@ -529,12 +603,15 @@ fh = fopen("bench/write_toc_title.test", "w")
 totest.write_toc_title(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
-assert(fget(fh)==`"{* tocline }{p 12 12 2}{view slide5.smcl : foo}{p_end}"')
+assert(fget(fh)==`"{* tocline }{p 12 12 2}{view slide5.smcl :foo}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+end
 
+mata:
 totest = smclpres()
 totest.settings.toc.title = "notitle"
+totest.settings.toc.anctitle = "subsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
 totest.slide[5].type = "regular"
@@ -546,9 +623,12 @@ fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
+end
 
+mata:
 totest = smclpres()
 totest.settings.toc.title = "notitle"
+totest.settings.toc.anctitle = "subsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
 totest.slide[5].type = "ancillary"
@@ -558,11 +638,12 @@ fh = fopen("bench/write_toc_title.test", "w")
 totest.write_toc_title(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
-assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl : foo} (ancillary){p_end}"')
+assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl :foo} (ancillary){p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
+totest.settings.toc.anctitle = "subsubsection"
 totest.settings.toc.title = "subsubsection"
 totest.settings.toc.subsubsecfont = "bold"
 totest.slide = strslide(10)
@@ -579,6 +660,7 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
+totest.settings.toc.anctitle = "subsubsection"
 totest.settings.toc.title = "subsubsection"
 totest.settings.toc.subsubsecfont = "italic"
 totest.slide = strslide(10)
@@ -595,6 +677,7 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
+totest.settings.toc.anctitle = "subsection"
 totest.settings.toc.title = "subsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
@@ -610,6 +693,7 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
+totest.settings.toc.anctitle = "subsection"
 totest.settings.toc.title = "subsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
@@ -621,11 +705,12 @@ totest.write_toc_title(5,fh)
 fclose(fh)
 fh = fopen(`"bench/write_toc_title.test"', "r")
 assert(fget(fh)==`" "')
-assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl : foo}{p_end}"')
+assert(fget(fh)==`"{* tocline }{p  8  8 2}{view slide5.smcl :foo}{p_end}"')
 assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
+totest.settings.toc.anctitle = "subsection"
 totest.settings.toc.title = "subsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
@@ -641,6 +726,7 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
+totest.settings.toc.anctitle = "subsubsection"
 totest.settings.toc.title = "subsubsection"
 totest.slide = strslide(10)
 totest.slide[5].title = "foo"
@@ -656,6 +742,7 @@ assert(fget(fh)==J(0,0,""))
 fclose(fh)
 
 totest = smclpres()
+totest.settings.toc.anctitle = "subsubsection"
 totest.settings.toc.title = "subsubsection"
 totest.settings.toc.nodigr = "nodigr"
 totest.slide = strslide(10)

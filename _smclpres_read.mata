@@ -897,35 +897,24 @@ void smclpres::parsedirs()
     pathsplit(usingpath, path="", file="")
     stub = pathrmsuffix(file)
     odir = pwd()
-    if(path != "") cd(path)
+    if(path != "") chdir(path)
     sdir = pwd()
     source = pathjoin(sdir,file)
     if (dir!= "") {
-        cd(odir)
-        cd(dir)
+        chdir(odir)
+        chdir(dir)
         ddir = pwd()
     }
     else {
         ddir = odir
     }
-    cd(odir)
+    chdir(odir)
 	settings.other.stub      = stub
 	settings.other.sourcedir = sdir
 	settings.other.source    = source
 	settings.other.olddir    = odir
 	settings.other.destdir   = ddir
 	settings.other.replace   = replace
-}
-
-void smclpres::cd(string scalar path) {
-    real scalar rc
-    string scalar errmsg
-    rc = _chdir(path)
-    if (rc != 0) {
-        errmsg = "{p}{err}directory " + path + " not found{p_end}"
-        printf(errmsg)
-        exit(rc)
-    }
 }
 
 real rowvector smclpres::parse_version(string scalar valstr, string scalar filename, real scalar lnr)
