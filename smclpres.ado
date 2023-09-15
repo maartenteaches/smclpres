@@ -1,5 +1,6 @@
-*! version 4.0.3 MLB 15Mar2022
-*  bugfix pres2html
+*! version 4.1.0 MLB 15Sep2023
+*  longer digression and ancillary files
+*  pres2html examples don't get affected by version
 
 program define smclpres, rclass
 	version 14.2

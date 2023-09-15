@@ -1,5 +1,6 @@
-*! version 4.0.3 MLB 07Mar2023
-*  bug fix with apdofile
+*! version 4.1.0 MLB 15Sep2023
+*  longer digression and ancillary files
+*  pres2html examples don't get affected by version
 program define pres2html
 	local olddir = c(pwd)
 	capture noisily pres2html_main `0'
